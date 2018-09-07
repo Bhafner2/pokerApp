@@ -5,7 +5,7 @@ import moment from "moment/moment";
 import 'react-infinite-calendar/styles.css';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import logo from './Poker.png';
-import PropTypes from 'prop-types';
+import ToDoList from "./Component/ToDoList";
 
 let game1 = {
     date: '2018-09-06',
@@ -29,17 +29,17 @@ let actualUser;
 
 let user1 = {
     name: 'benj',
-    game: [game1, game2]
+    games: [game1, game2]
 };
 
 let user2 = {
     name: 'hall1',
-    game: [game2, game3]
+    games: [game2, game3]
 };
 
 let newUser = {
     name: '',
-    game: []
+    games: []
 };
 
 let newGame = {
@@ -75,7 +75,6 @@ let renderUsers = function () {
 
 class UserModal extends React.Component {
     user;
-
     constructor(props) {
         super(props);
         this.state = {
@@ -100,7 +99,6 @@ class UserModal extends React.Component {
             date: actualDate
         });
         console.log("modal open with date : " + actualDate);
-
     }
 
     toggle() {
@@ -133,11 +131,11 @@ class UserModal extends React.Component {
 
     getActualGame() {
         console.log("search game for user " + actualUser.name + " on date " + actualDate);
-        for (let i = 0; i < actualUser.game.length; i++) {
-            if (actualDate === actualUser.game[i].date) {
+        for (let i = 0; i < actualUser.games.length; i++) {
+            if (actualDate === actualUser.games[i].date) {
                 this.setState({
-                    buyIn: actualUser.game[i].buyIn,
-                    won: actualUser.game[i].won
+                    buyIn: actualUser.games[i].buyIn,
+                    won: actualUser.games[i].won
                 });
                 console.log("game found");
                 break;
@@ -164,10 +162,10 @@ class UserModal extends React.Component {
 
     saveGame() {
         let found = false;
-        for (let i = 0; i < actualUser.game.length; i++) {
-            if (actualDate === actualUser.game[i].date) {
-                actualUser.game[i].buyIn = this.state.buyIn;
-                actualUser.game[i].won = this.state.won;
+        for (let i = 0; i < actualUser.games.length; i++) {
+            if (actualDate === actualUser.games[i].date) {
+                actualUser.games[i].buyIn = this.state.buyIn;
+                actualUser.games[i].won = this.state.won;
                 found = true;
                 console.log("game successfully updated, date: " + actualDate + " buyIn " + this.state.buyIn + " won " + this.state.won);
                 break;
@@ -177,7 +175,7 @@ class UserModal extends React.Component {
             newGame.date = this.state.date;
             newGame.buyIn = this.state.buyIn;
             newGame.won = this.state.won;
-            actualUser.game.push(newGame);
+            actualUser.games.push(newGame);
             console.log("game successfully created, date: " + actualDate + " buyIn " + this.state.buyIn + " won " + this.state.won)
         }
         this.toggle()
@@ -330,6 +328,12 @@ class App extends Component {
         };
         this.updateDate = this.updateDate.bind(this);
     }
+    componentDidMount() {
+        this.setState({
+            globalDate: actualDate
+        });
+        console.log("global with date : " + actualDate);
+    }
 
     updateDate(evt) {
         this.setState({
@@ -361,6 +365,11 @@ class App extends Component {
                 <div>
                     {renderUsers()}
                 </div>
+
+
+
+                    {/*<ToDoList />*/}
+
             </div>
         );
     }
