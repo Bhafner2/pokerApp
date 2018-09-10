@@ -163,10 +163,11 @@ class UserModal extends React.Component {
             }
         }
         if (!found) {
-            newGame.date = this.state.date;
-            newGame.buyIn = this.state.buyIn;
-            newGame.won = this.state.won;
-            actualUser.games.push(newGame);
+            let game = Object.assign({}, newGame);
+            game.date = this.state.date;
+            game.buyIn = this.state.buyIn;
+            game.won = this.state.won;
+            actualUser.games.push(game);
             console.log("game successfully created, date: " + actualDate + " buyIn " + this.state.buyIn + " won " + this.state.won)
         }
         this.toggle();
@@ -272,13 +273,14 @@ class Buttons extends React.Component {
                                 errorText: 'already taken!'
                             });
                             break;
-                        }else {
+                        } else {
                             this.setState({
                                 usernameOk: true,
+                                errorText: '',
                             });
                         }
                     }
-                }else{
+                } else {
                     this.setState({
                         usernameOk: false,
                         errorText: 'empty!'
@@ -289,20 +291,23 @@ class Buttons extends React.Component {
     }
 
     addUser() {
-        if (this.state.usernameOk) {
-            newUser.name = this.state.username;
-            users.push(newUser);
-            console.log("save User :" + newUser.name);
-            this.toggle();
-            this.props.saved();
-        }
+        let user = Object.assign({}, newUser);
+        user.name = this.state.username;
+        users.push(user);
+        console.log("save User :" + user.name);
+        this.toggle();
+        this.props.saved();
+        this.setState({
+            usernameOk: false,
+            errorText: 'Enter a Username',
+        });
     }
 
     render() {
         return <div>
-            <Button>
+            {/*            <Button>
                 Statistic
-            </Button>
+            </Button>*/}
             <Button key="add" onClick={this.toggle}>
                 Add User
             </Button>
@@ -351,6 +356,7 @@ class App extends Component {
             showAlert: true,
             alertText: 'Saved',
             alertSuccess: true,
+            globalDate: actualDate,
         });
         console.log("show alarm");
         setTimeout(() => {
@@ -400,7 +406,6 @@ class App extends Component {
                     </Row>
                     {console.log("global date: " + actualDate)}
                 </header>
-                <Buttons saved={this.showSaved}/>
                 <Input type="date" name="date" id="date"
                        value={this.state.globalDate}
                        onChange={this.updateDate}
@@ -409,6 +414,7 @@ class App extends Component {
                 <div>
                     {this.renderUsers()}
                 </div>
+                <Buttons saved={this.showSaved}/>
 
                 <Alert color={this.state.alertSuccess ? "success" : "danger"}
                        style={{
