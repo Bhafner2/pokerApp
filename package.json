@@ -5,6 +5,7 @@
   "dependencies": {
     "bootstrap": "^4.1.3",
     "firebase": "^5.4.2",
+    "mdbreact": "^4.7.1",
     "moment": "^2.22.2",
     "prop-types": "latest",
     "react": "^16.4.2",

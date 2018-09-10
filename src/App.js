@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import './App.css';
-import {Col, Input, ListGroup, ListGroupItem, Row} from 'reactstrap';
+import {Alert, Col, FormFeedback, FormGroup, Input, ListGroup, ListGroupItem, Row} from 'reactstrap';
 import moment from "moment/moment";
 import 'react-infinite-calendar/styles.css';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import logo from './Poker.png';
-import ToDoList from "./Component/ToDoList";
 
 let game1 = {
     date: '2018-09-06',
@@ -54,27 +53,20 @@ let today = moment(new Date()).format('YYYY-MM-DD');
 let actualDate = today;
 
 let notToday = function () {
-    if (actualDate !== today) {
+    if (actualDate === '') {
         return {backgroundColor: 'red'}
-
+    }
+    if (actualDate !== today) {
+        return {backgroundColor: 'LightSkyBlue'}
     } else {
         return {backgroundColor: 'white'}
     }
 };
 
-let renderUsers = function () {
-    return (
-        <ListGroup key={"group"}>
-            {users.map((user) =>
-                <UserModal user={user}/>)}
-            {console.log("render Users")}
-        </ListGroup>
-    );
-};
-
 
 class UserModal extends React.Component {
     user;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -168,7 +160,6 @@ class UserModal extends React.Component {
                 actualUser.games[i].won = this.state.won;
                 found = true;
                 console.log("game successfully updated, date: " + actualDate + " buyIn " + this.state.buyIn + " won " + this.state.won);
-                break;
             }
         }
         if (!found) {
@@ -178,7 +169,8 @@ class UserModal extends React.Component {
             actualUser.games.push(newGame);
             console.log("game successfully created, date: " + actualDate + " buyIn " + this.state.buyIn + " won " + this.state.won)
         }
-        this.toggle()
+        this.toggle();
+        this.props.saved();
     }
 
     getUsername() {
@@ -248,7 +240,8 @@ class Buttons extends React.Component {
         super(props);
         this.state = {
             modal: false,
-            username: ''
+            username: '',
+            usernameOk: false,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -268,28 +261,40 @@ class Buttons extends React.Component {
 
     updateUser(evt) {
         this.setState({
-            username: evt.target.value
-        });
+                username: evt.target.value,
+            }, () => {
+                if (this.state.username !== '') {
+
+                    for (let i = 0; i < users.length; i++) {
+                        if (users[i].name.toLowerCase() === this.state.username.toLowerCase()) {
+                            this.setState({
+                                usernameOk: false,
+                                errorText: 'already taken!'
+                            });
+                            break;
+                        }else {
+                            this.setState({
+                                usernameOk: true,
+                            });
+                        }
+                    }
+                }else{
+                    this.setState({
+                        usernameOk: false,
+                        errorText: 'empty!'
+                    });
+                }
+            }
+        );
     }
 
     addUser() {
-        let create = true;
-        if (this.state.username === '') {
-            alert('Username empty!');
-            create = false;
-        }
-        for (let i = 0; i < users.length; i++) {
-            if (users[i].name === this.state.username) {
-                alert('User already exists!');
-                create = false;
-            }
-        }
-        if (create) {
+        if (this.state.usernameOk) {
             newUser.name = this.state.username;
             users.push(newUser);
             console.log("save User :" + newUser.name);
             this.toggle();
-            alert('Done!');
+            this.props.saved();
         }
     }
 
@@ -305,13 +310,20 @@ class Buttons extends React.Component {
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                 <ModalHeader toggle={this.toggle}>New User</ModalHeader>
                 <ModalBody>
-                    <Input type="text" name="user" id="user"
-                           placeholder="Username"
-                           onChange={this.updateUser}
-                           value={this.state.username}/>
+                    <FormGroup>
+                        <Input
+                            valid={this.state.usernameOk}
+                            invalid={!this.state.usernameOk}
+                            type="text" name="user" id="user"
+                            placeholder="Username"
+                            onChange={this.updateUser}
+                            value={this.state.username}
+                        />
+                        <FormFeedback invalid>{this.state.errorText}</FormFeedback>
+                    </FormGroup>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={this.addUser}>Save</Button>
+                    <Button color="primary" onClick={this.addUser} disabled={!this.state.usernameOk}>Save</Button>
                     <Button color="secondary" onClick={this.toggle}>Cancel</Button>
                 </ModalFooter>
             </Modal>
@@ -324,10 +336,32 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            globalDate: actualDate
+            globalDate: actualDate,
+            showAlert: false,
+            alertText: '',
+            alertSuccess: false,
         };
         this.updateDate = this.updateDate.bind(this);
+        this.showSaved = this.showSaved.bind(this);
+
     }
+
+    showSaved() {
+        this.setState({
+            showAlert: true,
+            alertText: 'Saved',
+            alertSuccess: true,
+        });
+        console.log("show alarm");
+        setTimeout(() => {
+            this.setState({
+                showAlert: false
+            });
+            console.log("hide alarm")
+            return false;
+        }, 1000);
+    };
+
     componentDidMount() {
         this.setState({
             globalDate: actualDate
@@ -341,6 +375,16 @@ class App extends Component {
         });
         actualDate = evt.target.value;
     }
+
+    renderUsers() {
+        return (
+            <ListGroup key={"group"}>
+                {users.map((user) =>
+                    <UserModal user={user} saved={this.showSaved}/>)}
+                {console.log("render Users")}
+            </ListGroup>
+        );
+    };
 
     render() {
         return (
@@ -356,20 +400,26 @@ class App extends Component {
                     </Row>
                     {console.log("global date: " + actualDate)}
                 </header>
-                <Buttons/>
+                <Buttons saved={this.showSaved}/>
                 <Input type="date" name="date" id="date"
                        value={this.state.globalDate}
                        onChange={this.updateDate}
                        style={notToday()}
                 />
                 <div>
-                    {renderUsers()}
+                    {this.renderUsers()}
                 </div>
 
-
-
-                    {/*<ToDoList />*/}
-
+                <Alert color={this.state.alertSuccess ? "success" : "danger"}
+                       style={{
+                           visibility: this.state.showAlert ? 'visible' : 'hidden',
+                           position: "fixed",
+                           left: "0",
+                           bottom: "0",
+                           width: "100%"
+                       }}>
+                    {this.state.alertText}
+                </Alert>
             </div>
         );
     }
