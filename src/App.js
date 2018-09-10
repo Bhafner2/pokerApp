@@ -36,17 +36,6 @@ let user2 = {
     games: [game2, game3]
 };
 
-let newUser = {
-    name: '',
-    games: []
-};
-
-let newGame = {
-    date: '',
-    buyIn: 0,
-    won: 0
-};
-
 let users = [user1, user2];
 
 let today = moment(new Date()).format('YYYY-MM-DD');
@@ -84,13 +73,6 @@ class UserModal extends React.Component {
 
     }
 
-    componentDidMount() {
-        this.setState({
-            date: actualDate
-        });
-        console.log("modal open with date : " + actualDate);
-    }
-
     toggle() {
         this.setState({
             modal: !this.state.modal
@@ -126,8 +108,9 @@ class UserModal extends React.Component {
                 this.setState({
                     buyIn: actualUser.games[i].buyIn,
                     won: actualUser.games[i].won
+                }, () => {
+                    console.log("game found " + this.state.buyIn + " / " + this.state.won);
                 });
-                console.log("game found");
                 break;
             } else {
                 this.setState({
@@ -161,7 +144,11 @@ class UserModal extends React.Component {
             }
         }
         if (!found) {
-            let game = Object.assign({}, newGame);
+            let game = {
+                date: '',
+                buyIn: 0,
+                won: 0
+            };
             game.date = this.state.date;
             game.buyIn = this.state.buyIn;
             game.won = this.state.won;
@@ -174,7 +161,6 @@ class UserModal extends React.Component {
 
     setUsername() {
         actualUser = this.props.user;
-        console.log("update actual user " + actualUser.name);
         return (actualUser.name)
     }
 
@@ -227,9 +213,6 @@ class UserModal extends React.Component {
                         <Button color="secondary" onClick={this.toggle}>Cancel</Button>
                     </ModalFooter>
                 </Modal>
-                {console.log("new date " + this.state.date)}
-                {console.log("new won " + this.state.won)}
-                {console.log("new buyIn " + this.state.buyIn)}
             </div>
         );
     }
@@ -272,7 +255,6 @@ class Buttons extends React.Component {
                 username: evt.target.value,
             }, () => {
                 if (this.state.username !== '') {
-
                     for (let i = 0; i < users.length; i++) {
                         if (users[i].name.toLowerCase() === this.state.username.toLowerCase()) {
                             this.setState({
@@ -298,7 +280,10 @@ class Buttons extends React.Component {
     }
 
     addUser() {
-        let user = Object.assign({}, newUser);
+        let user =  {
+            name: '',
+            games: []
+        };
         user.name = this.state.username;
         users.push(user);
         console.log("save User :" + user.name);
@@ -371,7 +356,7 @@ class App extends Component {
             this.setState({
                 showAlert: false
             });
-            console.log("hide alarm")
+            console.log("hide alarm");
             return false;
         }, 1000);
     };
@@ -379,8 +364,9 @@ class App extends Component {
     componentDidMount() {
         this.setState({
             globalDate: actualDate
+        }, () => {
+            console.log("global with date : " + actualDate);
         });
-        console.log("global with date : " + actualDate);
     }
 
     updateDate(evt) {
@@ -412,7 +398,6 @@ class App extends Component {
                             <h1>Poker Statistic</h1>
                         </Col>
                     </Row>
-                    {console.log("global date: " + actualDate)}
                 </header>
                 <Input type="date" name="date" id="date"
                        value={this.state.globalDate}
