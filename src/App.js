@@ -7,7 +7,7 @@ import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import logo from './Poker.png';
 
 let game1 = {
-    date: '2018-09-06',
+    date: '2018-09-10',
     buyIn: 20,
     won: 30
 };
@@ -65,15 +65,13 @@ let notToday = function () {
 
 
 class UserModal extends React.Component {
-    user;
-
     constructor(props) {
         super(props);
         this.state = {
             modal: false,
             buyIn: 0,
             won: 0,
-            date: actualDate
+            date: actualDate,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -142,13 +140,13 @@ class UserModal extends React.Component {
 
     updateBuyIn(evt) {
         this.setState({
-            buyIn: evt.target.value
+            buyIn: parseInt(evt.target.value, 10)
         });
     }
 
     updateWon(evt) {
         this.setState({
-            won: evt.target.value
+            won: parseInt(evt.target.value, 10)
         });
     }
 
@@ -159,7 +157,7 @@ class UserModal extends React.Component {
                 actualUser.games[i].buyIn = this.state.buyIn;
                 actualUser.games[i].won = this.state.won;
                 found = true;
-                console.log("game successfully updated, date: " + actualDate + " buyIn " + this.state.buyIn + " won " + this.state.won);
+                console.log("game successfully updated " + actualUser.name + ", date: " + actualDate + " buyIn " + actualUser.games[i].buyIn + " won " + actualUser.games[i].won);
             }
         }
         if (!found) {
@@ -168,13 +166,13 @@ class UserModal extends React.Component {
             game.buyIn = this.state.buyIn;
             game.won = this.state.won;
             actualUser.games.push(game);
-            console.log("game successfully created, date: " + actualDate + " buyIn " + this.state.buyIn + " won " + this.state.won)
+            console.log("game successfully created " + actualUser.name + ", date: " + actualDate + " buyIn " + game.buyIn + " won " + game.won);
         }
         this.toggle();
         this.props.saved();
     }
 
-    getUsername() {
+    setUsername() {
         actualUser = this.props.user;
         console.log("update actual user " + actualUser.name);
         return (actualUser.name)
@@ -182,9 +180,9 @@ class UserModal extends React.Component {
 
     render() {
         return (<div>
-                <ListGroupItem key={this.getUsername()} onClick={this.toggle}>
+                <ListGroupItem key={this.setUsername()} onClick={this.toggle}>
                     <div>
-                        <b>{this.getUsername()}</b>
+                        <b>{this.props.user.name}</b>
                     </div>
                 </ListGroupItem>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
@@ -207,7 +205,8 @@ class UserModal extends React.Component {
                                 <div>BuyIn</div>
                             </Col>
                             <Col xs="8">
-                                <Input type="number" name="buyIn" id="buyIn"
+                                <Input autoFocus={true}
+                                       type="number" name="buyIn" id="buyIn"
                                        onChange={this.updateBuyIn}
                                        value={this.state.buyIn}/>
                             </Col>
@@ -243,11 +242,19 @@ class Buttons extends React.Component {
             modal: false,
             username: '',
             usernameOk: false,
+            field: false,
         };
 
         this.toggle = this.toggle.bind(this);
         this.addUser = this.addUser.bind(this);
         this.updateUser = this.updateUser.bind(this);
+    }
+
+    componentDidMount() {
+        this.setState({
+                field: true,
+            }
+        )
     }
 
     toggle() {
@@ -323,6 +330,7 @@ class Buttons extends React.Component {
                             placeholder="Username"
                             onChange={this.updateUser}
                             value={this.state.username}
+                            autoFocus={this.state.field}
                         />
                         <FormFeedback invalid>{this.state.errorText}</FormFeedback>
                     </FormGroup>
