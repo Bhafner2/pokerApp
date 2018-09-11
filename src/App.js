@@ -217,7 +217,7 @@ class UserModal extends React.Component {
     }
 }
 
-class Buttons extends React.Component {
+class AddUser extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -296,9 +296,6 @@ class Buttons extends React.Component {
 
     render() {
         return <div>
-            {/*            <Button>
-                Statistic
-            </Button>*/}
             <Button key="add" onClick={this.toggle}>
                 Add User
             </Button>
@@ -406,7 +403,7 @@ class App extends Component {
                 <div>
                     {this.renderUsers()}
                 </div>
-                <Buttons saved={this.showSaved}/>
+                <AddUser saved={this.showSaved}/>
 
                 <Alert color={this.state.alertSuccess ? "success" : "danger"}
                        style={{
