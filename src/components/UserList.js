@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Col, Input, ListGroupItem, Modal, ModalBody, ModalFooter, ModalHeader, Row} from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
 import { store } from "../store";
-import {updateActualUser} from "../actions";
+import {saveUsers, updateActualUser} from "../actions";
 
 
 class UserList extends React.Component {
@@ -119,6 +119,7 @@ class UserList extends React.Component {
         }
         this.toggle();
         this.props.saved();
+        store.dispatch(saveUsers(store.getState().users));
     }
 
     setUsername() {

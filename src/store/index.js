@@ -1,4 +1,4 @@
-import { createStore } from "redux";
+import {applyMiddleware, createStore} from "redux";
 import reducer from "../reducers";
 import moment from "moment/moment";
 
@@ -36,5 +36,8 @@ let actualUser = {};
 let today = moment(new Date()).format('YYYY-MM-DD');
 let actualDate = today;
 
-const initialState = { users: users, actualUser, actualDate, today };
+const initialState = { users: users, actualUser: actualUser, actualDate: actualDate, today: today };
+/*
+applyMiddleware(thunkMiddleware));
+*/
 export const store = createStore(reducer, initialState);

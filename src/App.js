@@ -4,9 +4,10 @@ import {Alert, Col, Input, ListGroup, Row} from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
 import logo from './Poker.png';
 import AddUser from "./components/AddUser";
-import { store } from "./store";
+import {store} from "./store";
 import {updateActualDate} from "./actions";
 import UserList from "./components/UserList";
+import {Provider} from "react-redux";
 
 class App extends Component {
     constructor(props) {
@@ -66,38 +67,40 @@ class App extends Component {
 
     render() {
         return (
-            <div className="App">
-                <header className="header">
-                    <Row>
-                        <Col xs="4">
-                            <img className="logo" src={logo} alt={"logo"}/>
-                        </Col>
-                        <Col xs="8">
-                            <h1>Poker Statistic</h1>
-                        </Col>
-                    </Row>
-                </header>
-                <Input type="date" name="date" id="date"
-                       value={store.getState().actualDate}
-                       onChange={App.updateDate}
-                       style={this.isToday()}
-                />
-                <div>
-                    {this.renderUsers()}
-                </div>
-                <AddUser saved={this.showSaved}/>
+            <Provider store={store}>
+                <div className="App">
+                    <header className="header">
+                        <Row>
+                            <Col xs="4">
+                                <img className="logo" src={logo} alt={"logo"}/>
+                            </Col>
+                            <Col xs="8">
+                                <h1>Poker Statistic</h1>
+                            </Col>
+                        </Row>
+                    </header>
+                    <Input type="date" name="date" id="date"
+                           value={store.getState().actualDate}
+                           onChange={App.updateDate}
+                           style={this.isToday()}
+                    />
+                    <div>
+                        {this.renderUsers()}
+                    </div>
+                    <AddUser saved={this.showSaved}/>
 
-                <Alert color={this.state.alertSuccess ? "success" : "danger"}
-                       style={{
-                           visibility: this.state.showAlert ? 'visible' : 'hidden',
-                           position: "fixed",
-                           left: "0",
-                           bottom: "0",
-                           width: "100%"
-                       }}>
-                    {this.state.alertText}
-                </Alert>
-            </div>
+                    <Alert color={this.state.alertSuccess ? "success" : "danger"}
+                           style={{
+                               visibility: this.state.showAlert ? 'visible' : 'hidden',
+                               position: "fixed",
+                               left: "0",
+                               bottom: "0",
+                               width: "100%"
+                           }}>
+                        {this.state.alertText}
+                    </Alert>
+                </div>
+            </Provider>
         );
     }
 }
