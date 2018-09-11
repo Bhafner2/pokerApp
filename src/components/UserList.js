@@ -4,6 +4,7 @@ import 'react-infinite-calendar/styles.css';
 import { store } from "../store";
 import {updateActualUser} from "../actions";
 
+
 class UserList extends React.Component {
     constructor(props) {
         super(props);
@@ -21,7 +22,18 @@ class UserList extends React.Component {
         this.saveGame = this.saveGame.bind(this);
         this.updateBuyIn = this.updateBuyIn.bind(this);
         this.updateDate = this.updateDate.bind(this);
+        this.isToday = this.isToday.bind(this);
+    }
 
+    isToday() {
+        if (this.state.date === '') {
+            return {backgroundColor: 'red'}
+        }
+        if (this.state.date !== store.getState().today) {
+            return {backgroundColor: 'LightSkyBlue'}
+        } else {
+            return {backgroundColor: 'white'}
+        }
     }
 
     toggle() {
@@ -132,9 +144,7 @@ class UserList extends React.Component {
                                 <Input type="date" name="date" id="date"
                                        onChange={this.updateDate}
                                        value={this.state.date}
-/*
-              TODO                         style={isItToday()}
-*/
+                                        style={this.isToday()}
                                 />
                             </Col>
                         </Row>

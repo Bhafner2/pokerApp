@@ -16,14 +16,13 @@ class App extends Component {
             alertText: '',
             alertSuccess: false,
         };
-        this.updateDate = this.updateDate.bind(this);
+        App.updateDate = App.updateDate.bind(this);
         this.showSaved = this.showSaved.bind(this);
+        this.isToday = this.isToday.bind(this);
 
     }
 
     isToday() {
-        console.log(store.getState().actualDate);
-        console.log(store.getState().today);
         if (store.getState().actualDate === '') {
             return {backgroundColor: 'red'}
         }
@@ -32,7 +31,7 @@ class App extends Component {
         } else {
             return {backgroundColor: 'white'}
         }
-    };
+    }
 
     showSaved() {
         this.setState({
@@ -50,8 +49,9 @@ class App extends Component {
         }, 1000);
     };
 
-    updateDate(evt) {
-        store.dispatch(updateActualDate, evt.target.value);
+    static updateDate(evt) {
+        //TODO
+        store.dispatch(updateActualDate, evt.target.value.toString());
     }
 
     renderUsers() {
@@ -79,17 +79,13 @@ class App extends Component {
                 </header>
                 <Input type="date" name="date" id="date"
                        value={store.getState().actualDate}
-                       onChange={this.updateDate}
-/*
+                       onChange={App.updateDate}
                        style={this.isToday()}
-*/
                 />
                 <div>
                     {this.renderUsers()}
                 </div>
                 <AddUser saved={this.showSaved}/>
-
-                {store.getState().users.map((user) => console.log("store test ................." + user.name))}
 
                 <Alert color={this.state.alertSuccess ? "success" : "danger"}
                        style={{
