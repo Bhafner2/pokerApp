@@ -92,8 +92,7 @@ class UserModal extends React.Component {
         this.setState({
                 date: evt.target.value
             }, () => {
-                actualDate = this.state.date;
-                console.log("new date " + actualDate);
+                console.log("new date " + this.state.date);
                 this.getActualGame();
             }
         );
@@ -102,9 +101,9 @@ class UserModal extends React.Component {
     }
 
     getActualGame() {
-        console.log("search game for user " + actualUser.name + " on date " + actualDate);
+        console.log("search game for user " + actualUser.name + " on date " + this.state.date);
         for (let i = 0; i < actualUser.games.length; i++) {
-            if (actualDate === actualUser.games[i].date) {
+            if (this.state.date === actualUser.games[i].date) {
                 this.setState({
                     buyIn: actualUser.games[i].buyIn,
                     won: actualUser.games[i].won
@@ -136,11 +135,11 @@ class UserModal extends React.Component {
     saveGame() {
         let found = false;
         for (let i = 0; i < actualUser.games.length; i++) {
-            if (actualDate === actualUser.games[i].date) {
+            if (this.state.date === actualUser.games[i].date) {
                 actualUser.games[i].buyIn = this.state.buyIn;
                 actualUser.games[i].won = this.state.won;
                 found = true;
-                console.log("game successfully updated " + actualUser.name + ", date: " + actualDate + " buyIn " + actualUser.games[i].buyIn + " won " + actualUser.games[i].won);
+                console.log("game successfully updated " + actualUser.name + ", date: " + this.state.date + " buyIn " + actualUser.games[i].buyIn + " won " + actualUser.games[i].won);
             }
         }
         if (!found) {
@@ -153,7 +152,7 @@ class UserModal extends React.Component {
             game.buyIn = this.state.buyIn;
             game.won = this.state.won;
             actualUser.games.push(game);
-            console.log("game successfully created " + actualUser.name + ", date: " + actualDate + " buyIn " + game.buyIn + " won " + game.won);
+            console.log("game successfully created " + actualUser.name + ", date: " + this.state.date + " buyIn " + game.buyIn + " won " + game.won);
         }
         this.toggle();
         this.props.saved();
