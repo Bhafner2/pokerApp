@@ -1,11 +1,10 @@
+import firebase from '../config/firebase';
+
 export default (state, action) => {
+    const db = firebase.database().ref('users');
     switch (action.type) {
         case "SAVE_USERS":
-            return {
-                ...state,
-                users: action.users
-            };
-        case "SAVE_USER":
+            db.update(action.users);
             return {
                 ...state,
                 users: action.users

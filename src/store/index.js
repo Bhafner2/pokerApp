@@ -1,43 +1,27 @@
-import {applyMiddleware, createStore} from "redux";
+import {createStore} from "redux";
 import reducer from "../reducers";
 import moment from "moment/moment";
+import firebase from '../config/firebase';
 
-let game1 = {
-    date: '2018-09-10',
-    buyIn: 20,
-    won: 30
+let getUsers = function () {
+    let users = [];
+    const db = firebase.database().ref('users/');
+    db.on('value', (snapshot) => {
+        let items = snapshot.val();
+        for (let item in items) {
+            users.push({
+                name: items[item].name,
+                games: items[item].games
+            });
+        }
+    });
+    console.log(users);
+    return users;
 };
-
-let game3 = {
-    date: '2018-09-06',
-    buyIn: 100,
-    won: 54
-};
-
-let game2 = {
-    date: '2018-07-21',
-    buyIn: 20,
-    won: 30
-};
-
-let user1 = {
-    name: 'benj',
-    games: [game1, game2]
-};
-
-let user2 = {
-    name: 'hall1',
-    games: [game2, game3]
-};
-
-let users = [user1, user2];
 
 let actualUser = {};
 let today = moment(new Date()).format('YYYY-MM-DD');
 let actualDate = today;
 
-const initialState = { users: users, actualUser: actualUser, actualDate: actualDate, today: today };
-/*
-applyMiddleware(thunkMiddleware));
-*/
+const initialState = {users: getUsers(), actualUser: actualUser, actualDate: actualDate, today: today};
 export const store = createStore(reducer, initialState);

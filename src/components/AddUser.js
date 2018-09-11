@@ -66,12 +66,18 @@ class AddUser extends React.Component {
     }
 
     addUser() {
+        let users = Object.assign(store.getState().users);
         let user = {
             name: '',
-            games: []
+            games: [
+                {
+                    date: '2000-01-01',
+                    buyIn: 0,
+                    won: 0
+                }]
         };
         user.name = this.state.username;
-        store.getState().users.push(user);
+        users.push(user);
         console.log("save User :" + user.name);
         this.toggle();
         this.props.saved();
@@ -79,7 +85,7 @@ class AddUser extends React.Component {
             usernameOk: false,
             errorText: 'Enter a Username',
         });
-        store.dispatch(saveUsers(store.getState().users));
+        store.dispatch(saveUsers(users));
     }
 
     render() {
