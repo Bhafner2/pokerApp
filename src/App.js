@@ -51,8 +51,8 @@ class App extends Component {
     };
 
     static updateDate(evt) {
-        //TODO
-        store.dispatch(updateActualDate, evt.target.value.toString());
+        let date = evt.target.value;
+        store.dispatch(updateActualDate, date);
     }
 
     renderUsers() {
@@ -85,6 +85,7 @@ class App extends Component {
                            style={this.isToday()}
                     />
                     <div>
+                        {console.log("log befor render" + store.getState().users)}
                         {this.renderUsers()}
                     </div>
                     <AddUser saved={this.showSaved}/>
