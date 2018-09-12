@@ -12,7 +12,7 @@ class UserList extends React.Component {
             modal: false,
             buyIn: 0,
             won: 0,
-            date: store.getState().actualDate,
+            date: props.date,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -29,7 +29,7 @@ class UserList extends React.Component {
         if (this.state.date === '') {
             return {backgroundColor: 'red'}
         }
-        if (this.state.date !== store.getState().today) {
+        if (this.state.date !== this.props.today) {
             return {backgroundColor: 'LightSkyBlue'}
         } else {
             return {backgroundColor: 'white'}
@@ -42,7 +42,7 @@ class UserList extends React.Component {
         }, () => {
             if (this.state.modal) {
                 this.setState({
-                    date: store.getState().actualDate
+                    date: this.props.date
                 }, () => {
                     this.getActualGame();
                 });

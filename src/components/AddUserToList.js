@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, FormFeedback, FormGroup, Input, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 import { store } from "../store";
-import { saveUsers } from "../actions"
+import {addUser, saveUsers} from "../actions"
 
 class AddUser extends React.Component {
     constructor(props) {
@@ -14,7 +14,7 @@ class AddUser extends React.Component {
         };
 
         this.toggle = this.toggle.bind(this);
-        this.addUser = this.addUser.bind(this);
+        this.addUserToList = this.addUserToList.bind(this);
         this.updateUser = this.updateUser.bind(this);
     }
 
@@ -65,7 +65,7 @@ class AddUser extends React.Component {
         );
     }
 
-    addUser() {
+    addUserToList() {
         let users = Object.assign(store.getState().users);
         let user = {
             name: '',
@@ -81,11 +81,11 @@ class AddUser extends React.Component {
         console.log("save User :" + user.name);
         this.toggle();
         this.props.saved();
+        store.dispatch(saveUsers(users));
         this.setState({
             usernameOk: false,
             errorText: 'Enter a Username',
         });
-        store.dispatch(saveUsers(users));
     }
 
     render() {
@@ -111,7 +111,7 @@ class AddUser extends React.Component {
                     </FormGroup>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={this.addUser} disabled={!this.state.usernameOk}>Save</Button>
+                    <Button color="primary" onClick={this.addUserToList} disabled={!this.state.usernameOk}>Save</Button>
                     <Button color="secondary" onClick={this.toggle}>Cancel</Button>
                 </ModalFooter>
             </Modal>

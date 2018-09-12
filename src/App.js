@@ -3,11 +3,12 @@ import './App.css';
 import {Alert, Col, Input, ListGroup, Row} from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
 import logo from './Poker.png';
-import AddUser from "./components/AddUser";
+import AddUser from "./components/AddUserToList";
 import {store} from "./store";
-import {updateActualDate} from "./actions";
+import {getUsers} from "./actions";
 import UserList from "./components/UserList";
 import {Provider} from "react-redux";
+import moment from "moment/moment";
 
 class App extends Component {
     constructor(props) {
@@ -16,18 +17,29 @@ class App extends Component {
             showAlert: false,
             alertText: '',
             alertSuccess: false,
-        };
-        App.updateDate = App.updateDate.bind(this);
+            today: moment(new Date()).format('YYYY-MM-DD'),
+            date: moment(new Date()).format('YYYY-MM-DD'),
+    };
+
+        this.updateDate = this.updateDate.bind(this);
         this.showSaved = this.showSaved.bind(this);
         this.isToday = this.isToday.bind(this);
+        this.updateDate = this.updateDate.bind(this);
+    }
 
+    componentDidMount() {
+        store.dispatch(getUsers());
+        this.setState({
+            today: moment(new Date()).format('YYYY-MM-DD'),
+            date: moment(new Date()).format('YYYY-MM-DD'),
+        });
     }
 
     isToday() {
-        if (store.getState().actualDate === '') {
+        if (this.state.date === '') {
             return {backgroundColor: 'red'}
         }
-        if (store.getState().actualDate !== store.getState().today) {
+        if (this.state.date !== this.state.today) {
             return {backgroundColor: 'LightSkyBlue'}
         } else {
             return {backgroundColor: 'white'}
@@ -50,16 +62,17 @@ class App extends Component {
         }, 1000);
     };
 
-    static updateDate(evt) {
-        let date = evt.target.value;
-        store.dispatch(updateActualDate, date);
+    updateDate(evt) {
+        this.setState({
+            date: evt.target.value,
+        });
     }
 
     renderUsers() {
         return (
             <ListGroup key={"group"}>
                 {store.getState().users.map((user) =>
-                    <UserList user={user} saved={this.showSaved}/>)}
+                    <UserList user={user} saved={this.showSaved} date={this.state.date} today={this.state.today}/>)}
                 {console.log("render Users")}
             </ListGroup>
         );
@@ -80,8 +93,8 @@ class App extends Component {
                         </Row>
                     </header>
                     <Input type="date" name="date" id="date"
-                           value={store.getState().actualDate}
-                           onChange={App.updateDate}
+                           value={this.state.date}
+                           onChange={this.updateDate}
                            style={this.isToday()}
                     />
                     <div>
