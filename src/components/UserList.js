@@ -1,8 +1,8 @@
 import React from 'react';
 import {Button, Col, Input, ListGroupItem, Modal, ModalBody, ModalFooter, ModalHeader, Row} from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
-import { store } from "../store";
-import {saveUsers, updateActualUser} from "../actions";
+import { store } from "../redux/store";
+import {saveUsers, updateActualUser} from "../redux/actions";
 
 
 class UserList extends React.Component {

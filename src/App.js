@@ -4,8 +4,8 @@ import {Alert, Col, Input, ListGroup, Row} from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
 import logo from './Poker.png';
 import AddUser from "./components/AddUserToList";
-import {store} from "./store";
-import {getUsers} from "./actions";
+import {store} from "./redux/store";
+import {getUsers} from "./redux/actions";
 import UserList from "./components/UserList";
 import {Provider} from "react-redux";
 import moment from "moment/moment";
@@ -19,12 +19,20 @@ class App extends Component {
             alertSuccess: false,
             today: moment(new Date()).format('YYYY-MM-DD'),
             date: moment(new Date()).format('YYYY-MM-DD'),
-    };
+            users: store.getState().users,
+        };
 
         this.updateDate = this.updateDate.bind(this);
         this.showSaved = this.showSaved.bind(this);
         this.isToday = this.isToday.bind(this);
         this.updateDate = this.updateDate.bind(this);
+        this.updateUsers = this.updateUsers.bind(this);
+    }
+
+    updateUsers() {
+        this.setState({
+            users: store.getState().users,
+        })
     }
 
     componentDidMount() {
@@ -33,6 +41,7 @@ class App extends Component {
             today: moment(new Date()).format('YYYY-MM-DD'),
             date: moment(new Date()).format('YYYY-MM-DD'),
         });
+        this.updateUsers();
     }
 
     isToday() {
@@ -71,7 +80,7 @@ class App extends Component {
     renderUsers() {
         return (
             <ListGroup key={"group"}>
-                {store.getState().users.map((user) =>
+                {this.state.users.map((user) =>
                     <UserList user={user} saved={this.showSaved} date={this.state.date} today={this.state.today}/>)}
                 {console.log("render Users")}
             </ListGroup>
@@ -81,6 +90,10 @@ class App extends Component {
     render() {
         return (
             <Provider store={store}>
+                {/*
+                {store.subscribe(this.updateUsers)}
+
+*/}
                 <div className="App">
                     <header className="header">
                         <Row>

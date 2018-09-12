@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, FormFeedback, FormGroup, Input, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
-import { store } from "../store";
-import {addUser, saveUsers} from "../actions"
+import { store } from "../redux/store";
+import {saveUsers} from "../redux/actions"
 
 class AddUser extends React.Component {
     constructor(props) {
