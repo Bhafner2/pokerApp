@@ -84,8 +84,10 @@ class App extends Component {
                 console.log("connected");
                 error = false;
             } else {
-                console.log("disconnectet");
-                error = true;
+                setTimeout(() => {
+                    console.log("disconnectet");
+                    error = true;
+                }, 1000);
             }
         });
     }
@@ -132,7 +134,7 @@ class App extends Component {
                     {this.connectionCheck()}
                     {this.renderUsers()}
                 </div>
-                {error? <div/> : <AddUser saved={this.showSaved}/>}
+                {error ? <div/> : <AddUser saved={this.showSaved}/>}
 
                 <Alert color={this.state.alertSuccess ? "success" : "danger"}
                        style={{
