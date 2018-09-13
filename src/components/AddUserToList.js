@@ -13,6 +13,7 @@ class AddUser extends React.Component {
             modal: false,
             username: '',
             usernameOk: false,
+            onOpen: true,
             field: false,
         };
 
@@ -24,6 +25,7 @@ class AddUser extends React.Component {
     componentDidMount() {
         this.setState({
                 field: true,
+                onOpen: true,
             }
         )
     }
@@ -77,6 +79,8 @@ class AddUser extends React.Component {
 
     addUserToList() {
         let users = Object.assign(this.props.asdf.users);
+        console.log("users befor adding ", users);
+        console.log("users befor adding ", this.props.asdf.users);
         let user = {
             name: '',
             games: [
@@ -88,6 +92,7 @@ class AddUser extends React.Component {
         };
         user.name = this.state.username;
         users.push(user);
+        console.log("users after adding ", users);
         console.log("save User :" + user.name);
         this.toggle();
         this.props.saved();
