@@ -32,7 +32,8 @@ class AddUser extends React.Component {
 
     toggle() {
         this.setState({
-            modal: !this.state.modal
+            modal: !this.state.modal,
+            onOpen: true,
         }, () => {
             this.setState({
                 username: ''
@@ -44,6 +45,7 @@ class AddUser extends React.Component {
         const {users} = this.props.asdf;
         this.setState({
                 username: evt.target.value,
+                onOpen: false,
             }, () => {
                 if (_.isNil(users)) {
                     this.setState({
@@ -115,7 +117,7 @@ class AddUser extends React.Component {
                     <FormGroup>
                         <Input
                             valid={this.state.usernameOk}
-                            invalid={!this.state.usernameOk}
+                            invalid={!this.state.usernameOk && !this.state.onOpen}
                             type="text" name="user" id="user"
                             placeholder="Username"
                             onChange={this.updateUser}

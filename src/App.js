@@ -8,8 +8,11 @@ import {getUsers} from "./redux/actions";
 import UserList from "./components/UserList";
 import moment from "moment/moment";
 import * as _ from 'lodash';
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 import {store} from './redux/store'
+import firebase from "./config/firebase";
+
+let error = false;
 
 
 class App extends Component {
@@ -27,6 +30,7 @@ class App extends Component {
         this.showSaved = this.showSaved.bind(this);
         this.isToday = this.isToday.bind(this);
         this.updateDate = this.updateDate.bind(this);
+        this.connectionCheck = this.connectionCheck.bind(this);
     }
 
     componentDidMount() {
@@ -70,8 +74,24 @@ class App extends Component {
         });
     }
 
+    connectionCheck() {
+        let connectedRef = firebase.database().ref(".info/connected");
+        connectedRef.on("value", function (snap) {
+            if (snap.val() === true) {
+                if (error) {
+                    store.dispatch(getUsers());
+                }
+                console.log("connected");
+                error = false;
+            } else {
+                console.log("disconnectet");
+                error = true;
+            }
+        });
+    }
+
     renderUsers() {
-        const { date, today } = this.state;
+        const {date, today} = this.state;
         const users = this.props.asdf.users;
 
         console.log("users to render ", users);
@@ -92,38 +112,50 @@ class App extends Component {
 
     render() {
         return (
-                <div className="App">
-                    <header className="header">
-                        <Row>
-                            <Col xs="4">
-                                <img className="logo" src={logo} alt={"logo"}/>
-                            </Col>
-                            <Col xs="8">
-                                <h1>Poker Statistic</h1>
-                            </Col>
-                        </Row>
-                    </header>
-                    <Input type="date" name="date" id="date"
-                           value={this.state.date}
-                           onChange={this.updateDate}
-                           style={this.isToday()}
-                    />
-                    <div>
-                        {this.renderUsers()}
-                    </div>
-                    <AddUser saved={this.showSaved}/>
-
-                    <Alert color={this.state.alertSuccess ? "success" : "danger"}
-                           style={{
-                               visibility: this.state.showAlert ? 'visible' : 'hidden',
-                               position: "fixed",
-                               left: "0",
-                               bottom: "0",
-                               width: "100%"
-                           }}>
-                        {this.state.alertText}
-                    </Alert>
+            <div className="App">
+                <header className="header">
+                    <Row>
+                        <Col xs="4">
+                            <img className="logo" src={logo} alt={"logo"}/>
+                        </Col>
+                        <Col xs="8">
+                            <h1>Poker Statistic</h1>
+                        </Col>
+                    </Row>
+                </header>
+                <Input type="date" name="date" id="date"
+                       value={this.state.date}
+                       onChange={this.updateDate}
+                       style={this.isToday()}
+                />
+                <div>
+                    {this.connectionCheck()}
+                    {this.renderUsers()}
                 </div>
+                {error? <div/> : <AddUser saved={this.showSaved}/>}
+
+                <Alert color={this.state.alertSuccess ? "success" : "danger"}
+                       style={{
+                           visibility: this.state.showAlert ? 'visible' : 'hidden',
+                           position: "fixed",
+                           left: "0",
+                           bottom: "0",
+                           width: "100%"
+                       }}>
+                    {this.state.alertText}
+                </Alert>
+
+                <Alert color="danger"
+                       style={{
+                           visibility: error ? 'visible' : 'hidden',
+                           position: "fixed",
+                           left: "0",
+                           bottom: "0",
+                           width: "100%"
+                       }}>
+                    "No connection to Server!"
+                </Alert>
+            </div>
         );
     }
 }
