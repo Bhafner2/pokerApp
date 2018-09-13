@@ -4,11 +4,13 @@ import {Alert, Col, Input, ListGroup, Row} from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
 import logo from './Poker.png';
 import AddUser from "./components/AddUserToList";
-import {store} from "./redux/store";
 import {getUsers} from "./redux/actions";
 import UserList from "./components/UserList";
-import {Provider} from "react-redux";
 import moment from "moment/moment";
+import * as _ from 'lodash';
+import { connect } from 'react-redux'
+import {store} from './redux/store'
+
 
 class App extends Component {
     constructor(props) {
@@ -19,20 +21,12 @@ class App extends Component {
             alertSuccess: false,
             today: moment(new Date()).format('YYYY-MM-DD'),
             date: moment(new Date()).format('YYYY-MM-DD'),
-            users: store.getState().users,
         };
 
         this.updateDate = this.updateDate.bind(this);
         this.showSaved = this.showSaved.bind(this);
         this.isToday = this.isToday.bind(this);
         this.updateDate = this.updateDate.bind(this);
-        this.updateUsers = this.updateUsers.bind(this);
-    }
-
-    updateUsers() {
-        this.setState({
-            users: store.getState().users,
-        })
     }
 
     componentDidMount() {
@@ -41,7 +35,6 @@ class App extends Component {
             today: moment(new Date()).format('YYYY-MM-DD'),
             date: moment(new Date()).format('YYYY-MM-DD'),
         });
-        this.updateUsers();
     }
 
     isToday() {
@@ -78,10 +71,20 @@ class App extends Component {
     }
 
     renderUsers() {
+        const { date, today } = this.state;
+        const users = this.props.asdf.users;
+
+        console.log("users to render ", users);
+        if (_.isNil(users[0])) {
+            return (
+                <div>loading....</div>
+            )
+        }
+
         return (
             <ListGroup key={"group"}>
-                {this.state.users.map((user) =>
-                    <UserList user={user} saved={this.showSaved} date={this.state.date} today={this.state.today}/>)}
+                {users.map((user) =>
+                    <UserList user={user} saved={this.showSaved} date={date} today={today}/>)}
                 {console.log("render Users")}
             </ListGroup>
         );
@@ -89,11 +92,6 @@ class App extends Component {
 
     render() {
         return (
-            <Provider store={store}>
-                {/*
-                {store.subscribe(this.updateUsers)}
-
-*/}
                 <div className="App">
                     <header className="header">
                         <Row>
@@ -111,7 +109,6 @@ class App extends Component {
                            style={this.isToday()}
                     />
                     <div>
-                        {console.log("log befor render" + store.getState().users)}
                         {this.renderUsers()}
                     </div>
                     <AddUser saved={this.showSaved}/>
@@ -127,9 +124,17 @@ class App extends Component {
                         {this.state.alertText}
                     </Alert>
                 </div>
-            </Provider>
         );
     }
 }
 
-export default App;
+const mapStateToProps = state => {
+    return {
+        asdf: state
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    {}
+)(App);

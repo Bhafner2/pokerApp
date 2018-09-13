@@ -1,7 +1,10 @@
 import React from 'react';
 import {Button, FormFeedback, FormGroup, Input, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
-import { store } from "../redux/store";
+import {store} from "../redux/store";
 import {saveUsers} from "../redux/actions"
+import {connect} from "react-redux";
+import * as _ from 'lodash';
+
 
 class AddUser extends React.Component {
     constructor(props) {
@@ -36,37 +39,44 @@ class AddUser extends React.Component {
     }
 
     updateUser(evt) {
-
+        const {users} = this.props.asdf;
         this.setState({
                 username: evt.target.value,
             }, () => {
-                if (this.state.username !== '') {
-                    for (let i = 0; i < store.getState().users.length; i++) {
-                        if (store.getState().users[i].name.toLowerCase() === this.state.username.toLowerCase()) {
-                            this.setState({
-                                usernameOk: false,
-                                errorText: 'already taken!'
-                            });
-                            break;
-                        } else {
-                            this.setState({
-                                usernameOk: true,
-                                errorText: '',
-                            });
-                        }
-                    }
-                } else {
+                if (_.isNil(users)) {
                     this.setState({
                         usernameOk: false,
-                        errorText: 'empty!'
+                        errorText: 'no connection to Server',
                     });
+                } else {
+                    if (this.state.username !== '') {
+                        for (let i = 0; i < users.length; i++) {
+                            if (users[i].name.toLowerCase() === this.state.username.toLowerCase()) {
+                                this.setState({
+                                    usernameOk: false,
+                                    errorText: 'already taken!'
+                                });
+                                break;
+                            } else {
+                                this.setState({
+                                    usernameOk: true,
+                                    errorText: '',
+                                });
+                            }
+                        }
+                    } else {
+                        this.setState({
+                            usernameOk: false,
+                            errorText: 'empty!'
+                        });
+                    }
                 }
             }
         );
     }
 
     addUserToList() {
-        let users = Object.assign(store.getState().users);
+        let users = Object.assign(this.props.asdf.users);
         let user = {
             name: '',
             games: [
@@ -120,4 +130,14 @@ class AddUser extends React.Component {
     }
 }
 
-export default AddUser;
+
+const mapStateToProps = state => {
+    return {
+        asdf: state
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    {}
+)(AddUser);

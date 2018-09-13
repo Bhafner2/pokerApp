@@ -2,7 +2,8 @@ import React from 'react';
 import {Button, Col, Input, ListGroupItem, Modal, ModalBody, ModalFooter, ModalHeader, Row} from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
 import { store } from "../redux/store";
-import {saveUsers, updateActualUser} from "../redux/actions";
+import {saveUsers} from "../redux/actions";
+import {connect} from "react-redux";
 
 
 class UserList extends React.Component {
@@ -64,12 +65,13 @@ class UserList extends React.Component {
     }
 
     getActualGame() {
-        console.log("search game for user " + store.getState().actualUser.name + " on date " + this.state.date);
-        for (let i = 0; i < store.getState().actualUser.games.length; i++) {
-            if (this.state.date === store.getState().actualUser.games[i].date) {
+        const {user} = this.props;
+        console.log("search game for user " + user.name + " on date " + this.state.date);
+        for (let i = 0; i < user.games.length; i++) {
+            if (this.state.date === user.games[i].date) {
                 this.setState({
-                    buyIn: store.getState().actualUser.games[i].buyIn,
-                    won: store.getState().actualUser.games[i].won
+                    buyIn: user.games[i].buyIn,
+                    won: user.games[i].won
                 }, () => {
                     console.log("game found " + this.state.buyIn + " / " + this.state.won);
                 });
@@ -97,12 +99,15 @@ class UserList extends React.Component {
 
     saveGame() {
         let found = false;
-        for (let i = 0; i < store.getState().actualUser.games.length; i++) {
-            if (this.state.date === store.getState().actualUser.games[i].date) {
-                store.getState().actualUser.games[i].buyIn = this.state.buyIn;
-                store.getState().actualUser.games[i].won = this.state.won;
+        const {users} = this.props.asdf;
+        const {user} = this.props;
+
+        for (let i = 0; i < user.games.length; i++) {
+            if (this.state.date === user.games[i].date) {
+                user.games[i].buyIn = this.state.buyIn;
+                user.games[i].won = this.state.won;
                 found = true;
-                console.log("game successfully updated " + store.getState().actualUser.name + ", date: " + this.state.date + " buyIn " + store.getState().actualUser.games[i].buyIn + " won " + store.getState().actualUser.games[i].won);
+                console.log("game successfully updated " + user.name + ", date: " + this.state.date + " buyIn " + user.games[i].buyIn + " won " + user.games[i].won);
             }
         }
         if (!found) {
@@ -114,28 +119,26 @@ class UserList extends React.Component {
             game.date = this.state.date;
             game.buyIn = this.state.buyIn;
             game.won = this.state.won;
-            store.getState().actualUser.games.push(game);
-            console.log("game successfully created " + store.getState().actualUser.name + ", date: " + this.state.date + " buyIn " + game.buyIn + " won " + game.won);
+            user.games.push(game);
+            console.log("game successfully created " + user.name + ", date: " + this.state.date + " buyIn " + game.buyIn + " won " + game.won);
         }
         this.toggle();
         this.props.saved();
-        store.dispatch(saveUsers(store.getState().users));
-    }
 
-    setUsername() {
-        store.dispatch(updateActualUser(this.props.user));
-        return (store.getState().actualUser.name)
+        //TODO read users an push the game
+        store.dispatch(saveUsers(users));
     }
 
     render() {
+        const {user} = this.props;
         return (<div>
-                <ListGroupItem key={this.setUsername()} onClick={this.toggle}>
+                <ListGroupItem key={user.name} onClick={this.toggle}>
                     <div>
-                        <b>{this.props.user.name}</b>
+                        <b>{user.name}</b>
                     </div>
                 </ListGroupItem>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                    <ModalHeader toggle={this.toggle}>{store.getState().actualUser.name}</ModalHeader>
+                    <ModalHeader toggle={this.toggle}>{user.name}</ModalHeader>
                     <ModalBody>
                         <Row>
                             <Col xs="4">
@@ -181,4 +184,13 @@ class UserList extends React.Component {
     }
 }
 
-export default UserList;
+const mapStateToProps = state => {
+    return {
+        asdf: state
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    {}
+)(UserList);

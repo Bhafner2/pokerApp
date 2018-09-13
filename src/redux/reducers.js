@@ -23,13 +23,9 @@ export default (state, action) => {
                 actualUser: action.user
             };
         case GET_USERS:
-            console.log("get users get");
-            return {
-                ...state,
-                users: getUsers()
-            };
+            return state;
         case "GET_USERS_SUCCESS":
-            console.log("get users success");
+            console.log("get users success", action.users);
             return {
                 ...state,
                 users: action.users
