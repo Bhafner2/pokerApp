@@ -1,6 +1,6 @@
 import firebase from "../config/firebase";
 import {takeLatest, call, put} from 'redux-saga/effects';
-import {getUsersError, getUsersSuccess, saveUsersErr, saveUsersSuccess} from "./actions";
+import {getUsersRejected, getUsersFulfilled, saveUsersRejected, saveUsersFulfilled} from "./actions";
 import {GET_USERS, SAVE_USERS} from "./constants";
 import {delay} from 'redux-saga';
 
@@ -14,10 +14,10 @@ export function* getUsersSaga(action) {
         yield call(fetchUsers);
         console.log("get users saga succ", fechedUsers);
         yield delay(1000);
-        yield put(getUsersSuccess(fechedUsers));
+        yield put(getUsersFulfilled(fechedUsers));
     } catch (err) {
         console.log("get users saga err");
-        yield put(getUsersError(err));
+        yield put(getUsersRejected(err));
     }
 }
 
@@ -25,11 +25,11 @@ export function* saveUsersSaga(action) {
     try {
         yield call(db.set(action.users));
         yield delay(1000);
-        yield put(saveUsersSuccess());
+        yield put(saveUsersFulfilled());
 
     } catch (err) {
         console.log("save users saga err");
-        yield put(saveUsersErr(err));
+        yield put(saveUsersRejected(err));
     }
 }
 

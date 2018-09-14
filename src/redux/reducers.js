@@ -1,5 +1,5 @@
 import firebase from '../config/firebase';
-import {GET_USERS, SAVE_USERS} from "./constants";
+import {GET_USERS, GET_USERS_FULFILLED, SAVE_USERS, SAVE_USERS_FULFILLED} from "./constants";
 
 export default (state, action) => {
     const db = firebase.database().ref('users');
@@ -7,27 +7,26 @@ export default (state, action) => {
         case SAVE_USERS:
             console.log("save users saga");
 
-/*
             return state;
-*/
 
 
-        /*            db.set(action.users);
-                    console.log("send to DB ", action.users);
-                    return {
-                        ...state,
-                        users: action.users
-                    };*/
-        case "SAVE_USERS_SUCCESS":
+
+            /*            db.set(action.users);
+                        console.log("send to DB ", action.users);
+                        return {
+                            ...state,
+                            users: action.users
+                        };*/
+        case SAVE_USERS_FULFILLED:
             console.log("save users saga succ");
-/*
-            return state;
-*/
 
-            /*return {
-                ...state,
-                users: action.users
-            };*/
+            return state;
+
+
+        /*return {
+            ...state,
+            users: action.users
+        };*/
         case "UPDATE_ACTUAL_DATE":
             return {
                 ...state,
@@ -40,22 +39,14 @@ export default (state, action) => {
             };
         case GET_USERS:
             return state;
-        case "GET_USERS_SUCCESS":
+        case GET_USERS_FULFILLED:
             console.log("get users success", action.users);
             return {
                 ...state,
                 users: action.users
             };
-        case "SET_TODAY":
-            return {
-                ...state,
-                today: action.today,
-                actualDate: action.today,
-            };
-
         default:
             console.log("default action");
             return state;
     }
-
 }

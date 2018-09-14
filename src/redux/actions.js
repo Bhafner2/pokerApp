@@ -1,10 +1,15 @@
-import {GET_USERS, SAVE_USERS} from "./constants";
+import {
+    GET_USERS,
+    GET_USERS_FULFILLED,
+    GET_USERS_REJECTED,
+    SAVE_USERS,
+    SAVE_USERS_FULFILLED,
+    SAVE_USERS_REJECTED
+} from "./constants";
 
-/*
-export const saveUsers = users => ({type: "SAVE_USERS", users});
-*/
-export const getUsersSuccess = users => ({type: "GET_USERS_SUCCESS", users});
-export const getUsersError = users => ({type: "GET_USERS_ERROR", users});
+export const getUsersFulfilled = users => ({type: GET_USERS_FULFILLED, users});
+
+export const getUsersRejected = users => ({type: GET_USERS_REJECTED, users});
 
 export function getUsers() {
     return {
@@ -19,16 +24,16 @@ export function saveUsers(users) {
     };
 }
 
-export function saveUsersSuccess(users) {
+export function saveUsersFulfilled(users) {
     return {
-        type: "SAVE_USERS_SUCCESS",
+        type: SAVE_USERS_FULFILLED,
         users
     };
 }
 
-export function saveUsersErr(users) {
+export function saveUsersRejected(users) {
     return {
-        type: "SAVE_USERS_ERR",
+        type: SAVE_USERS_REJECTED,
         users
     };
 }

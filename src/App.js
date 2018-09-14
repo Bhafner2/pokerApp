@@ -96,12 +96,12 @@ class App extends Component {
         const {date, today} = this.state;
         const users = this.props.asdf.users;
 
-        console.log("users to render ", users);
         if (_.isNil(users) || _.isNil(users[0])) {
             return (
                 <div>loading....</div>
             )
         }
+        console.log("users to render ", users);
 
         return (
             <ListGroup key={"group"}>
