@@ -1,17 +1,33 @@
 import firebase from '../config/firebase';
-import {store} from "./store";
-import {getUsersSuccess} from "./actions";
-import {GET_USERS} from "./constants";
+import {GET_USERS, SAVE_USERS} from "./constants";
 
 export default (state, action) => {
     const db = firebase.database().ref('users');
     switch (action.type) {
-        case "SAVE_USERS":
-            db.update(action.users);
-            return {
+        case SAVE_USERS:
+            console.log("save users saga");
+
+/*
+            return state;
+*/
+
+
+        /*            db.set(action.users);
+                    console.log("send to DB ", action.users);
+                    return {
+                        ...state,
+                        users: action.users
+                    };*/
+        case "SAVE_USERS_SUCCESS":
+            console.log("save users saga succ");
+/*
+            return state;
+*/
+
+            /*return {
                 ...state,
                 users: action.users
-            };
+            };*/
         case "UPDATE_ACTUAL_DATE":
             return {
                 ...state,
@@ -38,24 +54,8 @@ export default (state, action) => {
             };
 
         default:
+            console.log("default action");
             return state;
     }
 
 }
-
-let getUsers = function () {
-    let users = [];
-    const db = firebase.database().ref('users/');
-    db.on('value', (snapshot) => {
-        let items = snapshot.val();
-        for (let item in items) {
-            users.push({
-                name: items[item].name,
-                games: items[item].games
-            });
-            console.log(users);
-            store.dispatch(getUsersSuccess(users))
-        }
-    });
-    return users;
-};

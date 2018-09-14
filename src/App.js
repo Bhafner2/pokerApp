@@ -85,7 +85,7 @@ class App extends Component {
                 error = false;
             } else {
                 setTimeout(() => {
-                    console.log("disconnectet");
+                    console.log("disconnected");
                     error = true;
                 }, 1000);
             }
@@ -97,7 +97,7 @@ class App extends Component {
         const users = this.props.asdf.users;
 
         console.log("users to render ", users);
-        if (_.isNil(users[0])) {
+        if (_.isNil(users) || _.isNil(users[0])) {
             return (
                 <div>loading....</div>
             )
@@ -107,7 +107,7 @@ class App extends Component {
             <ListGroup key={"group"}>
                 {users.map((user) =>
                     <UserList user={user} saved={this.showSaved} date={date} today={today}/>)}
-                {console.log("render Users")}
+                {console.log("render Users: ", users)}
             </ListGroup>
         );
     };
@@ -155,7 +155,7 @@ class App extends Component {
                            bottom: "0",
                            width: "100%"
                        }}>
-                    "No connection to Server!"
+                    No connection to Server!
                 </Alert>
             </div>
         );

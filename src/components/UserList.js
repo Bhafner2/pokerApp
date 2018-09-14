@@ -102,6 +102,8 @@ class UserList extends React.Component {
         const {users} = this.props.asdf;
         const {user} = this.props;
 
+        //TODO check if date vorhanden
+
         for (let i = 0; i < user.games.length; i++) {
             if (this.state.date === user.games[i].date) {
                 user.games[i].buyIn = this.state.buyIn;

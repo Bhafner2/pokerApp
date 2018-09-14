@@ -18,7 +18,7 @@ class AddUser extends React.Component {
         };
 
         this.toggle = this.toggle.bind(this);
-        this.addUserToList = this.addUserToList.bind(this);
+        this.addUser = this.addUser.bind(this);
         this.updateUser = this.updateUser.bind(this);
     }
 
@@ -79,10 +79,9 @@ class AddUser extends React.Component {
         );
     }
 
-    addUserToList() {
-        let users = Object.assign(this.props.asdf.users);
-        console.log("users befor adding ", users);
+    addUser() {
         console.log("users befor adding ", this.props.asdf.users);
+        let users = Object.assign(this.props.asdf.users);
         let user = {
             name: '',
             games: [
@@ -128,11 +127,10 @@ class AddUser extends React.Component {
                     </FormGroup>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={this.addUserToList} disabled={!this.state.usernameOk}>Save</Button>
+                    <Button color="primary" onClick={this.addUser} disabled={!this.state.usernameOk}>Save</Button>
                     <Button color="secondary" onClick={this.toggle}>Cancel</Button>
                 </ModalFooter>
             </Modal>
-            {console.log("username " + this.state.username)}
         </div>;
     }
 }

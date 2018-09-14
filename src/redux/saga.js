@@ -1,10 +1,12 @@
 import firebase from "../config/firebase";
-import { takeLatest, call, put } from 'redux-saga/effects';
-import {getUsersError, getUsersSuccess} from "./actions";
-import {GET_USERS} from "./constants";
-import { delay } from 'redux-saga';
+import {takeLatest, call, put} from 'redux-saga/effects';
+import {getUsersError, getUsersSuccess, saveUsersErr, saveUsersSuccess} from "./actions";
+import {GET_USERS, SAVE_USERS} from "./constants";
+import {delay} from 'redux-saga';
 
 let fechedUsers = [];
+const db = firebase.database().ref('users/');
+
 export function* getUsersSaga(action) {
     console.log("get users saga");
 
@@ -19,9 +21,20 @@ export function* getUsersSaga(action) {
     }
 }
 
+export function* saveUsersSaga(action) {
+    try {
+        yield call(db.set(action.users));
+        yield delay(1000);
+        yield put(saveUsersSuccess());
+
+    } catch (err) {
+        console.log("save users saga err");
+        yield put(saveUsersErr(err));
+    }
+}
+
 function* fetchUsers(action) {
     let users = [];
-    const db = firebase.database().ref('users/');
     db.on('value', (snapshot) => {
         console.log("vor loop");
         let items = snapshot.val();
@@ -35,6 +48,7 @@ function* fetchUsers(action) {
     });
 }
 
-export function* getUsers() {
+export function* usersSaga() {
     yield takeLatest(GET_USERS, getUsersSaga);
+    yield takeLatest(SAVE_USERS, saveUsersSaga);
 }
