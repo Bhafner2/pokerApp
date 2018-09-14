@@ -112,9 +112,28 @@ class App extends Component {
         );
     };
 
+    fillDB() {
+        const db = firebase.database().ref('users/');
+        db.set([
+            {
+                name: 'default',
+                games: [
+                    {
+                        date: '2000-01-01',
+                        buyIn: 0,
+                        won: 0
+                    }]
+            }
+
+        ])
+    }
+
     render() {
         return (
             <div className="App">
+{/*
+                {this.fillDB()}
+*/}
                 <header className="header">
                     <Row>
                         <Col xs="4">
