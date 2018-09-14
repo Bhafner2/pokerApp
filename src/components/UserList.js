@@ -14,6 +14,7 @@ class UserList extends React.Component {
             buyIn: 0,
             won: 0,
             date: props.date,
+            dateOk: true,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -45,7 +46,16 @@ class UserList extends React.Component {
                 this.setState({
                     date: this.props.date
                 }, () => {
-                    this.getActualGame();
+                    if (this.state.date === ''){
+                        this.setState({
+                            dateOk: false,
+                        })
+                    }else{
+                        this.setState({
+                            dateOk: true,
+                        });
+                        this.getActualGame();
+                    }
                 });
             }
         });
@@ -57,7 +67,16 @@ class UserList extends React.Component {
                 date: evt.target.value
             }, () => {
                 console.log("new date " + this.state.date);
+                if (this.state.date === ''){
+                    this.setState({
+                        dateOk: false,
+                    })
+                }else{
+                    this.setState({
+                        dateOk: true,
+                    });
                 this.getActualGame();
+                }
             }
         );
 
@@ -102,8 +121,6 @@ class UserList extends React.Component {
         const {users} = this.props.asdf;
         const {user} = this.props;
 
-        //TODO check if date vorhanden
-
         for (let i = 0; i < user.games.length; i++) {
             if (this.state.date === user.games[i].date) {
                 user.games[i].buyIn = this.state.buyIn;
@@ -127,7 +144,6 @@ class UserList extends React.Component {
         this.toggle();
         this.props.saved();
 
-        //TODO read users an push the game
         store.dispatch(saveUsers(users));
     }
 
@@ -177,7 +193,7 @@ class UserList extends React.Component {
                         </Row>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this.saveGame}>Save</Button>
+                        <Button color="primary" onClick={this.saveGame}  disabled={!this.state.dateOk}>Save</Button>
                         <Button color="secondary" onClick={this.toggle}>Cancel</Button>
                     </ModalFooter>
                 </Modal>

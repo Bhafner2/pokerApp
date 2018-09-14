@@ -112,11 +112,11 @@ class App extends Component {
         );
     };
 
-    fillDB() {
+    dbInit() {
         const db = firebase.database().ref('users/');
         db.set([
             {
-                name: 'default',
+                name: 'init',
                 games: [
                     {
                         date: '2000-01-01',
@@ -132,7 +132,7 @@ class App extends Component {
         return (
             <div className="App">
 {/*
-                {this.fillDB()}
+                {this.dbInit()}
 */}
                 <header className="header">
                     <Row>

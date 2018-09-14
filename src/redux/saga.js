@@ -2,9 +2,8 @@ import firebase from "../config/firebase";
 import {takeLatest, call, put} from 'redux-saga/effects';
 import {getUsersRejected, getUsersFulfilled, saveUsersRejected, saveUsersFulfilled} from "./actions";
 import {GET_USERS, SAVE_USERS} from "./constants";
-import {delay} from 'redux-saga';
+import {store} from '../redux/store'
 
-let fechedUsers = [];
 const db = firebase.database().ref('users/');
 
 export function* getUsersSaga(action) {
@@ -12,9 +11,6 @@ export function* getUsersSaga(action) {
 
     try {
         yield call(fetchUsers);
-        console.log("get users saga succ", fechedUsers);
-        yield delay(1000);
-        yield put(getUsersFulfilled(fechedUsers));
     } catch (err) {
         console.log("get users saga err");
         yield put(getUsersRejected(err));
@@ -24,9 +20,6 @@ export function* getUsersSaga(action) {
 export function* saveUsersSaga(action) {
     try {
         yield call(db.set(action.users));
-        yield delay(1000);
-        yield put(saveUsersFulfilled());
-
     } catch (err) {
         console.log("save users saga err");
         yield put(saveUsersRejected(err));
@@ -44,7 +37,7 @@ function* fetchUsers(action) {
                 games: items[item].games
             });
         }
-        fechedUsers = users;
+        store.dispatch(getUsersFulfilled(users));
     });
 }
 
