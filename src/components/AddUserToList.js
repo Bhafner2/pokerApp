@@ -20,6 +20,7 @@ class AddUser extends React.Component {
         this.toggle = this.toggle.bind(this);
         this.addUser = this.addUser.bind(this);
         this.updateUser = this.updateUser.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
     componentDidMount() {
@@ -79,6 +80,17 @@ class AddUser extends React.Component {
         );
     }
 
+    handleKeyPress(target) {
+        console.log("key pressed");
+        if(target.charCode === 13){
+            console.log("enter pressed");
+            this.addUser()   
+        } else if(target.charCode === 27){
+            console.log("esc pressed");
+            this.toggle()
+        }
+    }
+
     addUser() {
         console.log("users befor adding ", this.props.asdf.users);
         let users = Object.assign(this.props.asdf.users);
@@ -110,7 +122,7 @@ class AddUser extends React.Component {
                 Add User
             </Button>
 
-            <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+            <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} onKeyPress={this.handleKeyPress}>
                 <ModalHeader toggle={this.toggle}>New User</ModalHeader>
                 <ModalBody>
                     <FormGroup>
@@ -121,7 +133,8 @@ class AddUser extends React.Component {
                             placeholder="Username"
                             onChange={this.updateUser}
                             value={this.state.username}
-                            autoFocus={this.state.field}
+                            autoFocus={true}
+                            onKeyPress={this.handleKeyPress}
                         />
                         <FormFeedback invalid>{this.state.errorText}</FormFeedback>
                     </FormGroup>
