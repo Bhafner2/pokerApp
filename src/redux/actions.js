@@ -24,13 +24,6 @@ export function saveUsers(users) {
     };
 }
 
-export function saveUsersFulfilled(users) {
-    return {
-        type: SAVE_USERS_FULFILLED,
-        users
-    };
-}
-
 export function saveUsersRejected(users) {
     return {
         type: SAVE_USERS_REJECTED,

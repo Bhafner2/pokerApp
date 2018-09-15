@@ -5,12 +5,6 @@ export default (state, action) => {
         case SAVE_USERS:
             console.log("save users saga");
             break;
-        case SAVE_USERS_FULFILLED:
-            return {
-                ...state,
-                actualUser: action.user
-            };
-
         case "UPDATE_ACTUAL_DATE":
             return {
                 ...state,

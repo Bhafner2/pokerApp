@@ -165,10 +165,10 @@ class UserList extends React.Component {
 
     handleKeyPress(target) {
         console.log("key pressed");
-        if(target.charCode==13){
+        if(target.charCode === 13){
             console.log("enter pressed");
             this.saveGame()   
-        } else if(target.charCode==27){
+        } else if(target.charCode === 27){
             console.log("esc pressed");
             this.toggle()
         }
