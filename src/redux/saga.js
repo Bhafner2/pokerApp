@@ -27,8 +27,8 @@ export function* saveUsersSaga(action) {
 }
 
 function* fetchUsers(action) {
-    let users = [];
     db.on('value', (snapshot) => {
+        let users = [];
         console.log("vor loop");
         let items = snapshot.val();
         for (let item in items) {
