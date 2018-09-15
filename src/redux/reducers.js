@@ -1,4 +1,4 @@
-import {GET_USERS, GET_USERS_FULFILLED, SAVE_USERS, SAVE_USERS_FULFILLED} from "./constants";
+import {GET_USERS, GET_USERS_FULFILLED, SAVE_USERS} from "./constants";
 
 export default (state, action) => {
     switch (action.type) {

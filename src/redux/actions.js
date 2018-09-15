@@ -3,7 +3,6 @@ import {
     GET_USERS_FULFILLED,
     GET_USERS_REJECTED,
     SAVE_USERS,
-    SAVE_USERS_FULFILLED,
     SAVE_USERS_REJECTED
 } from "./constants";
 

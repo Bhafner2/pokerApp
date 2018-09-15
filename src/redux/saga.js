@@ -1,6 +1,6 @@
 import firebase from "../config/firebase";
 import {takeLatest, call, put} from 'redux-saga/effects';
-import {getUsersRejected, getUsersFulfilled, saveUsersRejected, saveUsersFulfilled} from "./actions";
+import {getUsersRejected, getUsersFulfilled, saveUsersRejected} from "./actions";
 import {GET_USERS, SAVE_USERS} from "./constants";
 import {store} from '../redux/store'
 
