@@ -4,7 +4,7 @@ import 'react-infinite-calendar/styles.css';
 import { store } from "../redux/store";
 import {saveUsers} from "../redux/actions";
 import {connect} from "react-redux";
-
+import * as _ from 'lodash';
 
 class UserList extends React.Component {
     constructor(props) {
@@ -25,6 +25,7 @@ class UserList extends React.Component {
         this.updateBuyIn = this.updateBuyIn.bind(this);
         this.updateDate = this.updateDate.bind(this);
         this.isToday = this.isToday.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
     isToday() {
@@ -105,26 +106,43 @@ class UserList extends React.Component {
     }
 
     updateBuyIn(evt) {
-        this.setState({
-            buyIn: parseInt(evt.target.value, 10)
-        });
+        if(evt.target.value === '' || isNaN(evt.target.value)){
+            this.setState({
+                buyIn: 0
+            });
+        } else {
+            this.setState({
+                buyIn: _.parseInt(evt.target.value, 10)
+            });
+        }
     }
+    
 
     updateWon(evt) {
-        this.setState({
-            won: parseInt(evt.target.value, 10)
-        });
+        if(evt.target.value === '' || isNaN(evt.target.value)){
+            this.setState({
+                won: 0
+            });
+        } else {
+            this.setState({
+                won: _.parseInt(evt.target.value, 10)
+            });
+        }
     }
 
     saveGame() {
         let found = false;
         const {users} = this.props.asdf;
         const {user} = this.props;
+        this.toggle();
 
         for (let i = 0; i < user.games.length; i++) {
             if (this.state.date === user.games[i].date) {
-                user.games[i].buyIn = this.state.buyIn;
-                user.games[i].won = this.state.won;
+                if( user.games[i].buyIn !== this.state.buyIn || user.games[i].won !== this.state.won ) {
+                    user.games[i].buyIn = this.state.buyIn;
+                    user.games[i].won = this.state.won;
+                    store.dispatch(saveUsers(users));
+                }
                 found = true;
                 console.log("game successfully updated " + user.name + ", date: " + this.state.date + " buyIn " + user.games[i].buyIn + " won " + user.games[i].won);
             }
@@ -140,11 +158,20 @@ class UserList extends React.Component {
             game.won = this.state.won;
             user.games.push(game);
             console.log("game successfully created " + user.name + ", date: " + this.state.date + " buyIn " + game.buyIn + " won " + game.won);
+            store.dispatch(saveUsers(users));
         }
-        this.toggle();
         this.props.saved();
+    }
 
-        store.dispatch(saveUsers(users));
+    handleKeyPress(target) {
+        console.log("key pressed");
+        if(target.charCode==13){
+            console.log("enter pressed");
+            this.saveGame()   
+        } else if(target.charCode==27){
+            console.log("esc pressed");
+            this.toggle()
+        }
     }
 
     render() {
@@ -155,7 +182,7 @@ class UserList extends React.Component {
                         <b>{user.name}</b>
                     </div>
                 </ListGroupItem>
-                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} onKeyPress={this.handleKeyPress}>
                     <ModalHeader toggle={this.toggle}>{user.name}</ModalHeader>
                     <ModalBody>
                         <Row>
@@ -172,13 +199,14 @@ class UserList extends React.Component {
                         </Row>
                         <Row>
                             <Col xs="4">
-                                <div>BuyIn</div>
+                                <div>BuyIn</div>    
                             </Col>
                             <Col xs="8">
-                                <Input autoFocus={true}
+                                <Input autoFocus="true"
                                        type="number" name="buyIn" id="buyIn"
                                        onChange={this.updateBuyIn}
-                                       value={this.state.buyIn}/>
+                                       value={this.state.buyIn}
+                                       />
                             </Col>
                         </Row>
                         <Row>
@@ -188,12 +216,13 @@ class UserList extends React.Component {
                             <Col xs="8">
                                 <Input type="number" name="won" id="won"
                                        onChange={this.updateWon}
-                                       value={this.state.won}/>
+                                       value={this.state.won}
+                                       />
                             </Col>
                         </Row>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this.saveGame}  disabled={!this.state.dateOk}>Save</Button>
+                        <Button color="primary" onClick={this.saveGame} disabled={!this.state.dateOk}>Save</Button>
                         <Button color="secondary" onClick={this.toggle}>Cancel</Button>
                     </ModalFooter>
                 </Modal>

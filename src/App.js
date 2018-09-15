@@ -80,14 +80,16 @@ class App extends Component {
             if (snap.val() === true) {
                 if (error) {
                     store.dispatch(getUsers());
+                    console.log("connected");
                 }
-                console.log("connected");
                 error = false;
             } else {
                 setTimeout(() => {
+                    if (error){
                     console.log("disconnected");
+                    }
                     error = true;
-                }, 1000);
+                }, 100);
             }
         });
     }

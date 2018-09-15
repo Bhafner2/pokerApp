@@ -25,10 +25,10 @@ export default (state, action) => {
             return state;
         case GET_USERS_FULFILLED:
             console.log("get users success", action.users);
-            return {
-                ...state,
-                users: action.users
-            };
+            return ({
+                        ...state,
+                        users: action.users
+                    });
         default:
             console.log("default action");
             return state;
