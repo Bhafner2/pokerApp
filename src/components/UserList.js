@@ -6,6 +6,8 @@ import {saveUsers} from "../redux/actions";
 import {connect} from "react-redux";
 import * as _ from 'lodash';
 import Statistic from "./Statistic";
+import money from '../img/dollar-sign-solid.svg';
+
 
 class UserList extends React.Component {
     constructor(props) {
@@ -178,13 +180,22 @@ class UserList extends React.Component {
         return (<div>
                 <ListGroupItem key={this.props.key}>
                     <Row>
-                        <Col xs="2">
+                        <Col xs="4">
                             <Statistic user={user} today={today}/>
                         </Col>
-                        <Col xs="10">
+
+                        <Col xs="4">
                             <div onClick={this.toggle}>
                                 <b>{user.name}</b>
                             </div>
+                        </Col>
+                        <Col xs="4">
+                            <img className="money"
+                                 src={money}
+                                 alt={"money"}
+                                 onClick={this.toggle}
+                                 style={{height: "25px"}}
+                            />
                         </Col>
                     </Row>
                 </ListGroupItem>

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import {Alert, Col, Input, ListGroup, ListGroupItem, Row} from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
-import logo from './Poker.png';
+import logo from './img/Poker.png';
 import AddUser from "./components/AddUserToList";
 import {getUsers} from "./redux/actions";
 import UserList from "./components/UserList";

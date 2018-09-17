@@ -11,7 +11,7 @@ import {
     Row,
     Table
 } from "reactstrap";
-import chart from '../chart-bar-regular.svg';
+import chart from '../img/chart-line-solid.svg';
 import {connect} from "react-redux";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
@@ -242,7 +242,7 @@ class GeneralStatistic extends React.Component {
     render() {
         const {users} = this.props;
         return <div>
-            <img className="chart" src={chart} alt={"chart"} onClick={this.toggle}/>
+            <img className="chart" src={chart} alt={"chart"} onClick={this.toggle} style={{height: "25px"}}/>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                    onKeyPress={this.handleKeyPress}>

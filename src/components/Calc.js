@@ -13,7 +13,7 @@ import {
 import 'react-infinite-calendar/styles.css';
 import {connect} from "react-redux";
 import * as _ from 'lodash';
-import calc from '../calculator-solid.svg';
+import calc from '../img/calculator-solid.svg';
 
 
 class Calc extends React.Component {
@@ -181,7 +181,7 @@ class Calc extends React.Component {
 
     render() {
         return (<div>
-                <img className="calc" src={calc} alt={"calc"} onClick={this.toggle}/>
+                <img className="calc" src={calc} alt={"calc"} onClick={this.toggle} style={{height: "25px"}}/>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                        onKeyPress={this.handleKeyPress}>
                     <ModalHeader toggle={this.toggle}>Calculator</ModalHeader>

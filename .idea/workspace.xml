@@ -2,13 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9b843d04-d234-4560-a5d4-e527747186df" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/calculator-solid.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Calc.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/chart-line-solid.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/dollar-sign-solid.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.firebase/hosting.YnVpbGQ.cache" beforeDir="false" afterPath="$PROJECT_DIR$/.firebase/hosting.YnVpbGQ.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Poker.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/img/Poker.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/calculator-solid.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/img/calculator-solid.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chart-bar-regular.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/img/chart-bar-regular.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Calc.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Calc.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/GeneralStatistic.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/GeneralStatistic.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Statistic.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Statistic.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/UserList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserList.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -25,8 +30,8 @@
       <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="51" column="48" selection-start-line="51" selection-start-column="48" selection-end-line="51" selection-end-column="48" />
+            <state relative-caret-position="187">
+              <caret line="152" column="38" selection-start-line="152" selection-start-column="38" selection-end-line="152" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -34,17 +39,22 @@
       <file leaf-file-name="Calc.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Calc.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="347">
-              <caret line="183" column="18" selection-start-line="183" selection-end-line="184" />
+            <state relative-caret-position="194">
+              <caret line="183" column="108" selection-start-line="183" selection-start-column="108" selection-end-line="183" selection-end-column="108" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserList.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="chart-line-solid.svg" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/img/chart-line-solid.svg">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file leaf-file-name="UserList.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/UserList.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
-              <caret line="182" column="30" selection-start-line="182" selection-start-column="30" selection-end-line="182" selection-end-column="30" />
+            <state relative-caret-position="245">
+              <caret line="191" column="34" selection-start-line="191" selection-start-column="34" selection-end-line="191" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -52,17 +62,17 @@
       <file leaf-file-name="Statistic.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Statistic.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="123">
-              <caret line="241" column="14" selection-end-line="328" />
+            <state relative-caret-position="211">
+              <caret line="244" column="107" selection-start-line="244" selection-start-column="107" selection-end-line="244" selection-end-column="107" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GeneralStatistic.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GeneralStatistic.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="87" column="22" lean-forward="true" selection-start-line="87" selection-start-column="22" selection-end-line="87" selection-end-column="22" />
+            <state relative-caret-position="211">
+              <caret line="244" column="107" selection-start-line="244" selection-start-column="107" selection-end-line="244" selection-end-column="107" />
             </state>
           </provider>
         </entry>
@@ -175,13 +185,13 @@
         <option value="$PROJECT_DIR$/src/redux/store.js" />
         <option value="$PROJECT_DIR$/src/components/AddUserToList.js" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/src/components/UserList.js" />
         <option value="$PROJECT_DIR$/src/redux/saga.js" />
         <option value="$PROJECT_DIR$/src/calculator-solid.svg" />
+        <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/components/Statistic.js" />
         <option value="$PROJECT_DIR$/src/components/Calc.js" />
-        <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/components/GeneralStatistic.js" />
+        <option value="$PROJECT_DIR$/src/components/UserList.js" />
       </list>
     </option>
   </component>
@@ -244,6 +254,12 @@
               <item name="poker-app" type="b2602c69:ProjectViewProjectNode" />
               <item name="poker-app" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="img" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="poker-app" type="b2602c69:ProjectViewProjectNode" />
+              <item name="poker-app" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="redux" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -264,11 +280,13 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src\img" />
       <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src\redux" />
       <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src" />
       <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\public" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src\img" />
       <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src" />
       <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src\components" />
     </key>
@@ -449,7 +467,7 @@
       <workItem from="1536743945916" duration="30336000" />
       <workItem from="1536843319839" duration="1334000" />
       <workItem from="1536851870606" duration="7773000" />
-      <workItem from="1537172876141" duration="25994000" />
+      <workItem from="1537172876141" duration="27347000" />
     </task>
     <task id="LOCAL-00001" summary="firebase connection">
       <created>1536591132576</created>
@@ -612,11 +630,18 @@
       <option name="project" value="LOCAL" />
       <updated>1537195677918</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="with clac">
+      <created>1537203322383</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1537203322383</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="162387000" />
+    <option name="totallyTimeSpent" value="163740000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -639,9 +664,9 @@
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="bottom" id="Run" order="4" weight="0.32906404" />
       <window_info id="npm" order="5" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.32906404" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.32906404" />
       <window_info anchor="bottom" id="TypeScript" order="13" />
-      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.25922024" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.25922024" />
       <window_info id="Project Explorer" order="0" />
       <window_info id="Job Explorer" order="1" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
@@ -685,7 +710,8 @@
     <MESSAGE value="statisics with higtcharts" />
     <MESSAGE value="Users statisics" />
     <MESSAGE value="Users statisics final" />
-    <option name="LAST_COMMIT_MESSAGE" value="Users statisics final" />
+    <MESSAGE value="with clac" />
+    <option name="LAST_COMMIT_MESSAGE" value="with clac" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -693,20 +719,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="15912" column="17" selection-start-line="15912" selection-start-column="17" selection-end-line="15912" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/mdbreact/dist/mdbreact.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="65" selection-start-column="65" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/404.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="265">
@@ -880,7 +892,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/chart-bar-regular.svg">
+    <entry file="file://$PROJECT_DIR$/src/img/chart-bar-regular.svg">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/@types/react/index.d.ts">
@@ -939,7 +951,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/calculator-solid.svg">
+    <entry file="file://$PROJECT_DIR$/src/img/calculator-solid.svg">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/AddUserToList.js">
@@ -949,38 +961,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/UserList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="182" column="30" selection-start-line="182" selection-start-column="30" selection-end-line="182" selection-end-column="30" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/src/img/chart-line-solid.svg">
+      <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Calc.js">
+    <entry file="file://$PROJECT_DIR$/src/img/dollar-sign-solid.svg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="347">
-          <caret line="183" column="18" selection-start-line="183" selection-end-line="184" />
+        <state relative-caret-position="187">
+          <caret line="152" column="38" selection-start-line="152" selection-start-column="38" selection-end-line="152" selection-end-column="38" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Statistic.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="241" column="14" selection-end-line="328" />
+        <state relative-caret-position="211">
+          <caret line="244" column="107" selection-start-line="244" selection-start-column="107" selection-end-line="244" selection-end-column="107" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.js">
+    <entry file="file://$PROJECT_DIR$/src/components/Calc.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="51" column="48" selection-start-line="51" selection-start-column="48" selection-end-line="51" selection-end-column="48" />
+        <state relative-caret-position="194">
+          <caret line="183" column="108" selection-start-line="183" selection-start-column="108" selection-end-line="183" selection-end-column="108" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="87" column="22" lean-forward="true" selection-start-line="87" selection-start-column="22" selection-end-line="87" selection-end-column="22" />
+        <state relative-caret-position="211">
+          <caret line="244" column="107" selection-start-line="244" selection-start-column="107" selection-end-line="244" selection-end-column="107" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/UserList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="191" column="34" selection-start-line="191" selection-start-column="34" selection-end-line="191" selection-end-column="34" />
         </state>
       </provider>
     </entry>
