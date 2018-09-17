@@ -12,6 +12,7 @@ import {connect} from 'react-redux'
 import {store} from './redux/store'
 import firebase from "./config/firebase";
 import GeneralStatistic from "./components/GeneralStatistic";
+import Calc from "./components/Calc";
 
 let error = false;
 
@@ -48,7 +49,7 @@ class App extends Component {
         if (this.state.date !== this.state.today) {
             return {backgroundColor: 'LightSkyBlue'}
         } else {
-            return {backgroundColor: 'white'}
+            return {backgroundColor: 'whitesmoke'}
         }
     }
 
@@ -114,21 +115,21 @@ class App extends Component {
         );
     };
 
-   /* dbInit() {
-        const db = firebase.database().ref('users/');
-        db.set([
-            {
-                name: 'init',
-                games: [
-                    {
-                        date: '2000-01-01',
-                        buyIn: 0,
-                        won: 0
-                    }]
-            }
+    /* dbInit() {
+         const db = firebase.database().ref('users/');
+         db.set([
+             {
+                 name: 'init',
+                 games: [
+                     {
+                         date: '2000-01-01',
+                         buyIn: 0,
+                         won: 0
+                     }]
+             }
 
-        ])
-    }*/
+         ])
+     }*/
 
     render() {
         return (
@@ -147,17 +148,20 @@ class App extends Component {
                     </Row>
                 </header>
                 <ListGroup>
-                    <ListGroupItem key="global">
+                    <ListGroupItem key="global" style={{backgroundColor: "whitesmoke"}}>
                         <Row>
                             <Col xs="2">
                                 <GeneralStatistic users={this.props.data.users} today={this.state.today}/>
                             </Col>
-                            <Col xs="10">
-
+                            <Col xs="2">
+                                <Calc/>
+                            </Col>
+                            <Col xs="8">
                                 <Input type="date" name="date" id="date"
                                        value={this.state.date}
                                        onChange={this.updateDate}
                                        style={this.isToday()}
+
                                 />
                             </Col>
                         </Row>

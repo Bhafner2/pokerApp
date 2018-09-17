@@ -120,7 +120,7 @@ class Statistic extends React.Component {
     static chart(buyIn, won, total, showDots) {
         options = {
             chart: {
-                height: 200,
+                height: 190,
                 type: 'spline',
             },
             title: {
@@ -131,6 +131,13 @@ class Statistic extends React.Component {
                     text: ''
                 }
             },
+            xAxis: {},
+            legend: {
+                itemStyle: {
+                    fontSize: '16px',
+                    font: '12pt Trebuchet MS, Verdana, sans-serif',
+                },
+            },
             series: [{
                 name: 'Buy In',
                 data: buyIn,
@@ -139,6 +146,11 @@ class Statistic extends React.Component {
                 marker: {
                     enabled: showDots,
                 },
+                labels: {
+                    style: {
+                        fontSize: '50px'
+                    }
+                }
             }, {
                 name: 'Won',
                 data: won,
@@ -236,24 +248,19 @@ class Statistic extends React.Component {
                    onKeyPress={this.handleKeyPress}>
                 <ModalHeader toggle={this.toggle}>Statistic for {user.name}</ModalHeader>
                 <ModalBody>
+                    <Row>
+                        <Col xs={12}><b>Filter</b></Col>
+                    </Row>
                     <FormGroup>
                         <Row>
-                            <Col xs="2">
-                                From
-                            </Col>
-                            <Col xs="10">
+                            <Col xs="6">
                                 <Input type="date" name="fromDate" id="fromDate"
                                        onChange={this.updateFormDate}
                                        value={this.state.fromDate}
                                        style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
                                 />
                             </Col>
-                        </Row>
-                        <Row>
-                            <Col xs="2">
-                                To
-                            </Col>
-                            <Col xs="10">
+                            <Col xs="6">
                                 <Input type="date" name="toDate" id="toDate"
                                        onChange={this.updateToDate}
                                        value={this.state.toDate}
