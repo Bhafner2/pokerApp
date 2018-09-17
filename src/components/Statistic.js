@@ -42,12 +42,14 @@ class Statistic extends React.Component {
             fromDate: '',
             toDate: '',
             dateOk: true,
+            dataReady: false,
         };
 
         this.toggle = this.toggle.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.updateFormDate = this.updateFormDate.bind(this);
         this.updateToDate = this.updateToDate.bind(this);
+        this.init = this.init.bind(this);
     }
 
     toggle() {
@@ -55,8 +57,12 @@ class Statistic extends React.Component {
             modal: !this.state.modal,
             toDate: this.props.today,
             fromDate: '2018-01-01',
+        }, () => {
+            this.setState({
+                dataReady: false,
+            });
+            this.getData()
         });
-        this.getData()
     }
 
 
@@ -72,11 +78,11 @@ class Statistic extends React.Component {
     }
 
     getData() {
-        Statistic.init();
+        this.init();
         const {user} = this.props;
         if (this.state.dateOk) {
             for (let i = 0; i < user.games.length; i++) {
-                if (new Date(this.state.fromDate) < new Date(user.games[i].date) && new Date(this.state.toDate) > new Date(user.games[i].date)) {
+                if (new Date(this.state.fromDate) <= new Date(user.games[i].date) && new Date(this.state.toDate) >= new Date(user.games[i].date)) {
                     if (user.games[i].buyIn > 0) {
                         games.push(user.games[i]);
                         sumWon = sumWon + user.games[i].won;
@@ -88,28 +94,33 @@ class Statistic extends React.Component {
                     }
                 }
             }
-            sumTotal = sumWon - sumBuyIn;
-            maxBuyIn = _.min(buyIn) * -1;
-            maxWon = _.max(won);
-            maxTotal = _.max(total);
             if (games.length > 0) {
+                sumTotal = sumWon - sumBuyIn;
+                maxBuyIn = _.min(buyIn) * -1;
+                maxWon = _.max(won);
+                maxTotal = _.max(total);
                 avgTotal = Math.round(sumTotal / games.length);
                 avgBuyIn = Math.round(sumBuyIn / games.length);
                 avgWon = Math.round(sumWon / games.length);
             }
-            if (buyIn.length > 1) {
-                Statistic.chart(buyIn, won, total, false);
-            } else {
-                Statistic.chart(buyIn, won, total, true);
-            }
-            console.log("games for stat ", games);
         }
+        console.log("games for stat ", games);
+
+        if (buyIn.length > 1) {
+            Statistic.chart(buyIn, won, total, false);
+        } else {
+            Statistic.chart(buyIn, won, total, true);
+        }
+
+        this.setState({
+            dataReady: true,
+        })
     }
 
     static chart(buyIn, won, total, showDots) {
         options = {
             chart: {
-                height: 250,
+                height: 200,
                 type: 'spline',
             },
             title: {
@@ -149,7 +160,7 @@ class Statistic extends React.Component {
         };
     }
 
-    static init() {
+    init() {
         games = [];
         sumWon = 0;
         sumBuyIn = 0;
@@ -164,6 +175,9 @@ class Statistic extends React.Component {
         won = [];
         total = [];
         Statistic.chart([], [], [], true);
+        this.setState({
+            dataReady: false,
+        })
     }
 
     updateFormDate(evt) {
@@ -173,13 +187,18 @@ class Statistic extends React.Component {
                 if (this.state.fromDate === '' || new Date(this.state.toDate) < new Date(this.state.fromDate)) {
                     this.setState({
                         dateOk: false,
-                    })
+                        dataReady: false,
+                    }, () => {
+                        this.getData();
+                    });
                 } else {
                     this.setState({
                         dateOk: true,
+                        dataReady: false,
+                    }, () => {
+                        this.getData();
                     });
                 }
-                this.getData();
             }
         );
     }
@@ -191,13 +210,18 @@ class Statistic extends React.Component {
                 if (this.state.toDate === '' || new Date(this.state.toDate) < new Date(this.state.fromDate)) {
                     this.setState({
                         dateOk: false,
-                    })
+                        dataReady: false,
+                    }, () => {
+                        this.getData();
+                    });
                 } else {
                     this.setState({
                         dateOk: true,
+                        dataReady: false,
+                    }, () => {
+                        this.getData();
                     });
                 }
-                this.getData();
             }
         );
     }
@@ -270,6 +294,7 @@ class Statistic extends React.Component {
                     </Table>
                     <div>
                         <HighchartsReact
+                            style={{visibility: this.state.dataReady ? 'visible' : 'hidden'}}
                             highcharts={Highcharts}
                             options={options}
                         />
