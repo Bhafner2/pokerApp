@@ -43,7 +43,7 @@ class AddUser extends React.Component {
     }
 
     updateUser(evt) {
-        const {users} = this.props.asdf;
+        const {users} = this.props.data;
         this.setState({
                 username: evt.target.value,
                 onOpen: false,
@@ -92,8 +92,8 @@ class AddUser extends React.Component {
     }
 
     addUser() {
-        console.log("users befor adding ", this.props.asdf.users);
-        let users = Object.assign(this.props.asdf.users);
+        console.log("users befor adding ", this.props.data.users);
+        let users = Object.assign(this.props.data.users);
         let user = {
             name: '',
             games: [
@@ -151,7 +151,7 @@ class AddUser extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        asdf: state
+        data: state
     }
 };
 

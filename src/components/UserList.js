@@ -1,10 +1,11 @@
 import React from 'react';
 import {Button, Col, Input, ListGroupItem, Modal, ModalBody, ModalFooter, ModalHeader, Row} from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
-import { store } from "../redux/store";
+import {store} from "../redux/store";
 import {saveUsers} from "../redux/actions";
 import {connect} from "react-redux";
 import * as _ from 'lodash';
+import Statistic from "./Statistic";
 
 class UserList extends React.Component {
     constructor(props) {
@@ -47,11 +48,11 @@ class UserList extends React.Component {
                 this.setState({
                     date: this.props.date
                 }, () => {
-                    if (this.state.date === ''){
+                    if (this.state.date === '') {
                         this.setState({
                             dateOk: false,
                         })
-                    }else{
+                    } else {
                         this.setState({
                             dateOk: true,
                         });
@@ -68,20 +69,18 @@ class UserList extends React.Component {
                 date: evt.target.value
             }, () => {
                 console.log("new date " + this.state.date);
-                if (this.state.date === ''){
+                if (this.state.date === '') {
                     this.setState({
                         dateOk: false,
                     })
-                }else{
+                } else {
                     this.setState({
                         dateOk: true,
                     });
-                this.getActualGame();
+                    this.getActualGame();
                 }
             }
         );
-
-
     }
 
     getActualGame() {
@@ -106,7 +105,7 @@ class UserList extends React.Component {
     }
 
     updateBuyIn(evt) {
-        if(evt.target.value === '' || isNaN(evt.target.value)){
+        if (evt.target.value === '' || isNaN(evt.target.value)) {
             this.setState({
                 buyIn: 0
             });
@@ -116,10 +115,10 @@ class UserList extends React.Component {
             });
         }
     }
-    
+
 
     updateWon(evt) {
-        if(evt.target.value === '' || isNaN(evt.target.value)){
+        if (evt.target.value === '' || isNaN(evt.target.value)) {
             this.setState({
                 won: 0
             });
@@ -132,13 +131,13 @@ class UserList extends React.Component {
 
     saveGame() {
         let found = false;
-        const {users} = this.props.asdf;
+        const {users} = this.props.data;
         const {user} = this.props;
         this.toggle();
 
         for (let i = 0; i < user.games.length; i++) {
             if (this.state.date === user.games[i].date) {
-                if( user.games[i].buyIn !== this.state.buyIn || user.games[i].won !== this.state.won ) {
+                if (user.games[i].buyIn !== this.state.buyIn || user.games[i].won !== this.state.won) {
                     user.games[i].buyIn = this.state.buyIn;
                     user.games[i].won = this.state.won;
                     store.dispatch(saveUsers(users));
@@ -165,24 +164,32 @@ class UserList extends React.Component {
 
     handleKeyPress(target) {
         console.log("key pressed");
-        if(target.charCode === 13){
+        if (target.charCode === 13) {
             console.log("enter pressed");
-            this.saveGame()   
-        } else if(target.charCode === 27){
+            this.saveGame()
+        } else if (target.charCode === 27) {
             console.log("esc pressed");
             this.toggle()
         }
     }
 
     render() {
-        const {user} = this.props;
+        const {user, today} = this.props;
         return (<div>
-                <ListGroupItem key={user.name} onClick={this.toggle}>
-                    <div>
-                        <b>{user.name}</b>
-                    </div>
+                <ListGroupItem key={this.props.key}>
+                    <Row>
+                        <Col xs="2">
+                            <Statistic user={user} today={today}/>
+                        </Col>
+                        <Col xs="10">
+                            <div onClick={this.toggle}>
+                                <b>{user.name}</b>
+                            </div>
+                        </Col>
+                    </Row>
                 </ListGroupItem>
-                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} onKeyPress={this.handleKeyPress}>
+                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
+                       onKeyPress={this.handleKeyPress}>
                     <ModalHeader toggle={this.toggle}>{user.name}</ModalHeader>
                     <ModalBody>
                         <Row>
@@ -193,20 +200,20 @@ class UserList extends React.Component {
                                 <Input type="date" name="date" id="date"
                                        onChange={this.updateDate}
                                        value={this.state.date}
-                                        style={this.isToday()}
+                                       style={this.isToday()}
                                 />
                             </Col>
                         </Row>
                         <Row>
                             <Col xs="4">
-                                <div>BuyIn</div>    
+                                <div>Buy In</div>
                             </Col>
                             <Col xs="8">
                                 <Input autoFocus="true"
                                        type="number" name="buyIn" id="buyIn"
                                        onChange={this.updateBuyIn}
                                        value={this.state.buyIn}
-                                       />
+                                />
                             </Col>
                         </Row>
                         <Row>
@@ -217,7 +224,7 @@ class UserList extends React.Component {
                                 <Input type="number" name="won" id="won"
                                        onChange={this.updateWon}
                                        value={this.state.won}
-                                       />
+                                />
                             </Col>
                         </Row>
                     </ModalBody>
@@ -233,7 +240,7 @@ class UserList extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        asdf: state
+        data: state
     }
 };
 

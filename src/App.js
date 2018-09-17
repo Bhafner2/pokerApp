@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import './App.css';
-import {Alert, Col, Input, ListGroup, Row} from 'reactstrap';
+import {Alert, Col, Input, ListGroup, ListGroupItem, Row} from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
 import logo from './Poker.png';
+import chart from './chart-bar-regular.svg';
 import AddUser from "./components/AddUserToList";
 import {getUsers} from "./redux/actions";
 import UserList from "./components/UserList";
@@ -13,7 +14,6 @@ import {store} from './redux/store'
 import firebase from "./config/firebase";
 
 let error = false;
-
 
 class App extends Component {
     constructor(props) {
@@ -85,8 +85,8 @@ class App extends Component {
                 error = false;
             } else {
                 setTimeout(() => {
-                    if (error){
-                    console.log("disconnected");
+                    if (error) {
+                        console.log("disconnected");
                     }
                     error = true;
                 }, 100);
@@ -96,7 +96,7 @@ class App extends Component {
 
     renderUsers() {
         const {date, today} = this.state;
-        const users = this.props.asdf.users;
+        const users = this.props.data.users;
 
         if (_.isNil(users) || _.isNil(users[0])) {
             return (
@@ -106,11 +106,11 @@ class App extends Component {
         console.log("users to render ", users);
 
         return (
-            <ListGroup key={"group"}>
-                {users.map((user) =>
-                    <UserList user={user} saved={this.showSaved} date={date} today={today}/>)}
+            <div>
+                {users.map((user, i) =>
+                    <UserList user={user} key={i} saved={this.showSaved} date={date} today={today}/>)}
                 {console.log("render Users: ", users)}
-            </ListGroup>
+            </div>
         );
     };
 
@@ -133,7 +133,7 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-{/*
+                {/*
                 {this.dbInit()}
 */}
                 <header className="header">
@@ -146,15 +146,27 @@ class App extends Component {
                         </Col>
                     </Row>
                 </header>
-                <Input type="date" name="date" id="date"
-                       value={this.state.date}
-                       onChange={this.updateDate}
-                       style={this.isToday()}
-                />
-                <div>
+                <ListGroup>
+                    <ListGroupItem key="global">
+                        <Row>
+                            <Col xs="2">
+                                <img className="chart" src={chart} alt={"chart"}/>
+                            </Col>
+                            <Col xs="10">
+
+                                <Input type="date" name="date" id="date"
+                                       value={this.state.date}
+                                       onChange={this.updateDate}
+                                       style={this.isToday()}
+                                />
+                            </Col>
+                        </Row>
+                    </ListGroupItem>
+
                     {this.connectionCheck()}
                     {this.renderUsers()}
-                </div>
+                </ListGroup>
+
                 {error ? <div/> : <AddUser saved={this.showSaved}/>}
 
                 <Alert color={this.state.alertSuccess ? "success" : "danger"}
@@ -185,7 +197,7 @@ class App extends Component {
 
 const mapStateToProps = state => {
     return {
-        asdf: state
+        data: state
     }
 };
 
