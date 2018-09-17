@@ -15,7 +15,6 @@ import chart from '../chart-bar-regular.svg';
 import {connect} from "react-redux";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
-import * as _ from 'lodash';
 
 let options;
 
@@ -26,15 +25,15 @@ let sumTotal = 0;
 let avgWon = 0;
 let avgBuyIn = 0;
 let avgTotal = 0;
-let maxBuyIn = 0;
 let maxWon = 0;
+let maxBuyIn = 0;
 let maxTotal = 0;
 let buyIn = [];
 let won = [];
 let total = [];
 
 
-class Statistic extends React.Component {
+class GeneralStatistic extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -50,13 +49,18 @@ class Statistic extends React.Component {
         this.updateToDate = this.updateToDate.bind(this);
     }
 
+    componentDidMount(){
+        this.getData();
+    }
+
     toggle() {
         this.setState({
             modal: !this.state.modal,
             toDate: this.props.today,
             fromDate: '2018-01-01',
+        }, () => {
+            this.getData()
         });
-        this.getData()
     }
 
 
@@ -72,44 +76,52 @@ class Statistic extends React.Component {
     }
 
     getData() {
-        Statistic.init();
-        const {user} = this.props;
-        if (this.state.dateOk) {
-            for (let i = 0; i < user.games.length; i++) {
-                if (new Date(this.state.fromDate) < new Date(user.games[i].date) && new Date(this.state.toDate) > new Date(user.games[i].date)) {
-                    if (user.games[i].buyIn > 0) {
-                        games.push(user.games[i]);
-                        sumWon = sumWon + user.games[i].won;
-                        sumBuyIn = sumBuyIn + user.games[i].buyIn;
+        GeneralStatistic.init();
+        const {users} = this.props;
+       /* if (this.state.dateOk) {
+            for (let i = 0; i < users.games.length; i++) {
+                if (new Date(this.state.fromDate) < new Date(users.games[i].date) && new Date(this.state.toDate) > new Date(users.games[i].date)) {
+                    if (users.games[i].buyIn > 0) {
+                        games.push(users.games[i]);
+                        sumWon = sumWon + users.games[i].won;
+                        sumBuyIn = sumBuyIn + users.games[i].buyIn;
 
-                        buyIn.push(user.games[i].buyIn * -1);
-                        won.push(user.games[i].won);
-                        total.push(user.games[i].won - user.games[i].buyIn);
+                        buyIn.push(users.games[i].buyIn * -1);
+                        won.push(users.games[i].won);
+                        total.push(users.games[i].won - users.games[i].buyIn);
+
+                        if (users.games[i].buyIn > maxBuyIn) {
+                            maxBuyIn = users.games[i].buyIn;
+                        }
+                        if (users.games[i].won > maxWon) {
+                            maxWon = users.games[i].won;
+                        }
+                        if (users.games[i].won - users.games[i].buyIn > maxTotal) {
+                            maxTotal = users.games[i].won - users.games[i].buyIn;
+                        }
                     }
                 }
             }
             sumTotal = sumWon - sumBuyIn;
-            maxBuyIn = _.min(buyIn) * -1;
-            maxWon = _.max(won);
-            maxTotal = _.max(total);
+
             if (games.length > 0) {
                 avgTotal = Math.round(sumTotal / games.length);
                 avgBuyIn = Math.round(sumBuyIn / games.length);
                 avgWon = Math.round(sumWon / games.length);
             }
             if (buyIn.length > 1) {
-                Statistic.chart(buyIn, won, total, false);
+                GeneralStatistic.chart(buyIn, won, total, false);
             } else {
-                Statistic.chart(buyIn, won, total, true);
+                GeneralStatistic.chart(buyIn, won, total, true);
             }
             console.log("games for stat ", games);
-        }
+        }*/
     }
 
     static chart(buyIn, won, total, showDots) {
         options = {
             chart: {
-                height: 250,
+                height: 220,
                 type: 'spline',
             },
             title: {
@@ -157,13 +169,13 @@ class Statistic extends React.Component {
         avgWon = 0;
         avgBuyIn = 0;
         avgTotal = 0;
-        maxBuyIn = 0;
         maxWon = 0;
+        maxBuyIn = 0;
         maxTotal = 0;
         buyIn = [];
         won = [];
         total = [];
-        Statistic.chart([], [], [], true);
+        GeneralStatistic.chart([], [], [], true);
     }
 
     updateFormDate(evt) {
@@ -204,13 +216,13 @@ class Statistic extends React.Component {
 
 
     render() {
-        const {user} = this.props;
+        const {users} = this.props;
         return <div>
             <img className="chart" src={chart} alt={"chart"} onClick={this.toggle}/>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                    onKeyPress={this.handleKeyPress}>
-                <ModalHeader toggle={this.toggle}>Statistic for {user.name}</ModalHeader>
+                <ModalHeader toggle={this.toggle}>General Statistic</ModalHeader>
                 <ModalBody>
                     <FormGroup>
                         <Row>
@@ -252,7 +264,7 @@ class Statistic extends React.Component {
                             <th scope="row">Sum</th>
                             <td>{sumBuyIn}</td>
                             <td>{sumWon}</td>
-                            <th>{sumTotal}</th>
+                            <td>{sumTotal}</td>
                         </tr>
                         <tr>
                             <th scope="row">Avg</th>
@@ -293,4 +305,4 @@ const mapStateToProps = state => {
 export default connect(
     mapStateToProps,
     {}
-)(Statistic);
+)(GeneralStatistic);

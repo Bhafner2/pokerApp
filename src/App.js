@@ -3,7 +3,6 @@ import './App.css';
 import {Alert, Col, Input, ListGroup, ListGroupItem, Row} from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
 import logo from './Poker.png';
-import chart from './chart-bar-regular.svg';
 import AddUser from "./components/AddUserToList";
 import {getUsers} from "./redux/actions";
 import UserList from "./components/UserList";
@@ -12,6 +11,7 @@ import * as _ from 'lodash';
 import {connect} from 'react-redux'
 import {store} from './redux/store'
 import firebase from "./config/firebase";
+import GeneralStatistic from "./components/GeneralStatistic";
 
 let error = false;
 
@@ -150,7 +150,7 @@ class App extends Component {
                     <ListGroupItem key="global">
                         <Row>
                             <Col xs="2">
-                                <img className="chart" src={chart} alt={"chart"}/>
+                                <GeneralStatistic users={this.props.data.users} today={this.state.today}/>
                             </Col>
                             <Col xs="10">
 

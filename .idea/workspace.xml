@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9b843d04-d234-4560-a5d4-e527747186df" name="Default" comment="">
+    <list default="true" id="9b843d04-d234-4560-a5d4-e527747186df" name="Default" comment="Users statisics">
+      <change afterPath="$PROJECT_DIR$/src/components/GeneralStatistic.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.firebase/hosting.YnVpbGQ.cache" beforeDir="false" afterPath="$PROJECT_DIR$/.firebase/hosting.YnVpbGQ.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Statistic.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Statistic.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/saga.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/saga.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,8 +23,8 @@
       <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1649">
-              <caret line="109" column="39" lean-forward="true" selection-start-line="109" selection-start-column="39" selection-end-line="109" selection-end-column="39" />
+            <state relative-caret-position="170">
+              <caret line="10" column="22" selection-start-line="10" selection-end-line="11" />
             </state>
           </provider>
         </entry>
@@ -31,8 +32,8 @@
       <file leaf-file-name="UserList.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/UserList.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="202">
-              <caret line="140" column="20" selection-start-line="140" selection-start-column="20" selection-end-line="140" selection-end-column="20" />
+            <state relative-caret-position="576">
+              <caret line="180" selection-start-line="180" selection-end-line="182" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -40,8 +41,17 @@
       <file leaf-file-name="Statistic.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/Statistic.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="163" column="112" selection-start-line="163" selection-start-column="112" selection-end-line="163" selection-end-column="112" />
+            <state relative-caret-position="245">
+              <caret line="255" column="29" lean-forward="true" selection-start-line="255" selection-start-column="29" selection-end-line="255" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GeneralStatistic.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
             </state>
           </provider>
         </entry>
@@ -57,24 +67,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>add</find>
-      <find>date</find>
-      <find>store.getState().actualDate</find>
-      <find>actualDa</find>
-      <find>store.getState().users</find>
-      <find>users</find>
-      <find>.users</find>
-      <find>store.get</find>
-      <find>this.props.</find>
-      <find>updateUs</find>
-      <find>actualUser</find>
-      <find>store</find>
-      <find>apply</find>
-      <find>ap</find>
-      <find>app</find>
-      <find>firebase</find>
-      <find>log</find>
-      <find>dis</find>
       <find />
       <find>isNil</find>
       <find>isNiö</find>
@@ -83,10 +75,28 @@
       <find>save</find>
       <find>dispa</find>
       <find>dispatch</find>
-      <find>chart</find>
       <find>round</find>
-      <find>statis</find>
       <find>today</find>
+      <find>Statistic\.init\(\)\;\n        const \{users\} \= this\.props\;\n        if \(this\.state\.dateOk\) \{\n            for \(let i \= 0\; i \&lt; users\.games\.length\; i\+\+\) \{\n                if \(new Date\(this\.state\.fromDate\) \&lt; new Date\(users\.games\[i\]\.date\) \&amp;\&amp; new Date\(this\.state\.toDate\) \&gt; new Date\(users\.games\[i\]\.date\)\) \{\n                    if \(users\.games\[i\]\.buyIn \&gt; 0\) \{\n                        games\.push\(users\.games\[i\]\)\;\n                        sumWon \= sumWon \+ users\.games\[i\]\.won\;\n                        sumBuyIn \= sumBuyIn \+ users\.games\[i\]\.buyIn\;\n\n                        buyIn\.push\(users\.games\[i\]\.buyIn \* \-1\)\;\n                        won\.push\(users\.games\[i\]\.won\)\;\n                        total\.push\(users\.games\[i\]\.won \- users\.games\[i\]\.buyIn\)\;\n                    \}\n                \}\n            \}\n            sumTotal \= sumWon \- sumBuyIn\;\n\n            if \(games\.length \&gt; 0\) \{\n                avgTotal \= Math\.round\(sumTotal \/ games\.length\)\;\n                avgBuyIn \= Math\.round\(sumBuyIn \/ games\.length\)\;\n                avgWon \= Math\.round\(sumWon \/ games\.length\)\;\n            \}\n            if \(buyIn\.length \&gt; 1\) \{\n                Statistic\.chart\(buyIn\, won\, total\, false\)\;\n            \} else \{\n                Statistic\.chart\(buyIn\, won\, total\, true\)\;\n            \}\n            console\.log\(\&quot;games for stat \&quot;\, games\)\;\n        \}</find>
+      <find>user</find>
+      <find>games</find>
+      <find>games</find>
+      <find>sumWon</find>
+      <find>sumBuyIn</find>
+      <find>sumTotal</find>
+      <find>avgWon</find>
+      <find>avgBuyIn</find>
+      <find>avgTotal</find>
+      <find>maxWon</find>
+      <find>maxBuyIn</find>
+      <find>maxTotal</find>
+      <find>buyIn</find>
+      <find>won</find>
+      <find>total</find>
+      <find>stati</find>
+      <find>chart</find>
+      <find>statis</find>
+      <find>loa</find>
     </findStrings>
     <replaceStrings>
       <replace>addUser</replace>
@@ -96,6 +106,22 @@
       <replace>user</replace>
       <replace>this.state.users</replace>
       <replace>saveUser</replace>
+      <replace>users</replace>
+      <replace>this.state.games</replace>
+      <replace>this.state.games</replace>
+      <replace>sumWon</replace>
+      <replace>this.state.sumWon</replace>
+      <replace>this.state.sumBuyIn</replace>
+      <replace>this.state.sumTotal</replace>
+      <replace>this.state.avgWon</replace>
+      <replace>this.state.avgBuyIn</replace>
+      <replace>this.state.avgTotal</replace>
+      <replace>this.state.maxWon</replace>
+      <replace>this.state.maxBuyIn</replace>
+      <replace>this.state.maxTotal</replace>
+      <replace>this.state.buyIn</replace>
+      <replace>this.state.won</replace>
+      <replace>this.state.total</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -141,6 +167,7 @@
         <option value="$PROJECT_DIR$/src/components/UserList.js" />
         <option value="$PROJECT_DIR$/src/redux/saga.js" />
         <option value="$PROJECT_DIR$/src/App.js" />
+        <option value="$PROJECT_DIR$/src/components/GeneralStatistic.js" />
         <option value="$PROJECT_DIR$/src/components/Statistic.js" />
       </list>
     </option>
@@ -229,6 +256,7 @@
       <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\public" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src\components" />
       <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src" />
     </key>
   </component>
@@ -408,7 +436,7 @@
       <workItem from="1536743945916" duration="30336000" />
       <workItem from="1536843319839" duration="1334000" />
       <workItem from="1536851870606" duration="7773000" />
-      <workItem from="1537172876141" duration="13401000" />
+      <workItem from="1537172876141" duration="17649000" />
     </task>
     <task id="LOCAL-00001" summary="firebase connection">
       <created>1536591132576</created>
@@ -550,11 +578,18 @@
       <option name="project" value="LOCAL" />
       <updated>1537189118148</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Users statisics">
+      <created>1537190572687</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1537190572687</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="149794000" />
+    <option name="totallyTimeSpent" value="154042000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -571,6 +606,7 @@
     <layout>
       <window_info anchor="bottom" id="TODO" order="9" />
       <window_info id="DB Browser" order="3" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.32906404" />
       <window_info anchor="bottom" id="DB Execution Console" order="1" />
       <window_info anchor="bottom" id="Event Log" order="14" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="11" />
@@ -593,7 +629,6 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="2" />
       <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.32906404" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -621,7 +656,8 @@
     <MESSAGE value="db init" />
     <MESSAGE value="with stat amount" />
     <MESSAGE value="statisics with higtcharts" />
-    <option name="LAST_COMMIT_MESSAGE" value="statisics with higtcharts" />
+    <MESSAGE value="Users statisics" />
+    <option name="LAST_COMMIT_MESSAGE" value="Users statisics" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -629,13 +665,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/build/manifest.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build/browserconfig.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -890,13 +919,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/UserList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="140" column="20" selection-start-line="140" selection-start-column="20" selection-end-line="140" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/redux/reducers.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
@@ -904,17 +926,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/UserList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="576">
+          <caret line="180" selection-start-line="180" selection-end-line="182" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1649">
-          <caret line="109" column="39" lean-forward="true" selection-start-line="109" selection-start-column="39" selection-end-line="109" selection-end-column="39" />
+        <state relative-caret-position="170">
+          <caret line="10" column="22" selection-start-line="10" selection-end-line="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Statistic.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="163" column="112" selection-start-line="163" selection-start-column="112" selection-end-line="163" selection-end-column="112" />
+        <state relative-caret-position="245">
+          <caret line="255" column="29" lean-forward="true" selection-start-line="255" selection-start-column="29" selection-end-line="255" selection-end-column="29" />
         </state>
       </provider>
     </entry>
