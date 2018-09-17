@@ -114,7 +114,7 @@ class App extends Component {
         );
     };
 
-    dbInit() {
+   /* dbInit() {
         const db = firebase.database().ref('users/');
         db.set([
             {
@@ -128,7 +128,7 @@ class App extends Component {
             }
 
         ])
-    }
+    }*/
 
     render() {
         return (

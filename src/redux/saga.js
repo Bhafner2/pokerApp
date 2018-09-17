@@ -6,7 +6,7 @@ import {store} from '../redux/store'
 
 const db = firebase.database().ref('users/');
 
-export function* getUsersSaga(action) {
+export function* getUsersSaga() {
     console.log("get users saga");
 
     try {
@@ -26,10 +26,9 @@ export function* saveUsersSaga(action) {
     }
 }
 
-function* fetchUsers(action) {
+function* fetchUsers() {
     db.on('value', (snapshot) => {
         let users = [];
-        console.log("vor loop");
         let items = snapshot.val();
         for (let item in items) {
             users.push({

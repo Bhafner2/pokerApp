@@ -13,7 +13,6 @@ import {
 } from "reactstrap";
 import chart from '../chart-bar-regular.svg';
 import {connect} from "react-redux";
-import * as _ from 'lodash';
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 
@@ -69,11 +68,11 @@ class Statistic extends React.Component {
     }
 
     getData() {
-        this.init();
+        Statistic.init();
         const {user} = this.props;
         if (this.state.dateOk) {
             for (let i = 0; i < user.games.length; i++) {
-                if (this.state.fromDate < user.games[i].date || this.state.toDate > user.games[i].date) {
+                if (new Date(this.state.fromDate) < new Date(user.games[i].date) && new Date(this.state.toDate) > new Date(user.games[i].date)) {
                     if (user.games[i].buyIn > 0) {
                         games.push(user.games[i]);
                         sumWon = sumWon + user.games[i].won;
@@ -92,15 +91,16 @@ class Statistic extends React.Component {
                 avgBuyIn = Math.round(sumBuyIn / games.length);
                 avgWon = Math.round(sumWon / games.length);
             }
-
-            this.chart(buyIn, won, total);
+            if (buyIn.length > 1) {
+                Statistic.chart(buyIn, won, total, false);
+            } else {
+                Statistic.chart(buyIn, won, total, true);
+            }
             console.log("games for stat ", games);
-        } else {
-            this.init();
         }
     }
 
-    chart(buyIn, won, total) {
+    static chart(buyIn, won, total, showDots) {
         options = {
             chart: {
                 height: 250,
@@ -120,7 +120,7 @@ class Statistic extends React.Component {
                 lineWidth: 1,
                 color: 'rgb(255, 0, 0)',
                 marker: {
-                    enabled: false,
+                    enabled: showDots,
                 },
             }, {
                 name: 'Won',
@@ -128,7 +128,7 @@ class Statistic extends React.Component {
                 lineWidth: 1,
                 color: 'rgb(0, 255, 0)',
                 marker: {
-                    enabled: false,
+                    enabled: showDots,
                 },
             }, {
                 name: 'Total',
@@ -136,14 +136,14 @@ class Statistic extends React.Component {
                 lineWidth: 3,
                 color: 'rgb(0, 0, 0)',
                 marker: {
-                    enabled: false,
+                    enabled: showDots,
                 },
             },
             ],
         };
     }
 
-    init() {
+    static init() {
         games = [];
         sumWon = 0;
         sumBuyIn = 0;
@@ -154,14 +154,14 @@ class Statistic extends React.Component {
         buyIn = [];
         won = [];
         total = [];
-        this.chart([], [], []);
+        Statistic.chart([], [], [], true);
     }
 
     updateFormDate(evt) {
         this.setState({
                 fromDate: evt.target.value
             }, () => {
-                if (this.state.fromDate === '') {
+                if (this.state.fromDate === '' || new Date(this.state.toDate) < new Date(this.state.fromDate)) {
                     this.setState({
                         dateOk: false,
                     })
@@ -179,7 +179,7 @@ class Statistic extends React.Component {
         this.setState({
                 toDate: evt.target.value
             }, () => {
-                if (this.state.toDate === '') {
+                if (this.state.toDate === '' || new Date(this.state.toDate) < new Date(this.state.fromDate)) {
                     this.setState({
                         dateOk: false,
                     })
@@ -201,7 +201,7 @@ class Statistic extends React.Component {
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                    onKeyPress={this.handleKeyPress}>
-                <ModalHeader toggle={this.toggle}>Statistic {user.name}</ModalHeader>
+                <ModalHeader toggle={this.toggle}>Statistic for {user.name}</ModalHeader>
                 <ModalBody>
                     <FormGroup>
                         <Row>
