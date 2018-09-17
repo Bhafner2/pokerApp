@@ -57,12 +57,21 @@ class Calc extends React.Component {
     calculate() {
         const {amount} = this.state;
         const factor = 1000;
-        if (this.state.amount < 1) {
+        if (this.state.amount < 1 || !this.state.amountOk) {
             this.setState({
                 p1: 0,
                 p2: 0,
                 p3: 0,
                 p4: 0,
+            });
+        } else if (this.state.amount < 40) {
+            this.setState({
+                p1: amount,
+                p2: 0,
+                p3: 0,
+                p4: 0,
+            }, () => {
+                this.checkResult()
             });
         } else if (this.state.amount < 100) {
             this.setState({
@@ -73,7 +82,7 @@ class Calc extends React.Component {
             }, () => {
                 this.checkResult()
             });
-        } else if (this.state.amount < 200) {
+        }else if (this.state.amount < 200) {
             this.setState({
                 p1: Math.round(amount * 60 / factor) * 10,
                 p2: Math.round(amount * 30 / factor) * 10,
@@ -158,11 +167,14 @@ class Calc extends React.Component {
                 if ((this.state.amount % 10) === 0 && this.state.amount !== 0) {
                     this.setState({
                         amountOk: true,
+                    }, () => {
+                        this.calculate()
                     });
-                    this.calculate()
                 } else {
                     this.setState({
                         amountOk: false,
+                    }, () => {
+                        this.calculate()
                     });
                 }
             });

@@ -3,7 +3,7 @@ import './App.css';
 import {Alert, Col, Input, ListGroup, ListGroupItem, Row} from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
 import logo from './img/Poker.png';
-import AddUser from "./components/AddUserToList";
+import AddUser from "./components/AddUser";
 import {getUsers} from "./redux/actions";
 import UserList from "./components/UserList";
 import moment from "moment/moment";

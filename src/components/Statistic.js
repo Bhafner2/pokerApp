@@ -3,7 +3,7 @@ import {
     Button,
     Col,
     FormGroup,
-    Input,
+    Input, InputGroup,
     Modal,
     ModalBody,
     ModalFooter,
@@ -248,24 +248,26 @@ class Statistic extends React.Component {
                    onKeyPress={this.handleKeyPress}>
                 <ModalHeader toggle={this.toggle}>Statistic for {user.name}</ModalHeader>
                 <ModalBody>
-                    <Row>
-                        <Col xs={12}><b>Filter</b></Col>
-                    </Row>
                     <FormGroup>
                         <Row>
-                            <Col xs="6">
+                            <Col><b>Filter</b></Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                            <InputGroup>
                                 <Input type="date" name="fromDate" id="fromDate"
                                        onChange={this.updateFormDate}
                                        value={this.state.fromDate}
                                        style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
                                 />
-                            </Col>
-                            <Col xs="6">
+
                                 <Input type="date" name="toDate" id="toDate"
                                        onChange={this.updateToDate}
                                        value={this.state.toDate}
                                        style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
                                 />
+
+                            </InputGroup>
                             </Col>
                         </Row>
                     </FormGroup>
