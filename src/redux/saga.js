@@ -29,11 +29,11 @@ export function* saveUsersSaga(action) {
 function fetchUsers() {
     db.on('value', (snapshot) => {
         let users = [];
-        let items = snapshot.val();
-        for (let item in items) {
+        let data = snapshot.val();
+        for (let user in data) {
             users.push({
-                name: items[item].name,
-                games: items[item].games
+                name: data[user].name,
+                games: data[user].games
             });
         }
         store.dispatch(getUsersFulfilled(users));
