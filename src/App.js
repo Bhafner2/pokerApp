@@ -66,7 +66,7 @@ class App extends Component {
             });
             console.log("hide alarm");
             return false;
-        }, 1000);
+        }, 2000);
     };
 
     updateDate(evt) {
@@ -171,8 +171,12 @@ class App extends Component {
                     {this.renderUsers()}
                 </ListGroup>
 
-                {error ? <div/> : <AddUser saved={this.showSaved}/>}
-
+                <div style={{
+                    paddingTop: '10px',
+                    paddingBottom: '20px',
+                }}>
+                    {error ? <div/> : <AddUser saved={this.showSaved}/>}
+                </div>
                 <Alert color={this.state.alertSuccess ? "success" : "danger"}
                        style={{
                            visibility: this.state.showAlert ? 'visible' : 'hidden',

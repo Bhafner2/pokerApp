@@ -3,7 +3,7 @@ import {
     Button,
     Col,
     FormGroup,
-    Input,
+    Input, InputGroup,
     Modal,
     ModalBody,
     ModalFooter,
@@ -11,7 +11,7 @@ import {
     Row,
     Table
 } from "reactstrap";
-import chart from '../img/chart-line-solid.svg';
+import chart from '../img/chart-bar-regular.svg';
 import {connect} from "react-redux";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
@@ -32,7 +32,8 @@ let maxTotal = 0;
 let buyIn = [];
 let won = [];
 let total = [];
-
+let trend = [];
+let counter = 0;
 
 class GeneralStatistic extends React.Component {
     constructor(props) {
@@ -57,6 +58,7 @@ class GeneralStatistic extends React.Component {
             modal: !this.state.modal,
             toDate: this.props.today,
             fromDate: '2018-01-01',
+            dateOk: true,
         }, () => {
             this.setState({
                 dataReady: false,
@@ -78,12 +80,15 @@ class GeneralStatistic extends React.Component {
     }
 
     getData() {
-        this.init();
-        const {user} = this.props;
-  /*      if (this.state.dateOk) {
+      /*  this.init();
+        const {users} = this.props;
+        const from = new Date(this.state.fromDate);
+        const to = new Date(this.state.toDate);
+        if (this.state.dateOk) {
             for (let i = 0; i < user.games.length; i++) {
-                if (new Date(this.state.fromDate) <= new Date(user.games[i].date) && new Date(this.state.toDate) >= new Date(user.games[i].date)) {
+                if (from <= new Date(user.games[i].date) && to >= new Date(user.games[i].date)) {
                     if (user.games[i].buyIn > 0) {
+                        counter++;
                         games.push(user.games[i]);
                         sumWon = sumWon + user.games[i].won;
                         sumBuyIn = sumBuyIn + user.games[i].buyIn;
@@ -91,6 +96,7 @@ class GeneralStatistic extends React.Component {
                         buyIn.push(user.games[i].buyIn * -1);
                         won.push(user.games[i].won);
                         total.push(user.games[i].won - user.games[i].buyIn);
+                        trend.push(Math.round((sumWon - sumBuyIn) / counter));
                     }
                 }
             }
@@ -103,33 +109,42 @@ class GeneralStatistic extends React.Component {
                 avgBuyIn = Math.round(sumBuyIn / games.length);
                 avgWon = Math.round(sumWon / games.length);
             }
-        }*/
+        }
         console.log("games for stat ", games);
 
         if (buyIn.length > 1) {
-            GeneralStatistic.chart(buyIn, won, total, false);
+            GeneralStatistic.chart(buyIn, won, total, trend, false);
         } else {
-            GeneralStatistic.chart(buyIn, won, total, true);
+            GeneralStatistic.chart(buyIn, won, total, trend, true);
         }
 
         this.setState({
             dataReady: true,
-        })
+        })*/
     }
 
-    static chart(buyIn, won, total, showDots) {
+    static chart(buyIn, won, total, trend, showDots) {
         options = {
             chart: {
                 height: 190,
                 type: 'spline',
             },
             title: {
-                text: 'Game overview'
+                text: 'Games',
+                style: {
+                    fontWeight: 'bold'
+                },
             },
             yAxis: {
                 title: {
                     text: ''
-                }
+                },
+                plotLines: [{
+                    value: 0,
+                    color: 'lightGrey',
+                    dashStyle: 'shortdash',
+                    width: 0.5,
+                }],
             },
             xAxis: {},
             legend: {
@@ -160,6 +175,14 @@ class GeneralStatistic extends React.Component {
                     enabled: showDots,
                 },
             }, {
+                name: 'Trend',
+                data: trend,
+                lineWidth: 1,
+                color: 'rgb(0, 0, 255)',
+                marker: {
+                    enabled: showDots,
+                },
+            }, {
                 name: 'Total',
                 data: total,
                 lineWidth: 3,
@@ -186,6 +209,8 @@ class GeneralStatistic extends React.Component {
         buyIn = [];
         won = [];
         total = [];
+        trend = [];
+        counter = 0;
         GeneralStatistic.chart([], [], [], true);
         this.setState({
             dataReady: false,
@@ -240,32 +265,33 @@ class GeneralStatistic extends React.Component {
 
 
     render() {
-        const {users} = this.props;
         return <div>
-            <img className="chart" src={chart} alt={"chart"} onClick={this.toggle} style={{height: "25px"}}/>
+            <img className="chart" src={chart} alt={"chart"} onClick={this.toggle} style={{height: "32px"}}/>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                    onKeyPress={this.handleKeyPress}>
-                <ModalHeader toggle={this.toggle}>Statistic for {users.name}</ModalHeader>
+                <ModalHeader toggle={this.toggle}>General Statistic</ModalHeader>
                 <ModalBody>
-                    <Row>
-                        <Col xs={12}><b>Filter</b></Col>
-                    </Row>
                     <FormGroup>
                         <Row>
-                            <Col xs="6">
-                                <Input type="date" name="fromDate" id="fromDate"
-                                       onChange={this.updateFormDate}
-                                       value={this.state.fromDate}
-                                       style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
-                                />
-                            </Col>
-                            <Col xs="6">
-                                <Input type="date" name="toDate" id="toDate"
-                                       onChange={this.updateToDate}
-                                       value={this.state.toDate}
-                                       style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
-                                />
+                            <Col><b>Filter</b></Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <InputGroup>
+                                    <Input type="date" name="fromDate" id="fromDate"
+                                           onChange={this.updateFormDate}
+                                           value={this.state.fromDate}
+                                           style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
+                                    />
+
+                                    <Input type="date" name="toDate" id="toDate"
+                                           onChange={this.updateToDate}
+                                           value={this.state.toDate}
+                                           style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
+                                    />
+
+                                </InputGroup>
                             </Col>
                         </Row>
                     </FormGroup>

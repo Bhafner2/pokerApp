@@ -26,7 +26,7 @@ export function* saveUsersSaga(action) {
     }
 }
 
-function* fetchUsers() {
+function fetchUsers() {
     db.on('value', (snapshot) => {
         let users = [];
         let items = snapshot.val();

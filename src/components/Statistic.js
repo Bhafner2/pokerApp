@@ -11,7 +11,7 @@ import {
     Row,
     Table
 } from "reactstrap";
-import chart from '../img/chart-bar-regular.svg';
+import chart from '../img/chart-line-solid.svg';
 import {connect} from "react-redux";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
@@ -32,7 +32,8 @@ let maxTotal = 0;
 let buyIn = [];
 let won = [];
 let total = [];
-
+let trend = [];
+let counter = 0;
 
 class Statistic extends React.Component {
     constructor(props) {
@@ -57,6 +58,7 @@ class Statistic extends React.Component {
             modal: !this.state.modal,
             toDate: this.props.today,
             fromDate: '2018-01-01',
+            dateOk: true,
         }, () => {
             this.setState({
                 dataReady: false,
@@ -80,10 +82,13 @@ class Statistic extends React.Component {
     getData() {
         this.init();
         const {user} = this.props;
+        const from = new Date(this.state.fromDate);
+        const to = new Date(this.state.toDate);
         if (this.state.dateOk) {
             for (let i = 0; i < user.games.length; i++) {
-                if (new Date(this.state.fromDate) <= new Date(user.games[i].date) && new Date(this.state.toDate) >= new Date(user.games[i].date)) {
+                if (from <= new Date(user.games[i].date) && to >= new Date(user.games[i].date)) {
                     if (user.games[i].buyIn > 0) {
+                        counter++;
                         games.push(user.games[i]);
                         sumWon = sumWon + user.games[i].won;
                         sumBuyIn = sumBuyIn + user.games[i].buyIn;
@@ -91,6 +96,7 @@ class Statistic extends React.Component {
                         buyIn.push(user.games[i].buyIn * -1);
                         won.push(user.games[i].won);
                         total.push(user.games[i].won - user.games[i].buyIn);
+                        trend.push(Math.round((sumWon - sumBuyIn) / counter));
                     }
                 }
             }
@@ -107,9 +113,9 @@ class Statistic extends React.Component {
         console.log("games for stat ", games);
 
         if (buyIn.length > 1) {
-            Statistic.chart(buyIn, won, total, false);
+            Statistic.chart(buyIn, won, total, trend, false);
         } else {
-            Statistic.chart(buyIn, won, total, true);
+            Statistic.chart(buyIn, won, total, trend, true);
         }
 
         this.setState({
@@ -117,19 +123,28 @@ class Statistic extends React.Component {
         })
     }
 
-    static chart(buyIn, won, total, showDots) {
+    static chart(buyIn, won, total, trend, showDots) {
         options = {
             chart: {
                 height: 190,
                 type: 'spline',
             },
             title: {
-                text: 'Game overview'
+                text: 'Games',
+                style: {
+                    fontWeight: 'bold'
+                },
             },
             yAxis: {
                 title: {
                     text: ''
-                }
+                },
+                plotLines: [{
+                    value: 0,
+                    color: 'lightGrey',
+                    dashStyle: 'shortdash',
+                    width: 0.5,
+                }],
             },
             xAxis: {},
             legend: {
@@ -160,6 +175,14 @@ class Statistic extends React.Component {
                     enabled: showDots,
                 },
             }, {
+                name: 'Trend',
+                data: trend,
+                lineWidth: 1,
+                color: 'rgb(0, 0, 255)',
+                marker: {
+                    enabled: showDots,
+                },
+            }, {
                 name: 'Total',
                 data: total,
                 lineWidth: 3,
@@ -186,6 +209,8 @@ class Statistic extends React.Component {
         buyIn = [];
         won = [];
         total = [];
+        trend = [];
+        counter = 0;
         Statistic.chart([], [], [], true);
         this.setState({
             dataReady: false,
@@ -254,20 +279,20 @@ class Statistic extends React.Component {
                         </Row>
                         <Row>
                             <Col>
-                            <InputGroup>
-                                <Input type="date" name="fromDate" id="fromDate"
-                                       onChange={this.updateFormDate}
-                                       value={this.state.fromDate}
-                                       style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
-                                />
+                                <InputGroup>
+                                    <Input type="date" name="fromDate" id="fromDate"
+                                           onChange={this.updateFormDate}
+                                           value={this.state.fromDate}
+                                           style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
+                                    />
 
-                                <Input type="date" name="toDate" id="toDate"
-                                       onChange={this.updateToDate}
-                                       value={this.state.toDate}
-                                       style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
-                                />
+                                    <Input type="date" name="toDate" id="toDate"
+                                           onChange={this.updateToDate}
+                                           value={this.state.toDate}
+                                           style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
+                                    />
 
-                            </InputGroup>
+                                </InputGroup>
                             </Col>
                         </Row>
                     </FormGroup>
