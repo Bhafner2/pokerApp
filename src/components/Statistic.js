@@ -110,7 +110,7 @@ class Statistic extends React.Component {
                         buyIn.push(user.games[i].buyIn * -1);
                         won.push(user.games[i].won);
                         total.push(user.games[i].won - user.games[i].buyIn);
-                        trend.push(Math.round((sumWon - sumBuyIn)));
+                        trend.push(Math.round((sumWon - sumBuyIn) / counter));
                         date.push(moment(user.games[i].date).format('D.M.YY'))
 
                         //TODO sort
@@ -203,19 +203,19 @@ class Statistic extends React.Component {
                     enabled: showDots,
                 },
             }, {
+                name: 'Total',
+                type: 'spline',
+                data: total,
+                color: 'rgb(0, 0, 0)',
+                marker: {
+                    enabled: showDots,
+                },
+            }, {
                 name: 'Trend',
                 type: 'spline',
                 data: trend,
                 lineWidth: 1,
                 color: 'rgb(0, 0, 255)',
-                marker: {
-                    enabled: showDots,
-                },
-            }, {
-                name: 'Total',
-                type: 'spline',
-                data: total,
-                color: 'rgb(0, 0, 0)',
                 marker: {
                     enabled: showDots,
                 },

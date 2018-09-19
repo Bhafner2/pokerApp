@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9b843d04-d234-4560-a5d4-e527747186df" name="Default" comment="calc">
-      <change beforePath="$PROJECT_DIR$/.firebase/hosting.YnVpbGQ.cache" beforeDir="false" afterPath="$PROJECT_DIR$/.firebase/hosting.YnVpbGQ.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Calc.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Calc.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Statistic.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Statistic.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -55,11 +53,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Calc.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Calc.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Calc.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="106" column="14" lean-forward="true" selection-start-line="106" selection-start-column="14" selection-end-line="106" selection-end-column="14" />
+            <state relative-caret-position="-103">
+              <caret line="118" column="20" lean-forward="true" selection-start-line="118" selection-start-column="20" selection-end-line="118" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -82,11 +80,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Statistic.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Statistic.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/Statistic.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="428">
-              <caret line="421" column="12" selection-start-line="421" selection-start-column="12" selection-end-line="421" selection-end-column="12" />
+            <state relative-caret-position="330">
+              <caret line="105" column="25" lean-forward="true" selection-start-line="105" selection-start-column="25" selection-end-line="105" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -214,8 +212,8 @@
         <option value="$PROJECT_DIR$/src/components/AddUser.js" />
         <option value="$PROJECT_DIR$/src/components/UserList.js" />
         <option value="$PROJECT_DIR$/src/App.js" />
-        <option value="$PROJECT_DIR$/src/components/Statistic.js" />
         <option value="$PROJECT_DIR$/src/components/Calc.js" />
+        <option value="$PROJECT_DIR$/src/components/Statistic.js" />
       </list>
     </option>
   </component>
@@ -362,7 +360,7 @@
       <workItem from="1536851870606" duration="7773000" />
       <workItem from="1537172876141" duration="28093000" />
       <workItem from="1537250679568" duration="9000" />
-      <workItem from="1537267868169" duration="22733000" />
+      <workItem from="1537267868169" duration="23903000" />
     </task>
     <task id="LOCAL-00001" summary="firebase connection">
       <created>1536591132576</created>
@@ -588,11 +586,18 @@
       <option name="project" value="LOCAL" />
       <updated>1537359451832</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="calc">
+      <created>1537373390073</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1537373390073</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="187228000" />
+    <option name="totallyTimeSpent" value="188398000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -665,7 +670,8 @@
     <MESSAGE value="tab menu" />
     <MESSAGE value="verschönert" />
     <MESSAGE value="chart cloumn" />
-    <option name="LAST_COMMIT_MESSAGE" value="chart cloumn" />
+    <MESSAGE value="calc" />
+    <option name="LAST_COMMIT_MESSAGE" value="calc" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -930,17 +936,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Statistic.js">
+    <entry file="file://$PROJECT_DIR$/src/components/Calc.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="428">
-          <caret line="421" column="12" selection-start-line="421" selection-start-column="12" selection-end-line="421" selection-end-column="12" />
+        <state relative-caret-position="-103">
+          <caret line="118" column="20" lean-forward="true" selection-start-line="118" selection-start-column="20" selection-end-line="118" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Calc.js">
+    <entry file="file://$PROJECT_DIR$/src/components/Statistic.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="106" column="14" lean-forward="true" selection-start-line="106" selection-start-column="14" selection-end-line="106" selection-end-column="14" />
+        <state relative-caret-position="330">
+          <caret line="105" column="25" lean-forward="true" selection-start-line="105" selection-start-column="25" selection-end-line="105" selection-end-column="25" />
         </state>
       </provider>
     </entry>
