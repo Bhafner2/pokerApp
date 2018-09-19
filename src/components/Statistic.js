@@ -110,8 +110,10 @@ class Statistic extends React.Component {
                         buyIn.push(user.games[i].buyIn * -1);
                         won.push(user.games[i].won);
                         total.push(user.games[i].won - user.games[i].buyIn);
-                        trend.push(Math.round((sumWon - sumBuyIn) / counter));
+                        trend.push(Math.round((sumWon - sumBuyIn)));
                         date.push(moment(user.games[i].date).format('D.M.YY'))
+
+                        //TODO sort
                     }
                 }
             }

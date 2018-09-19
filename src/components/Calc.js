@@ -32,11 +32,12 @@ class Calc extends React.Component {
 
         this.toggle = this.toggle.bind(this);
 
+        this.checkResults = this.checkResults.bind(this);
         this.updateAmount = this.updateAmount.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
-        this.checkResult = this.checkResult.bind(this);
+        this.roundResults = this.roundResults.bind(this);
+        this.preventFailture = this.preventFailture.bind(this);
     }
-
 
     toggle() {
         this.setState({
@@ -53,10 +54,9 @@ class Calc extends React.Component {
         });
     }
 
-
     calculate() {
-        const {amount} = this.state;
-        const factor = 1000;
+        const factor = 100;
+        const amount = this.state.amount / 10;
         if (this.state.amount < 1 || !this.state.amountOk) {
             this.setState({
                 p1: 0,
@@ -71,40 +71,53 @@ class Calc extends React.Component {
                 p3: 0,
                 p4: 0,
             }, () => {
-                this.checkResult()
+                this.preventFailture()
             });
         } else if (this.state.amount < 100) {
             this.setState({
-                p1: Math.round(amount * 70 / factor) * 10,
-                p2: Math.round(amount * 30 / factor) * 10,
+                p1: Math.round(amount * 70 / factor),
+                p2: Math.round(amount * 30 / factor),
                 p3: 0,
                 p4: 0,
             }, () => {
-                this.checkResult()
+                this.preventFailture()
             });
-        }else if (this.state.amount < 200) {
+        } else if (this.state.amount < 200) {
             this.setState({
-                p1: Math.round(amount * 60 / factor) * 10,
-                p2: Math.round(amount * 30 / factor) * 10,
-                p3: Math.round(amount * 10 / factor) * 10,
+                p1: Math.round(amount * 60 / factor),
+                p2: Math.round(amount * 30 / factor),
+                p3: Math.round(amount * 10 / factor),
                 p4: 0,
             }, () => {
-                this.checkResult()
+                this.preventFailture()
             });
         } else {
             this.setState({
-                p1: Math.round(amount * 55 / factor) * 10,
-                p2: Math.round(amount * 27 / factor) * 10,
-                p3: Math.round(amount * 13 / factor) * 10,
-                p4: Math.round(amount * 5 / factor) * 10,
+                p1: Math.round(amount * 55 / factor),
+                p2: Math.round(amount * 27 / factor),
+                p3: Math.round(amount * 13 / factor),
+                p4: Math.round(amount * 5 / factor),
 
             }, () => {
-                this.checkResult()
+                this.preventFailture()
             });
         }
     }
 
-    checkResult() {
+    preventFailture() {
+        if (this.state.amount === 150) {
+            this.setState({
+                p2: this.state.p2 - 1,
+            }, () => {
+                this.roundResults();
+            });
+        } else {
+            this.roundResults();
+        }
+    }
+
+    roundResults() {
+        const amount = this.state.amount / 10;
         console.log("p1 ", this.state.p1);
         console.log("p2 ", this.state.p2);
         console.log("p3 ", this.state.p3);
@@ -114,40 +127,46 @@ class Calc extends React.Component {
                 this.state.p2 +
                 this.state.p3 +
                 this.state.p4)
-            < this.state.amount
+            < amount
         ) {
             this.setState({
-                p1: this.state.p1 + 10,
+                p1: this.state.p1 + 1,
             }, () => {
-                if ((this.state.p1 +
-                    this.state.p2 +
-                    this.state.p3 +
-                    this.state.p4)
-                    !== this.state.amount) {
-
-                    alert("not Ok");
-                }
+                this.checkResults();
             });
         } else if (
             (this.state.p1 +
                 this.state.p2 +
                 this.state.p3 +
                 this.state.p4)
-            > this.state.amount
+            > amount
         ) {
             this.setState({
-                p1: this.state.p1 - 10,
+                p1: this.state.p1 - 1,
             }, () => {
-                if ((this.state.p1 +
-                    this.state.p2 +
-                    this.state.p3 +
-                    this.state.p4)
-                    !== this.state.amount) {
-
-                    alert("not Ok");
-                }
+                this.checkResults();
             });
+        } else {
+            this.checkResults();
         }
+    }
+
+    checkResults() {
+        this.setState({
+            p1: this.state.p1 * 10,
+            p2: this.state.p2 * 10,
+            p3: this.state.p3 * 10,
+            p4: this.state.p4 * 10,
+        }, () => {
+            if ((this.state.p1 +
+                this.state.p2 +
+                this.state.p3 +
+                this.state.p4)
+                !== this.state.amount) {
+
+                alert("not Ok");
+            }
+        });
     }
 
     updateAmount(evt) {
