@@ -14,8 +14,6 @@ import firebase from "./config/firebase";
 import GeneralStatistic from "./components/GeneralStatistic";
 import Calc from "./components/Calc";
 
-let error = false;
-
 class App extends Component {
     constructor(props) {
         super(props);
@@ -80,6 +78,7 @@ class App extends Component {
     connectionCheck() {
         let connectedRef = firebase.database().ref(".info/connected");
         const {connErr} = this.props.data;
+        let error = false;
         connectedRef.on("value", function (snap) {
             if (snap.val()) {
                 console.log("connected");
@@ -88,8 +87,11 @@ class App extends Component {
                 }
                 store.dispatch(connectionError(false));
             } else {
-                store.dispatch(connectionError(true));
-                console.log("disconnected");
+                if (error) {
+                    store.dispatch(connectionError(true));
+                    console.log("disconnected");
+                }
+                error = true;
             }
         });
     }
@@ -148,37 +150,37 @@ class App extends Component {
                     </Row>
                 </header>
                 {connErr ? <div>loading....</div> : (
-                <div>
-                    <ListGroupItem key="global" style={{backgroundColor: "whitesmoke"}}>
-                        <Row>
-                            <Col xs="2">
-                                <GeneralStatistic users={users} today={this.state.today}/>
-                            </Col>
-                            <Col xs="2">
-                                <Calc/>
-                            </Col>
-                            <Col xs="8">
-                                <Input type="date" name="date" id="date"
-                                       value={this.state.date}
-                                       onChange={this.updateDate}
-                                       style={this.isToday()}
+                    <div>
+                        <ListGroupItem key="global" style={{backgroundColor: "whitesmoke"}}>
+                            <Row>
+                                <Col xs="2">
+                                    <GeneralStatistic users={users} today={this.state.today}/>
+                                </Col>
+                                <Col xs="2">
+                                    <Calc/>
+                                </Col>
+                                <Col xs="8">
+                                    <Input type="date" name="date" id="date"
+                                           value={this.state.date}
+                                           onChange={this.updateDate}
+                                           style={this.isToday()}
 
-                                />
-                            </Col>
-                        </Row>
-                    </ListGroupItem>
+                                    />
+                                </Col>
+                            </Row>
+                        </ListGroupItem>
 
-                    <ListGroup>
-                        {this.renderUsers()}
-                    </ListGroup>
+                        <ListGroup>
+                            {this.renderUsers()}
+                        </ListGroup>
 
-                    <div style={{
-                        paddingTop: '10px',
-                        paddingBottom: '20px',
-                    }}>
-                        {connErr ? <div/> : <AddUser saved={this.showSaved}/>}
+                        <div style={{
+                            paddingTop: '10px',
+                            paddingBottom: '20px',
+                        }}>
+                            {connErr ? <div/> : <AddUser saved={this.showSaved}/>}
+                        </div>
                     </div>
-                </div>
                 )}
                 <Alert color={this.state.alertSuccess ? "success" : "danger"}
                        style={{
