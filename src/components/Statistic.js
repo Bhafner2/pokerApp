@@ -7,15 +7,16 @@ import {
     Modal,
     ModalBody,
     ModalFooter,
-    ModalHeader,
-    Row,
-    Table
+    ModalHeader, Nav, NavItem, NavLink,
+    Row, TabContent,
+    Table, TabPane
 } from "reactstrap";
 import chart from '../img/chart-line-solid.svg';
 import {connect} from "react-redux";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import * as _ from 'lodash';
+import classnames from 'classnames';
 
 let options;
 
@@ -44,13 +45,24 @@ class Statistic extends React.Component {
             toDate: '',
             dateOk: true,
             dataReady: false,
+            activeTab: '1',
         };
 
         this.toggle = this.toggle.bind(this);
+        this.toggleTab = this.toggleTab.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.updateFormDate = this.updateFormDate.bind(this);
         this.updateToDate = this.updateToDate.bind(this);
         this.init = this.init.bind(this);
+    }
+
+
+    toggleTab(tab) {
+        if (this.state.activeTab !== tab) {
+            this.setState({
+                activeTab: tab
+            });
+        }
     }
 
     toggle() {
@@ -126,7 +138,7 @@ class Statistic extends React.Component {
     static chart(buyIn, won, total, trend, showDots) {
         options = {
             chart: {
-                height: 190,
+                height: 300,
                 type: 'spline',
             },
             title: {
@@ -296,43 +308,83 @@ class Statistic extends React.Component {
                             </Col>
                         </Row>
                     </FormGroup>
-                    <Table borderless size="sm">
-                        <thead>
-                        <tr>
-                            <th/>
-                            <th scope="row">Buy In</th>
-                            <th>Won</th>
-                            <th>Total</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th scope="row">Sum</th>
-                            <td>{sumBuyIn}</td>
-                            <td>{sumWon}</td>
-                            <th>{sumTotal}</th>
-                        </tr>
-                        <tr>
-                            <th scope="row">Avg</th>
-                            <td>{avgBuyIn}</td>
-                            <td>{avgWon}</td>
-                            <td>{avgTotal}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Max</th>
-                            <td>{maxBuyIn}</td>
-                            <td>{maxWon}</td>
-                            <td>{maxTotal}</td>
-                        </tr>
-                        </tbody>
-                    </Table>
-                    <div>
-                        <HighchartsReact
-                            style={{visibility: this.state.dataReady ? 'visible' : 'hidden'}}
-                            highcharts={Highcharts}
-                            options={options}
-                        />
-                    </div>
+                    <Nav tabs>
+                        <NavItem>
+                            <NavLink
+                                className={classnames({active: this.state.activeTab === '1'})}
+                                onClick={() => {
+                                    this.toggleTab('1');
+                                }}
+                            >
+                                Chart
+                            </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink
+                                className={classnames({active: this.state.activeTab === '2'})}
+                                onClick={() => {
+                                    this.toggleTab('2');
+                                }}
+                            >
+                                Table
+                            </NavLink>
+                        </NavItem>
+                    </Nav>
+                    <TabContent activeTab={this.state.activeTab}>
+                        <TabPane tabId="1">
+                            <br/>
+                            <Row>
+                                <Col>
+                                    <HighchartsReact
+                                        style={{visibility: this.state.dataReady ? 'visible' : 'hidden'}}
+                                        highcharts={Highcharts}
+                                        options={options}
+                                    />
+                                </Col>
+                            </Row>
+                        </TabPane>
+                    </TabContent>
+                    <TabContent activeTab={this.state.activeTab}>
+                        <TabPane tabId="2">
+                            <br/>
+                            <Row>
+                                <Col>
+                                    <Table borderless size="sm">
+                                        <thead>
+                                        <tr>
+                                            <th/>
+                                            <th scope="row">Buy In</th>
+                                            <th>Won</th>
+                                            <th>Total</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">Sum</th>
+                                            <td>{sumBuyIn}</td>
+                                            <td>{sumWon}</td>
+                                            <th>{sumTotal}</th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Avg</th>
+                                            <td>{avgBuyIn}</td>
+                                            <td>{avgWon}</td>
+                                            <td>{avgTotal}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Max</th>
+                                            <td>{maxBuyIn}</td>
+                                            <td>{maxWon}</td>
+                                            <td>{maxTotal}</td>
+                                        </tr>
+                                        </tbody>
+                                    </Table>
+                                </Col>
+                            </Row>
+                        </TabPane>
+                    </TabContent>
+
+
                 </ModalBody>
                 <ModalFooter>
                     <Button color="secondary" onClick={this.toggle}>Exit</Button>
