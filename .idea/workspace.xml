@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9b843d04-d234-4560-a5d4-e527747186df" name="Default" comment="calc">
+    <list default="true" id="9b843d04-d234-4560-a5d4-e527747186df" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Statistic.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Statistic.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -17,11 +20,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="App.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="95" column="27" selection-start-line="95" selection-start-column="27" selection-end-line="95" selection-end-column="27" />
+            <state relative-caret-position="270">
+              <caret line="134" column="17" lean-forward="true" selection-start-line="134" selection-start-column="17" selection-end-line="134" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="App.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/App.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="30" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -57,7 +69,7 @@
         <entry file="file://$PROJECT_DIR$/src/components/Calc.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-103">
-              <caret line="118" column="20" lean-forward="true" selection-start-line="118" selection-start-column="20" selection-end-line="118" selection-end-column="20" />
+              <caret line="118" column="20" selection-start-line="118" selection-start-column="20" selection-end-line="118" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -80,11 +92,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Statistic.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Statistic.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Statistic.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="105" column="25" lean-forward="true" selection-start-line="105" selection-start-column="25" selection-end-line="105" selection-end-column="25" />
+            <state relative-caret-position="347">
+              <caret line="115" column="15" selection-start-line="115" selection-start-column="15" selection-end-line="115" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -109,8 +121,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>avgWon</find>
-      <find>avgBuyIn</find>
       <find>avgTotal</find>
       <find>maxWon</find>
       <find>maxBuyIn</find>
@@ -139,6 +149,8 @@
       <find>momen</find>
       <find>auto</find>
       <find>) * 10,</find>
+      <find>todo</find>
+      <find>loadi</find>
     </findStrings>
     <replaceStrings>
       <replace>addUser</replace>
@@ -211,9 +223,9 @@
         <option value="$PROJECT_DIR$/src/redux/actions.js" />
         <option value="$PROJECT_DIR$/src/components/AddUser.js" />
         <option value="$PROJECT_DIR$/src/components/UserList.js" />
-        <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/components/Calc.js" />
         <option value="$PROJECT_DIR$/src/components/Statistic.js" />
+        <option value="$PROJECT_DIR$/src/App.js" />
       </list>
     </option>
   </component>
@@ -289,16 +301,16 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src\img" />
+      <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src" />
+      <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src\components" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src\img" />
       <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src\redux" />
       <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src" />
       <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\public" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src\img" />
-      <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src" />
-      <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src\components" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -360,7 +372,7 @@
       <workItem from="1536851870606" duration="7773000" />
       <workItem from="1537172876141" duration="28093000" />
       <workItem from="1537250679568" duration="9000" />
-      <workItem from="1537267868169" duration="23903000" />
+      <workItem from="1537267868169" duration="27177000" />
     </task>
     <task id="LOCAL-00001" summary="firebase connection">
       <created>1536591132576</created>
@@ -593,11 +605,18 @@
       <option name="project" value="LOCAL" />
       <updated>1537373390073</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="verscönert">
+      <created>1537374527738</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1537374527738</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="188398000" />
+    <option name="totallyTimeSpent" value="191672000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -621,7 +640,7 @@
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="bottom" id="Run" order="4" weight="0.32906404" />
       <window_info anchor="bottom" id="Terminal" order="10" weight="0.3369458" />
-      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.25922024" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.25922024" />
       <window_info id="Project Explorer" order="0" />
       <window_info id="Job Explorer" order="1" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
@@ -646,7 +665,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="toDos" />
     <MESSAGE value="firebase connection" />
     <MESSAGE value="user problem" />
     <MESSAGE value="global und local date" />
@@ -671,7 +689,8 @@
     <MESSAGE value="verschönert" />
     <MESSAGE value="chart cloumn" />
     <MESSAGE value="calc" />
-    <option name="LAST_COMMIT_MESSAGE" value="calc" />
+    <MESSAGE value="verscönert" />
+    <option name="LAST_COMMIT_MESSAGE" value="verscönert" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -857,13 +876,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="30" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/img/calculator-solid.svg">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -929,24 +941,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="95" column="27" selection-start-line="95" selection-start-column="27" selection-end-line="95" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Calc.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-103">
-          <caret line="118" column="20" lean-forward="true" selection-start-line="118" selection-start-column="20" selection-end-line="118" selection-end-column="20" />
+          <caret line="118" column="20" selection-start-line="118" selection-start-column="20" selection-end-line="118" selection-end-column="20" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Statistic.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="105" column="25" lean-forward="true" selection-start-line="105" selection-start-column="25" selection-end-line="105" selection-end-column="25" />
+        <state relative-caret-position="347">
+          <caret line="115" column="15" selection-start-line="115" selection-start-column="15" selection-end-line="115" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="30" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="134" column="17" lean-forward="true" selection-start-line="134" selection-start-column="17" selection-end-line="134" selection-end-column="17" />
         </state>
       </provider>
     </entry>

@@ -21,7 +21,6 @@ import moment from "moment";
 
 let options;
 
-let games = [];
 let sumWon = 0;
 let sumBuyIn = 0;
 let sumTotal = 0;
@@ -36,7 +35,6 @@ let won = [];
 let total = [];
 let trend = [];
 let date = [];
-let counter = 0;
 
 class Statistic extends React.Component {
     constructor(props) {
@@ -99,35 +97,49 @@ class Statistic extends React.Component {
         const from = new Date(this.state.fromDate);
         const to = new Date(this.state.toDate);
         if (this.state.dateOk) {
-            for (let i = 0; i < user.games.length; i++) {
-                if (from <= new Date(user.games[i].date) && to >= new Date(user.games[i].date)) {
-                    if (user.games[i].buyIn > 0) {
-                        counter++;
-                        games.push(user.games[i]);
-                        sumWon = sumWon + user.games[i].won;
-                        sumBuyIn = sumBuyIn + user.games[i].buyIn;
+            let filterdGames = _.filter(user.games, function (game) {
+                return (from <= new Date(game.date) && to >= new Date(game.date)) && game.buyIn > 0;
+            });
 
-                        buyIn.push(user.games[i].buyIn * -1);
-                        won.push(user.games[i].won);
-                        total.push(user.games[i].won - user.games[i].buyIn);
-                        trend.push(Math.round((sumWon - sumBuyIn) / counter));
-                        date.push(moment(user.games[i].date).format('D.M.YY'))
+            filterdGames = _.sortBy(filterdGames, [function (game) {
+                return game.date;
+            }]);
 
-                        //TODO sort
-                    }
-                }
-            }
-            if (games.length > 0) {
-                sumTotal = sumWon - sumBuyIn;
-                maxBuyIn = _.min(buyIn) * -1;
-                maxWon = _.max(won);
-                maxTotal = _.max(total);
-                avgTotal = Math.round(sumTotal / games.length);
-                avgBuyIn = Math.round(sumBuyIn / games.length);
-                avgWon = Math.round(sumWon / games.length);
-            }
+            console.log("filtered games ", filterdGames);
+
+            buyIn = _.map(filterdGames, (game) => {
+                return -game.buyIn;
+            });
+
+            won = _.map(filterdGames, (game) => {
+                return game.won;
+            });
+
+            date = _.map(filterdGames, (game) => {
+                return moment(game.date).format('D.M.YY');
+            });
+
+            total = _.map(filterdGames, (game) => {
+                return game.won - game.buyIn;
+            });
+
+            trend = _.map(filterdGames, (game) => {
+                return (game.won - game.buyIn) / 3;
+            });
+
+
+            sumWon = _.sum(won);
+            sumBuyIn = _.sum(buyIn);
+            sumTotal = sumWon - sumBuyIn;
+
+            maxBuyIn = _.min(buyIn) * -1;
+            maxWon = _.max(won);
+            maxTotal = _.max(total);
+            avgTotal = Math.round(sumTotal / filterdGames.length);
+            avgBuyIn = Math.round(sumBuyIn / filterdGames.length);
+            avgWon = Math.round(sumWon / filterdGames.length);
+            console.log("games for stat ", filterdGames);
         }
-        console.log("games for stat ", games);
 
         if (buyIn.length > 1) {
             Statistic.chart(date, buyIn, won, total, trend, false);
@@ -225,7 +237,6 @@ class Statistic extends React.Component {
     }
 
     init() {
-        games = [];
         sumWon = 0;
         sumBuyIn = 0;
         sumTotal = 0;
@@ -240,7 +251,6 @@ class Statistic extends React.Component {
         total = [];
         trend = [];
         date = [];
-        counter = 0;
         Statistic.chart([], [], [], true);
         this.setState({
             dataReady: false,

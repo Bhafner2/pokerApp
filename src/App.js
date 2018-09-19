@@ -13,6 +13,7 @@ import {store} from './redux/store'
 import firebase from "./config/firebase";
 import GeneralStatistic from "./components/GeneralStatistic";
 import Calc from "./components/Calc";
+import ReactLoading from 'react-loading';
 
 class App extends Component {
     constructor(props) {
@@ -33,13 +34,15 @@ class App extends Component {
     }
 
     componentDidMount() {
-        this.connectionCheck();
-
         store.dispatch(getUsers());
         this.setState({
             today: moment(new Date()).format('YYYY-MM-DD'),
             date: moment(new Date()).format('YYYY-MM-DD'),
         });
+
+        setTimeout(() => {
+            this.connectionCheck()
+        }, 1000);
     }
 
     isToday() {
@@ -98,7 +101,7 @@ class App extends Component {
 
         if (_.isNil(users) || _.isNil(users[0])) {
             return (
-                <div>loading....</div>
+                App.loading()
             )
         }
         console.log("users to render ", users);
@@ -127,6 +130,21 @@ class App extends Component {
 
          ])
      }*/
+    static loading() {
+        return (
+            <div>
+                <br/>
+                <ReactLoading type="cubes" color="#f5f5f5" height={50} width={50}
+                              style={{
+                                  alignItem: "center",
+                                  color: "#f5f5f5",
+                                  justifyContent: "center",
+                                  transform: "rotate(90deg)",
+
+                              }}/>
+            </div>
+        )
+    }
 
     render() {
         const {users, connErr} = this.props.data;
@@ -145,7 +163,7 @@ class App extends Component {
                         </Col>
                     </Row>
                 </header>
-                {connErr ? <div>loading....</div> : (
+                {connErr ? App.loading() : (
                     <div>
                         <ListGroupItem key="global" style={{backgroundColor: "whitesmoke"}}>
                             <Row>
