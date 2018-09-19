@@ -17,6 +17,7 @@ import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import * as _ from 'lodash';
 import classnames from 'classnames';
+import moment from "moment";
 
 let options;
 
@@ -34,6 +35,7 @@ let buyIn = [];
 let won = [];
 let total = [];
 let trend = [];
+let date = [];
 let counter = 0;
 
 class Statistic extends React.Component {
@@ -109,6 +111,7 @@ class Statistic extends React.Component {
                         won.push(user.games[i].won);
                         total.push(user.games[i].won - user.games[i].buyIn);
                         trend.push(Math.round((sumWon - sumBuyIn) / counter));
+                        date.push(moment(user.games[i].date).format('D.M.YY'))
                     }
                 }
             }
@@ -125,9 +128,9 @@ class Statistic extends React.Component {
         console.log("games for stat ", games);
 
         if (buyIn.length > 1) {
-            Statistic.chart(buyIn, won, total, trend, false);
+            Statistic.chart(date, buyIn, won, total, trend, false);
         } else {
-            Statistic.chart(buyIn, won, total, trend, true);
+            Statistic.chart(date, buyIn, won, total, trend, true);
         }
 
         this.setState({
@@ -135,10 +138,10 @@ class Statistic extends React.Component {
         })
     }
 
-    static chart(buyIn, won, total, trend, showDots) {
+    static chart(date, buyIn, won, total, trend, showDots) {
         options = {
             chart: {
-                height: 290,
+                height: 280,
                 type: 'spline',
             },
             title: {
@@ -158,7 +161,14 @@ class Statistic extends React.Component {
                     width: 0.5,
                 }],
             },
-            xAxis: {},
+            plotOptions: {
+                column: {
+                    stacking: 'normal'
+                },
+            },
+            xAxis: [{
+                categories: date,
+            }],
             legend: {
                 itemStyle: {
                     fontSize: '16px',
@@ -167,6 +177,8 @@ class Statistic extends React.Component {
             },
             series: [{
                 name: 'Buy In',
+                stack: 'data',
+                type: 'column',
                 data: buyIn,
                 lineWidth: 1,
                 color: 'rgb(255, 0, 0)',
@@ -180,6 +192,8 @@ class Statistic extends React.Component {
                 }
             }, {
                 name: 'Won',
+                stack: 'data',
+                type: 'column',
                 data: won,
                 lineWidth: 1,
                 color: 'rgb(0, 255, 0)',
@@ -188,6 +202,7 @@ class Statistic extends React.Component {
                 },
             }, {
                 name: 'Trend',
+                type: 'spline',
                 data: trend,
                 lineWidth: 1,
                 color: 'rgb(0, 0, 255)',
@@ -196,8 +211,8 @@ class Statistic extends React.Component {
                 },
             }, {
                 name: 'Total',
+                type: 'spline',
                 data: total,
-                lineWidth: 2,
                 color: 'rgb(0, 0, 0)',
                 marker: {
                     enabled: showDots,
@@ -222,6 +237,7 @@ class Statistic extends React.Component {
         won = [];
         total = [];
         trend = [];
+        date = [];
         counter = 0;
         Statistic.chart([], [], [], true);
         this.setState({

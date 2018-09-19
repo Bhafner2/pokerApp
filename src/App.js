@@ -78,7 +78,6 @@ class App extends Component {
     connectionCheck() {
         let connectedRef = firebase.database().ref(".info/connected");
         const {connErr} = this.props.data;
-        let error = false;
         connectedRef.on("value", function (snap) {
             if (snap.val()) {
                 console.log("connected");
@@ -87,11 +86,8 @@ class App extends Component {
                 }
                 store.dispatch(connectionError(false));
             } else {
-                if (error) {
-                    store.dispatch(connectionError(true));
-                    console.log("disconnected");
-                }
-                error = true;
+                store.dispatch(connectionError(true));
+                console.log("disconnected");
             }
         });
     }
