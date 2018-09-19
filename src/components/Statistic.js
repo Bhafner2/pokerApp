@@ -185,7 +185,7 @@ class Statistic extends React.Component {
             }, {
                 name: 'Total',
                 data: total,
-                lineWidth: 3,
+                lineWidth: 2,
                 color: 'rgb(0, 0, 0)',
                 marker: {
                     enabled: showDots,

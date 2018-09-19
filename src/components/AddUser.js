@@ -28,7 +28,13 @@ class AddUser extends React.Component {
                 field: true,
                 onOpen: true,
             }
-        )
+        );
+        if (this.props.data.connErr) {
+            this.setState({
+                usernameOk: false,
+                errorText: 'No connection to Server!'
+            });
+        }
     }
 
     toggle() {
@@ -43,49 +49,57 @@ class AddUser extends React.Component {
     }
 
     updateUser(evt) {
-        const {users} = this.props.data;
-        this.setState({
-                username: evt.target.value,
-                onOpen: false,
-            }, () => {
-                if (_.isNil(users)) {
-                    this.setState({
-                        usernameOk: false,
-                        errorText: 'no connection to Server',
-                    });
-                } else {
-                    if (this.state.username !== '') {
-                        for (let i = 0; i < users.length; i++) {
-                            if (users[i].name.toLowerCase() === this.state.username.toLowerCase()) {
-                                this.setState({
-                                    usernameOk: false,
-                                    errorText: 'already taken!'
-                                });
-                                break;
-                            } else {
-                                this.setState({
-                                    usernameOk: true,
-                                    errorText: '',
-                                });
-                            }
-                        }
-                    } else {
+        const {users, connErr} = this.props.data;
+
+        if (connErr) {
+            this.setState({
+                usernameOk: false,
+                errorText: 'No connection to Server!'
+            });
+        } else {
+            this.setState({
+                    username: evt.target.value,
+                    onOpen: false,
+                }, () => {
+                    if (_.isNil(users)) {
                         this.setState({
                             usernameOk: false,
-                            errorText: 'empty!'
+                            errorText: 'no connection to Server',
                         });
+                    } else {
+                        if (this.state.username !== '') {
+                            for (let i = 0; i < users.length; i++) {
+                                if (users[i].name.toLowerCase() === this.state.username.toLowerCase()) {
+                                    this.setState({
+                                        usernameOk: false,
+                                        errorText: 'already taken!'
+                                    });
+                                    break;
+                                } else {
+                                    this.setState({
+                                        usernameOk: true,
+                                        errorText: '',
+                                    });
+                                }
+                            }
+                        } else {
+                            this.setState({
+                                usernameOk: false,
+                                errorText: 'empty!'
+                            });
+                        }
                     }
                 }
-            }
-        );
+            );
+        }
     }
 
     handleKeyPress(target) {
         console.log("key pressed");
-        if(target.charCode === 13){
+        if (target.charCode === 13) {
             console.log("enter pressed");
-            this.addUser()   
-        } else if(target.charCode === 27){
+            this.addUser()
+        } else if (target.charCode === 27) {
             console.log("esc pressed");
             this.toggle()
         }
@@ -122,7 +136,8 @@ class AddUser extends React.Component {
                 Add User
             </Button>
 
-            <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} onKeyPress={this.handleKeyPress}>
+            <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
+                   onKeyPress={this.handleKeyPress}>
                 <ModalHeader toggle={this.toggle}>New User</ModalHeader>
                 <ModalBody>
                     <FormGroup>

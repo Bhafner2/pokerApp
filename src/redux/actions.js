@@ -1,4 +1,5 @@
 import {
+    CONNECTION_ERROR,
     GET_USERS,
     GET_USERS_FULFILLED,
     GET_USERS_REJECTED,
@@ -27,5 +28,12 @@ export function saveUsersRejected(users) {
     return {
         type: SAVE_USERS_REJECTED,
         users
+    };
+}
+
+export function connectionError(connErr) {
+    return {
+        type: CONNECTION_ERROR,
+        connErr
     };
 }

@@ -4,7 +4,7 @@ import {Alert, Col, Input, ListGroup, ListGroupItem, Row} from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
 import logo from './img/Poker.png';
 import AddUser from "./components/AddUser";
-import {getUsers} from "./redux/actions";
+import {connectionError, getUsers} from "./redux/actions";
 import UserList from "./components/UserList";
 import moment from "moment/moment";
 import * as _ from 'lodash';
@@ -35,6 +35,8 @@ class App extends Component {
     }
 
     componentDidMount() {
+        this.connectionCheck();
+
         store.dispatch(getUsers());
         this.setState({
             today: moment(new Date()).format('YYYY-MM-DD'),
@@ -77,27 +79,24 @@ class App extends Component {
 
     connectionCheck() {
         let connectedRef = firebase.database().ref(".info/connected");
+        const {connErr} = this.props.data;
         connectedRef.on("value", function (snap) {
-            if (snap.val() === true) {
-                if (error) {
+            if (snap.val()) {
+                console.log("connected");
+                if (connErr) {
                     store.dispatch(getUsers());
-                    console.log("connected");
                 }
-                error = false;
+                store.dispatch(connectionError(false));
             } else {
-                setTimeout(() => {
-                    if (error) {
-                        console.log("disconnected");
-                    }
-                    error = true;
-                }, 100);
+                store.dispatch(connectionError(true));
+                console.log("disconnected");
             }
         });
     }
 
     renderUsers() {
         const {date, today} = this.state;
-        const users = this.props.data.users;
+        const {users} = this.props.data;
 
         if (_.isNil(users) || _.isNil(users[0])) {
             return (
@@ -132,6 +131,7 @@ class App extends Component {
      }*/
 
     render() {
+        const {users, connErr} = this.props.data;
         return (
             <div className="App">
                 {/*
@@ -147,11 +147,13 @@ class App extends Component {
                         </Col>
                     </Row>
                 </header>
-                <ListGroup>
+                {connErr ? <div/> : (
+
+                <div>
                     <ListGroupItem key="global" style={{backgroundColor: "whitesmoke"}}>
                         <Row>
                             <Col xs="2">
-                                <GeneralStatistic users={this.props.data.users} today={this.state.today}/>
+                                <GeneralStatistic users={users} today={this.state.today}/>
                             </Col>
                             <Col xs="2">
                                 <Calc/>
@@ -167,16 +169,18 @@ class App extends Component {
                         </Row>
                     </ListGroupItem>
 
-                    {this.connectionCheck()}
-                    {this.renderUsers()}
-                </ListGroup>
+                    <ListGroup>
+                        {this.renderUsers()}
+                    </ListGroup>
 
-                <div style={{
-                    paddingTop: '10px',
-                    paddingBottom: '20px',
-                }}>
-                    {error ? <div/> : <AddUser saved={this.showSaved}/>}
+                    <div style={{
+                        paddingTop: '10px',
+                        paddingBottom: '20px',
+                    }}>
+                        {connErr ? <div/> : <AddUser saved={this.showSaved}/>}
+                    </div>
                 </div>
+                )}
                 <Alert color={this.state.alertSuccess ? "success" : "danger"}
                        style={{
                            visibility: this.state.showAlert ? 'visible' : 'hidden',
@@ -190,7 +194,7 @@ class App extends Component {
 
                 <Alert color="danger"
                        style={{
-                           visibility: error ? 'visible' : 'hidden',
+                           visibility: connErr ? 'visible' : 'hidden',
                            position: "fixed",
                            left: "0",
                            bottom: "0",

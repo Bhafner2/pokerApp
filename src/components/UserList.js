@@ -87,21 +87,29 @@ class UserList extends React.Component {
 
     getActualGame() {
         const {user} = this.props;
-        console.log("search game for user " + user.name + " on date " + this.state.date);
-        for (let i = 0; i < user.games.length; i++) {
-            if (this.state.date === user.games[i].date) {
-                this.setState({
-                    buyIn: user.games[i].buyIn,
-                    won: user.games[i].won
-                }, () => {
-                    console.log("game found " + this.state.buyIn + " / " + this.state.won);
-                });
-                break;
-            } else {
-                this.setState({
-                    buyIn: 0,
-                    won: 0
-                });
+        const {connErr} = this.props.data;
+
+        if (connErr) {
+            this.setState({
+                dataOk: false,
+            });
+        } else {
+            console.log("search game for user " + user.name + " on date " + this.state.date);
+            for (let i = 0; i < user.games.length; i++) {
+                if (this.state.date === user.games[i].date) {
+                    this.setState({
+                        buyIn: user.games[i].buyIn,
+                        won: user.games[i].won
+                    }, () => {
+                        console.log("game found " + this.state.buyIn + " / " + this.state.won);
+                    });
+                    break;
+                } else {
+                    this.setState({
+                        buyIn: 0,
+                        won: 0
+                    });
+                }
             }
         }
     }
