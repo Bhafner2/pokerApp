@@ -147,8 +147,7 @@ class App extends Component {
                         </Col>
                     </Row>
                 </header>
-                {connErr ? <div/> : (
-
+                {connErr ? <div>loading....</div> : (
                 <div>
                     <ListGroupItem key="global" style={{backgroundColor: "whitesmoke"}}>
                         <Row>

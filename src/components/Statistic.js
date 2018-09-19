@@ -138,7 +138,7 @@ class Statistic extends React.Component {
     static chart(buyIn, won, total, trend, showDots) {
         options = {
             chart: {
-                height: 300,
+                height: 290,
                 type: 'spline',
             },
             title: {
