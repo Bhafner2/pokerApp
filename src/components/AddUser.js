@@ -21,6 +21,7 @@ class AddUser extends React.Component {
         this.addUser = this.addUser.bind(this);
         this.updateUser = this.updateUser.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
+        this.checkUser = this.checkUser.bind(this);
     }
 
     componentDidMount() {
@@ -49,48 +50,44 @@ class AddUser extends React.Component {
     }
 
     updateUser(evt) {
-        const {users, connErr} = this.props.data;
+        this.setState({
+                username: evt.target.value,
+                onOpen: false,
+            }, () => {
+                this.checkUser()
+            }
+        );
 
-        if (connErr) {
+    }
+
+    checkUser() {
+        const {users} = this.props.data;
+        if (_.isNil(users)) {
             this.setState({
                 usernameOk: false,
-                errorText: 'No connection to Server!'
+                errorText: 'no connection to Server',
             });
         } else {
-            this.setState({
-                    username: evt.target.value,
-                    onOpen: false,
-                }, () => {
-                    if (_.isNil(users)) {
+            if (this.state.username !== '') {
+                for (let i = 0; i < users.length; i++) {
+                    if (users[i].name.toLowerCase() === this.state.username.toLowerCase()) {
                         this.setState({
                             usernameOk: false,
-                            errorText: 'no connection to Server',
+                            errorText: 'already taken!'
                         });
                     } else {
-                        if (this.state.username !== '') {
-                            for (let i = 0; i < users.length; i++) {
-                                if (users[i].name.toLowerCase() === this.state.username.toLowerCase()) {
-                                    this.setState({
-                                        usernameOk: false,
-                                        errorText: 'already taken!'
-                                    });
-                                    break;
-                                } else {
-                                    this.setState({
-                                        usernameOk: true,
-                                        errorText: '',
-                                    });
-                                }
-                            }
-                        } else {
-                            this.setState({
-                                usernameOk: false,
-                                errorText: 'empty!'
-                            });
-                        }
+                        this.setState({
+                            usernameOk: true,
+                            errorText: '',
+                        });
                     }
                 }
-            );
+            } else {
+                this.setState({
+                    usernameOk: false,
+                    errorText: 'empty!'
+                });
+            }
         }
     }
 
@@ -128,6 +125,12 @@ class AddUser extends React.Component {
             usernameOk: false,
             errorText: 'Enter a Username',
         });
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps !== this.props) {
+            this.checkUser();
+        }
     }
 
     render() {
