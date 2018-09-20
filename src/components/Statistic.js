@@ -19,8 +19,6 @@ import * as _ from 'lodash';
 import classnames from 'classnames';
 import moment from "moment";
 
-let options;
-
 let sumWon = 0;
 let sumBuyIn = 0;
 let sumTotal = 0;
@@ -44,8 +42,9 @@ class Statistic extends React.Component {
             fromDate: '',
             toDate: '',
             dateOk: true,
-            dataReady: false,
             activeTab: '1',
+            filteredGames: [],
+            options: {},
         };
 
         this.toggle = this.toggle.bind(this);
@@ -53,7 +52,8 @@ class Statistic extends React.Component {
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.updateFormDate = this.updateFormDate.bind(this);
         this.updateToDate = this.updateToDate.bind(this);
-        this.init = this.init.bind(this);
+        Statistic.init = Statistic.init.bind(this);
+        this.chart = this.chart.bind(this);
     }
 
 
@@ -72,9 +72,6 @@ class Statistic extends React.Component {
             fromDate: '2018-01-01',
             dateOk: true,
         }, () => {
-            this.setState({
-                dataReady: false,
-            });
             this.getData()
         });
     }
@@ -92,151 +89,164 @@ class Statistic extends React.Component {
     }
 
     getData() {
-        this.init();
+        Statistic.init();
         const {user} = this.props;
+        const {users} = this.props.data;
         const from = new Date(this.state.fromDate);
         const to = new Date(this.state.toDate);
+
+        const actualUser = _.filter(users, (u) => {
+            return user.name === u.name
+        })[0];
+
         if (this.state.dateOk) {
-            let filterdGames = _.filter(user.games, function (game) {
-                return (from <= new Date(game.date) && to >= new Date(game.date)) && game.buyIn > 0;
-            });
+            this.setState({
+                filteredGames: _.filter(actualUser.games, function (g) {
+                    return (from <= new Date(g.date) && to >= new Date(g.date)) && g.buyIn > 0;
 
-            filterdGames = _.sortBy(filterdGames, [function (game) {
-                return game.date;
-            }]);
+                }),
+            }, () => {
+                this.setState({
+                    filteredGames: _.sortBy(this.state.filteredGames, function (g) {
+                        return g.date;
+                    })
+                }, () => {
 
-            console.log("filtered games ", filterdGames);
+                    let {filteredGames} = this.state;
 
-            buyIn = _.map(filterdGames, (game) => {
-                return -game.buyIn;
-            });
+                    console.log("filtered games ", filteredGames);
 
-            won = _.map(filterdGames, (game) => {
-                return game.won;
-            });
+                    buyIn = _.map(filteredGames, (game) => {
+                        return -game.buyIn;
+                    });
 
-            date = _.map(filterdGames, (game) => {
-                return moment(game.date).format('D.M.YY');
-            });
+                    won = _.map(filteredGames, (game) => {
+                        return game.won;
+                    });
 
-            total = _.map(filterdGames, (game) => {
-                return game.won - game.buyIn;
-            });
+                    date = _.map(filteredGames, (game) => {
+                        return moment(game.date).format('D.M.YY');
+                    });
 
-            trend = _.map(filterdGames, (game) => {
-                return (game.won - game.buyIn) / 3;
-            });
+                    total = _.map(filteredGames, (game) => {
+                        return game.won - game.buyIn;
+                    });
+
+                    trend = _.map(filteredGames, (game) => {
+                        return (game.won - game.buyIn) / 3;
+                    });
 
 
-            sumWon = _.sum(won);
-            sumBuyIn = _.sum(buyIn);
-            sumTotal = sumWon - sumBuyIn;
+                    sumWon = _.sum(won);
+                    sumBuyIn = _.sum(buyIn) * -1;
+                    sumTotal = sumWon - sumBuyIn;
 
-            maxBuyIn = _.min(buyIn) * -1;
-            maxWon = _.max(won);
-            maxTotal = _.max(total);
-            avgTotal = Math.round(sumTotal / filterdGames.length);
-            avgBuyIn = Math.round(sumBuyIn / filterdGames.length);
-            avgWon = Math.round(sumWon / filterdGames.length);
-            console.log("games for stat ", filterdGames);
-        }
+                    maxBuyIn = _.min(buyIn) * -1;
+                    maxWon = _.max(won);
+                    maxTotal = _.max(total);
+                    avgTotal = Math.round(sumTotal / filteredGames.length);
+                    avgBuyIn = Math.round(sumBuyIn / filteredGames.length);
+                    avgWon = Math.round(sumWon / filteredGames.length);
+                    console.log("games for stat ", filteredGames);
 
-        if (buyIn.length > 1) {
-            Statistic.chart(date, buyIn, won, total, trend, false);
-        } else {
-            Statistic.chart(date, buyIn, won, total, trend, true);
-        }
-
-        this.setState({
-            dataReady: true,
-        })
-    }
-
-    static chart(date, buyIn, won, total, trend, showDots) {
-        options = {
-            chart: {
-                height: 280,
-                type: 'spline',
-            },
-            title: {
-                text: 'Games',
-                style: {
-                    fontWeight: 'bold'
-                },
-            },
-            yAxis: {
-                title: {
-                    text: ''
-                },
-                plotLines: [{
-                    value: 0,
-                    color: 'lightGrey',
-                    dashStyle: 'shortdash',
-                    width: 0.5,
-                }],
-            },
-            plotOptions: {
-                column: {
-                    stacking: 'normal'
-                },
-            },
-            xAxis: [{
-                categories: date,
-            }],
-            legend: {
-                itemStyle: {
-                    fontSize: '16px',
-                    font: '12pt Trebuchet MS, Verdana, sans-serif',
-                },
-            },
-            series: [{
-                name: 'Buy In',
-                stack: 'data',
-                type: 'column',
-                data: buyIn,
-                lineWidth: 1,
-                color: 'rgb(255, 0, 0)',
-                marker: {
-                    enabled: showDots,
-                },
-                labels: {
-                    style: {
-                        fontSize: '50px'
+                    if (buyIn.length > 1) {
+                        this.chart(date, buyIn, won, total, trend, false);
+                    } else {
+                        this.chart(date, buyIn, won, total, trend, true);
                     }
-                }
-            }, {
-                name: 'Won',
-                stack: 'data',
-                type: 'column',
-                data: won,
-                lineWidth: 1,
-                color: 'rgb(0, 255, 0)',
-                marker: {
-                    enabled: showDots,
-                },
-            }, {
-                name: 'Total',
-                type: 'spline',
-                data: total,
-                color: 'rgb(0, 0, 0)',
-                marker: {
-                    enabled: showDots,
-                },
-            }, {
-                name: 'Trend',
-                type: 'spline',
-                data: trend,
-                lineWidth: 1,
-                color: 'rgb(0, 0, 255)',
-                marker: {
-                    enabled: showDots,
-                },
-            },
-            ],
-        };
+
+                })
+            });
+        }
     }
 
-    init() {
+    chart(date, buyIn, won, total, trend, showDots) {
+        this.setState({
+            options: {
+                chart: {
+                    height: 280,
+                    type: 'spline',
+                },
+                title: {
+                    text: 'Games',
+                    style: {
+                        fontWeight: 'bold'
+                    },
+                },
+                yAxis: {
+                    title: {
+                        text: ''
+                    },
+                    plotLines: [{
+                        value: 0,
+                        color: 'lightGrey',
+                        dashStyle: 'shortdash',
+                        width: 0.5,
+                    }],
+                },
+                plotOptions: {
+                    column: {
+                        stacking: 'normal'
+                    },
+                },
+                xAxis: [{
+                    categories: date,
+                }],
+                legend: {
+                    itemStyle: {
+                        fontSize: '16px',
+                        font: '12pt Trebuchet MS, Verdana, sans-serif',
+                    },
+                },
+                series: [{
+                    name: 'Buy In',
+                    stack: 'data',
+                    type: 'column',
+                    data: buyIn,
+                    lineWidth: 1,
+                    color: 'rgb(255, 0, 0)',
+                    marker: {
+                        enabled: showDots,
+                    },
+                    labels: {
+                        style: {
+                            fontSize: '50px'
+                        }
+                    }
+                }, {
+                    name: 'Won',
+                    stack: 'data',
+                    type: 'column',
+                    data: won,
+                    lineWidth: 1,
+                    color: 'rgb(0, 255, 0)',
+                    marker: {
+                        enabled: showDots,
+                    },
+                }, {
+                    name: 'Total',
+                    type: 'spline',
+                    data: total,
+                    color: 'rgb(0, 0, 0)',
+                    marker: {
+                        enabled: showDots,
+                    },
+                }, {
+                    name: 'Trend',
+                    type: 'spline',
+                    data: trend,
+                    lineWidth: 1,
+                    color: 'rgb(0, 0, 255)',
+                    marker: {
+                        enabled: showDots,
+                    },
+                },
+                ],
+            }
+        });
+    }
+
+    static init() {
         sumWon = 0;
         sumBuyIn = 0;
         sumTotal = 0;
@@ -251,10 +261,6 @@ class Statistic extends React.Component {
         total = [];
         trend = [];
         date = [];
-        Statistic.chart([], [], [], true);
-        this.setState({
-            dataReady: false,
-        })
     }
 
     updateFormDate(evt) {
@@ -264,14 +270,12 @@ class Statistic extends React.Component {
                 if (this.state.fromDate === '' || new Date(this.state.toDate) < new Date(this.state.fromDate)) {
                     this.setState({
                         dateOk: false,
-                        dataReady: false,
                     }, () => {
                         this.getData();
                     });
                 } else {
                     this.setState({
                         dateOk: true,
-                        dataReady: false,
                     }, () => {
                         this.getData();
                     });
@@ -287,14 +291,12 @@ class Statistic extends React.Component {
                 if (this.state.toDate === '' || new Date(this.state.toDate) < new Date(this.state.fromDate)) {
                     this.setState({
                         dateOk: false,
-                        dataReady: false,
                     }, () => {
                         this.getData();
                     });
                 } else {
                     this.setState({
                         dateOk: true,
-                        dataReady: false,
                     }, () => {
                         this.getData();
                     });
@@ -364,9 +366,9 @@ class Statistic extends React.Component {
                             <Row>
                                 <Col>
                                     <HighchartsReact
-                                        style={{visibility: this.state.dataReady ? 'visible' : 'hidden'}}
+                                        style={{visibility: this.state.dateOk ? 'visible' : 'hidden'}}
                                         highcharts={Highcharts}
-                                        options={options}
+                                        options={this.state.options}
                                     />
                                 </Col>
                             </Row>
