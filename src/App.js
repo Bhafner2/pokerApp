@@ -14,6 +14,7 @@ import firebase from "./config/firebase";
 import GeneralStatistic from "./components/GeneralStatistic";
 import Calc from "./components/Calc";
 import ReactLoading from 'react-loading';
+import {Route, Router} from "react-router";
 
 class App extends Component {
     constructor(props) {

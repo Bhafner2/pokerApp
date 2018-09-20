@@ -44,7 +44,8 @@ class AddUser extends React.Component {
             onOpen: true,
         }, () => {
             this.setState({
-                username: ''
+                username: '',
+                usernameOk: false,
             })
         });
     }
@@ -144,15 +145,14 @@ class AddUser extends React.Component {
                 <ModalHeader toggle={this.toggle}>New User</ModalHeader>
                 <ModalBody>
                     <FormGroup>
-                        <Input
-                            valid={this.state.usernameOk}
-                            invalid={!this.state.usernameOk && !this.state.onOpen}
-                            type="text" name="user" id="user"
-                            placeholder="Username"
-                            onChange={this.updateUser}
-                            value={this.state.username}
-                            autoFocus={true}
-                            onKeyPress={this.handleKeyPress}
+                        <Input autoFocus={true}
+                               valid={this.state.usernameOk}
+                               invalid={!this.state.usernameOk && !this.state.onOpen}
+                               type="text" name="user" id="user"
+                               placeholder="Username"
+                               onChange={this.updateUser}
+                               value={this.state.username}
+                               onKeyPress={this.handleKeyPress}
                         />
                         <FormFeedback invalid>{this.state.errorText}</FormFeedback>
                     </FormGroup>
