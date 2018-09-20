@@ -168,7 +168,7 @@ class App extends Component {
                         <ListGroupItem key="global" style={{backgroundColor: "whitesmoke"}}>
                             <Row>
                                 <Col xs="2">
-                                    <GeneralStatistic users={users} today={this.state.today}/>
+                                    <GeneralStatistic today={this.state.today}/>
                                 </Col>
                                 <Col xs="2">
                                     <Calc/>
