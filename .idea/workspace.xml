@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9b843d04-d234-4560-a5d4-e527747186df" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.firebase/hosting.YnVpbGQ.cache" beforeDir="false" afterPath="$PROJECT_DIR$/.firebase/hosting.YnVpbGQ.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/GeneralStatistic.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/GeneralStatistic.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -21,8 +21,8 @@
       <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="268">
-              <caret line="170" column="53" selection-start-line="170" selection-start-column="53" selection-end-line="170" selection-end-column="53" />
+            <state relative-caret-position="328">
+              <caret line="135" selection-start-line="135" selection-end-line="139" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -48,8 +48,8 @@
       <file leaf-file-name="Calc.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Calc.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-103">
-              <caret line="118" column="20" selection-start-line="118" selection-start-column="20" selection-end-line="118" selection-end-column="20" />
+            <state relative-caret-position="-4">
+              <caret line="192" column="35" lean-forward="true" selection-start-line="192" selection-start-column="35" selection-end-line="192" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -58,7 +58,7 @@
         <entry file="file://$PROJECT_DIR$/src/components/AddUser.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="136">
-              <caret line="32" column="38" lean-forward="true" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
+              <caret line="32" column="38" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -67,7 +67,7 @@
         <entry file="file://$PROJECT_DIR$/src/redux/saga.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="285">
-              <caret line="29" column="34" lean-forward="true" selection-start-line="29" selection-start-column="34" selection-end-line="29" selection-end-column="34" />
+              <caret line="29" column="34" selection-start-line="29" selection-start-column="34" selection-end-line="29" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -85,7 +85,7 @@
         <entry file="file://$PROJECT_DIR$/src/components/Statistic.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="199">
-              <caret line="123" column="23" lean-forward="true" selection-start-line="123" selection-start-column="23" selection-end-line="123" selection-end-column="58" />
+              <caret line="123" column="23" selection-start-line="123" selection-start-column="23" selection-end-line="123" selection-end-column="58" />
             </state>
           </provider>
         </entry>
@@ -93,8 +93,8 @@
       <file leaf-file-name="GeneralStatistic.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="369" column="51" selection-start-line="368" selection-end-line="371" />
+            <state relative-caret-position="242">
+              <caret line="303" column="56" lean-forward="true" selection-start-line="303" selection-start-column="56" selection-end-line="303" selection-end-column="56" />
             </state>
           </provider>
         </entry>
@@ -110,11 +110,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>users</find>
-      <find>disa</find>
-      <find>error</find>
-      <find>setTimeout</find>
-      <find>momen</find>
       <find>auto</find>
       <find>) * 10,</find>
       <find>todo</find>
@@ -140,9 +135,13 @@
       <find>lod</find>
       <find>maxWon</find>
       <find>mome</find>
+      <find>max</find>
+      <find>avgSi</find>
+      <find>sumWon</find>
+      <find>sum</find>
+      <find>left</find>
     </findStrings>
     <replaceStrings>
-      <replace>addUser</replace>
       <replace>deleteUser</replace>
       <replace>store.getState().actualDate</replace>
       <replace>this.props.date</replace>
@@ -171,6 +170,8 @@
       <replace>),</replace>
       <replace>GeneralStatisic</replace>
       <replace>GeneralStatistic</replace>
+      <replace>sum</replace>
+      <replace>avg</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -217,8 +218,8 @@
         <option value="$PROJECT_DIR$/src/components/Calc.js" />
         <option value="$PROJECT_DIR$/src/components/UserList.js" />
         <option value="$PROJECT_DIR$/src/components/AddUser.js" />
-        <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/components/Statistic.js" />
+        <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/components/GeneralStatistic.js" />
       </list>
     </option>
@@ -366,7 +367,7 @@
       <workItem from="1536851870606" duration="7773000" />
       <workItem from="1537172876141" duration="28093000" />
       <workItem from="1537250679568" duration="9000" />
-      <workItem from="1537267868169" duration="46683000" />
+      <workItem from="1537267868169" duration="52032000" />
     </task>
     <task id="LOCAL-00001" summary="firebase connection">
       <created>1536591132576</created>
@@ -648,11 +649,25 @@
       <option name="project" value="LOCAL" />
       <updated>1537451182612</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="general max">
+      <created>1537458584836</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1537458584836</updated>
+    </task>
+    <task id="LOCAL-00042" summary="general">
+      <created>1537462828404</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1537462828404</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="211178000" />
+    <option name="totallyTimeSpent" value="216527000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -701,8 +716,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="store implemeted and components" />
-    <MESSAGE value="isToday" />
     <MESSAGE value="firebase connectet" />
     <MESSAGE value="date today fixed" />
     <MESSAGE value="with not working sagas" />
@@ -726,7 +739,9 @@
     <MESSAGE value="add User aus store" />
     <MESSAGE value="UserList aus store" />
     <MESSAGE value="verschönert" />
-    <option name="LAST_COMMIT_MESSAGE" value="verschönert" />
+    <MESSAGE value="general max" />
+    <MESSAGE value="general" />
+    <option name="LAST_COMMIT_MESSAGE" value="general" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -928,13 +943,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Calc.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-103">
-          <caret line="118" column="20" selection-start-line="118" selection-start-column="20" selection-end-line="118" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/App.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -966,21 +974,14 @@
     <entry file="file://$PROJECT_DIR$/src/redux/saga.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
-          <caret line="29" column="34" lean-forward="true" selection-start-line="29" selection-start-column="34" selection-end-line="29" selection-end-column="34" />
+          <caret line="29" column="34" selection-start-line="29" selection-start-column="34" selection-end-line="29" selection-end-column="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/AddUser.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
-          <caret line="32" column="38" lean-forward="true" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="170" column="53" selection-start-line="170" selection-start-column="53" selection-end-line="170" selection-end-column="53" />
+          <caret line="32" column="38" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
         </state>
       </provider>
     </entry>
@@ -994,14 +995,28 @@
     <entry file="file://$PROJECT_DIR$/src/components/Statistic.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="199">
-          <caret line="123" column="23" lean-forward="true" selection-start-line="123" selection-start-column="23" selection-end-line="123" selection-end-column="58" />
+          <caret line="123" column="23" selection-start-line="123" selection-start-column="23" selection-end-line="123" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="328">
+          <caret line="135" selection-start-line="135" selection-end-line="139" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Calc.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4">
+          <caret line="192" column="35" lean-forward="true" selection-start-line="192" selection-start-column="35" selection-end-line="192" selection-end-column="35" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="369" column="51" selection-start-line="368" selection-end-line="371" />
+        <state relative-caret-position="242">
+          <caret line="303" column="56" lean-forward="true" selection-start-line="303" selection-start-column="56" selection-end-line="303" selection-end-column="56" />
         </state>
       </provider>
     </entry>

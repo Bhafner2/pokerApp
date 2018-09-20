@@ -11,7 +11,7 @@ import {
     Row, TabContent,
     Table, TabPane
 } from "reactstrap";
-import chart from '../img/chart-line-solid.svg';
+import chart from '../img/chart-bar-regular.svg';
 import {connect} from "react-redux";
 import * as _ from 'lodash';
 import classnames from 'classnames';
@@ -151,7 +151,7 @@ class GeneralStatistic extends React.Component {
                         return o.buyIn
                     });
 
-                    user.total =  _.sumBy(user.games, function (o) {
+                    user.total = _.sumBy(user.games, function (o) {
                         return o.won - o.buyIn
                     });
 
@@ -255,10 +255,10 @@ class GeneralStatistic extends React.Component {
     }
 
     render() {
-        const {sumWon, sumBuyIn, sumTotal, avgWon, avgBuyIn, avgTotal, maxWon, maxBuyIn, maxTotal, top} = this.state;
+        const { sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxTotal, top} = this.state;
 
         return (<div>
-            <img className="chart" src={chart} alt={"chart"} onClick={this.toggle} style={{height: "25px"}}/>
+            <img className="chart" src={chart} alt={"chart"} onClick={this.toggle} style={{height: "32px"}}/>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                    onKeyPress={this.handleKeyPress}>
@@ -294,7 +294,7 @@ class GeneralStatistic extends React.Component {
                                     this.toggleTab('1');
                                 }}
                             >
-                                Max
+                                Top List
                             </NavLink>
                         </NavItem>
                         <NavItem>
@@ -307,20 +307,34 @@ class GeneralStatistic extends React.Component {
                                 Table
                             </NavLink>
                         </NavItem>
-                        <NavItem>
-                            <NavLink
-                                className={classnames({active: this.state.activeTab === '3'})}
-                                onClick={() => {
-                                    this.toggleTab('3');
-                                }}
-                            >
-                                Top list
-                            </NavLink>
-                        </NavItem>
                     </Nav>
                     <TabContent activeTab={this.state.activeTab}>
                         <TabPane tabId="1">
                             <br/>
+                            <Row>
+                                <Col>
+                                    <Table borderless>
+                                        <tbody>
+                                        {top.map((user) => (
+                                            <tr>
+                                                <td>{user.name}</td>
+                                                <td>{user.total}</td>
+                                            </tr>
+                                        ))}
+                                        </tbody>
+                                    </Table>
+                                </Col>
+                            </Row>
+                        </TabPane>
+                    </TabContent>
+                    <TabContent activeTab={this.state.activeTab}>
+                        <TabPane tabId="2">
+                            <br/>
+                            <div style={{
+                                textAlign: "center",
+                            }}>
+                                <b>Maximum Values</b>
+                            </div>
                             <Row>
                                 <Col>
                                     <Table borderless size="sm">
@@ -359,54 +373,19 @@ class GeneralStatistic extends React.Component {
                                     </Table>
                                 </Col>
                             </Row>
-                        </TabPane>
-                    </TabContent>
-                    <TabContent activeTab={this.state.activeTab}>
-                        <TabPane tabId="2">
                             <br/>
                             <Row>
                                 <Col>
                                     <Table borderless size="sm">
-                                        <thead>
-                                        <tr>
-                                            <th/>
-                                            <th scope="row">Buy In</th>
-                                            <th>Won</th>
-                                            <th>Total</th>
-                                        </tr>
-                                        </thead>
                                         <tbody>
                                         <tr>
-                                            <th scope="row">Sum</th>
-                                            <th>{sumBuyIn}</th>
-                                            <td>{sumWon}</td>
-                                            <td>{sumTotal}</td>
+                                            <td scope="row">Sum of all Buy In's</td>
+                                            <td>{sumBuyIn}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">Avg</th>
-                                            <th>{avgBuyIn}</th>
-                                            <td>{avgWon}</td>
-                                            <td>{avgTotal}</td>
+                                            <td scope="row">Average Buy In</td>
+                                            <td>{avgBuyIn}</td>
                                         </tr>
-                                        </tbody>
-                                    </Table>
-                                </Col>
-                            </Row>
-                        </TabPane>
-                    </TabContent>
-                    <TabContent activeTab={this.state.activeTab}>
-                        <TabPane tabId="3">
-                            <br/>
-                            <Row>
-                                <Col>
-                                    <Table borderless>
-                                        <tbody>
-                                        {top.map((user) => (
-                                            <tr>
-                                                <td>{user.name}</td>
-                                                <td>{user.total}</td>
-                                            </tr>
-                                        ))}
                                         </tbody>
                                     </Table>
                                 </Col>
