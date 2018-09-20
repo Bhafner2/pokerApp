@@ -183,6 +183,12 @@ class UserList extends React.Component {
         }
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps !== this.props) {
+            this.getActualGame();
+        }
+    }
+
     render() {
         const {user, today} = this.props;
         return (<div>
