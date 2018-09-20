@@ -13,11 +13,8 @@ import {
 } from "reactstrap";
 import chart from '../img/chart-line-solid.svg';
 import {connect} from "react-redux";
-import Highcharts from 'highcharts'
-import HighchartsReact from 'highcharts-react-official'
 import * as _ from 'lodash';
 import classnames from 'classnames';
-import moment from "moment";
 
 let filteredUsers = [];
 let empty = {name: '', won: 0, buyIn: 0, date: ''};
@@ -42,6 +39,7 @@ class GeneralStatistic extends React.Component {
             maxBuyIn: {...empty},
             maxWon: {...empty},
             maxTotal: {...empty},
+            top: [],
         };
 
         this.toggle = this.toggle.bind(this);
@@ -49,7 +47,6 @@ class GeneralStatistic extends React.Component {
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.updateFormDate = this.updateFormDate.bind(this);
         this.updateToDate = this.updateToDate.bind(this);
-        this.chart = this.chart.bind(this);
         this.init = this.init.bind(this);
     }
 
@@ -94,6 +91,14 @@ class GeneralStatistic extends React.Component {
         let maxWon = {...empty};
         let maxBuyIn = {...empty};
         let maxTotal = {...empty};
+        let sumWon = 0;
+        let sumBuyIn = 0;
+        let sumTotal = 0;
+        let avgWon = 0;
+        let avgBuyIn = 0;
+        let avgTotal = 0;
+        let counter = 0;
+        let top = [];
         if (this.state.dateOk) {
 
             for (let i in users) {
@@ -107,7 +112,7 @@ class GeneralStatistic extends React.Component {
                 });
                 if (user.games.length > 0) {
 
-
+                    counter = counter + user.games.length;
                     let maxW = _.maxBy(user.games, function (o) {
                         return o.won
                     });
@@ -138,103 +143,51 @@ class GeneralStatistic extends React.Component {
                         console.log('total', maxTotal.won - maxTotal.buyIn)
                     }
 
+                    sumWon = sumWon + _.sumBy(user.games, function (o) {
+                        return o.won
+                    });
+
+                    sumBuyIn = sumBuyIn + _.sumBy(user.games, function (o) {
+                        return o.buyIn
+                    });
+
+                    user.total =  _.sumBy(user.games, function (o) {
+                        return o.won - o.buyIn
+                    });
+
+                    sumTotal = sumTotal + user.total;
+                    console.log("user total", user.total);
+
+
                     filteredUsers.push(user);
                     console.log("users", filteredUsers);
                 }
             }
+
+            top = _.sortBy(filteredUsers, function (o) {
+                return -o.total
+            });
+
+            console.log('top', top);
+            avgWon = Math.round(sumWon / counter);
+            avgBuyIn = Math.round(sumBuyIn / counter);
+            avgTotal = Math.round(sumTotal / counter);
+
             this.setState({
                 maxWon,
                 maxBuyIn,
                 maxTotal,
+                sumBuyIn,
+                sumTotal,
+                sumWon,
+                avgBuyIn,
+                avgWon,
+                avgTotal,
+                top,
             });
         }
     }
 
-    chart(date, buyIn, won, total, trend, showDots) {
-        this.setState({
-            options: {
-                chart: {
-                    height: 280,
-                    type: 'spline',
-                },
-                title: {
-                    text: 'Games',
-                    style: {
-                        fontWeight: 'bold'
-                    },
-                },
-                yAxis: {
-                    title: {
-                        text: ''
-                    },
-                    plotLines: [{
-                        value: 0,
-                        color: 'lightGrey',
-                        dashStyle: 'shortdash',
-                        width: 0.5,
-                    }],
-                },
-                plotOptions: {
-                    column: {
-                        stacking: 'normal'
-                    },
-                },
-                xAxis: [{
-                    categories: date,
-                }],
-                legend: {
-                    itemStyle: {
-                        fontSize: '16px',
-                        font: '12pt Trebuchet MS, Verdana, sans-serif',
-                    },
-                },
-                series: [{
-                    name: 'Buy In',
-                    stack: 'data',
-                    type: 'column',
-                    data: buyIn,
-                    lineWidth: 1,
-                    color: 'rgb(255, 0, 0)',
-                    marker: {
-                        enabled: showDots,
-                    },
-                    labels: {
-                        style: {
-                            fontSize: '50px'
-                        }
-                    }
-                }, {
-                    name: 'Won',
-                    stack: 'data',
-                    type: 'column',
-                    data: won,
-                    lineWidth: 1,
-                    color: 'rgb(0, 255, 0)',
-                    marker: {
-                        enabled: showDots,
-                    },
-                }, {
-                    name: 'Total',
-                    type: 'spline',
-                    data: total,
-                    color: 'rgb(0, 0, 0)',
-                    marker: {
-                        enabled: showDots,
-                    },
-                }, {
-                    name: 'Trend',
-                    type: 'spline',
-                    data: trend,
-                    lineWidth: 1,
-                    color: 'rgb(0, 0, 255)',
-                    marker: {
-                        enabled: showDots,
-                    },
-                },
-                ],
-            }
-        });
-    }
 
     init() {
         filteredUsers = [];
@@ -248,6 +201,8 @@ class GeneralStatistic extends React.Component {
             maxBuyIn: {...empty},
             maxWon: {...empty},
             maxTotal: 0,
+            filteredGames: [],
+            top: [],
         });
     }
 
@@ -300,7 +255,7 @@ class GeneralStatistic extends React.Component {
     }
 
     render() {
-        const {sumWon, sumBuyIn, sumTotal, avgWon, avgBuyIn, avgTotal, maxWon, maxBuyIn, maxTotal} = this.state;
+        const {sumWon, sumBuyIn, sumTotal, avgWon, avgBuyIn, avgTotal, maxWon, maxBuyIn, maxTotal, top} = this.state;
 
         return (<div>
             <img className="chart" src={chart} alt={"chart"} onClick={this.toggle} style={{height: "25px"}}/>
@@ -349,7 +304,17 @@ class GeneralStatistic extends React.Component {
                                     this.toggleTab('2');
                                 }}
                             >
-                                Chart
+                                Table
+                            </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink
+                                className={classnames({active: this.state.activeTab === '3'})}
+                                onClick={() => {
+                                    this.toggleTab('3');
+                                }}
+                            >
+                                Top list
                             </NavLink>
                         </NavItem>
                     </Nav>
@@ -366,9 +331,6 @@ class GeneralStatistic extends React.Component {
                                             <th>Buy In</th>
                                             <th>Won</th>
                                             <th>Total</th>
-{/*
-                                            <th>Date</th>
-*/}
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -378,9 +340,6 @@ class GeneralStatistic extends React.Component {
                                             <th>{maxBuyIn.buyIn}</th>
                                             <td>{maxBuyIn.won}</td>
                                             <td>{maxBuyIn.won - maxBuyIn.buyIn}</td>
-{/*
-                                            <td>{moment(maxBuyIn.date).format('D.M.YY')}</td>
-*/}
                                         </tr>
                                         <tr>
                                             <th scope="row">Won</th>
@@ -388,9 +347,6 @@ class GeneralStatistic extends React.Component {
                                             <td>{maxWon.buyIn}</td>
                                             <th>{maxWon.won}</th>
                                             <td>{maxWon.won - maxWon.buyIn}</td>
-{/*
-                                            <td>{moment(maxWon.date).format('D.M.YY')}</td>
-*/}
                                         </tr>
                                         <tr>
                                             <th scope="row">Total</th>
@@ -398,15 +354,11 @@ class GeneralStatistic extends React.Component {
                                             <td>{maxTotal.buyIn}</td>
                                             <td>{maxTotal.won}</td>
                                             <th>{maxTotal.won - maxTotal.buyIn}</th>
-{/*
-                                            <td>{moment(maxTotal.date).format('D.M.YY')}</td>
-*/}
                                         </tr>
                                         </tbody>
                                     </Table>
                                 </Col>
                             </Row>
-
                         </TabPane>
                     </TabContent>
                     <TabContent activeTab={this.state.activeTab}>
@@ -414,11 +366,49 @@ class GeneralStatistic extends React.Component {
                             <br/>
                             <Row>
                                 <Col>
-                                    <HighchartsReact
-                                        style={{visibility: this.state.dateOk ? 'visible' : 'hidden'}}
-                                        highcharts={Highcharts}
-                                        options={this.state.options}
-                                    />
+                                    <Table borderless size="sm">
+                                        <thead>
+                                        <tr>
+                                            <th/>
+                                            <th scope="row">Buy In</th>
+                                            <th>Won</th>
+                                            <th>Total</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">Sum</th>
+                                            <th>{sumBuyIn}</th>
+                                            <td>{sumWon}</td>
+                                            <td>{sumTotal}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Avg</th>
+                                            <th>{avgBuyIn}</th>
+                                            <td>{avgWon}</td>
+                                            <td>{avgTotal}</td>
+                                        </tr>
+                                        </tbody>
+                                    </Table>
+                                </Col>
+                            </Row>
+                        </TabPane>
+                    </TabContent>
+                    <TabContent activeTab={this.state.activeTab}>
+                        <TabPane tabId="3">
+                            <br/>
+                            <Row>
+                                <Col>
+                                    <Table borderless>
+                                        <tbody>
+                                        {top.map((user) => (
+                                            <tr>
+                                                <td>{user.name}</td>
+                                                <td>{user.total}</td>
+                                            </tr>
+                                        ))}
+                                        </tbody>
+                                    </Table>
                                 </Col>
                             </Row>
                         </TabPane>
