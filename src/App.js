@@ -14,6 +14,7 @@ import firebase from "./config/firebase";
 import GeneralStatistic from "./components/GeneralStatistic";
 import Calc from "./components/Calc";
 import ReactLoading from 'react-loading';
+import ThisGame from "./components/ThisGame";
 
 class App extends Component {
     constructor(props) {
@@ -169,18 +170,21 @@ class App extends Component {
                     <ListGroupItem key="global" style={{backgroundColor: "whitesmoke"}}>
                         <Row>
                             <Col xs="2">
+                                <Calc/>
+                            </Col>
+                            <Col xs="2">
                                 {connErr ? <div/> : <GeneralStatistic today={this.state.today}/>}
 
                             </Col>
                             <Col xs="2">
-                                <Calc/>
+                                {connErr ? <div/> : <ThisGame today={this.state.date}/>}
+
                             </Col>
-                            <Col xs="8">
+                            <Col xs="6">
                                 <Input type="date" name="date" id="date"
                                        value={this.state.date}
                                        onChange={this.updateDate}
                                        style={this.isToday()}
-
                                 />
                             </Col>
                         </Row>

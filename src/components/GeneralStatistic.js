@@ -11,7 +11,7 @@ import {
     Row, TabContent,
     Table, TabPane
 } from "reactstrap";
-import chart from '../img/chart-bar-regular.svg';
+import trophy from '../img/trophy-solid.svg';
 import {connect} from "react-redux";
 import * as _ from 'lodash';
 import classnames from 'classnames';
@@ -292,7 +292,7 @@ class GeneralStatistic extends React.Component {
         const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, top} = this.state;
 
         return (<div>
-            <img className="chart" src={chart} alt={"chart"} onClick={this.toggle} style={{height: "32px"}}/>
+            <img className="chart" src={trophy} alt={"chart"} onClick={this.toggle} style={{height: "30px"}}/>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                    onKeyPress={this.handleKeyPress}>
