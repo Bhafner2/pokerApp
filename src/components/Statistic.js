@@ -22,6 +22,7 @@ import moment from "moment";
 let buyIn = [];
 let won = [];
 let total = [];
+let bounty = [];
 let trend = [];
 let date = [];
 
@@ -39,12 +40,14 @@ class Statistic extends React.Component {
             sumWon: 0,
             sumBuyIn: 0,
             sumTotal: 0,
+            sumBounty: 0,
             avgWon: 0,
             avgBuyIn: 0,
             avgTotal: 0,
+            avgBounty: 0,
             maxBuyIn: 0,
             maxWon: 0,
-            maxTotal: 0,
+            maxBounty: 0,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -102,8 +105,10 @@ class Statistic extends React.Component {
 
         if (this.state.dateOk) {
             let filteredGames = _.filter(actualUser.games, function (g) {
+                if (_.isNil(g) || _.isNil(g.date)) {
+                    return false;
+                }
                 return (from <= new Date(g.date) && to >= new Date(g.date)) && g.buyIn > 0;
-
             });
 
             filteredGames = _.sortBy(filteredGames, function (g) {
@@ -120,12 +125,16 @@ class Statistic extends React.Component {
                 return game.won;
             });
 
+            bounty = _.map(filteredGames, (game) => {
+                return game.bounty;
+            });
+
             date = _.map(filteredGames, (game) => {
                 return moment(game.date).format('D.M.YY');
             });
 
             total = _.map(filteredGames, (game) => {
-                return game.won - game.buyIn;
+                return game.won + game.bounty - game.buyIn;
             });
 
             trend = _.map(filteredGames, (game) => {
@@ -134,18 +143,21 @@ class Statistic extends React.Component {
 
             this.setState({
                 sumWon: _.sum(won),
+                sumBounty: _.sum(bounty),
                 sumBuyIn: _.sum(buyIn) * -1,
 
                 maxBuyIn: _.min(buyIn) * -1,
                 maxWon: _.max(won),
+                maxBounty: _.max(bounty),
                 maxTotal: _.max(total),
             }, () => {
-                const {sumWon, sumBuyIn, sumTotal} = this.state;
+                const {sumWon, sumBuyIn, sumBounty} = this.state;
                 this.setState({
-                    sumTotal: sumWon - sumBuyIn,
+                    sumTotal: sumWon + sumBounty - sumBuyIn,
 
-                    avgTotal: Math.round(sumTotal / filteredGames.length),
+                    avgTotal: Math.round((sumWon + sumBounty - sumBuyIn) / filteredGames.length),
                     avgBuyIn: Math.round(sumBuyIn / filteredGames.length),
+                    avgBounty: Math.round(sumBounty / filteredGames.length),
                     avgWon: Math.round(sumWon / filteredGames.length),
                 });
             });
@@ -153,17 +165,17 @@ class Statistic extends React.Component {
             console.log("games for stat ", filteredGames);
 
             if (buyIn.length > 1) {
-                this.chart(date, buyIn, won, total, trend, false);
+                this.chart(date, buyIn, won, bounty, total, trend, false);
             } else {
-                this.chart(date, buyIn, won, total, trend, true);
+                this.chart(date, buyIn, won, bounty, total, trend, true);
             }
         } else {
             this.init();
-            this.chart(date, buyIn, won, total, trend, true);
+            this.chart(date, buyIn, won, total, bounty, trend, true);
         }
     }
 
-    chart(date, buyIn, won, total, trend, showDots) {
+    chart(date, buyIn, won, bounty, total, trend, showDots) {
         this.setState({
             options: {
                 chart: {
@@ -211,11 +223,16 @@ class Statistic extends React.Component {
                     marker: {
                         enabled: showDots,
                     },
-                    labels: {
-                        style: {
-                            fontSize: '50px'
-                        }
-                    }
+                }, {
+                    name: 'Bounty',
+                    stack: 'data',
+                    type: 'column',
+                    data: bounty,
+                    lineWidth: 1,
+                    color: 'rgb(125, 125, 125)',
+                    marker: {
+                        enabled: showDots,
+                    },
                 }, {
                     name: 'Won',
                     stack: 'data',
@@ -254,12 +271,15 @@ class Statistic extends React.Component {
             sumWon: 0,
             sumBuyIn: 0,
             sumTotal: 0,
+            sumBounty: 0,
             avgWon: 0,
             avgBuyIn: 0,
             avgTotal: 0,
+            avgBounty: 0,
             maxBuyIn: 0,
             maxWon: 0,
             maxTotal: 0,
+            maxBounty: 0,
         });
 
         buyIn = [];
@@ -267,6 +287,7 @@ class Statistic extends React.Component {
         total = [];
         trend = [];
         date = [];
+        bounty = [];
     }
 
     updateFormDate(evt) {
@@ -319,7 +340,7 @@ class Statistic extends React.Component {
 
     render() {
         const {user} = this.props;
-        const {sumWon, sumBuyIn, sumTotal, avgWon, avgBuyIn, avgTotal, maxWon, maxBuyIn, maxTotal} = this.state;
+        const {sumWon, sumBuyIn, sumTotal, sumBounty, avgWon, avgBuyIn, avgTotal, avgBounty, maxWon, maxBuyIn, maxTotal, maxBounty} = this.state;
 
         return (<div>
             <img className="chart" src={chart} alt={"chart"} onClick={this.toggle} style={{height: "25px"}}/>
@@ -397,6 +418,7 @@ class Statistic extends React.Component {
                                             <th/>
                                             <th scope="row">Buy In</th>
                                             <th>Won</th>
+                                            <th>Bounty</th>
                                             <th>Total</th>
                                         </tr>
                                         </thead>
@@ -405,18 +427,21 @@ class Statistic extends React.Component {
                                             <th scope="row">Sum</th>
                                             <td>{sumBuyIn}</td>
                                             <td>{sumWon}</td>
+                                            <td>{sumBounty}</td>
                                             <th>{sumTotal}</th>
                                         </tr>
                                         <tr>
                                             <th scope="row">Avg</th>
                                             <td>{avgBuyIn}</td>
                                             <td>{avgWon}</td>
+                                            <td>{avgBounty}</td>
                                             <td>{avgTotal}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Max</th>
                                             <td>{maxBuyIn}</td>
                                             <td>{maxWon}</td>
+                                            <td>{maxBounty}</td>
                                             <td>{maxTotal}</td>
                                         </tr>
                                         </tbody>

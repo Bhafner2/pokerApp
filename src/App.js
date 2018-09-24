@@ -14,7 +14,6 @@ import firebase from "./config/firebase";
 import GeneralStatistic from "./components/GeneralStatistic";
 import Calc from "./components/Calc";
 import ReactLoading from 'react-loading';
-import {Route, Router} from "react-router";
 
 class App extends Component {
     constructor(props) {
@@ -116,43 +115,46 @@ class App extends Component {
         );
     };
 
-    /* dbInit() {
-         const db = firebase.database().ref('users/');
-         db.set([
-             {
-                 name: 'init',
-                 games: [
-                     {
-                         date: '2000-01-01',
-                         buyIn: 0,
-                         won: 0
-                     }]
-             }
+    /*     dbInit() {
+             const db = firebase.database().ref('users/');
+             db.set([
+                 {
+                     name: 'init',
+                     games: [
+                         {
+                             date: '2000-01-01',
+                             buyIn: 0,
+                             won: 0
+                         }]
+                 }
 
-         ])
-     }*/
+             ])
+         }*/
     static loading() {
         return (
-            <div style={{
-                display: "block",
-                marginLeft: "auto",
-                marginRight: "auto",
-            }}>
-                <br/>
-                <ReactLoading type="spin" color="black" height={50} width={50}
+            <Row>
+                <Col xs={5}/>
+                <Col xs={2}>
+                    <br/>
+                    <ReactLoading type="spin" color="black" height={50} width={50}/>
+                    <br/>
+                </Col>
+                < Col
+                    xs={5}
                 />
-                <br/>
-            </div>
+            </Row>
         )
     }
 
     render() {
-        const {users, connErr} = this.props.data;
+        const {connErr} = this.props.data;
         return (
             <div className="App">
+
                 {/*
                 {this.dbInit()}
 */}
+
                 <header className="header">
                     <Row>
                         <Col xs="4">
@@ -163,39 +165,42 @@ class App extends Component {
                         </Col>
                     </Row>
                 </header>
-                {connErr ? App.loading() : (
-                    <div>
-                        <ListGroupItem key="global" style={{backgroundColor: "whitesmoke"}}>
-                            <Row>
-                                <Col xs="2">
-                                    <GeneralStatistic today={this.state.today}/>
-                                </Col>
-                                <Col xs="2">
-                                    <Calc/>
-                                </Col>
-                                <Col xs="8">
-                                    <Input type="date" name="date" id="date"
-                                           value={this.state.date}
-                                           onChange={this.updateDate}
-                                           style={this.isToday()}
+                <div>
+                    <ListGroupItem key="global" style={{backgroundColor: "whitesmoke"}}>
+                        <Row>
+                            <Col xs="2">
+                                {connErr ? <div/> : <GeneralStatistic today={this.state.today}/>}
 
-                                    />
-                                </Col>
-                            </Row>
-                        </ListGroupItem>
+                            </Col>
+                            <Col xs="2">
+                                <Calc/>
+                            </Col>
+                            <Col xs="8">
+                                <Input type="date" name="date" id="date"
+                                       value={this.state.date}
+                                       onChange={this.updateDate}
+                                       style={this.isToday()}
 
-                        <ListGroup>
-                            {this.renderUsers()}
-                        </ListGroup>
+                                />
+                            </Col>
+                        </Row>
+                    </ListGroupItem>
+                    {connErr ? App.loading() : (
+                        <div>
+                            <ListGroup>
+                                {this.renderUsers()}
+                            </ListGroup>
 
-                        <div style={{
-                            paddingTop: '10px',
-                            paddingBottom: '20px',
-                        }}>
-                            {connErr ? <div/> : <AddUser saved={this.showSaved}/>}
+                            <div style={{
+                                paddingTop: '10px',
+                                paddingBottom: '20px',
+                            }}>
+                                <AddUser saved={this.showSaved}/>
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
+
                 <Alert color={this.state.alertSuccess ? "success" : "danger"}
                        style={{
                            visibility: this.state.showAlert ? 'visible' : 'hidden',

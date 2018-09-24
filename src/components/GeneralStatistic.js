@@ -99,11 +99,18 @@ class GeneralStatistic extends React.Component {
         let avgTotal = 0;
         let counter = 0;
         let top = [];
-        if (this.state.dateOk) {
+
+        console.log("users for generalstat", users);
+        if (this.state.dateOk && !_.isNil(users)) {
 
             for (let i in users) {
                 let user = {...users[i]};
+                console.log("user for generalstat", user);
+
                 user.games = _.filter(user.games, function (g) {
+                    if (_.isNil(g) || _.isNil(g.date)) {
+                        return false;
+                    }
                     return (from <= new Date(g.date) && to >= new Date(g.date)) && g.buyIn > 0;
                 });
 
@@ -255,7 +262,7 @@ class GeneralStatistic extends React.Component {
     }
 
     render() {
-        const { sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxTotal, top} = this.state;
+        const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxTotal, top} = this.state;
 
         return (<div>
             <img className="chart" src={chart} alt={"chart"} onClick={this.toggle} style={{height: "32px"}}/>
@@ -349,21 +356,21 @@ class GeneralStatistic extends React.Component {
                                         </thead>
                                         <tbody>
                                         <tr>
-                                            <th scope="row">Buy In</th>
+                                            <th>Buy In</th>
                                             <td>{maxBuyIn.name}</td>
                                             <th>{maxBuyIn.buyIn}</th>
                                             <td>{maxBuyIn.won}</td>
                                             <td>{maxBuyIn.won - maxBuyIn.buyIn}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">Won</th>
+                                            <th>Won</th>
                                             <td>{maxWon.name}</td>
                                             <td>{maxWon.buyIn}</td>
                                             <th>{maxWon.won}</th>
                                             <td>{maxWon.won - maxWon.buyIn}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">Total</th>
+                                            <th>Total</th>
                                             <td>{maxTotal.name}</td>
                                             <td>{maxTotal.buyIn}</td>
                                             <td>{maxTotal.won}</td>
@@ -379,11 +386,11 @@ class GeneralStatistic extends React.Component {
                                     <Table borderless size="sm">
                                         <tbody>
                                         <tr>
-                                            <td scope="row">Sum of all Buy In's</td>
+                                            <td>Sum of all Buy In's</td>
                                             <td>{sumBuyIn}</td>
                                         </tr>
                                         <tr>
-                                            <td scope="row">Average Buy In</td>
+                                            <td>Average Buy In</td>
                                             <td>{avgBuyIn}</td>
                                         </tr>
                                         </tbody>

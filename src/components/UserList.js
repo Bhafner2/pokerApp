@@ -16,12 +16,14 @@ class UserList extends React.Component {
             modal: false,
             buyIn: 0,
             won: 0,
+            bounty: 0,
             date: props.date,
             dateOk: true,
         };
 
         this.toggle = this.toggle.bind(this);
         this.updateWon = this.updateWon.bind(this);
+        this.updateBounty = this.updateBounty.bind(this);
         this.getActualGame = this.getActualGame.bind(this);
         this.updateWon = this.updateWon.bind(this);
         this.saveGame = this.saveGame.bind(this);
@@ -95,20 +97,24 @@ class UserList extends React.Component {
             });
         } else {
             console.log("search game for user " + user.name + " on date " + this.state.date);
-            for (let i = 0; i < user.games.length; i++) {
-                if (this.state.date === user.games[i].date) {
-                    this.setState({
-                        buyIn: user.games[i].buyIn,
-                        won: user.games[i].won
-                    }, () => {
-                        console.log("game found " + this.state.buyIn + " / " + this.state.won);
-                    });
-                    break;
-                } else {
-                    this.setState({
-                        buyIn: 0,
-                        won: 0
-                    });
+            for (let i in user.games) {
+                if (!_.isNil(user.games[i]) && !_.isNil(user.games[i].date)) {
+                    if (this.state.date === user.games[i].date) {
+                        this.setState({
+                            buyIn: user.games[i].buyIn,
+                            won: user.games[i].won,
+                            bounty: user.games[i].bounty,
+                        }, () => {
+                            console.log("game found " + this.state.buyIn + " / " + this.state.won, " / ", this.state.bounty);
+                        });
+                        break;
+                    } else {
+                        this.setState({
+                            buyIn: 0,
+                            won: 0,
+                            bounty: 0,
+                        });
+                    }
                 }
             }
         }
@@ -139,6 +145,18 @@ class UserList extends React.Component {
         }
     }
 
+    updateBounty(evt) {
+        if (evt.target.value === '' || isNaN(evt.target.value)) {
+            this.setState({
+                bounty: 0
+            });
+        } else {
+            this.setState({
+                bounty: _.parseInt(evt.target.value, 10)
+            });
+        }
+    }
+
     saveGame() {
         let found = false;
         const {users} = this.props.data;
@@ -147,26 +165,29 @@ class UserList extends React.Component {
 
         for (let i = 0; i < user.games.length; i++) {
             if (this.state.date === user.games[i].date) {
-                if (user.games[i].buyIn !== this.state.buyIn || user.games[i].won !== this.state.won) {
+                if (user.games[i].buyIn !== this.state.buyIn || user.games[i].won !== this.state.won || user.games[i].bounty !== this.state.bounty) {
                     user.games[i].buyIn = this.state.buyIn;
                     user.games[i].won = this.state.won;
+                    user.games[i].bounty = this.state.bounty;
                     store.dispatch(saveUsers(users));
                 }
                 found = true;
-                console.log("game successfully updated " + user.name + ", date: " + this.state.date + " buyIn " + user.games[i].buyIn + " won " + user.games[i].won);
+                console.log("game successfully updated " + user.name + ", date: " + this.state.date + " buyIn " + user.games[i].buyIn + " won " + user.games[i].won, " bounty ", user.games[i].bounty);
             }
         }
         if (!found) {
             let game = {
                 date: '',
                 buyIn: 0,
-                won: 0
+                won: 0,
+                bounty: 0,
             };
             game.date = this.state.date;
             game.buyIn = this.state.buyIn;
             game.won = this.state.won;
+            game.bounty = this.state.bounty;
             user.games.push(game);
-            console.log("game successfully created " + user.name + ", date: " + this.state.date + " buyIn " + game.buyIn + " won " + game.won);
+            console.log("game successfully created " + user.name + ", date: " + this.state.date + " buyIn " + game.buyIn + " won " + game.won, " bounty ", game.bounty);
             store.dispatch(saveUsers(users));
         }
         this.props.saved();
@@ -249,6 +270,17 @@ class UserList extends React.Component {
                                 <Input type="number" name="won" id="won"
                                        onChange={this.updateWon}
                                        value={this.state.won}
+                                />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs="4">
+                                <div style={{display: 'inline-block'}}>Bounty's Won</div>
+                            </Col>
+                            <Col xs="8">
+                                <Input type="number" name="bounty" id="bounty"
+                                       onChange={this.updateBounty}
+                                       value={this.state.bounty}
                                 />
                             </Col>
                         </Row>

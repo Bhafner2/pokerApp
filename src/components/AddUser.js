@@ -112,7 +112,8 @@ class AddUser extends React.Component {
                 {
                     date: '2000-01-01',
                     buyIn: 0,
-                    won: 0
+                    won: 0,
+                    bounty: 0
                 }]
         };
         user.name = this.state.username;
