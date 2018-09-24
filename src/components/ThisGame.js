@@ -22,6 +22,8 @@ class ThisGame extends React.Component {
             date: '',
             dateOk: true,
             options: {},
+            sum: 0,
+            sumOk: true,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -57,6 +59,8 @@ class ThisGame extends React.Component {
         filteredUsers = [];
         const {users} = this.props.data;
         const date = new Date(this.state.date);
+        let sum = 0;
+        let sumOk;
 
         if (this.state.dateOk && !_.isNil(users)) {
 
@@ -75,12 +79,12 @@ class ThisGame extends React.Component {
 
                     let plainUser = {
                         name: user.name,
-                        buyIn: - user.games[0].buyIn,
+                        buyIn: -user.games[0].buyIn,
                         won: user.games[0].won,
                         bounty: user.games[0].bounty,
                         total: user.games[0].won + user.games[0].bounty - user.games[0].buyIn
                     };
-
+                    sum = sum + plainUser.total;
                     filteredUsers.push(plainUser);
                     console.log("filtered users", filteredUsers);
 
@@ -88,16 +92,23 @@ class ThisGame extends React.Component {
             }
             this.chart(filteredUsers);
         }
+        sumOk = sum === 0;
+        this.setState({
+            sum,
+            sumOk,
+        })
     }
 
     chart(users) {
-        console.log("list" , users);
+        console.log("list", users);
 
         users = _.sortBy(users, function (g) {
-            return - g.total;
+            return -g.total;
         });
-        console.log("list" , users);
-        console.log("name list ", _.map(users, (u) => {return u.name}));
+        console.log("list", users);
+        console.log("name list ", _.map(users, (u) => {
+            return u.name
+        }));
 
         this.setState({
             options: {
@@ -128,7 +139,9 @@ class ThisGame extends React.Component {
                     },
                 },
                 xAxis: [{
-                    categories: _.map(users, (u) => {return u.name}),
+                    categories: _.map(users, (u) => {
+                        return u.name
+                    }),
                 }],
 
                 legend: {
@@ -141,7 +154,9 @@ class ThisGame extends React.Component {
                     name: 'Buy In',
                     stack: 'data',
                     type: 'column',
-                    data: _.map(users, (u) => {return u.buyIn}),
+                    data: _.map(users, (u) => {
+                        return u.buyIn
+                    }),
                     lineWidth: 1,
                     color: 'rgb(255, 0, 0)',
                     marker: {
@@ -151,7 +166,9 @@ class ThisGame extends React.Component {
                     name: 'Bounty',
                     stack: 'data',
                     type: 'column',
-                    data: _.map(users, (u) => {return u.bounty}),
+                    data: _.map(users, (u) => {
+                        return u.bounty
+                    }),
                     lineWidth: 1,
                     color: 'rgb(125, 125, 125)',
                     marker: {
@@ -161,7 +178,9 @@ class ThisGame extends React.Component {
                     name: 'Won',
                     stack: 'data',
                     type: 'column',
-                    data: _.map(users, (u) => {return u.won}),
+                    data: _.map(users, (u) => {
+                        return u.won
+                    }),
                     lineWidth: 1,
                     color: 'rgb(0, 255, 0)',
                     marker: {
@@ -170,7 +189,9 @@ class ThisGame extends React.Component {
                 }, {
                     name: 'Total',
                     type: 'spline',
-                    data: _.map(users, (u) => {return u.total}),
+                    data: _.map(users, (u) => {
+                        return u.total
+                    }),
                     color: 'rgb(0, 0, 0)',
                     marker: {
                         enabled: false,
@@ -208,7 +229,8 @@ class ThisGame extends React.Component {
 
     render() {
         return (<div>
-            <img className="chart" src={icon} alt={"chart"} onClick={this.toggle} style={{height: "32px"}}/>
+            <img className="chart" src={icon} alt={"chart"} onClick={this.toggle}
+                 style={{height: "32px", backgroundColor: this.state.sumOk ? "" : "red"}}/>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                    onKeyPress={this.handleKeyPress}>
@@ -216,10 +238,10 @@ class ThisGame extends React.Component {
                 <ModalBody>
                     <FormGroup>
                         <Row>
-                            <Col><b>Date</b></Col>
-                        </Row>
-                        <Row>
-                            <Col>
+                            <Col xs="4">
+                                <b>Date</b>
+                            </Col>
+                            <Col xs="8">
                                 <InputGroup>
                                     <Input type="date" name="date" id="date"
                                            onChange={this.updateDate}
@@ -227,6 +249,17 @@ class ThisGame extends React.Component {
                                            style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
                                     />
                                 </InputGroup>
+                            </Col>
+                        </Row>
+                        <br/>
+                        <Row style={{
+                            color: this.state.sumOk ? "green" : "red"
+                        }}>
+                            <Col xs="4">
+                                <b>Checksum</b>
+                            </Col>
+                            <Col xs="8">
+                                <div>{this.state.sum}</div>
                             </Col>
                         </Row>
                     </FormGroup>

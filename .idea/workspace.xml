@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9b843d04-d234-4560-a5d4-e527747186df" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/ThisGame.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/img/gamepad-solid.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/img/trophy-solid.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.firebase/hosting.YnVpbGQ.cache" beforeDir="false" afterPath="$PROJECT_DIR$/.firebase/hosting.YnVpbGQ.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/GeneralStatistic.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/GeneralStatistic.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ThisGame.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ThisGame.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -25,8 +20,8 @@
       <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="163" column="36" lean-forward="true" selection-start-line="163" selection-start-column="36" selection-end-line="163" selection-end-column="36" />
+            <state relative-caret-position="-248">
+              <caret line="169" column="51" selection-start-line="169" selection-start-column="48" selection-end-line="169" selection-end-column="51" />
             </state>
           </provider>
         </entry>
@@ -79,8 +74,8 @@
       <file leaf-file-name="UserList.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/UserList.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="840">
-              <caret line="87" column="5" lean-forward="true" selection-start-line="70" selection-start-column="3" selection-end-line="87" selection-end-column="5" />
+            <state relative-caret-position="408">
+              <caret line="240" selection-start-line="240" selection-end-line="251" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -106,8 +101,8 @@
       <file leaf-file-name="ThisGame.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/ThisGame.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="108" column="36" lean-forward="true" selection-start-line="108" selection-start-column="36" selection-end-line="108" selection-end-column="36" />
+            <state relative-caret-position="323">
+              <caret line="228" lean-forward="true" selection-start-line="228" selection-end-line="228" />
             </state>
           </provider>
         </entry>
@@ -123,8 +118,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>/*</find>
-      <find>trend</find>
       <find>= 0;</find>
       <find>ini</find>
       <find>;</find>
@@ -148,11 +141,13 @@
       <find>total</find>
       <find>push</find>
       <find>actualDate</find>
-      <find>date</find>
       <find>props</find>
       <find>general</find>
       <find>user.</find>
       <find>buyIn</find>
+      <find>date</find>
+      <find>sty</find>
+      <find>didmou</find>
     </findStrings>
     <replaceStrings>
       <replace>store.getState().actualDate</replace>
@@ -389,7 +384,7 @@
       <workItem from="1537250679568" duration="9000" />
       <workItem from="1537267868169" duration="52221000" />
       <workItem from="1537781342123" duration="6909000" />
-      <workItem from="1537794826035" duration="6292000" />
+      <workItem from="1537794826035" duration="7703000" />
     </task>
     <task id="LOCAL-00001" summary="firebase connection">
       <created>1536591132576</created>
@@ -706,11 +701,18 @@
       <option name="project" value="LOCAL" />
       <updated>1537797025837</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="this game">
+      <created>1537805372996</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1537805372996</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="229917000" />
+    <option name="totallyTimeSpent" value="231328000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -759,7 +761,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="with not working sagas" />
     <MESSAGE value="with working sagas" />
     <MESSAGE value="onOpen and connection check" />
     <MESSAGE value="connection check with timeout" />
@@ -784,7 +785,8 @@
     <MESSAGE value="verschönert" />
     <MESSAGE value="bountys" />
     <MESSAGE value="bounty" />
-    <option name="LAST_COMMIT_MESSAGE" value="bounty" />
+    <MESSAGE value="this game" />
+    <option name="LAST_COMMIT_MESSAGE" value="this game" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1032,20 +1034,6 @@
     <entry file="file://$PROJECT_DIR$/src/img/trophy-solid.svg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="163" column="36" lean-forward="true" selection-start-line="163" selection-start-column="36" selection-end-line="163" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/UserList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
-          <caret line="87" column="5" lean-forward="true" selection-start-line="70" selection-start-column="3" selection-end-line="87" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Statistic.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
@@ -1060,10 +1048,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/UserList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="240" selection-start-line="240" selection-end-line="251" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-248">
+          <caret line="169" column="51" selection-start-line="169" selection-start-column="48" selection-end-line="169" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/ThisGame.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="108" column="36" lean-forward="true" selection-start-line="108" selection-start-column="36" selection-end-line="108" selection-end-column="36" />
+        <state relative-caret-position="323">
+          <caret line="228" lean-forward="true" selection-start-line="228" selection-end-line="228" />
         </state>
       </provider>
     </entry>
