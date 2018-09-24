@@ -419,7 +419,6 @@ class GeneralStatistic extends React.Component {
                                     </Table>
                                 </Col>
                             </Row>
-                            <br/>
                             <Row>
                                 <Col>
                                     <Table borderless size="sm">

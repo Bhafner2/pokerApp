@@ -75,8 +75,6 @@ class ThisGame extends React.Component {
                 });
 
                 if (user.games.length > 0) {
-
-
                     let plainUser = {
                         name: user.name,
                         buyIn: -user.games[0].buyIn,
@@ -87,16 +85,15 @@ class ThisGame extends React.Component {
                     sum = sum + plainUser.total;
                     filteredUsers.push(plainUser);
                     console.log("filtered users", filteredUsers);
-
                 }
             }
-            this.chart(filteredUsers);
         }
         sumOk = sum === 0;
         this.setState({
             sum,
             sumOk,
-        })
+        });
+        this.chart(filteredUsers);
     }
 
     chart(users) {
@@ -215,8 +212,8 @@ class ThisGame extends React.Component {
                     this.setState({
                         dateOk: true,
                     });
-                    this.getData();
                 }
+                this.getData();
             }
         );
     }
