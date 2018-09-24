@@ -17,7 +17,7 @@ import * as _ from 'lodash';
 import classnames from 'classnames';
 
 let filteredUsers = [];
-let empty = {name: '', won: 0, buyIn: 0, date: ''};
+let empty = {name: '', won: 0, buyIn: 0, bounty: 0, date: ''};
 
 class GeneralStatistic extends React.Component {
     constructor(props) {
@@ -33,12 +33,15 @@ class GeneralStatistic extends React.Component {
             sumWon: 0,
             sumBuyIn: 0,
             sumTotal: 0,
+            sumBounty: 0,
             avgWon: 0,
             avgBuyIn: 0,
             avgTotal: 0,
+            avgBounty: 0,
             maxBuyIn: {...empty},
             maxWon: {...empty},
             maxTotal: {...empty},
+            maxBounty: {...empty},
             top: [],
         };
 
@@ -91,12 +94,15 @@ class GeneralStatistic extends React.Component {
         let maxWon = {...empty};
         let maxBuyIn = {...empty};
         let maxTotal = {...empty};
+        let maxBounty = {...empty};
         let sumWon = 0;
         let sumBuyIn = 0;
         let sumTotal = 0;
+        let sumBounty = 0;
         let avgWon = 0;
         let avgBuyIn = 0;
         let avgTotal = 0;
+        let avgBounty = 0;
         let counter = 0;
         let top = [];
 
@@ -140,14 +146,24 @@ class GeneralStatistic extends React.Component {
                         console.log('buyIn', maxTotal.buyIn)
                     }
 
+                    let maxBo = _.maxBy(user.games, function (o) {
+                        return o.bounty
+                    });
+
+                    if (maxBounty.bounty < maxBo.bounty) {
+                        maxBounty = maxBo;
+                        maxBounty.name = user.name;
+                        console.log('Bounty', maxBounty.bounty);
+                    }
+
                     let maxT = _.maxBy(user.games, function (o) {
                         return o.won - o.buyIn
                     });
 
-                    if (maxTotal.won - maxTotal.buyIn < maxT.won - maxT.buyIn) {
+                    if (maxTotal.won + maxTotal.bounty - maxTotal.buyIn < maxT.won + maxT.bounty - maxT.buyIn) {
                         maxTotal = maxT;
                         maxTotal.name = user.name;
-                        console.log('total', maxTotal.won - maxTotal.buyIn)
+                        console.log('total', maxTotal.won + maxTotal.bounty - maxTotal.buyIn)
                     }
 
                     sumWon = sumWon + _.sumBy(user.games, function (o) {
@@ -158,8 +174,12 @@ class GeneralStatistic extends React.Component {
                         return o.buyIn
                     });
 
+                    sumBounty = sumBounty + _.sumBy(user.games, function (o) {
+                        return o.bounty
+                    });
+
                     user.total = _.sumBy(user.games, function (o) {
-                        return o.won - o.buyIn
+                        return o.won + o.bounty - o.buyIn
                     });
 
                     sumTotal = sumTotal + user.total;
@@ -178,18 +198,22 @@ class GeneralStatistic extends React.Component {
             console.log('top', top);
             avgWon = Math.round(sumWon / counter);
             avgBuyIn = Math.round(sumBuyIn / counter);
+            avgBounty = Math.round(sumBounty / counter);
             avgTotal = Math.round(sumTotal / counter);
 
             this.setState({
                 maxWon,
                 maxBuyIn,
                 maxTotal,
+                maxBounty,
                 sumBuyIn,
                 sumTotal,
                 sumWon,
+                sumBounty,
                 avgBuyIn,
                 avgWon,
                 avgTotal,
+                avgBounty,
                 top,
             });
         }
@@ -202,11 +226,14 @@ class GeneralStatistic extends React.Component {
             sumWon: 0,
             sumBuyIn: 0,
             sumTotal: 0,
+            sumBounty: 0,
             avgWon: 0,
             avgBuyIn: 0,
+            avgBounty: 0,
             avgTotal: {...empty},
             maxBuyIn: {...empty},
             maxWon: {...empty},
+            maxBounty: {...empty},
             maxTotal: 0,
             filteredGames: [],
             top: [],
@@ -262,7 +289,7 @@ class GeneralStatistic extends React.Component {
     }
 
     render() {
-        const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxTotal, top} = this.state;
+        const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, top} = this.state;
 
         return (<div>
             <img className="chart" src={chart} alt={"chart"} onClick={this.toggle} style={{height: "32px"}}/>
@@ -351,6 +378,7 @@ class GeneralStatistic extends React.Component {
                                             <th scope="row">Name</th>
                                             <th>Buy In</th>
                                             <th>Won</th>
+                                            <th>Bounty</th>
                                             <th>Total</th>
                                         </tr>
                                         </thead>
@@ -360,6 +388,7 @@ class GeneralStatistic extends React.Component {
                                             <td>{maxBuyIn.name}</td>
                                             <th>{maxBuyIn.buyIn}</th>
                                             <td>{maxBuyIn.won}</td>
+                                            <td>{maxBuyIn.bounty}</td>
                                             <td>{maxBuyIn.won - maxBuyIn.buyIn}</td>
                                         </tr>
                                         <tr>
@@ -367,13 +396,23 @@ class GeneralStatistic extends React.Component {
                                             <td>{maxWon.name}</td>
                                             <td>{maxWon.buyIn}</td>
                                             <th>{maxWon.won}</th>
+                                            <td>{maxWon.bounty}</td>
                                             <td>{maxWon.won - maxWon.buyIn}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Bounty</th>
+                                            <td>{maxBounty.name}</td>
+                                            <td>{maxBounty.buyIn}</td>
+                                            <td>{maxBounty.won}</td>
+                                            <th>{maxBounty.bounty}</th>
+                                            <td>{maxBounty.won - maxBounty.buyIn}</td>
                                         </tr>
                                         <tr>
                                             <th>Total</th>
                                             <td>{maxTotal.name}</td>
                                             <td>{maxTotal.buyIn}</td>
                                             <td>{maxTotal.won}</td>
+                                            <td>{maxTotal.bounty}</td>
                                             <th>{maxTotal.won - maxTotal.buyIn}</th>
                                         </tr>
                                         </tbody>
