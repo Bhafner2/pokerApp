@@ -7,7 +7,7 @@ import {
     Modal,
     ModalBody,
     ModalFooter,
-    ModalHeader, Nav, NavItem, NavLink,
+    ModalHeader, Nav, NavItem, NavLink, Popover, PopoverBody, PopoverHeader,
     Row, TabContent,
     Table, TabPane
 } from "reactstrap";
@@ -43,9 +43,11 @@ class GeneralStatistic extends React.Component {
             maxTotal: {...empty},
             maxBounty: {...empty},
             top: [],
+            popoverOpen: false,
         };
 
         this.toggle = this.toggle.bind(this);
+        this.toggleDetail = this.toggleDetail.bind(this);
         this.toggleTab = this.toggleTab.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.updateFormDate = this.updateFormDate.bind(this);
@@ -288,6 +290,13 @@ class GeneralStatistic extends React.Component {
         }
     }
 
+    toggleDetail() {
+        this.setState({
+            popoverOpen: !this.state.popoverOpen
+        });
+        console.log("cklick on table");
+    }
+
     render() {
         const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, top} = this.state;
 
@@ -349,8 +358,8 @@ class GeneralStatistic extends React.Component {
                                 <Col>
                                     <Table borderless>
                                         <tbody>
-                                        {top.map((user) => (
-                                            <tr>
+                                        {top.map((user, i) => (
+                                            <tr key={'toplist' + i}>
                                                 <td>{user.name}</td>
                                                 <td>{user.total}</td>
                                             </tr>
@@ -368,52 +377,78 @@ class GeneralStatistic extends React.Component {
                                 textAlign: "center",
                             }}>
                                 <b>Maximum Values</b>
+                                <br/>
                             </div>
                             <Row>
                                 <Col>
                                     <Table borderless size="sm">
-                                        <thead>
-                                        <tr>
-                                            <th/>
-                                            <th scope="row">Name</th>
-                                            <th>Buy In</th>
-                                            <th>Won</th>
-                                            <th>Bounty</th>
-                                            <th>Total</th>
-                                        </tr>
-                                        </thead>
                                         <tbody>
-                                        <tr>
+                                        <tr id={'tableRow1'} onClick={this.toggleDetail}>
                                             <th>Buy In</th>
+                                            <td>{maxBuyIn.buyIn}</td>
                                             <td>{maxBuyIn.name}</td>
-                                            <th>{maxBuyIn.buyIn}</th>
-                                            <td>{maxBuyIn.won}</td>
-                                            <td>{maxBuyIn.bounty}</td>
-                                            <td>{maxBuyIn.won - maxBuyIn.buyIn}</td>
+                                            <Popover placement="top" isOpen={this.state.popoverOpen}
+                                                     target={'tableRow1'}
+                                                     toggle={this.toggleDetail}>
+                                                <PopoverHeader>The Game who made the Record</PopoverHeader>
+                                                <PopoverBody>
+                                                    <Row>
+                                                        <Col xs={6}>
+                                                            Name
+                                                        </Col>
+                                                        <Col xs={6}>
+                                                            {maxBuyIn.name}
+                                                        </Col>
+                                                    </Row>
+                                                    <Row>
+                                                        <Col xs={6}>
+                                                            BuyIn
+                                                        </Col>
+                                                        <Col xs={6}>
+                                                            {maxBuyIn.buyIn}
+                                                        </Col>
+                                                    </Row>
+                                                    <Row>
+                                                        <Col xs={6}>
+                                                            Won
+                                                        </Col>
+                                                        <Col xs={6}>
+                                                            {maxBuyIn.won}
+                                                        </Col>
+                                                    </Row>
+                                                    <Row>
+                                                        <Col xs={6}>
+                                                            Bounty
+                                                        </Col>
+                                                        <Col xs={6}>
+                                                            {maxBuyIn.bounty}
+                                                        </Col>
+                                                    </Row>
+                                                    <Row>
+                                                        <Col xs={6}>
+                                                            Total
+                                                        </Col>
+                                                        <Col xs={6}>
+                                                            {maxBuyIn.won + maxBuyIn.bounty - maxBuyIn.buyIn}
+                                                        </Col>
+                                                    </Row>
+                                                </PopoverBody>
+                                            </Popover>
                                         </tr>
                                         <tr>
                                             <th>Won</th>
+                                            <td>{maxWon.won}</td>
                                             <td>{maxWon.name}</td>
-                                            <td>{maxWon.buyIn}</td>
-                                            <th>{maxWon.won}</th>
-                                            <td>{maxWon.bounty}</td>
-                                            <td>{maxWon.won - maxWon.buyIn}</td>
                                         </tr>
                                         <tr>
                                             <th>Bounty</th>
+                                            <td>{maxBounty.bounty}</td>
                                             <td>{maxBounty.name}</td>
-                                            <td>{maxBounty.buyIn}</td>
-                                            <td>{maxBounty.won}</td>
-                                            <th>{maxBounty.bounty}</th>
-                                            <td>{maxBounty.won - maxBounty.buyIn}</td>
                                         </tr>
                                         <tr>
                                             <th>Total</th>
+                                            <td>{maxTotal.won - maxTotal.buyIn}</td>
                                             <td>{maxTotal.name}</td>
-                                            <td>{maxTotal.buyIn}</td>
-                                            <td>{maxTotal.won}</td>
-                                            <td>{maxTotal.bounty}</td>
-                                            <th>{maxTotal.won - maxTotal.buyIn}</th>
                                         </tr>
                                         </tbody>
                                     </Table>

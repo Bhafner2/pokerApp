@@ -110,9 +110,9 @@ class UserList extends React.Component {
                         break;
                     } else {
                         this.setState({
-                            buyIn: 0,
-                            won: 0,
-                            bounty: 0,
+                            buyIn: '',
+                            won: '',
+                            bounty: '',
                         });
                     }
                 }
@@ -123,7 +123,7 @@ class UserList extends React.Component {
     updateBuyIn(evt) {
         if (evt.target.value === '' || isNaN(evt.target.value)) {
             this.setState({
-                buyIn: 0
+                buyIn: ''
             });
         } else {
             this.setState({
@@ -136,7 +136,7 @@ class UserList extends React.Component {
     updateWon(evt) {
         if (evt.target.value === '' || isNaN(evt.target.value)) {
             this.setState({
-                won: 0
+                won: ''
             });
         } else {
             this.setState({
@@ -148,11 +148,11 @@ class UserList extends React.Component {
     updateBounty(evt) {
         if (evt.target.value === '' || isNaN(evt.target.value)) {
             this.setState({
-                bounty: 0
+                bounty: '',
             });
         } else {
             this.setState({
-                bounty: _.parseInt(evt.target.value, 10)
+                bounty: _.parseInt(evt.target.value, 10),
             });
         }
     }
@@ -162,17 +162,26 @@ class UserList extends React.Component {
         const {users} = this.props.data;
         const {user} = this.props;
         this.toggle();
-
+        let {buyIn, won, bounty, date} = this.state;
+        if (buyIn === '' || isNaN(buyIn)) {
+            buyIn = 0;
+        }
+        if (won === '' || isNaN(won)) {
+            won = 0;
+        }
+        if (bounty === '' || isNaN(bounty)) {
+            bounty = 0;
+        }
         for (let i = 0; i < user.games.length; i++) {
             if (this.state.date === user.games[i].date) {
-                if (user.games[i].buyIn !== this.state.buyIn || user.games[i].won !== this.state.won || user.games[i].bounty !== this.state.bounty) {
-                    user.games[i].buyIn = this.state.buyIn;
-                    user.games[i].won = this.state.won;
-                    user.games[i].bounty = this.state.bounty;
+                if (user.games[i].buyIn !== buyIn || user.games[i].won !== won || user.games[i].bounty !== bounty) {
+                    user.games[i].buyIn = buyIn;
+                    user.games[i].won = won;
+                    user.games[i].bounty = bounty;
                     store.dispatch(saveUsers(users));
                 }
                 found = true;
-                console.log("game successfully updated " + user.name + ", date: " + this.state.date + " buyIn " + user.games[i].buyIn + " won " + user.games[i].won, " bounty ", user.games[i].bounty);
+                console.log("game successfully updated " + user.name + ", date: " + date + " buyIn " + user.games[i].buyIn + " won " + user.games[i].won, " bounty ", user.games[i].bounty);
             }
         }
         if (!found) {
@@ -182,10 +191,10 @@ class UserList extends React.Component {
                 won: 0,
                 bounty: 0,
             };
-            game.date = this.state.date;
-            game.buyIn = this.state.buyIn;
-            game.won = this.state.won;
-            game.bounty = this.state.bounty;
+            game.date = date;
+            game.buyIn = buyIn;
+            game.won = won;
+            game.bounty = bounty;
             user.games.push(game);
             console.log("game successfully created " + user.name + ", date: " + this.state.date + " buyIn " + game.buyIn + " won " + game.won, " bounty ", game.bounty);
             store.dispatch(saveUsers(users));
