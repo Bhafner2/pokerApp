@@ -7,7 +7,7 @@ import {
     Modal,
     ModalBody,
     ModalFooter,
-    ModalHeader, Nav, NavItem, NavLink, Popover, PopoverBody, PopoverHeader,
+    ModalHeader, Nav, NavItem, NavLink,
     Row, TabContent,
     Table, TabPane
 } from "reactstrap";
@@ -15,6 +15,8 @@ import trophy from '../img/trophy-solid.svg';
 import {connect} from "react-redux";
 import * as _ from 'lodash';
 import classnames from 'classnames';
+import GameDetail from "./GameDetail";
+import Statistic from "./Statistic";
 
 let filteredUsers = [];
 let empty = {name: '', won: 0, buyIn: 0, bounty: 0, date: ''};
@@ -297,53 +299,7 @@ class GeneralStatistic extends React.Component {
     }
 
     popOver(game, name) {
-        return (<Popover placement="top" isOpen={this.state.popoverOpen}
-                         target={name}
-                         toggle={this.toggleDetail}>
-            <PopoverHeader>The Game with the highest {name}</PopoverHeader>
-            <PopoverBody>
-                <Row>
-                    <Col xs={6}>
-                        Name
-                    </Col>
-                    <Col xs={6}>
-                        {game.name}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={6}>
-                        BuyIn
-                    </Col>
-                    <Col xs={6}>
-                        {game.buyIn}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={6}>
-                        Won
-                    </Col>
-                    <Col xs={6}>
-                        {game.won}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={6}>
-                        Bounty
-                    </Col>
-                    <Col xs={6}>
-                        {game.bounty}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={6}>
-                        Total
-                    </Col>
-                    <Col xs={6}>
-                        {game.won + game.bounty - game.buyIn}
-                    </Col>
-                </Row>
-            </PopoverBody>
-        </Popover>)
+
     }
 
     render() {
@@ -354,7 +310,7 @@ class GeneralStatistic extends React.Component {
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                    onKeyPress={this.handleKeyPress}>
-                <ModalHeader toggle={this.toggle}>General Statistic</ModalHeader>
+                <ModalHeader toggle={this.toggle}>Top List</ModalHeader>
                 <ModalBody>
                     <FormGroup>
                         <Row>
@@ -386,7 +342,7 @@ class GeneralStatistic extends React.Component {
                                     this.toggleTab('1');
                                 }}
                             >
-                                Top List
+                                Total
                             </NavLink>
                         </NavItem>
                         <NavItem>
@@ -396,7 +352,7 @@ class GeneralStatistic extends React.Component {
                                     this.toggleTab('2');
                                 }}
                             >
-                                Table
+                                Peaks
                             </NavLink>
                         </NavItem>
                     </Nav>
@@ -409,6 +365,7 @@ class GeneralStatistic extends React.Component {
                                         <tbody>
                                         {top.map((user, i) => (
                                             <tr key={'toplist' + i}>
+                                                <td><Statistic user={user} fromDate={this.state.fromDate} toDate={this.state.toDate}/></td>
                                                 <td>{user.name}</td>
                                                 <td>{user.total}</td>
                                             </tr>
@@ -426,18 +383,21 @@ class GeneralStatistic extends React.Component {
                                 textAlign: "center",
                             }}>
                                 <b>Maximum Values</b>
-                                <br/>
                             </div>
+
+                            <br/>
+                            <Row>
+                                {/*
+                                 <GameDetail game={maxBuyIn} name={'Buy In'} value={maxBuyIn.buyIn}/>
+                                <GameDetail game={maxWon} name={'Won'} value={maxWon.won}/>
+                                <GameDetail game={maxBounty} name={'Bounty'} value={maxBounty.bounty}/>
+                                <GameDetail game={maxTotal} name={'Total'} value={maxTotal.won + maxTotal.bounty - maxTotal.buyIn}/>
+                                */}
+                            </Row>
                             <Row>
                                 <Col>
                                     <Table borderless size="sm">
                                         <tbody>
-                                        <tr id='BuyIn' onClick={this.toggleDetail}>
-                                            <th>Buy In</th>
-                                            <td>{maxBuyIn.buyIn}</td>
-                                            <td>{maxBuyIn.name}</td>
-                                            {this.popOver(maxBuyIn, 'BuyIn')}
-                                        </tr>
                                         <tr id='Won' onClick={this.toggleDetail}>
                                             <th>Won</th>
                                             <td>{maxWon.won}</td>

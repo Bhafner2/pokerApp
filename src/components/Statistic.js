@@ -69,10 +69,27 @@ class Statistic extends React.Component {
     }
 
     toggle() {
+        if (this.props.fromDate !== undefined) {
+            this.setState({
+                fromDate: this.props.fromDate,
+            })
+        } else {
+            this.setState({
+                fromDate: '2018-01-01',
+            });
+        }
+
+        if (this.props.toDate !== undefined) {
+            this.setState({
+                toDate: this.props.toDate,
+            })
+        } else {
+            this.setState({
+                toDate: this.props.today,
+            });
+        }
         this.setState({
             modal: !this.state.modal,
-            toDate: this.props.today,
-            fromDate: '2018-01-01',
             dateOk: true,
             activeTab: '1',
         }, () => {

@@ -220,12 +220,12 @@ class UserList extends React.Component {
     }
 
     render() {
-        const {user, today} = this.props;
+        const {user} = this.props;
         return (<div>
                 <ListGroupItem key={this.props.key}>
                     <Row>
                         <Col xs="4">
-                            <Statistic user={user} today={today}/>
+                            <Statistic user={user} today={this.props.date}/>
                         </Col>
 
                         <Col xs="4">
