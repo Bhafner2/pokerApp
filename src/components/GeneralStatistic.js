@@ -294,7 +294,56 @@ class GeneralStatistic extends React.Component {
         this.setState({
             popoverOpen: !this.state.popoverOpen
         });
-        console.log("cklick on table");
+    }
+
+    popOver(game, name) {
+        return (<Popover placement="top" isOpen={this.state.popoverOpen}
+                         target={name}
+                         toggle={this.toggleDetail}>
+            <PopoverHeader>The Game with the highest {name}</PopoverHeader>
+            <PopoverBody>
+                <Row>
+                    <Col xs={6}>
+                        Name
+                    </Col>
+                    <Col xs={6}>
+                        {game.name}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={6}>
+                        BuyIn
+                    </Col>
+                    <Col xs={6}>
+                        {game.buyIn}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={6}>
+                        Won
+                    </Col>
+                    <Col xs={6}>
+                        {game.won}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={6}>
+                        Bounty
+                    </Col>
+                    <Col xs={6}>
+                        {game.bounty}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={6}>
+                        Total
+                    </Col>
+                    <Col xs={6}>
+                        {game.won + game.bounty - game.buyIn}
+                    </Col>
+                </Row>
+            </PopoverBody>
+        </Popover>)
     }
 
     render() {
@@ -383,72 +432,29 @@ class GeneralStatistic extends React.Component {
                                 <Col>
                                     <Table borderless size="sm">
                                         <tbody>
-                                        <tr id={'tableRow1'} onClick={this.toggleDetail}>
+                                        <tr id='BuyIn' onClick={this.toggleDetail}>
                                             <th>Buy In</th>
                                             <td>{maxBuyIn.buyIn}</td>
                                             <td>{maxBuyIn.name}</td>
-                                            <Popover placement="top" isOpen={this.state.popoverOpen}
-                                                     target={'tableRow1'}
-                                                     toggle={this.toggleDetail}>
-                                                <PopoverHeader>The Game who made the Record</PopoverHeader>
-                                                <PopoverBody>
-                                                    <Row>
-                                                        <Col xs={6}>
-                                                            Name
-                                                        </Col>
-                                                        <Col xs={6}>
-                                                            {maxBuyIn.name}
-                                                        </Col>
-                                                    </Row>
-                                                    <Row>
-                                                        <Col xs={6}>
-                                                            BuyIn
-                                                        </Col>
-                                                        <Col xs={6}>
-                                                            {maxBuyIn.buyIn}
-                                                        </Col>
-                                                    </Row>
-                                                    <Row>
-                                                        <Col xs={6}>
-                                                            Won
-                                                        </Col>
-                                                        <Col xs={6}>
-                                                            {maxBuyIn.won}
-                                                        </Col>
-                                                    </Row>
-                                                    <Row>
-                                                        <Col xs={6}>
-                                                            Bounty
-                                                        </Col>
-                                                        <Col xs={6}>
-                                                            {maxBuyIn.bounty}
-                                                        </Col>
-                                                    </Row>
-                                                    <Row>
-                                                        <Col xs={6}>
-                                                            Total
-                                                        </Col>
-                                                        <Col xs={6}>
-                                                            {maxBuyIn.won + maxBuyIn.bounty - maxBuyIn.buyIn}
-                                                        </Col>
-                                                    </Row>
-                                                </PopoverBody>
-                                            </Popover>
+                                            {this.popOver(maxBuyIn, 'BuyIn')}
                                         </tr>
-                                        <tr>
+                                        <tr id='Won' onClick={this.toggleDetail}>
                                             <th>Won</th>
                                             <td>{maxWon.won}</td>
                                             <td>{maxWon.name}</td>
+                                            {this.popOver(maxWon, 'Won')}
                                         </tr>
-                                        <tr>
+                                        <tr id='Bounty' onClick={this.toggleDetail}>
                                             <th>Bounty</th>
                                             <td>{maxBounty.bounty}</td>
                                             <td>{maxBounty.name}</td>
+                                            {this.popOver(maxBounty, 'Bounty')}
                                         </tr>
-                                        <tr>
+                                        <tr id='Total' onClick={this.toggleDetail}>
                                             <th>Total</th>
-                                            <td>{maxTotal.won - maxTotal.buyIn}</td>
+                                            <td>{maxTotal.won + maxTotal.bounty - maxTotal.buyIn}</td>
                                             <td>{maxTotal.name}</td>
+                                            {this.popOver(maxTotal, 'Total')}
                                         </tr>
                                         </tbody>
                                     </Table>

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9b843d04-d234-4560-a5d4-e527747186df" name="Default" comment="this game">
+    <list default="true" id="9b843d04-d234-4560-a5d4-e527747186df" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/GeneralStatistic.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/GeneralStatistic.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/UserList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserList.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -75,7 +74,7 @@
       <file leaf-file-name="UserList.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/UserList.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="489">
+            <state relative-caret-position="1938">
               <caret line="114" column="39" selection-start-line="114" selection-start-column="39" selection-end-line="114" selection-end-column="39" />
             </state>
           </provider>
@@ -93,8 +92,8 @@
       <file leaf-file-name="GeneralStatistic.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="353">
-              <caret line="431" column="108" selection-start-line="431" selection-start-column="108" selection-end-line="431" selection-end-column="108" />
+            <state relative-caret-position="328">
+              <caret line="173" lean-forward="true" selection-start-line="173" selection-end-line="173" />
             </state>
           </provider>
         </entry>
@@ -102,7 +101,7 @@
       <file leaf-file-name="ThisGame.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/ThisGame.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
+            <state relative-caret-position="3604">
               <caret line="212" column="37" selection-start-line="212" selection-start-column="37" selection-end-line="212" selection-end-column="37" />
             </state>
           </provider>
@@ -119,10 +118,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ini</find>
-      <find>;</find>
-      <find>init</find>
-      <find>mount</find>
       <find>reac</find>
       <find>statis</find>
       <find>Statistic</find>
@@ -149,9 +144,12 @@
       <find>sty</find>
       <find>didmou</find>
       <find>togg</find>
+      <find>avgBuy</find>
+      <find>game</find>
+      <find>maxbuyIn</find>
+      <find>maxTotal</find>
     </findStrings>
     <replaceStrings>
-      <replace>store.getState().actualDate</replace>
       <replace>this.props.date</replace>
       <replace>user</replace>
       <replace>this.state.users</replace>
@@ -181,6 +179,7 @@
       <replace>sum</replace>
       <replace>avg</replace>
       <replace>user.games[0].</replace>
+      <replace>game</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -387,7 +386,8 @@
       <workItem from="1537781342123" duration="6909000" />
       <workItem from="1537794826035" duration="8029000" />
       <workItem from="1537808211404" duration="182000" />
-      <workItem from="1537950730082" duration="5423000" />
+      <workItem from="1537950730082" duration="5694000" />
+      <workItem from="1537963649799" duration="759000" />
     </task>
     <task id="LOCAL-00001" summary="firebase connection">
       <created>1536591132576</created>
@@ -725,11 +725,18 @@
       <option name="project" value="LOCAL" />
       <updated>1537808382086</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="general stat with popup + einkauf ohne 0">
+      <created>1537963194606</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1537963194607</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="237259000" />
+    <option name="totallyTimeSpent" value="238289000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -751,12 +758,13 @@
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="bottom" id="Run" order="4" weight="0.32906404" />
       <window_info id="npm" order="5" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.3369458" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.3369458" />
       <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.15542677" />
       <window_info id="Project Explorer" order="0" />
       <window_info id="Job Explorer" order="1" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Console" order="0" />
+      <window_info active="true" anchor="bottom" id="Find" order="3" visible="true" weight="0.34778324" />
       <window_info id="Structure" order="4" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="5" weight="0.4" />
@@ -768,7 +776,6 @@
       <window_info anchor="bottom" id="Messages" order="12" weight="0.32906404" />
       <window_info anchor="bottom" id="Message" order="2" />
       <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="3" weight="0.34778324" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -778,7 +785,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="with working sagas" />
     <MESSAGE value="onOpen and connection check" />
     <MESSAGE value="connection check with timeout" />
     <MESSAGE value="save user with saga" />
@@ -803,7 +809,8 @@
     <MESSAGE value="bountys" />
     <MESSAGE value="bounty" />
     <MESSAGE value="this game" />
-    <option name="LAST_COMMIT_MESSAGE" value="this game" />
+    <MESSAGE value="general stat with popup + einkauf ohne 0" />
+    <option name="LAST_COMMIT_MESSAGE" value="general stat with popup + einkauf ohne 0" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1067,22 +1074,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/ThisGame.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
+        <state relative-caret-position="3604">
           <caret line="212" column="37" selection-start-line="212" selection-start-column="37" selection-end-line="212" selection-end-column="37" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/UserList.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="489">
+        <state relative-caret-position="1938">
           <caret line="114" column="39" selection-start-line="114" selection-start-column="39" selection-end-line="114" selection-end-column="39" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="353">
-          <caret line="431" column="108" selection-start-line="431" selection-start-column="108" selection-end-line="431" selection-end-column="108" />
+        <state relative-caret-position="328">
+          <caret line="173" lean-forward="true" selection-start-line="173" selection-end-line="173" />
         </state>
       </provider>
     </entry>
