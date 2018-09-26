@@ -173,12 +173,10 @@ class App extends Component {
                                 <Calc/>
                             </Col>
                             <Col xs="2">
-                                {connErr ? <div/> : <GeneralStatistic today={this.state.today}/>}
-
+                                {connErr ? <div/> : <GeneralStatistic today={this.state.date}/>}
                             </Col>
                             <Col xs="2">
                                 {connErr ? <div/> : <ThisGame today={this.state.date}/>}
-
                             </Col>
                             <Col xs="6">
                                 <Input type="date" name="date" id="date"
@@ -205,17 +203,6 @@ class App extends Component {
                     )}
                 </div>
                 <Row>
-                    <Alert color={this.state.alertSuccess ? "success" : "danger"}
-                           style={{
-                               visibility: this.state.showAlert ? 'visible' : 'hidden',
-                               position: "fixed",
-                               left: "0",
-                               bottom: "0",
-                               width: "100%"
-                           }}>
-                        {this.state.alertText}
-                    </Alert>
-
                     <Alert color="danger"
                            style={{
                                visibility: connErr ? 'visible' : 'hidden',
@@ -225,6 +212,16 @@ class App extends Component {
                                width: "100%"
                            }}>
                         No connection to Server!
+                    </Alert>
+                    <Alert color={this.state.alertSuccess ? "success" : "danger"}
+                           style={{
+                               visibility: this.state.showAlert ? 'visible' : 'hidden',
+                               position: "fixed",
+                               left: "0",
+                               bottom: "0",
+                               width: "100%"
+                           }}>
+                        {this.state.alertText}
                     </Alert>
                 </Row>
             </div>
