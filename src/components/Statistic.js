@@ -85,19 +85,12 @@ class Statistic extends React.Component {
             });
         }
 
-        if (this.props.toDate !== undefined) {
-            this.setState({
-                toDate: this.props.toDate,
-            })
-        } else {
-            this.setState({
-                toDate: this.props.today,
-            });
-        }
         this.setState({
             modal: !this.state.modal,
             dateOk: true,
             activeTab: '1',
+            showFilter: false,
+            toDate: this.props.today,
         }, () => {
             this.getData()
         });
@@ -367,6 +360,7 @@ class Statistic extends React.Component {
         d.setMonth(d.getMonth() - months);
         this.setState({
             fromDate: moment(d).format('YYYY-MM-DD'),
+            toDate: this.props.today,
         }, () => {
             this.getData();
         })
@@ -378,6 +372,7 @@ class Statistic extends React.Component {
         d.setMonth(d.getMonth() - months);
         this.setState({
             fromDate: moment(d).format('YYYY-MM-DD'),
+            toDate: this.props.today,
         }, () => {
             this.getData();
         })
@@ -390,6 +385,7 @@ class Statistic extends React.Component {
         d.setMonth(d.getMonth() - months);
         this.setState({
             fromDate: moment(d).format('YYYY-MM-DD'),
+            toDate: this.props.today,
         }, () => {
             this.getData();
         })

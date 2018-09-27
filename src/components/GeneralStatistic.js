@@ -312,6 +312,7 @@ class GeneralStatistic extends React.Component {
         d.setMonth(d.getMonth() - months);
         this.setState({
             fromDate: moment(d).format('YYYY-MM-DD'),
+            toDate: this.props.today,
         }, () => {
             this.getData();
         })
@@ -323,6 +324,7 @@ class GeneralStatistic extends React.Component {
         d.setMonth(d.getMonth() - months);
         this.setState({
             fromDate: moment(d).format('YYYY-MM-DD'),
+            toDate: this.props.today,
         }, () => {
             this.getData();
         })
@@ -335,6 +337,7 @@ class GeneralStatistic extends React.Component {
         d.setMonth(d.getMonth() - months);
         this.setState({
             fromDate: moment(d).format('YYYY-MM-DD'),
+            toDate: this.props.today,
         }, () => {
             this.getData();
         })
@@ -442,7 +445,7 @@ class GeneralStatistic extends React.Component {
                                         {top.map((user, i) => (
                                             <tr key={'toplist' + i}>
                                                 <td><Statistic user={user} fromDate={this.state.fromDate}
-                                                               toDate={this.state.toDate}/></td>
+                                                               today={this.state.toDate}/></td>
                                                 <td>{user.name}</td>
                                                 <td>Sum: {user.total}</td>
                                                 <td/>
