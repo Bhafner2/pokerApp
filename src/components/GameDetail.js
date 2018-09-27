@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Popover, PopoverHeader, PopoverBody, Row, Col} from 'reactstrap';
+import {Popover, PopoverHeader, PopoverBody, Row, Col} from 'reactstrap';
 
 class GameDetail extends React.Component {
     constructor(props) {
@@ -20,10 +20,10 @@ class GameDetail extends React.Component {
     render() {
         const {game, name, value} = this.props;
         return (
-            <div id={name} onClick={this.toggle}>
+            <div id={'list' + name} onClick={this.toggle}>
                 <Row>
                     <Col xs={4}>
-                        {name}
+                        <b>{name}</b>
                     </Col>
                     <Col xs={2}>
                         {value}
@@ -33,12 +33,12 @@ class GameDetail extends React.Component {
                     </Col>
                 </Row>
                 <Popover placement="top" isOpen={this.state.popoverOpen}
-                         target={name}
+                         target={'list' + name}
                          toggle={this.toggle}>
                     <PopoverHeader>The Game with the highest {name}</PopoverHeader>
                     <PopoverBody>
                         <Row>
-                            <Col xs={6}>
+                            <Col xs={4}>
                                 Name
                             </Col>
                             <Col xs={6}>
@@ -46,7 +46,7 @@ class GameDetail extends React.Component {
                             </Col>
                         </Row>
                         <Row>
-                            <Col xs={6}>
+                            <Col xs={4}>
                                 BuyIn
                             </Col>
                             <Col xs={6}>
@@ -54,7 +54,7 @@ class GameDetail extends React.Component {
                             </Col>
                         </Row>
                         <Row>
-                            <Col xs={6}>
+                            <Col xs={4}>
                                 Won
                             </Col>
                             <Col xs={6}>
@@ -62,7 +62,7 @@ class GameDetail extends React.Component {
                             </Col>
                         </Row>
                         <Row>
-                            <Col xs={6}>
+                            <Col xs={4}>
                                 Bounty
                             </Col>
                             <Col xs={6}>
@@ -70,7 +70,7 @@ class GameDetail extends React.Component {
                             </Col>
                         </Row>
                         <Row>
-                            <Col xs={6}>
+                            <Col xs={4}>
                                 Total
                             </Col>
                             <Col xs={6}>

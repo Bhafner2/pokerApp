@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Button,
+    Button, ButtonGroup,
     Col,
     FormGroup,
     Input, InputGroup,
@@ -15,8 +15,10 @@ import trophy from '../img/trophy-solid.svg';
 import {connect} from "react-redux";
 import * as _ from 'lodash';
 import classnames from 'classnames';
-import GameDetail from "./GameDetail";
 import Statistic from "./Statistic";
+import GameDetail from "./GameDetail";
+import moment from "moment/moment";
+
 
 let filteredUsers = [];
 let empty = {name: '', won: 0, buyIn: 0, bounty: 0, date: ''};
@@ -46,6 +48,7 @@ class GeneralStatistic extends React.Component {
             maxBounty: {...empty},
             top: [],
             popoverOpen: false,
+            showFilter: false,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -55,8 +58,12 @@ class GeneralStatistic extends React.Component {
         this.updateFormDate = this.updateFormDate.bind(this);
         this.updateToDate = this.updateToDate.bind(this);
         this.init = this.init.bind(this);
+        this.last3m = this.last3m.bind(this);
+        this.last6m = this.last6m.bind(this);
+        this.last12m = this.last12m.bind(this);
+        this.this12m = this.this12m.bind(this);
+        this.showFilter = this.showFilter.bind(this);
     }
-
 
     toggleTab(tab) {
         if (this.state.activeTab !== tab) {
@@ -73,6 +80,7 @@ class GeneralStatistic extends React.Component {
             fromDate: '2018-01-01',
             dateOk: true,
             activeTab: '1',
+            showFilter: false,
         }, () => {
             this.getData()
         });
@@ -298,8 +306,90 @@ class GeneralStatistic extends React.Component {
         });
     }
 
-    popOver(game, name) {
+    last3m() {
+        const months = 3;
+        let d = new Date(this.props.today);
+        d.setMonth(d.getMonth() - months);
+        this.setState({
+            fromDate: moment(d).format('YYYY-MM-DD'),
+        }, () => {
+            this.getData();
+        })
+    }
 
+    last6m() {
+        const months = 6;
+        let d = new Date(this.props.today);
+        d.setMonth(d.getMonth() - months);
+        this.setState({
+            fromDate: moment(d).format('YYYY-MM-DD'),
+        }, () => {
+            this.getData();
+        })
+    }
+
+
+    last12m() {
+        const months = 12;
+        let d = new Date(this.props.today);
+        d.setMonth(d.getMonth() - months);
+        this.setState({
+            fromDate: moment(d).format('YYYY-MM-DD'),
+        }, () => {
+            this.getData();
+        })
+    }
+
+    this12m() {
+        let d = new Date(this.props.today);
+        this.setState({
+            fromDate: d.getFullYear() + '-01-01',
+            toDate: d.getFullYear() + '-12-31',
+        }, () => {
+            this.getData();
+        })
+    }
+
+    showFilter() {
+        this.setState({
+            showFilter: !this.state.showFilter,
+        })
+    }
+
+    filter() {
+        if (this.state.showFilter) {
+            return (
+                <div style={{}}>
+                    <Row>
+                        <Col>
+                            <InputGroup>
+                                <Input type="date" name="fromDate" id="fromDate"
+                                       onChange={this.updateFormDate}
+                                       value={this.state.fromDate}
+                                       style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
+                                />
+                                <Input type="date" name="toDate" id="toDate"
+                                       onChange={this.updateToDate}
+                                       value={this.state.toDate}
+                                       style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
+                                />
+                            </InputGroup>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <ButtonGroup>
+                                <Button color="link" onClick={this.last3m}>3 Month</Button>
+                                <Button color="link" onClick={this.last6m}>6 Month</Button>
+                                <Button color="link" onClick={this.last12m}>Year</Button>
+                                <Button color="link" onClick={this.this12m}>This Year</Button>
+                            </ButtonGroup>
+                        </Col>
+                    </Row>
+                </div>)
+        } else {
+            return <div/>
+        }
     }
 
     render() {
@@ -314,25 +404,11 @@ class GeneralStatistic extends React.Component {
                 <ModalBody>
                     <FormGroup>
                         <Row>
-                            <Col><b>Filter</b></Col>
-                        </Row>
-                        <Row>
                             <Col>
-                                <InputGroup>
-                                    <Input type="date" name="fromDate" id="fromDate"
-                                           onChange={this.updateFormDate}
-                                           value={this.state.fromDate}
-                                           style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
-                                    />
-
-                                    <Input type="date" name="toDate" id="toDate"
-                                           onChange={this.updateToDate}
-                                           value={this.state.toDate}
-                                           style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
-                                    />
-                                </InputGroup>
+                                <Button color="link" onClick={this.showFilter}>Filter</Button>
                             </Col>
                         </Row>
+                        {this.filter()}
                     </FormGroup>
                     <Nav tabs>
                         <NavItem>
@@ -365,9 +441,11 @@ class GeneralStatistic extends React.Component {
                                         <tbody>
                                         {top.map((user, i) => (
                                             <tr key={'toplist' + i}>
-                                                <td><Statistic user={user} fromDate={this.state.fromDate} toDate={this.state.toDate}/></td>
+                                                <td><Statistic user={user} fromDate={this.state.fromDate}
+                                                               toDate={this.state.toDate}/></td>
                                                 <td>{user.name}</td>
-                                                <td>{user.total}</td>
+                                                <td>Sum: {user.total}</td>
+                                                <td/>
                                             </tr>
                                         ))}
                                         </tbody>
@@ -378,62 +456,28 @@ class GeneralStatistic extends React.Component {
                     </TabContent>
                     <TabContent activeTab={this.state.activeTab}>
                         <TabPane tabId="2">
-                            <br/>
-                            <div style={{
-                                textAlign: "center",
-                            }}>
-                                <b>Maximum Values</b>
-                            </div>
 
                             <br/>
+                            <GameDetail game={maxBuyIn} name={'BuyIn'} value={maxBuyIn.buyIn}/>
+                            <GameDetail game={maxWon} name={'Won'} value={maxWon.won}/>
+                            <GameDetail game={maxBounty} name={'Bounty'} value={maxBounty.bounty}/>
+                            <GameDetail game={maxTotal} name={'Total'}
+                                        value={maxTotal.won + maxTotal.bounty - maxTotal.buyIn}/>
+                            <br/>
                             <Row>
-                                {/*
-                                 <GameDetail game={maxBuyIn} name={'Buy In'} value={maxBuyIn.buyIn}/>
-                                <GameDetail game={maxWon} name={'Won'} value={maxWon.won}/>
-                                <GameDetail game={maxBounty} name={'Bounty'} value={maxBounty.bounty}/>
-                                <GameDetail game={maxTotal} name={'Total'} value={maxTotal.won + maxTotal.bounty - maxTotal.buyIn}/>
-                                */}
-                            </Row>
-                            <Row>
-                                <Col>
-                                    <Table borderless size="sm">
-                                        <tbody>
-                                        <tr id='Won' onClick={this.toggleDetail}>
-                                            <th>Won</th>
-                                            <td>{maxWon.won}</td>
-                                            <td>{maxWon.name}</td>
-                                            {this.popOver(maxWon, 'Won')}
-                                        </tr>
-                                        <tr id='Bounty' onClick={this.toggleDetail}>
-                                            <th>Bounty</th>
-                                            <td>{maxBounty.bounty}</td>
-                                            <td>{maxBounty.name}</td>
-                                            {this.popOver(maxBounty, 'Bounty')}
-                                        </tr>
-                                        <tr id='Total' onClick={this.toggleDetail}>
-                                            <th>Total</th>
-                                            <td>{maxTotal.won + maxTotal.bounty - maxTotal.buyIn}</td>
-                                            <td>{maxTotal.name}</td>
-                                            {this.popOver(maxTotal, 'Total')}
-                                        </tr>
-                                        </tbody>
-                                    </Table>
+                                <Col xs={6}>
+                                    <b>Sum</b> of all Buy In's
+                                </Col>
+                                <Col xs={6}>
+                                    {sumBuyIn}
                                 </Col>
                             </Row>
                             <Row>
-                                <Col>
-                                    <Table borderless size="sm">
-                                        <tbody>
-                                        <tr>
-                                            <td>Sum of all Buy In's</td>
-                                            <td>{sumBuyIn}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Average Buy In</td>
-                                            <td>{avgBuyIn}</td>
-                                        </tr>
-                                        </tbody>
-                                    </Table>
+                                <Col xs={6}>
+                                    <b>Average</b> Buy In
+                                </Col>
+                                <Col xs={6}>
+                                    {avgBuyIn}
                                 </Col>
                             </Row>
                         </TabPane>
