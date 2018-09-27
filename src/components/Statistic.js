@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Button,
+    Button, ButtonGroup,
     Col,
     FormGroup,
     Input, InputGroup,
@@ -48,6 +48,7 @@ class Statistic extends React.Component {
             maxBuyIn: 0,
             maxWon: 0,
             maxBounty: 0,
+            showFilter: false,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -57,6 +58,11 @@ class Statistic extends React.Component {
         this.updateToDate = this.updateToDate.bind(this);
         this.chart = this.chart.bind(this);
         this.init = this.init.bind(this);
+        this.last3m = this.last3m.bind(this);
+        this.last6m = this.last6m.bind(this);
+        this.last12m = this.last12m.bind(this);
+        this.this12m = this.this12m.bind(this);
+        this.showFilter = this.showFilter.bind(this);
     }
 
 
@@ -355,6 +361,92 @@ class Statistic extends React.Component {
         }
     }
 
+    last3m() {
+        const months = 3;
+        let d = new Date(this.props.today);
+        d.setMonth(d.getMonth() - months);
+        this.setState({
+            fromDate: moment(d).format('YYYY-MM-DD'),
+        }, () => {
+            this.getData();
+        })
+    }
+
+    last6m() {
+        const months = 6;
+        let d = new Date(this.props.today);
+        d.setMonth(d.getMonth() - months);
+        this.setState({
+            fromDate: moment(d).format('YYYY-MM-DD'),
+        }, () => {
+            this.getData();
+        })
+    }
+
+
+    last12m() {
+        const months = 12;
+        let d = new Date(this.props.today);
+        d.setMonth(d.getMonth() - months);
+        this.setState({
+            fromDate: moment(d).format('YYYY-MM-DD'),
+        }, () => {
+            this.getData();
+        })
+    }
+
+    this12m() {
+        let d = new Date(this.props.today);
+        this.setState({
+            fromDate: d.getFullYear() + '-01-01',
+            toDate: d.getFullYear() + '-12-31',
+        }, () => {
+            this.getData();
+        })
+    }
+
+    showFilter() {
+        this.setState({
+            showFilter: !this.state.showFilter,
+        })
+    }
+
+    filter() {
+        if (this.state.showFilter) {
+            return (
+                <div style={{}}>
+                    <Row>
+                        <Col>
+                            <InputGroup>
+                                <Input type="date" name="fromDate" id="fromDate"
+                                       onChange={this.updateFormDate}
+                                       value={this.state.fromDate}
+                                       style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
+                                />
+                                <Input type="date" name="toDate" id="toDate"
+                                       onChange={this.updateToDate}
+                                       value={this.state.toDate}
+                                       style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
+                                />
+                            </InputGroup>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <ButtonGroup>
+                                <Button color="link" onClick={this.last3m}>3 Month</Button>
+                                <Button color="link" onClick={this.last6m}>6 Month</Button>
+                                <Button color="link" onClick={this.last12m}>Year</Button>
+                                <Button color="link" onClick={this.this12m}>This Year</Button>
+                            </ButtonGroup>
+                        </Col>
+                    </Row>
+                </div>)
+        } else {
+            return <div/>
+        }
+    }
+
     render() {
         const {user} = this.props;
         const {sumWon, sumBuyIn, sumTotal, sumBounty, avgWon, avgBuyIn, avgTotal, avgBounty, maxWon, maxBuyIn, maxTotal, maxBounty} = this.state;
@@ -368,25 +460,11 @@ class Statistic extends React.Component {
                 <ModalBody>
                     <FormGroup>
                         <Row>
-                            <Col><b>Filter</b></Col>
-                        </Row>
-                        <Row>
                             <Col>
-                                <InputGroup>
-                                    <Input type="date" name="fromDate" id="fromDate"
-                                           onChange={this.updateFormDate}
-                                           value={this.state.fromDate}
-                                           style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
-                                    />
-
-                                    <Input type="date" name="toDate" id="toDate"
-                                           onChange={this.updateToDate}
-                                           value={this.state.toDate}
-                                           style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
-                                    />
-                                </InputGroup>
+                                <Button color="link" onClick={this.showFilter}>Filter</Button>
                             </Col>
                         </Row>
+                        {this.filter()}
                     </FormGroup>
                     <Nav tabs>
                         <NavItem>

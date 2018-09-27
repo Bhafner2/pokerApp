@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9b843d04-d234-4560-a5d4-e527747186df" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.firebase/hosting.YnVpbGQ.cache" beforeDir="false" afterPath="$PROJECT_DIR$/.firebase/hosting.YnVpbGQ.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/GameDetail" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/GameDetail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/GeneralStatistic.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/GeneralStatistic.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Statistic.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Statistic.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -64,11 +62,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GeneralStatistic.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Statistic.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/Statistic.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="378">
+              <caret line="435" column="36" lean-forward="true" selection-start-line="435" selection-start-column="36" selection-end-line="435" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GeneralStatistic.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="353">
-              <caret line="409" column="30" lean-forward="true" selection-start-line="409" selection-start-column="30" selection-end-line="409" selection-end-column="30" />
+            <state relative-caret-position="370">
+              <caret line="50" column="19" selection-start-line="50" selection-end-line="51" />
             </state>
           </provider>
         </entry>
@@ -210,12 +217,12 @@
         <option value="$PROJECT_DIR$/src/components/Calc.js" />
         <option value="$PROJECT_DIR$/src/components/AddUser.js" />
         <option value="$PROJECT_DIR$/src/components/ThisGame.js" />
-        <option value="$PROJECT_DIR$/src/components/Statistic.js" />
         <option value="$PROJECT_DIR$/src/components/UserList.js" />
         <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/components/GameDetail" />
         <option value="$PROJECT_DIR$/src/components/GameDetail.js" />
         <option value="$PROJECT_DIR$/src/components/GeneralStatistic.js" />
+        <option value="$PROJECT_DIR$/src/components/Statistic.js" />
       </list>
     </option>
   </component>
@@ -375,14 +382,7 @@
       <workItem from="1537950730082" duration="5694000" />
       <workItem from="1537963649799" duration="837000" />
       <workItem from="1537967366146" duration="3954000" />
-      <workItem from="1538047034205" duration="3986000" />
-    </task>
-    <task id="LOCAL-00004" summary="global und local date">
-      <created>1536652863145</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1536652863145</updated>
+      <workItem from="1538047034205" duration="4099000" />
     </task>
     <task id="LOCAL-00005" summary="addUser">
       <created>1536653052645</created>
@@ -720,11 +720,18 @@
       <option name="project" value="LOCAL" />
       <updated>1537971516594</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="filter">
+      <created>1538051050544</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1538051050545</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="246307000" />
+    <option name="totallyTimeSpent" value="246420000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -746,8 +753,8 @@
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="bottom" id="Run" order="4" weight="0.32906404" />
       <window_info id="npm" order="5" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.3369458" />
-      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.15542677" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.3369458" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.15542677" />
       <window_info id="Project Explorer" order="0" />
       <window_info id="Job Explorer" order="1" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
@@ -773,7 +780,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="save user with saga" />
     <MESSAGE value="db init" />
     <MESSAGE value="with stat amount" />
     <MESSAGE value="statisics with higtcharts" />
@@ -798,7 +804,8 @@
     <MESSAGE value="general stat with popup + einkauf ohne 0" />
     <MESSAGE value="general stat with popup" />
     <MESSAGE value="stat with date" />
-    <option name="LAST_COMMIT_MESSAGE" value="stat with date" />
+    <MESSAGE value="filter" />
+    <option name="LAST_COMMIT_MESSAGE" value="filter" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1058,13 +1065,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Statistic.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="863">
-          <caret line="487" column="15" selection-start-line="487" selection-start-column="15" selection-end-line="487" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/UserList.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="489">
@@ -1088,8 +1088,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="353">
-          <caret line="409" column="30" lean-forward="true" selection-start-line="409" selection-start-column="30" selection-end-line="409" selection-end-column="30" />
+        <state relative-caret-position="370">
+          <caret line="50" column="19" selection-start-line="50" selection-end-line="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Statistic.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="435" column="36" lean-forward="true" selection-start-line="435" selection-start-column="36" selection-end-line="435" selection-end-column="36" />
         </state>
       </provider>
     </entry>
