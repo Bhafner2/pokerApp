@@ -371,6 +371,7 @@ class Statistic extends React.Component {
         this.setState({
             fromDate: moment(d).format('YYYY-MM-DD'),
             toDate: this.props.today,
+            showFilter: false,
         }, () => {
             this.getData();
         })
@@ -383,6 +384,7 @@ class Statistic extends React.Component {
         this.setState({
             fromDate: moment(d).format('YYYY-MM-DD'),
             toDate: this.props.today,
+            showFilter: false,
         }, () => {
             this.getData();
         })
@@ -396,6 +398,7 @@ class Statistic extends React.Component {
         this.setState({
             fromDate: moment(d).format('YYYY-MM-DD'),
             toDate: this.props.today,
+            showFilter: false,
         }, () => {
             this.getData();
         })
@@ -406,6 +409,7 @@ class Statistic extends React.Component {
         this.setState({
             fromDate: d.getFullYear() + '-01-01',
             toDate: d.getFullYear() + '-12-31',
+            showFilter: false,
         }, () => {
             this.getData();
         })
@@ -433,6 +437,7 @@ class Statistic extends React.Component {
                 <div>
                     <Row>
                         <Col>
+                            <br/>
                             <InputGroup>
                                 <Input type="date" name="fromDate" id="fromDate"
                                        onChange={this.updateFormDate}

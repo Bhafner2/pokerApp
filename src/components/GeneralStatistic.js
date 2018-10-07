@@ -324,6 +324,7 @@ class GeneralStatistic extends React.Component {
         this.setState({
             fromDate: moment(d).format('YYYY-MM-DD'),
             toDate: this.props.today,
+            showFilter: false,
         }, () => {
             this.getData();
         })
@@ -336,6 +337,7 @@ class GeneralStatistic extends React.Component {
         this.setState({
             fromDate: moment(d).format('YYYY-MM-DD'),
             toDate: this.props.today,
+            showFilter: false,
         }, () => {
             this.getData();
         })
@@ -349,6 +351,7 @@ class GeneralStatistic extends React.Component {
         this.setState({
             fromDate: moment(d).format('YYYY-MM-DD'),
             toDate: this.props.today,
+            showFilter: false,
         }, () => {
             this.getData();
         })
@@ -359,6 +362,7 @@ class GeneralStatistic extends React.Component {
         this.setState({
             fromDate: d.getFullYear() + '-01-01',
             toDate: d.getFullYear() + '-12-31',
+            showFilter: false,
         }, () => {
             this.getData();
         })
@@ -386,6 +390,7 @@ class GeneralStatistic extends React.Component {
                 <div style={{}}>
                     <Row>
                         <Col>
+                            <br/>
                             <InputGroup>
                                 <Input type="date" name="fromDate" id="fromDate"
                                        onChange={this.updateFormDate}
@@ -470,19 +475,14 @@ class GeneralStatistic extends React.Component {
                             <br/>
                             <Row>
                                 <Col>
-                                    <Table borderless>
-                                        <tbody>
                                         {top.map((user, i) => (
-                                            <tr key={'toplist' + i}>
-                                                <td><Statistic user={user} fromDate={this.state.fromDate}
-                                                               today={this.state.toDate}/></td>
-                                                <td>{user.name}</td>
-                                                <td>Sum: {user.total}</td>
-                                                <td/>
-                                            </tr>
+                                            <Row key={'toplist' + i}>
+                                                <Col xs={2}><Statistic user={user} fromDate={this.state.fromDate}
+                                                               today={this.state.toDate}/></Col>
+                                                <Col xs={4}>{user.name}</Col>
+                                                <Col xs={6}>total: {user.total}</Col>
+                                            </Row>
                                         ))}
-                                        </tbody>
-                                    </Table>
                                 </Col>
                             </Row>
                         </TabPane>
