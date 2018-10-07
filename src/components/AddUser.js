@@ -141,8 +141,12 @@ class AddUser extends React.Component {
                 Add User
             </Button>
 
-            <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
-                   onKeyPress={this.handleKeyPress}>
+            <Modal isOpen={this.state.modal}
+                   toggle={this.toggle}
+                   className={this.props.className}
+                   onKeyPress={this.handleKeyPress}
+                   onBackButtonPress={() => this.setState({ modal: false })}
+                   >
                 <ModalHeader toggle={this.toggle}>New User</ModalHeader>
                 <ModalBody>
                     <FormGroup>

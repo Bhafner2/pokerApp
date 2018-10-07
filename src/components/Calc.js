@@ -214,7 +214,9 @@ class Calc extends React.Component {
         return (<div>
                 <img className="calc" src={calc} alt={"calc"} onClick={this.toggle} style={{height: "30px"}}/>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
-                       onKeyPress={this.handleKeyPress}>
+                       onKeyPress={this.handleKeyPress}
+                       onBackButtonPress={() => this.setState({ modal: false })}
+                       >
                     <ModalHeader toggle={this.toggle}>Calculator</ModalHeader>
                     <ModalBody>
                         <Row>

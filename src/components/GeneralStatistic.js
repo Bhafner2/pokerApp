@@ -49,6 +49,7 @@ class GeneralStatistic extends React.Component {
             top: [],
             popoverOpen: false,
             showFilter: false,
+            filtered: false,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -63,6 +64,7 @@ class GeneralStatistic extends React.Component {
         this.last12m = this.last12m.bind(this);
         this.this12m = this.this12m.bind(this);
         this.showFilter = this.showFilter.bind(this);
+        this.resetFilter = this.resetFilter.bind(this);
     }
 
     toggleTab(tab) {
@@ -119,6 +121,15 @@ class GeneralStatistic extends React.Component {
         let top = [];
 
         console.log("users for generalstat", users);
+        if (this.state.fromDate === "2018-01-01" && this.state.toDate === this.props.today){
+            this.setState({
+                filtered: true,
+            })
+        }else {
+            this.setState({
+                filtered: false,
+            })
+        }
         if (this.state.dateOk && !_.isNil(users)) {
 
             for (let i in users) {
@@ -359,6 +370,16 @@ class GeneralStatistic extends React.Component {
         })
     }
 
+    resetFilter(){
+        this.setState({
+            showFilter: false,
+            fromDate: '2018-01-01',
+            toDate: this.props.today,
+        }, () => {
+            this.getData();
+        })
+    }
+
     filter() {
         if (this.state.showFilter) {
             return (
@@ -402,13 +423,22 @@ class GeneralStatistic extends React.Component {
             <img className="chart" src={trophy} alt={"chart"} onClick={this.toggle} style={{height: "30px"}}/>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
-                   onKeyPress={this.handleKeyPress}>
+                   onKeyPress={this.handleKeyPress}
+                   onBackButtonPress={() => this.setState({ modal: false })}
+                   >
                 <ModalHeader toggle={this.toggle}>Top List</ModalHeader>
                 <ModalBody>
                     <FormGroup>
                         <Row>
                             <Col>
-                                <Button color="link" onClick={this.showFilter}>Filter</Button>
+                                <ButtonGroup>
+                                    <Button color={this.state.filtered ? "link" : "primary"} onClick={this.showFilter}>
+                                        Filter
+                                    </Button>
+                                    <Button style={{visibility: this.state.filtered ? "hidden" : "visible"}} onClick={this.resetFilter}>
+                                        X
+                                    </Button>
+                                </ButtonGroup>
                             </Col>
                         </Row>
                         {this.filter()}

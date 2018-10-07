@@ -230,7 +230,9 @@ class ThisGame extends React.Component {
                  style={{height: "32px", backgroundColor: this.state.sumOk ? "" : "red"}}/>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
-                   onKeyPress={this.handleKeyPress}>
+                   onKeyPress={this.handleKeyPress}
+                   onBackButtonPress={() => this.setState({ modal: false })}
+                   >
                 <ModalHeader toggle={this.toggle}>This Game</ModalHeader>
                 <ModalBody>
                     <FormGroup>

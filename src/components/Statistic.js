@@ -49,6 +49,7 @@ class Statistic extends React.Component {
             maxWon: 0,
             maxBounty: 0,
             showFilter: false,
+            filtered: false,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -63,6 +64,7 @@ class Statistic extends React.Component {
         this.last12m = this.last12m.bind(this);
         this.this12m = this.this12m.bind(this);
         this.showFilter = this.showFilter.bind(this);
+        this.resetFilter = this.resetFilter.bind(this);
     }
 
 
@@ -118,7 +120,15 @@ class Statistic extends React.Component {
         const actualUser = _.filter(users, (u) => {
             return user.name === u.name
         })[0];
-
+        if (this.state.fromDate === "2018-01-01" && this.state.toDate === this.props.today){
+            this.setState({
+                filtered: true,
+            })
+        }else {
+            this.setState({
+                filtered: false,
+            })
+        }
         if (this.state.dateOk) {
             let filteredGames = _.filter(actualUser.games, function (g) {
                 if (_.isNil(g) || _.isNil(g.date)) {
@@ -400,6 +410,16 @@ class Statistic extends React.Component {
             this.getData();
         })
     }
+    
+    resetFilter(){
+        this.setState({
+            showFilter: false,
+            fromDate: '2018-01-01',
+            toDate: this.props.today,
+        }, () => {
+            this.getData();
+        })
+    }
 
     showFilter() {
         this.setState({
@@ -410,7 +430,7 @@ class Statistic extends React.Component {
     filter() {
         if (this.state.showFilter) {
             return (
-                <div style={{}}>
+                <div>
                     <Row>
                         <Col>
                             <InputGroup>
@@ -451,17 +471,26 @@ class Statistic extends React.Component {
             <img className="chart" src={chart} alt={"chart"} onClick={this.toggle} style={{height: "25px"}}/>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
-                   onKeyPress={this.handleKeyPress}>
+                   onKeyPress={this.handleKeyPress}
+                   onBackButtonPress={() => this.setState({ modal: false })}
+                   >
                 <ModalHeader toggle={this.toggle}>Statistic for {user.name}</ModalHeader>
                 <ModalBody>
                     <FormGroup>
-                        <Row>
-                            <Col>
-                                <Button color="link" onClick={this.showFilter}>Filter</Button>
-                            </Col>
-                        </Row>
-                        {this.filter()}
-                    </FormGroup>
+                            <Row>
+                                <Col>
+                                    <ButtonGroup>
+                                        <Button color={this.state.filtered ? "link" : "primary"} onClick={this.showFilter}>
+                                            Filter
+                                        </Button>
+                                        <Button style={{visibility: this.state.filtered ? "hidden" : "visible"}} onClick={this.resetFilter}>
+                                            X
+                                        </Button>
+                                    </ButtonGroup>
+                                </Col>
+                            </Row>
+                            {this.filter()}
+                        </FormGroup>
                     <Nav tabs>
                         <NavItem>
                             <NavLink
