@@ -2,12 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9b843d04-d234-4560-a5d4-e527747186df" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.firebase/hosting.YnVpbGQ.cache" beforeDir="false" afterPath="$PROJECT_DIR$/.firebase/hosting.YnVpbGQ.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database.rules.json" beforeDir="false" afterPath="$PROJECT_DIR$/database.rules.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/GameDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/GameDetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/GeneralStatistic.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/GeneralStatistic.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Home.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/constants.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/redux/reducers.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/saga.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/saga.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -24,35 +29,8 @@
       <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="899">
-              <caret line="56" column="16" lean-forward="true" selection-start-line="56" selection-end-line="57" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Calc.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/Calc.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="548">
-              <caret line="231" column="46" selection-start-line="231" selection-start-column="39" selection-end-line="231" selection-end-column="46" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="firebase.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/config/firebase.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="24" lean-forward="true" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserList.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/UserList.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="313">
-              <caret line="32" column="30" lean-forward="true" selection-start-line="32" selection-end-line="33" />
+            <state relative-caret-position="362">
+              <caret line="83" column="22" selection-start-line="83" selection-start-column="22" selection-end-line="83" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -60,17 +38,17 @@
       <file leaf-file-name="Login.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/Login.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="19" selection-start-line="19" selection-end-line="19" />
+            <state relative-caret-position="166">
+              <caret line="58" selection-start-line="58" selection-end-line="58" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="actions.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/redux/actions.js">
+      <file leaf-file-name="App.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/App.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="833">
-              <caret line="49" column="24" lean-forward="true" selection-start-line="49" selection-start-column="24" selection-end-line="49" selection-end-column="24" />
+            <state relative-caret-position="119">
+              <caret line="7" column="7" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -78,26 +56,26 @@
       <file leaf-file-name="reducers.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/redux/reducers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
-              <caret line="36" column="21" lean-forward="true" selection-start-line="36" selection-start-column="21" selection-end-line="36" selection-end-column="21" />
+            <state relative-caret-position="153">
+              <caret line="21" column="21" selection-start-line="21" selection-start-column="21" selection-end-line="21" selection-end-column="21" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="store.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/redux/store.js">
+      <file leaf-file-name="saga.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/redux/saga.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="94" selection-start-line="4" selection-start-column="94" selection-end-line="4" selection-end-column="94" />
+            <state relative-caret-position="489">
+              <caret line="38" column="15" selection-start-line="38" selection-start-column="15" selection-end-line="38" selection-end-column="15" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ThisGame.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/ThisGame.js">
+      <file leaf-file-name="actions.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/redux/actions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2225">
-              <caret line="224" column="5" lean-forward="true" selection-start-line="224" selection-start-column="5" selection-end-line="224" selection-end-column="5" />
+            <state relative-caret-position="153">
+              <caret line="9" column="69" selection-start-line="9" selection-start-column="50" selection-end-line="9" selection-end-column="69" />
             </state>
           </provider>
         </entry>
@@ -105,8 +83,26 @@
       <file leaf-file-name="GameDetail.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/GameDetail.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="782">
-              <caret line="46" column="30" lean-forward="true" selection-start-line="46" selection-start-column="30" selection-end-line="46" selection-end-column="30" />
+            <state relative-caret-position="187">
+              <caret line="11" column="30" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ThisGame.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/ThisGame.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="302">
+              <caret line="230" selection-start-line="230" selection-end-line="230" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Home.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/Home.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="234">
+              <caret line="153" column="51" selection-start-line="153" selection-start-column="51" selection-end-line="153" selection-end-column="51" />
             </state>
           </provider>
         </entry>
@@ -122,11 +118,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>avgSi</find>
-      <find>sumWon</find>
-      <find>sum</find>
-      <find>left</find>
-      <find>sumTo</find>
       <find>user</find>
       <find>total</find>
       <find>push</find>
@@ -144,14 +135,19 @@
       <find>gamede</find>
       <find>props</find>
       <find>ale</find>
-      <find>mom</find>
       <find>today</find>
-      <find>momen</find>
       <find>togg</find>
       <find>logo</find>
       <find>saved</find>
       <find>showDate</find>
       <find>keyx</find>
+      <find>mom</find>
+      <find>momen</find>
+      <find>thisG</find>
+      <find>GET_USERS_FULFILLED</find>
+      <find>this</find>
+      <find>boda</find>
+      <find>color</find>
     </findStrings>
     <replaceStrings>
       <replace>this.props.date</replace>
@@ -221,22 +217,23 @@
         <option value="$PROJECT_DIR$/src/components/AddUserToList.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/src/calculator-solid.svg" />
-        <option value="$PROJECT_DIR$/src/redux/saga.js" />
         <option value="$PROJECT_DIR$/src/components/Calc.js" />
         <option value="$PROJECT_DIR$/src/components/UserList.js" />
         <option value="$PROJECT_DIR$/src/components/GameDetail" />
-        <option value="$PROJECT_DIR$/src/components/GameDetail.js" />
         <option value="$PROJECT_DIR$/src/components/Statistic.js" />
         <option value="$PROJECT_DIR$/src/components/AddUser.js" />
-        <option value="$PROJECT_DIR$/src/components/GeneralStatistic.js" />
-        <option value="$PROJECT_DIR$/src/components/ThisGame.js" />
-        <option value="$PROJECT_DIR$/src/App.css" />
-        <option value="$PROJECT_DIR$/src/components/Home.js" />
-        <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/redux/constants.js" />
         <option value="$PROJECT_DIR$/src/redux/actions.js" />
-        <option value="$PROJECT_DIR$/src/redux/reducers.js" />
         <option value="$PROJECT_DIR$/src/redux/store.js" />
+        <option value="$PROJECT_DIR$/database.rules.json" />
+        <option value="$PROJECT_DIR$/src/App.css" />
+        <option value="$PROJECT_DIR$/src/components/GeneralStatistic.js" />
+        <option value="$PROJECT_DIR$/src/redux/reducers.js" />
+        <option value="$PROJECT_DIR$/src/components/GameDetail.js" />
+        <option value="$PROJECT_DIR$/src/components/Home.js" />
+        <option value="$PROJECT_DIR$/src/redux/saga.js" />
+        <option value="$PROJECT_DIR$/src/components/ThisGame.js" />
+        <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/components/Login.js" />
       </list>
     </option>
@@ -295,6 +292,12 @@
               <item name="poker-app" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="config" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="poker-app" type="b2602c69:ProjectViewProjectNode" />
+              <item name="poker-app" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="img" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="poker-app" type="b2602c69:ProjectViewProjectNode" />
@@ -398,14 +401,7 @@
       <workItem from="1537963649799" duration="837000" />
       <workItem from="1537967366146" duration="3954000" />
       <workItem from="1538047034205" duration="4099000" />
-      <workItem from="1539083646119" duration="11149000" />
-    </task>
-    <task id="LOCAL-00009" summary="firebase connectet">
-      <created>1536684704149</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1536684704149</updated>
+      <workItem from="1539083646119" duration="18012000" />
     </task>
     <task id="LOCAL-00010" summary="firebase connectet">
       <created>1536685589970</created>
@@ -743,11 +739,18 @@
       <option name="project" value="LOCAL" />
       <updated>1539096835810</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="login">
+      <created>1539098721204</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1539098721277</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="257569000" />
+    <option name="totallyTimeSpent" value="264432000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -770,8 +773,8 @@
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="bottom" id="Run" order="4" weight="0.32906404" />
       <window_info id="npm" order="5" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="10" weight="0.3369458" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.15542677" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.3369458" />
+      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.15542677" />
       <window_info id="Project Explorer" order="0" />
       <window_info id="Job Explorer" order="1" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
@@ -829,20 +832,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/node_modules/firebase/externs/firebase-database-externs.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="162" selection-start-line="162" selection-end-line="162" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/firebase/index.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="511" column="14" selection-start-line="511" selection-start-column="6" selection-end-line="511" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/redux/index.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="194">
@@ -954,9 +943,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/img/calculator-solid.svg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/img/chart-line-solid.svg">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -967,13 +953,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="614">
           <caret line="4895" column="4" selection-start-line="4895" selection-start-column="4" selection-end-line="4895" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/redux/saga.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="29" column="34" selection-start-line="29" selection-start-column="34" selection-end-line="29" selection-end-column="34" />
         </state>
       </provider>
     </entry>
@@ -1011,13 +990,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Statistic.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="431" column="5" lean-forward="true" selection-start-line="431" selection-start-column="5" selection-end-line="431" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/AddUser.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="199">
@@ -1034,52 +1006,10 @@
     <entry file="file://$PROJECT_DIR$/src/img/sign-out-alt-solid.svg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2123">
-          <caret line="534" column="15" selection-start-line="534" selection-start-column="15" selection-end-line="534" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Home.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="154" column="30" lean-forward="true" selection-start-line="154" selection-start-column="30" selection-end-line="154" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/config/firebase.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="11" column="24" lean-forward="true" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/ThisGame.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2225">
-          <caret line="224" column="5" lean-forward="true" selection-start-line="224" selection-start-column="5" selection-end-line="224" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/GameDetail.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="46" column="30" lean-forward="true" selection-start-line="46" selection-start-column="30" selection-end-line="46" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Calc.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="548">
-          <caret line="231" column="46" selection-start-line="231" selection-start-column="39" selection-end-line="231" selection-end-column="46" />
         </state>
       </provider>
     </entry>
@@ -1090,20 +1020,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/redux/actions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="833">
-          <caret line="49" column="24" lean-forward="true" selection-start-line="49" selection-start-column="24" selection-end-line="49" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/redux/reducers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="36" column="21" lean-forward="true" selection-start-line="36" selection-start-column="21" selection-end-line="36" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/redux/store.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -1111,24 +1027,107 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="899">
-          <caret line="56" column="16" lean-forward="true" selection-start-line="56" selection-end-line="57" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/UserList.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="313">
-          <caret line="32" column="30" lean-forward="true" selection-start-line="32" selection-end-line="33" />
+          <caret line="32" column="30" selection-start-line="32" selection-end-line="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/firebase.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database.rules.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Calc.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="194" column="30" lean-forward="true" selection-start-line="194" selection-start-column="30" selection-end-line="194" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Statistic.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="19" column="16" selection-start-line="19" selection-end-line="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="648">
+          <caret line="494" column="34" lean-forward="true" selection-start-line="494" selection-start-column="34" selection-end-line="494" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/redux/actions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="69" selection-start-line="9" selection-start-column="50" selection-end-line="9" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/redux/reducers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="21" column="21" selection-start-line="21" selection-start-column="21" selection-end-line="21" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="7" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/redux/saga.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="489">
+          <caret line="38" column="15" selection-start-line="38" selection-start-column="15" selection-end-line="38" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/img/calculator-solid.svg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Home.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="153" column="51" selection-start-line="153" selection-start-column="51" selection-end-line="153" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/GameDetail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="30" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/ThisGame.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="230" selection-start-line="230" selection-end-line="230" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="362">
+          <caret line="83" column="22" selection-start-line="83" selection-start-column="22" selection-end-line="83" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Login.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        <state relative-caret-position="166">
+          <caret line="58" selection-start-line="58" selection-end-line="58" />
         </state>
       </provider>
     </entry>

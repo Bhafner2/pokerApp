@@ -137,7 +137,7 @@ class Home extends Component {
     render() {
         const {connErr} = this.props.data;
         return (
-            <div>
+            <div className="center">
 
                 {/*
                 {this.dbInit()}
@@ -196,16 +196,6 @@ class Home extends Component {
                     </div>
                 )}
                 <Row>
-                    <Alert color="danger"
-                           style={{
-                               visibility: connErr ? 'visible' : 'hidden',
-                               position: "fixed",
-                               left: "0",
-                               bottom: "0",
-                               width: "100%"
-                           }}>
-                        No connection to Server!
-                    </Alert>
                     <Alert color={this.state.alertSuccess ? "success" : "danger"}
                            style={{
                                visibility: this.state.showAlert ? 'visible' : 'hidden',

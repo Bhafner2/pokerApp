@@ -14,22 +14,21 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {};
-
         this.connectionCheck = this.connectionCheck.bind(this);
-
     }
 
-    componentDidMount() {
+    componentWillMount() {
+        App.logout();
         setTimeout(() => {
             this.connectionCheck()
-        }, 2000);
+        }, 3000);
 
         firebase.auth().onAuthStateChanged(function (user) {
             console.log("auth change");
             if (user) {
-                App.login()
+                App.login();
             } else {
-                App.logout()
+                App.logout();
             }
         });
     }
@@ -46,6 +45,7 @@ class App extends Component {
                 store.dispatch(connectionError(false));
             } else {
                 store.dispatch(connectionError(true));
+                App.logout();
                 console.log("disconnected");
             }
         });

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import 'react-infinite-calendar/styles.css';
 import firebase from "../config/firebase";
 import {connect} from 'react-redux'
-import {Button, Col, FormFeedback, FormGroup, Input, Label, Row} from "reactstrap";
+import {Alert, Button, Col, FormGroup, Input, Label, ListGroupItem, Row} from "reactstrap";
 import {loginError} from "../redux/actions";
 import {store} from "../redux/store";
 
@@ -47,54 +47,64 @@ class Login extends Component {
     }
 
     render() {
+        const {connErr} = this.props.data;
         return (
             <div onKeyPress={this.handleKeyPress}>
-                <Row>
-                    <Col xs={1}/>
-                    <Col xs={10}>
-                        <FormGroup>
-                            <br/>
-                            <br/>
-                            <Label for="email">Email</Label>
-                            <Input type="email" name="email" id="email"
-                                   onChange={this.updateEmail}
-                                   value={this.state.email}
-                            />
-                        </FormGroup>
-                    </Col>
-                    <Col xs={1}/>
-                </Row>
-                <Row>
-                    <Col xs={1}/>
-                    <Col xs={10}>
-                        <FormGroup>
-                            <Label for="password">Password</Label>
-                            <Input type="password" name="password" id="password"
-                                   onChange={this.updatePassword}
-                                   value={this.state.password}
-                            />
-                        </FormGroup>
-                    </Col>
-                    <Col xs={1}/>
-                </Row>
-                <Row>
-                    <Col xs={1}/>
-                    <Col xs={10}>
-                        <FormGroup>
-                            <Button type="primary" name="login" onClick={this.login}>Login</Button>
-                        </FormGroup>
-                    </Col>
-                    <Col xs={1}/>
-                </Row>
-                <Row>
-                    <Col xs={1}/>
-                    <Col xs={10}>
-                        <FormGroup>
-                            <div style={{color: "red", fontSize: "0.8em"}}>{this.props.data.loginError}</div>
-                        </FormGroup>
-                    </Col>
-                    <Col xs={1}/>
-                </Row>
+                <ListGroupItem>
+                    <Row>
+                        <Col xs={1}/>
+                        <Col xs={10}>
+                            <FormGroup>
+                                <br/>
+                                <Label for="email">Email</Label>
+                                <Input type="email" name="email" id="email"
+                                       onChange={this.updateEmail}
+                                       value={this.state.email}
+                                />
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={1}/>
+                        <Col xs={10}>
+                            <FormGroup>
+                                <Label for="password">Password</Label>
+                                <Input type="password" name="password" id="password"
+                                       onChange={this.updatePassword}
+                                       value={this.state.password}
+                                />
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={1}/>
+                        <Col xs={10}>
+                            <FormGroup>
+                                <Button type="primary" name="login" onClick={this.login}>Login</Button>
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={1}/>
+                        <Col xs={10}>
+                            <FormGroup>
+                                <div style={{color: "red", fontSize: "0.8em"}}>{this.props.data.loginError}</div>
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                </ListGroupItem>
+                <Alert className="center"
+                       color="danger"
+                       style={{
+                           visibility: connErr ? 'visible' : 'hidden',
+                           position: "fixed",
+                           left: "0",
+                           bottom: "0",
+                           width: "100%",
+
+                       }}>
+                    No connection to Server!
+                </Alert>
             </div>
         )
     }

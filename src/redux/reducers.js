@@ -40,6 +40,6 @@ export default (state, action) => {
             });
         default:
             console.log("default action");
-            return state;
+            return {...state};
     }
 }

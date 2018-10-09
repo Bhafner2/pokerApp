@@ -1,5 +1,7 @@
 import React from 'react';
 import {Popover, PopoverHeader, PopoverBody, Row, Col} from 'reactstrap';
+import moment from "moment/moment";
+import ThisGame from "./ThisGame";
 
 class GameDetail extends React.Component {
     constructor(props) {
@@ -20,17 +22,21 @@ class GameDetail extends React.Component {
     render() {
         const {game, name, value} = this.props;
         return (
-            <div id={'list' + name} onClick={this.toggle}>
+            <div id={'list' + name}>
                 <Row>
-                    <Col xs={4}>
+                    <Col xs={4} onClick={this.toggle}>
                         <b>{name}</b>
                     </Col>
-                    <Col xs={2}>
+                    <Col xs={2} onClick={this.toggle}>
                         {value}
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={4} onClick={this.toggle}>
                         {game.name}
                     </Col>
+                    <Col xs={1}>
+                        <ThisGame today={game.date} style={{height: "1em", backgroundColor: "white"}}/>
+                    </Col>
+                    <Col xs={1}/>
                 </Row>
                 <Popover placement="top" isOpen={this.state.popoverOpen}
                          target={'list' + name}
@@ -43,6 +49,14 @@ class GameDetail extends React.Component {
                             </Col>
                             <Col xs={6}>
                                 {game.name}
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs={4}>
+                                Date
+                            </Col>
+                            <Col xs={6}>
+                                {moment(game.date).format('D.M.YY')}
                             </Col>
                         </Row>
                         <Row>

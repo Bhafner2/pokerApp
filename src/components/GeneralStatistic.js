@@ -478,10 +478,10 @@ class GeneralStatistic extends React.Component {
                                 <Col>
                                     {top.map((user, i) => (
                                         <Row key={'toplist' + i}>
-                                            <Col xs={2}><Statistic user={user} fromDate={this.state.fromDate}
-                                                                   today={this.state.toDate}/></Col>
                                             <Col xs={4}>{user.name}</Col>
                                             <Col xs={6}>total: {user.total}</Col>
+                                            <Col xs={2}><Statistic user={user} fromDate={this.state.fromDate}
+                                                                   today={this.state.toDate}/></Col>
                                         </Row>
                                     ))}
                                 </Col>

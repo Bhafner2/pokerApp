@@ -22,7 +22,9 @@ export function* saveUsersSaga(action) {
         yield call(db.set(action.users));
     } catch (err) {
         console.log("save users saga err");
+/*
         yield put(saveUsersRejected(err));
+*/
     }
 }
 
@@ -37,6 +39,7 @@ function fetchUsers() {
             });
         }
         store.dispatch(getUsersFulfilled(users));
+        console.log("save users saga succ");
     });
 }
 
