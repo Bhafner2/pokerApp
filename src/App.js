@@ -1,82 +1,31 @@
 import React, {Component} from 'react';
 import './App.css';
-import {Alert, Col, Input, ListGroup, ListGroupItem, Row} from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
-import logo from './img/Poker.png';
-import AddUser from "./components/AddUser";
 import {connectionError, getUsers} from "./redux/actions";
-import UserList from "./components/UserList";
-import moment from "moment/moment";
-import * as _ from 'lodash';
 import {connect} from 'react-redux'
 import {store} from './redux/store'
 import firebase from "./config/firebase";
-import GeneralStatistic from "./components/GeneralStatistic";
-import Calc from "./components/Calc";
-import ReactLoading from 'react-loading';
-import ThisGame from "./components/ThisGame";
+import Home from "./components/Home";
+import Login from "./components/Login";
+import {Col, Row} from "reactstrap";
+import logo from './img/Poker.png';
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showAlert: false,
-            alertText: '',
-            alertSuccess: false,
-            today: moment(new Date()).format('YYYY-MM-DD'),
-            date: moment(new Date()).format('YYYY-MM-DD'),
+            loginSuccess: false,
         };
 
-        this.updateDate = this.updateDate.bind(this);
-        this.showSaved = this.showSaved.bind(this);
-        this.isToday = this.isToday.bind(this);
-        this.updateDate = this.updateDate.bind(this);
         this.connectionCheck = this.connectionCheck.bind(this);
+        this.login = this.login.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
     componentDidMount() {
-        store.dispatch(getUsers());
-        this.setState({
-            today: moment(new Date()).format('YYYY-MM-DD'),
-            date: moment(new Date()).format('YYYY-MM-DD'),
-        });
-
         setTimeout(() => {
             this.connectionCheck()
         }, 2000);
-    }
-
-    isToday() {
-        if (this.state.date === '') {
-            return {backgroundColor: 'red'}
-        }
-        if (this.state.date !== this.state.today) {
-            return {backgroundColor: 'LightSkyBlue'}
-        } else {
-            return {backgroundColor: 'whitesmoke'}
-        }
-    }
-
-    showSaved() {
-        this.setState({
-            showAlert: true,
-            alertText: 'Saved',
-            alertSuccess: true,
-        });
-        console.log("show alarm");
-        setTimeout(() => {
-            this.setState({
-                showAlert: false
-            });
-            console.log("hide alarm");
-            return false;
-        }, 2000);
-    };
-
-    updateDate(evt) {
-        this.setState({
-            date: evt.target.value,
-        });
     }
 
     connectionCheck() {
@@ -96,66 +45,21 @@ class App extends Component {
         });
     }
 
-    renderUsers() {
-        const {date, today} = this.state;
-        const {users} = this.props.data;
+    login() {
+        this.setState({
+            loginSuccess: true,
+        })
+    }
 
-        if (_.isNil(users) || _.isNil(users[0])) {
-            return (
-                App.loading()
-            )
-        }
-        console.log("users to render ", users);
-
-        return (
-            <div>
-                {users.map((user, i) =>
-                    <UserList user={user} key={i} saved={this.showSaved} date={date} today={today}/>)}
-                {console.log("render Users: ", users)}
-            </div>
-        );
-    };
-
-    /*     dbInit() {
-             const db = firebase.database().ref('users/');
-             db.set([
-                 {
-                     name: 'init',
-                     games: [
-                         {
-                             date: '2000-01-01',
-                             buyIn: 0,
-                             won: 0
-                         }]
-                 }
-
-             ])
-         }*/
-    static loading() {
-        return (
-            <Row>
-                <Col xs={5}/>
-                <Col xs={2}>
-                    <br/>
-                    <ReactLoading type="spin" color="black" height={50} width={50}/>
-                    <br/>
-                </Col>
-                < Col
-                    xs={5}
-                />
-            </Row>
-        )
+    logout() {
+        this.setState({
+            loginSuccess: false,
+        })
     }
 
     render() {
-        const {connErr} = this.props.data;
         return (
-            <div className="App">
-
-                {/*
-                {this.dbInit()}
-*/}
-
+            <div>
                 <header className="header">
                     <Row>
                         <Col xs="4">
@@ -166,64 +70,7 @@ class App extends Component {
                         </Col>
                     </Row>
                 </header>
-                <div>
-                    <ListGroupItem key="global" style={{backgroundColor: "whitesmoke"}}>
-                        <Row>
-                            <Col xs="2">
-                                <Calc/>
-                            </Col>
-                            <Col xs="2">
-                                {connErr ? <div/> : <GeneralStatistic today={this.state.date}/>}
-                            </Col>
-                            <Col xs="2">
-                                {connErr ? <div/> : <ThisGame today={this.state.date}/>}
-                            </Col>
-                            <Col xs="6">
-                                <Input type="date" name="date" id="date"
-                                       value={this.state.date}
-                                       onChange={this.updateDate}
-                                       style={this.isToday()}
-                                />
-                            </Col>
-                        </Row>
-                    </ListGroupItem>
-                    {connErr ? App.loading() : (
-                        <div>
-                            <ListGroup>
-                                {this.renderUsers()}
-                            </ListGroup>
-
-                            <div style={{
-                                paddingTop: '10px',
-                                paddingBottom: '20px',
-                            }}>
-                                <AddUser saved={this.showSaved}/>
-                            </div>
-                        </div>
-                    )}
-                </div>
-                <Row>
-                    <Alert color="danger"
-                           style={{
-                               visibility: connErr ? 'visible' : 'hidden',
-                               position: "fixed",
-                               left: "0",
-                               bottom: "0",
-                               width: "100%"
-                           }}>
-                        No connection to Server!
-                    </Alert>
-                    <Alert color={this.state.alertSuccess ? "success" : "danger"}
-                           style={{
-                               visibility: this.state.showAlert ? 'visible' : 'hidden',
-                               position: "fixed",
-                               left: "0",
-                               bottom: "0",
-                               width: "100%"
-                           }}>
-                        {this.state.alertText}
-                    </Alert>
-                </Row>
+                {this.state.loginSuccess ? <Home logout={this.logout}/> : <Login login={this.login}/>}
             </div>
         );
     }

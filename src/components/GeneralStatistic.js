@@ -9,7 +9,7 @@ import {
     ModalFooter,
     ModalHeader, Nav, NavItem, NavLink,
     Row, TabContent,
-    Table, TabPane
+    TabPane
 } from "reactstrap";
 import trophy from '../img/trophy-solid.svg';
 import {connect} from "react-redux";
@@ -121,11 +121,11 @@ class GeneralStatistic extends React.Component {
         let top = [];
 
         console.log("users for generalstat", users);
-        if (this.state.fromDate === "2018-01-01" && this.state.toDate === this.props.today){
+        if (this.state.fromDate === "2018-01-01" && this.state.toDate === this.props.today) {
             this.setState({
                 filtered: true,
             })
-        }else {
+        } else {
             this.setState({
                 filtered: false,
             })
@@ -374,7 +374,7 @@ class GeneralStatistic extends React.Component {
         })
     }
 
-    resetFilter(){
+    resetFilter() {
         this.setState({
             showFilter: false,
             fromDate: '2018-01-01',
@@ -429,8 +429,8 @@ class GeneralStatistic extends React.Component {
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                    onKeyPress={this.handleKeyPress}
-                   onBackButtonPress={() => this.setState({ modal: false })}
-                   >
+                   onBackButtonPress={() => this.setState({modal: false})}
+            >
                 <ModalHeader toggle={this.toggle}>Top List</ModalHeader>
                 <ModalBody>
                     <FormGroup>
@@ -440,7 +440,8 @@ class GeneralStatistic extends React.Component {
                                     <Button color={this.state.filtered ? "link" : "primary"} onClick={this.showFilter}>
                                         Filter
                                     </Button>
-                                    <Button style={{visibility: this.state.filtered ? "hidden" : "visible"}} onClick={this.resetFilter}>
+                                    <Button style={{visibility: this.state.filtered ? "hidden" : "visible"}}
+                                            onClick={this.resetFilter}>
                                         X
                                     </Button>
                                 </ButtonGroup>
@@ -475,14 +476,14 @@ class GeneralStatistic extends React.Component {
                             <br/>
                             <Row>
                                 <Col>
-                                        {top.map((user, i) => (
-                                            <Row key={'toplist' + i}>
-                                                <Col xs={2}><Statistic user={user} fromDate={this.state.fromDate}
-                                                               today={this.state.toDate}/></Col>
-                                                <Col xs={4}>{user.name}</Col>
-                                                <Col xs={6}>total: {user.total}</Col>
-                                            </Row>
-                                        ))}
+                                    {top.map((user, i) => (
+                                        <Row key={'toplist' + i}>
+                                            <Col xs={2}><Statistic user={user} fromDate={this.state.fromDate}
+                                                                   today={this.state.toDate}/></Col>
+                                            <Col xs={4}>{user.name}</Col>
+                                            <Col xs={6}>total: {user.total}</Col>
+                                        </Row>
+                                    ))}
                                 </Col>
                             </Row>
                         </TabPane>
