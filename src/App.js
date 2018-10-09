@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import 'react-infinite-calendar/styles.css';
-import {connectionError, getUsers} from "./redux/actions";
+import {connectionError, getUsers, login} from "./redux/actions";
 import {connect} from 'react-redux'
 import {store} from './redux/store'
 import firebase from "./config/firebase";
@@ -13,19 +13,25 @@ import logo from './img/Poker.png';
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            loginSuccess: false,
-        };
+        this.state = {};
 
         this.connectionCheck = this.connectionCheck.bind(this);
-        this.login = this.login.bind(this);
-        this.logout = this.logout.bind(this);
+
     }
 
     componentDidMount() {
         setTimeout(() => {
             this.connectionCheck()
         }, 2000);
+
+        firebase.auth().onAuthStateChanged(function (user) {
+            console.log("auth change");
+            if (user) {
+                App.login()
+            } else {
+                App.logout()
+            }
+        });
     }
 
     connectionCheck() {
@@ -45,16 +51,19 @@ class App extends Component {
         });
     }
 
-    login() {
-        this.setState({
-            loginSuccess: true,
-        })
+
+    static login() {
+        console.log("login");
+        store.dispatch(login(true));
     }
 
-    logout() {
-        this.setState({
-            loginSuccess: false,
-        })
+    static logout() {
+        firebase.auth().signOut().then(function () {
+            console.log("logout");
+            store.dispatch(login(false));
+        }).catch(function (error) {
+            alert(error);
+        });
     }
 
     render() {
@@ -71,7 +80,7 @@ class App extends Component {
                     </Row>
                 </header>
                 <div>
-                    {this.state.loginSuccess ? <Home logout={this.logout}/> : <Login login={this.login}/>}
+                    {this.props.data.login ? <Home logout={App.logout}/> : <Login login={App.login}/>}
                 </div>
             </div>
         );

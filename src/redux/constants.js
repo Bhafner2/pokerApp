@@ -4,3 +4,5 @@ export const GET_USERS_REJECTED = 'app/redux/GET_USERS_REJECTED';
 export const SAVE_USERS = 'app/redux/SAVE_USERS';
 export const SAVE_USERS_REJECTED = 'app/redux/SAVE_USERS_REJECTED';
 export const CONNECTION_ERROR = 'app/redux/CONNECTION_ERROR';
+export const LOGIN = 'app/redux/LOGIN';
+
