@@ -3,8 +3,9 @@ import 'react-infinite-calendar/styles.css';
 import firebase from "../config/firebase";
 import {connect} from 'react-redux'
 import {Button, Col, FormFeedback, FormGroup, Input, Label, Row} from "reactstrap";
+import {loginError} from "../redux/actions";
+import {store} from "../redux/store";
 
-let errorText = '';
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -15,33 +16,39 @@ class Login extends Component {
         this.updatePassword = this.updatePassword.bind(this);
         this.updateEmail = this.updateEmail.bind(this);
         this.login = this.login.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
     login() {
         firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).catch(function (error) {
-//TODO show errror
-            alert(error.message);
-            errorText = error.message;
+            store.dispatch(loginError(error.message));
         });
-
-
     }
 
     updateEmail(evt) {
         this.setState({
             email: evt.target.value
         });
+        store.dispatch(loginError(''));
     }
 
     updatePassword(evt) {
         this.setState({
             password: evt.target.value
         });
+        store.dispatch(loginError(''));
+    }
+
+    handleKeyPress(target) {
+        console.log("key pressed");
+        if (target.charCode === 13) {
+            this.login()
+        }
     }
 
     render() {
         return (
-            <div>
+            <div onKeyPress={this.handleKeyPress}>
                 <Row>
                     <Col xs={1}/>
                     <Col xs={10}>
@@ -52,9 +59,7 @@ class Login extends Component {
                             <Input type="email" name="email" id="email"
                                    onChange={this.updateEmail}
                                    value={this.state.email}
-                                   invalid={true}
                             />
-                            <FormFeedback invalid>{errorText}</FormFeedback>
                         </FormGroup>
                     </Col>
                     <Col xs={1}/>
@@ -76,8 +81,16 @@ class Login extends Component {
                     <Col xs={1}/>
                     <Col xs={10}>
                         <FormGroup>
-                            <br/>
                             <Button type="primary" name="login" onClick={this.login}>Login</Button>
+                        </FormGroup>
+                    </Col>
+                    <Col xs={1}/>
+                </Row>
+                <Row>
+                    <Col xs={1}/>
+                    <Col xs={10}>
+                        <FormGroup>
+                            <div style={{color: "red", fontSize: "0.8em"}}>{this.props.data.loginError}</div>
                         </FormGroup>
                     </Col>
                     <Col xs={1}/>

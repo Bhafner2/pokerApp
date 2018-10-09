@@ -1,4 +1,4 @@
-import {CONNECTION_ERROR, GET_USERS, GET_USERS_FULFILLED, LOGIN, SAVE_USERS} from "./constants";
+import {CONNECTION_ERROR, GET_USERS, GET_USERS_FULFILLED, LOGIN, LOGIN_ERROR, SAVE_USERS} from "./constants";
 
 export default (state, action) => {
     switch (action.type) {
@@ -32,6 +32,11 @@ export default (state, action) => {
             return ({
                 ...state,
                 login: action.login
+            });
+        case LOGIN_ERROR:
+            return ({
+                ...state,
+                loginError: action.text
             });
         default:
             console.log("default action");
