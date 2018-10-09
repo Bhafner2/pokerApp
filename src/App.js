@@ -70,7 +70,9 @@ class App extends Component {
                         </Col>
                     </Row>
                 </header>
-                {this.state.loginSuccess ? <Home logout={this.logout}/> : <Login login={this.login}/>}
+                <div>
+                    {this.state.loginSuccess ? <Home logout={this.logout}/> : <Login login={this.login}/>}
+                </div>
             </div>
         );
     }

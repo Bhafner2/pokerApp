@@ -2,14 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9b843d04-d234-4560-a5d4-e527747186df" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/img/calendar-alt-solid.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/img/search-solid.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/img/sign-out-alt-solid.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/GeneralStatistic.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/GeneralStatistic.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Home.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ThisGame.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ThisGame.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -26,35 +23,17 @@
       <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="595">
-              <caret line="35" column="41" lean-forward="true" selection-start-line="35" selection-start-column="41" selection-end-line="35" selection-end-column="41" />
+            <state relative-caret-position="629">
+              <caret line="73" column="80" lean-forward="true" selection-start-line="73" selection-start-column="80" selection-end-line="73" selection-end-column="80" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AddUser.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/AddUser.js">
+      <file leaf-file-name="App.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/App.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="199">
-              <caret line="123" column="26" selection-start-line="123" selection-start-column="7" selection-end-line="123" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserList.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/UserList.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4063">
-              <caret line="239" column="54" selection-start-line="239" selection-start-column="54" selection-end-line="239" selection-end-column="54" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Statistic.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/Statistic.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="310">
-              <caret line="431" column="5" lean-forward="true" selection-start-line="431" selection-start-column="5" selection-end-line="431" selection-end-column="5" />
+            <state relative-caret-position="153">
+              <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -62,8 +41,8 @@
       <file leaf-file-name="Home.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/Home.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="310">
-              <caret line="162" column="51" lean-forward="true" selection-start-line="162" selection-start-column="51" selection-end-line="162" selection-end-column="51" />
+            <state relative-caret-position="177">
+              <caret line="139" column="16" selection-start-line="139" selection-start-column="16" selection-end-line="139" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -71,8 +50,17 @@
       <file leaf-file-name="Login.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Login.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="166">
-              <caret line="29" column="22" lean-forward="true" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
+            <state relative-caret-position="406">
+              <caret line="25" column="22" lean-forward="true" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ThisGame.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/ThisGame.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="308">
+              <caret line="67" column="37" selection-start-line="67" selection-start-column="37" selection-end-line="67" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -80,8 +68,8 @@
       <file leaf-file-name="GeneralStatistic.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1985">
-              <caret line="534" column="15" selection-start-line="534" selection-start-column="15" selection-end-line="534" selection-end-column="15" />
+            <state relative-caret-position="211">
+              <caret line="135" column="37" selection-start-line="135" selection-start-column="37" selection-end-line="135" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -192,7 +180,6 @@
         <option value="$PROJECT_DIR$/build/service-worker.js" />
         <option value="$PROJECT_DIR$/public/manifest.json" />
         <option value="$PROJECT_DIR$/public/site.webmanifest" />
-        <option value="$PROJECT_DIR$/src/App.css" />
         <option value="$PROJECT_DIR$/src/components/UserModal.js" />
         <option value="$PROJECT_DIR$/src/config/dev.js" />
         <option value="$PROJECT_DIR$/src/config/firebase.js" />
@@ -217,10 +204,11 @@
         <option value="$PROJECT_DIR$/src/components/GameDetail.js" />
         <option value="$PROJECT_DIR$/src/components/Statistic.js" />
         <option value="$PROJECT_DIR$/src/components/AddUser.js" />
-        <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/components/GeneralStatistic.js" />
-        <option value="$PROJECT_DIR$/src/components/Login.js" />
         <option value="$PROJECT_DIR$/src/components/ThisGame.js" />
+        <option value="$PROJECT_DIR$/src/App.css" />
+        <option value="$PROJECT_DIR$/src/App.js" />
+        <option value="$PROJECT_DIR$/src/components/Login.js" />
         <option value="$PROJECT_DIR$/src/components/Home.js" />
       </list>
     </option>
@@ -382,14 +370,7 @@
       <workItem from="1537963649799" duration="837000" />
       <workItem from="1537967366146" duration="3954000" />
       <workItem from="1538047034205" duration="4099000" />
-      <workItem from="1539083646119" duration="4499000" />
-    </task>
-    <task id="LOCAL-00006" summary="store implemeted and components">
-      <created>1536668586569</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1536668586569</updated>
+      <workItem from="1539083646119" duration="5043000" />
     </task>
     <task id="LOCAL-00007" summary="isToday">
       <created>1536669068599</created>
@@ -727,11 +708,18 @@
       <option name="project" value="LOCAL" />
       <updated>1539086378797</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="login prepared">
+      <created>1539088532153</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1539088532154</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="250919000" />
+    <option name="totallyTimeSpent" value="251463000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -748,13 +736,14 @@
     <layout>
       <window_info anchor="bottom" id="TODO" order="9" />
       <window_info id="DB Browser" order="3" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.32906404" />
       <window_info anchor="bottom" id="DB Execution Console" order="1" />
       <window_info anchor="bottom" id="Event Log" order="14" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="bottom" id="Run" order="4" weight="0.32906404" />
       <window_info id="npm" order="5" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.3369458" />
-      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.15542677" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.3369458" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.15542677" />
       <window_info id="Project Explorer" order="0" />
       <window_info id="Job Explorer" order="1" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
@@ -767,7 +756,6 @@
       <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.32906404" />
       <window_info anchor="bottom" id="Message" order="2" />
       <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="3" weight="0.34778324" />
@@ -968,13 +956,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="30" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/reactstrap/dist/reactstrap.es.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="614">
@@ -1065,36 +1046,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/img/sign-out-alt-solid.svg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="35" column="41" lean-forward="true" selection-start-line="35" selection-start-column="41" selection-end-line="35" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/img/calendar-alt-solid.svg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Login.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="29" column="22" lean-forward="true" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/img/search-solid.svg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/ThisGame.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="229" column="36" selection-start-line="229" selection-start-column="36" selection-end-line="229" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/GameDetail.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
@@ -1102,17 +1053,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/img/search-solid.svg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/img/calendar-alt-solid.svg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/img/sign-out-alt-solid.svg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/ThisGame.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="67" column="37" selection-start-line="67" selection-start-column="37" selection-end-line="67" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1985">
-          <caret line="534" column="15" selection-start-line="534" selection-start-column="15" selection-end-line="534" selection-end-column="15" />
+        <state relative-caret-position="211">
+          <caret line="135" column="37" selection-start-line="135" selection-start-column="37" selection-end-line="135" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="73" column="80" lean-forward="true" selection-start-line="73" selection-start-column="80" selection-end-line="73" selection-end-column="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="25" column="22" lean-forward="true" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Home.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="162" column="51" lean-forward="true" selection-start-line="162" selection-start-column="51" selection-end-line="162" selection-end-column="51" />
+        <state relative-caret-position="177">
+          <caret line="139" column="16" selection-start-line="139" selection-start-column="16" selection-end-line="139" selection-end-column="16" />
         </state>
       </provider>
     </entry>

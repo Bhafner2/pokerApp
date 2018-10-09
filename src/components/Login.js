@@ -13,27 +13,36 @@ class Login extends Component {
         return (
             <div>
                 <Row>
-                    <Col>
+                    <Col xs={1}/>
+                    <Col xs={10}>
                         <FormGroup>
+                            <br/>
+                            <br/>
                             <Label for="email">Email</Label>
                             <Input type="email" name="email" id="email"/>
                         </FormGroup>
                     </Col>
+                    <Col xs={1}/>
                 </Row>
                 <Row>
-                    <Col>
+                    <Col xs={1}/>
+                    <Col xs={10}>
                         <FormGroup>
                             <Label for="password">Password</Label>
                             <Input type="password" name="password" id="password"/>
                         </FormGroup>
                     </Col>
+                    <Col xs={1}/>
                 </Row>
                 <Row>
-                    <Col>
+                    <Col xs={1}/>
+                    <Col xs={10}>
                         <FormGroup>
+                            <br/>
                             <Button type="primary" name="login" onClick={this.props.login}>Login</Button>
                         </FormGroup>
                     </Col>
+                    <Col xs={1}/>
                 </Row>
             </div>
         )

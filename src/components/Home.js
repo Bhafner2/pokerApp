@@ -137,66 +137,64 @@ class Home extends Component {
     render() {
         const {connErr} = this.props.data;
         return (
-            <div className="App">
+            <div>
 
                 {/*
                 {this.dbInit()}
 */}
-                <div>
-                    <ListGroupItem key="global" style={{backgroundColor: "whitesmoke"}}>
+                <ListGroupItem key="global" style={{backgroundColor: "whitesmoke"}}>
+                    <Row>
+                        <Col xs="2">
+                            <Calc/>
+                        </Col>
+                        <Col xs="2">
+                            {connErr ? <div/> : <GeneralStatistic today={this.state.date}/>}
+                        </Col>
+                        <Col xs="2">
+                            {connErr ? <div/> : <ThisGame today={this.state.date}/>}
+                        </Col>
+                        <Col xs="2">
+                            {connErr ? <div/> :
+                                <img className="date" src={date} alt={"date"} onClick={this.toggleDate}
+                                     style={{height: "30px"}} style={this.isToday()}/>}
+                        </Col>
+                        <Col xs="2">
+                            {connErr ? <div/> :
+                                <img className="search" src={search} alt={"search"}
+                                     style={{height: "30px"}}/>}
+                        </Col>
+                        <Col xs="2">
+                            {connErr ? <div/> :
+                                <img className="logout" src={logout} alt={"logout"} onClick={this.props.logout}
+                                     style={{height: "30px"}}/>}
+                        </Col>
+                    </Row>
+                    {this.state.showDate ? <div/> :
                         <Row>
-                            <Col xs="2">
-                                <Calc/>
+                            <Col>
+                                <br/>
+                                <Input type="date" name="date" id="date"
+                                       value={this.state.date}
+                                       onChange={this.updateDate}
+                                       style={this.isToday()}
+                                />
                             </Col>
-                            <Col xs="2">
-                                {connErr ? <div/> : <GeneralStatistic today={this.state.date}/>}
-                            </Col>
-                            <Col xs="2">
-                                {connErr ? <div/> : <ThisGame today={this.state.date}/>}
-                            </Col>
-                            <Col xs="2">
-                                {connErr ? <div/> :
-                                    <img className="date" src={date} alt={"date"} onClick={this.toggleDate}
-                                         style={{height: "30px"}} style={this.isToday()}/>}
-                            </Col>
-                            <Col xs="2">
-                                {connErr ? <div/> :
-                                    <img className="search" src={search} alt={"search"}
-                                         style={{height: "30px"}}/>}
-                            </Col>
-                            <Col xs="2">
-                                {connErr ? <div/> :
-                                    <img className="logout" src={logout} alt={"logout"} onClick={this.props.logout}
-                                         style={{height: "30px"}}/>}
-                            </Col>
-                        </Row>
-                        {this.state.showDate ? <div/> :
-                            <Row>
-                                <Col>
-                                    <br/>
-                                    <Input type="date" name="date" id="date"
-                                           value={this.state.date}
-                                           onChange={this.updateDate}
-                                           style={this.isToday()}
-                                    />
-                                </Col>
-                            </Row>}
-                    </ListGroupItem>
-                    {connErr ? Home.loading() : (
-                        <div>
-                            <ListGroup>
-                                {this.renderUsers()}
-                            </ListGroup>
+                        </Row>}
+                </ListGroupItem>
+                {connErr ? Home.loading() : (
+                    <div>
+                        <ListGroup>
+                            {this.renderUsers()}
+                        </ListGroup>
 
-                            <div style={{
-                                paddingTop: '10px',
-                                paddingBottom: '20px',
-                            }}>
-                                <AddUser saved={this.showSaved}/>
-                            </div>
+                        <div style={{
+                            paddingTop: '10px',
+                            paddingBottom: '20px',
+                        }}>
+                            <AddUser saved={this.showSaved}/>
                         </div>
-                    )}
-                </div>
+                    </div>
+                )}
                 <Row>
                     <Alert color="danger"
                            style={{

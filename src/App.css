@@ -1,7 +1,12 @@
 .App {
-  text-align: center;
+    text-align: center;
     max-width: max-content;
     width: auto;
+    align-content: center;
+}
+
+div {
+    text-align: center;
     align-content: center;
 }
 
