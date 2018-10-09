@@ -425,7 +425,7 @@ class GeneralStatistic extends React.Component {
         const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, top} = this.state;
 
         return (<div>
-            <img className="chart" src={trophy} alt={"chart"} onClick={this.toggle} style={{height: "30px"}}/>
+            <img className="trophy" src={trophy} alt={"trophy"} onClick={this.toggle} style={{height: "30px"}}/>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                    onKeyPress={this.handleKeyPress}

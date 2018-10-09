@@ -31,11 +31,10 @@ class Login extends Component {
                 <Row>
                     <Col>
                         <FormGroup>
-                            <Button type="primary" name="login">Login</Button>
+                            <Button type="primary" name="login" onClick={this.props.login}>Login</Button>
                         </FormGroup>
                     </Col>
                 </Row>
-                {this.props.login()}
             </div>
         )
     }

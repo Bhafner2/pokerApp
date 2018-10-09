@@ -12,6 +12,9 @@ import GeneralStatistic from "./GeneralStatistic";
 import Calc from "./Calc";
 import ReactLoading from 'react-loading';
 import ThisGame from "./ThisGame";
+import logout from '../img/sign-out-alt-solid.svg';
+import date from '../img/calendar-alt-solid.svg';
+import search from '../img/search-solid.svg';
 
 class Home extends Component {
     constructor(props) {
@@ -22,12 +25,14 @@ class Home extends Component {
             alertSuccess: false,
             today: moment(new Date()).format('YYYY-MM-DD'),
             date: moment(new Date()).format('YYYY-MM-DD'),
+            showDate: true,
         };
 
         this.updateDate = this.updateDate.bind(this);
         this.showSaved = this.showSaved.bind(this);
         this.isToday = this.isToday.bind(this);
         this.updateDate = this.updateDate.bind(this);
+        this.toggleDate = this.toggleDate.bind(this);
     }
 
     componentDidMount() {
@@ -35,6 +40,7 @@ class Home extends Component {
         this.setState({
             today: moment(new Date()).format('YYYY-MM-DD'),
             date: moment(new Date()).format('YYYY-MM-DD'),
+            showDate: true,
         });
     }
 
@@ -122,6 +128,12 @@ class Home extends Component {
         )
     }
 
+    toggleDate() {
+        this.setState({
+            showDate: !this.state.showDate,
+        });
+    }
+
     render() {
         const {connErr} = this.props.data;
         return (
@@ -142,14 +154,33 @@ class Home extends Component {
                             <Col xs="2">
                                 {connErr ? <div/> : <ThisGame today={this.state.date}/>}
                             </Col>
-                            <Col xs="6">
-                                <Input type="date" name="date" id="date"
-                                       value={this.state.date}
-                                       onChange={this.updateDate}
-                                       style={this.isToday()}
-                                />
+                            <Col xs="2">
+                                {connErr ? <div/> :
+                                    <img className="date" src={date} alt={"date"} onClick={this.toggleDate}
+                                         style={{height: "30px"}} style={this.isToday()}/>}
+                            </Col>
+                            <Col xs="2">
+                                {connErr ? <div/> :
+                                    <img className="search" src={search} alt={"search"}
+                                         style={{height: "30px"}}/>}
+                            </Col>
+                            <Col xs="2">
+                                {connErr ? <div/> :
+                                    <img className="logout" src={logout} alt={"logout"} onClick={this.props.logout}
+                                         style={{height: "30px"}}/>}
                             </Col>
                         </Row>
+                        {this.state.showDate ? <div/> :
+                            <Row>
+                                <Col>
+                                    <br/>
+                                    <Input type="date" name="date" id="date"
+                                           value={this.state.date}
+                                           onChange={this.updateDate}
+                                           style={this.isToday()}
+                                    />
+                                </Col>
+                            </Row>}
                     </ListGroupItem>
                     {connErr ? Home.loading() : (
                         <div>

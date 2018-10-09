@@ -2,11 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9b843d04-d234-4560-a5d4-e527747186df" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/Home.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Login.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/calendar-alt-solid.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/search-solid.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/sign-out-alt-solid.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/GeneralStatistic.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/GeneralStatistic.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ThisGame.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ThisGame.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -20,20 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="App.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="22" column="5" lean-forward="true" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Calc.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/Calc.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3264">
-              <caret line="192" column="35" selection-start-line="192" selection-start-column="35" selection-end-line="192" selection-end-column="35" />
+            <state relative-caret-position="595">
+              <caret line="35" column="41" lean-forward="true" selection-start-line="35" selection-start-column="41" selection-end-line="35" selection-end-column="41" />
             </state>
           </provider>
         </entry>
@@ -65,11 +59,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Home.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Home.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/Home.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="29" column="16" lean-forward="true" selection-start-line="29" selection-end-line="30" />
+            <state relative-caret-position="310">
+              <caret line="162" column="51" lean-forward="true" selection-start-line="162" selection-start-column="51" selection-end-line="162" selection-end-column="51" />
             </state>
           </provider>
         </entry>
@@ -77,8 +71,8 @@
       <file leaf-file-name="Login.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Login.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
-              <caret line="36" column="22" lean-forward="true" selection-start-line="36" selection-start-column="22" selection-end-line="36" selection-end-column="22" />
+            <state relative-caret-position="166">
+              <caret line="29" column="22" lean-forward="true" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -86,8 +80,8 @@
       <file leaf-file-name="GeneralStatistic.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
+            <state relative-caret-position="1985">
+              <caret line="534" column="15" selection-start-line="534" selection-start-column="15" selection-end-line="534" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -95,17 +89,8 @@
       <file leaf-file-name="GameDetail.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/GameDetail.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="799">
-              <caret line="47" selection-start-line="47" selection-end-line="54" selection-end-column="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ThisGame.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/ThisGame.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3383">
-              <caret line="199" column="5" selection-start-line="199" selection-start-column="5" selection-end-line="199" selection-end-column="5" />
+            <state relative-caret-position="374">
+              <caret line="46" column="30" lean-forward="true" selection-start-line="46" selection-start-column="30" selection-end-line="46" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -121,7 +106,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>mome</find>
       <find>max</find>
       <find>avgSi</find>
       <find>sumWon</find>
@@ -151,6 +135,7 @@
       <find>togg</find>
       <find>logo</find>
       <find>saved</find>
+      <find>showDate</find>
     </findStrings>
     <replaceStrings>
       <replace>this.props.date</replace>
@@ -227,16 +212,16 @@
         <option value="$PROJECT_DIR$/src/redux/reducers.js" />
         <option value="$PROJECT_DIR$/src/redux/actions.js" />
         <option value="$PROJECT_DIR$/src/components/Calc.js" />
-        <option value="$PROJECT_DIR$/src/components/ThisGame.js" />
         <option value="$PROJECT_DIR$/src/components/UserList.js" />
         <option value="$PROJECT_DIR$/src/components/GameDetail" />
         <option value="$PROJECT_DIR$/src/components/GameDetail.js" />
         <option value="$PROJECT_DIR$/src/components/Statistic.js" />
-        <option value="$PROJECT_DIR$/src/components/GeneralStatistic.js" />
-        <option value="$PROJECT_DIR$/src/components/Home.js" />
         <option value="$PROJECT_DIR$/src/components/AddUser.js" />
-        <option value="$PROJECT_DIR$/src/components/Login.js" />
         <option value="$PROJECT_DIR$/src/App.js" />
+        <option value="$PROJECT_DIR$/src/components/GeneralStatistic.js" />
+        <option value="$PROJECT_DIR$/src/components/Login.js" />
+        <option value="$PROJECT_DIR$/src/components/ThisGame.js" />
+        <option value="$PROJECT_DIR$/src/components/Home.js" />
       </list>
     </option>
   </component>
@@ -318,16 +303,16 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src\components" />
-      <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src\img" />
-      <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src\img" />
       <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src\redux" />
       <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src" />
       <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\public" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src\img" />
+      <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src\components" />
+      <recent name="C:\Users\bha\Google Drive\PokerApp\poker-app\src" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -397,14 +382,7 @@
       <workItem from="1537963649799" duration="837000" />
       <workItem from="1537967366146" duration="3954000" />
       <workItem from="1538047034205" duration="4099000" />
-      <workItem from="1539083646119" duration="2407000" />
-    </task>
-    <task id="LOCAL-00005" summary="addUser">
-      <created>1536653052645</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1536653052645</updated>
+      <workItem from="1539083646119" duration="4499000" />
     </task>
     <task id="LOCAL-00006" summary="store implemeted and components">
       <created>1536668586569</created>
@@ -742,11 +720,18 @@
       <option name="project" value="LOCAL" />
       <updated>1538051050545</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="login prepared">
+      <created>1539086378781</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1539086378797</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="248827000" />
+    <option name="totallyTimeSpent" value="250919000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -795,7 +780,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="db init" />
     <MESSAGE value="with stat amount" />
     <MESSAGE value="statisics with higtcharts" />
     <MESSAGE value="Users statisics" />
@@ -820,7 +804,8 @@
     <MESSAGE value="general stat with popup" />
     <MESSAGE value="stat with date" />
     <MESSAGE value="filter" />
-    <option name="LAST_COMMIT_MESSAGE" value="filter" />
+    <MESSAGE value="login prepared" />
+    <option name="LAST_COMMIT_MESSAGE" value="login prepared" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -828,11 +813,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/index.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/UserModal.js" />
-    <entry file="file://$PROJECT_DIR$/src/config/dev.js" />
     <entry file="file://$PROJECT_DIR$/node_modules/firebase/externs/firebase-database-externs.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="218">
@@ -1057,20 +1037,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/ThisGame.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3383">
-          <caret line="199" column="5" selection-start-line="199" selection-start-column="5" selection-end-line="199" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/GameDetail.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="799">
-          <caret line="47" selection-start-line="47" selection-end-line="54" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/UserList.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4063">
@@ -1092,13 +1058,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/AddUser.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="199">
@@ -1106,24 +1065,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/img/sign-out-alt-solid.svg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="35" column="41" lean-forward="true" selection-start-line="35" selection-start-column="41" selection-end-line="35" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/img/calendar-alt-solid.svg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Login.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="36" column="22" lean-forward="true" selection-start-line="36" selection-start-column="22" selection-end-line="36" selection-end-column="22" />
+        <state relative-caret-position="166">
+          <caret line="29" column="22" lean-forward="true" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/img/search-solid.svg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/ThisGame.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="229" column="36" selection-start-line="229" selection-start-column="36" selection-end-line="229" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/GameDetail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="46" column="30" lean-forward="true" selection-start-line="46" selection-start-column="30" selection-end-line="46" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1985">
+          <caret line="534" column="15" selection-start-line="534" selection-start-column="15" selection-end-line="534" selection-end-column="15" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Home.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="29" column="16" lean-forward="true" selection-start-line="29" selection-end-line="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="22" column="5" lean-forward="true" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
+        <state relative-caret-position="310">
+          <caret line="162" column="51" lean-forward="true" selection-start-line="162" selection-start-column="51" selection-end-line="162" selection-end-column="51" />
         </state>
       </provider>
     </entry>

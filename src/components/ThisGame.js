@@ -227,7 +227,7 @@ class ThisGame extends React.Component {
     render() {
         return (<div>
             <img className="chart" src={icon} alt={"chart"} onClick={this.toggle}
-                 style={{height: "32px", backgroundColor: this.state.sumOk ? "" : "red"}}/>
+                 style={{height: "30px", backgroundColor: this.state.sumOk ? "" : "red"}}/>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                    onKeyPress={this.handleKeyPress}
