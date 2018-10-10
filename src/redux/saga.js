@@ -4,15 +4,13 @@ import {getUsersRejected, getUsersFulfilled, saveUsersRejected} from "./actions"
 import {GET_USERS, SAVE_USERS} from "./constants";
 import {store} from '../redux/store'
 
-const db = firebase.database().ref('users/');
 
 export function* getUsersSaga() {
-    console.log("get users saga");
-
+    console.log("saga get user");
     try {
         yield call(fetchUsers);
     } catch (err) {
-        console.log("get users saga err");
+        console.log("saga get users rejected ", err);
         yield put(getUsersRejected(err));
     }
 }
@@ -21,12 +19,12 @@ export function* saveUsersSaga(action) {
     try {
         yield call(db.set(action.users));
     } catch (err) {
-        console.log("save users saga err");
-/*
+        console.log("saga save users err ", err);
         yield put(saveUsersRejected(err));
-*/
     }
 }
+
+const db = firebase.database().ref('users/');
 
 function fetchUsers() {
     db.on('value', (snapshot) => {
@@ -38,10 +36,14 @@ function fetchUsers() {
                 games: data[user].games
             });
         }
+        console.log("saga get Users fulfilled");
+        store.getState();
+
+        console.log("store state", store.getState());
         store.dispatch(getUsersFulfilled(users));
-        console.log("save users saga succ");
     });
 }
+
 
 export function* usersSaga() {
     yield takeLatest(GET_USERS, getUsersSaga);

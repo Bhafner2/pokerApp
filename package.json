@@ -15,6 +15,7 @@
     "prop-types": "latest",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "react-fontawesome": "^1.6.1",
     "react-infinite-calendar": "^2.3.1",
     "react-loading": "^2.0.3",
     "react-redux": "^5.0.7",

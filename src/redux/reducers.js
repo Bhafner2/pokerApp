@@ -3,43 +3,50 @@ import {CONNECTION_ERROR, GET_USERS, GET_USERS_FULFILLED, LOGIN, LOGIN_ERROR, SA
 export default (state, action) => {
     switch (action.type) {
         case SAVE_USERS:
-            console.log("save users saga");
+            console.log("reducer save user", "break");
             break;
         case "UPDATE_ACTUAL_DATE":
+            console.log("reducer update actual date", action.date);
             return {
                 ...state,
                 actualDate: action.date
             };
         case "UPDATE_ACTUAL_USER":
+            console.log("reducer update actual user", action.user);
             return {
                 ...state,
                 actualUser: action.user
             };
         case GET_USERS:
+            console.log("reducer get user", state);
             return state;
         case GET_USERS_FULFILLED:
-            console.log("get users success", action.users);
+            console.log("reducer get users fulfilled", action.users);
+            let newState = {users: [], actualUser: {}, connErr: false, login: true, loginError: '',};
             return ({
-                ...state,
+                ...newState,
                 users: action.users
             });
         case CONNECTION_ERROR:
+            console.log("reducer connection error", action.connErr);
             return ({
                 ...state,
                 connErr: action.connErr
             });
         case LOGIN:
+            console.log("reducer login", action.login);
             return ({
                 ...state,
                 login: action.login
             });
         case LOGIN_ERROR:
+            console.log("reducer login error", action.text);
             return ({
                 ...state,
                 loginError: action.text
             });
         default:
-            console.log("default action");
-            return {...state};
+            console.log("reducer default", action.type, state);
+            return state;
     }
 }

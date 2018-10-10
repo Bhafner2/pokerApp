@@ -7,7 +7,6 @@ import {
     SAVE_USERS_REJECTED
 } from "./constants";
 
-export const getUsersFulfilled = users => ({type: GET_USERS_FULFILLED, users});
 
 export const getUsersRejected = users => ({type: GET_USERS_REJECTED, users});
 
@@ -16,6 +15,14 @@ export function getUsers() {
         type: GET_USERS,
     };
 }
+
+export function getUsersFulfilled(users) {
+    return {
+        type: GET_USERS_FULFILLED,
+        users
+    };
+}
+
 
 export function saveUsers(users) {
     return {
