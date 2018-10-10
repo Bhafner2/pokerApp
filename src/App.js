@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import 'react-infinite-calendar/styles.css';
-import {connectionError, getUsers, login} from "./redux/actions";
+import {connectionError, getUsers, login, setLoad} from "./redux/actions";
 import {connect} from 'react-redux'
 import {store} from './redux/store'
 import firebase from "./config/firebase";
@@ -25,6 +25,7 @@ class App extends Component {
 
         firebase.auth().onAuthStateChanged(function (user) {
             console.log("auth change");
+            store.dispatch(setLoad(false));
             if (user) {
                 App.login();
             } else {
@@ -45,6 +46,7 @@ class App extends Component {
                 store.dispatch(connectionError(false));
             } else {
                 store.dispatch(connectionError(true));
+                store.dispatch(setLoad(false));
                 App.logout();
                 console.log("disconnected");
             }

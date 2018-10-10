@@ -13,6 +13,23 @@ import Calc from "./Calc";
 import ReactLoading from 'react-loading';
 import ThisGame from "./ThisGame";
 
+export function loading() {
+    return (
+        <Row>
+            <Col xs={5}/>
+            <Col xs={2}>
+                <br/>
+                <ReactLoading type="spin" color="black" height={50} width={50}/>
+                <br/>
+            </Col>
+            < Col
+                xs={5}
+            />
+        </Row>
+    )
+}
+
+
 class Home extends Component {
     constructor(props) {
         super(props);
@@ -80,7 +97,7 @@ class Home extends Component {
 
         if (_.isNil(users) || _.isNil(users[0])) {
             return (
-                Home.loading()
+                loading()
             )
         }
         console.log("users to render ", users);
@@ -109,21 +126,6 @@ class Home extends Component {
 
              ])
          }*/
-    static loading() {
-        return (
-            <Row>
-                <Col xs={5}/>
-                <Col xs={2}>
-                    <br/>
-                    <ReactLoading type="spin" color="black" height={50} width={50}/>
-                    <br/>
-                </Col>
-                < Col
-                    xs={5}
-                />
-            </Row>
-        )
-    }
 
     toggleDate() {
         this.setState({
@@ -178,7 +180,7 @@ class Home extends Component {
                             </Col>
                         </Row>}
                 </ListGroupItem>
-                {connErr ? Home.loading() : (
+                {connErr ? loading() : (
                     <div>
                         <ListGroup>
                             {this.renderUsers()}

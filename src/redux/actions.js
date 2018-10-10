@@ -2,7 +2,7 @@ import {
     CONNECTION_ERROR,
     GET_USERS,
     GET_USERS_FULFILLED,
-    GET_USERS_REJECTED, LOGIN, LOGIN_ERROR,
+    GET_USERS_REJECTED, LOAD, LOGIN, LOGIN_ERROR,
     SAVE_USERS,
     SAVE_USERS_REJECTED
 } from "./constants";
@@ -56,5 +56,12 @@ export function loginError(text) {
     return {
         type: LOGIN_ERROR,
         text
+    };
+}
+
+export function setLoad(load) {
+    return {
+        type: LOAD,
+        load
     };
 }

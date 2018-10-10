@@ -3,8 +3,9 @@ import 'react-infinite-calendar/styles.css';
 import firebase from "../config/firebase";
 import {connect} from 'react-redux'
 import {Alert, Button, Col, FormGroup, Input, Label, ListGroupItem, Row} from "reactstrap";
-import {loginError} from "../redux/actions";
+import {loginError, setLoad} from "../redux/actions";
 import {store} from "../redux/store";
+import {loading} from "./Home";
 
 class Login extends Component {
     constructor(props) {
@@ -20,8 +21,10 @@ class Login extends Component {
     }
 
     login() {
+        store.dispatch(setLoad(true));
         firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).catch(function (error) {
             store.dispatch(loginError(error.message));
+            store.dispatch(setLoad(false));
         });
 
     }
@@ -51,49 +54,50 @@ class Login extends Component {
         const {connErr} = this.props.data;
         return (
             <div onKeyPress={this.handleKeyPress}>
-                <ListGroupItem>
-                    <Row>
-                        <Col xs={1}/>
-                        <Col xs={10}>
-                            <FormGroup>
-                                <br/>
-                                <Label for="email">Email</Label>
-                                <Input type="email" name="email" id="email"
-                                       onChange={this.updateEmail}
-                                       value={this.state.email}
-                                />
-                            </FormGroup>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col xs={1}/>
-                        <Col xs={10}>
-                            <FormGroup>
-                                <Label for="password">Password</Label>
-                                <Input type="password" name="password" id="password"
-                                       onChange={this.updatePassword}
-                                       value={this.state.password}
-                                />
-                            </FormGroup>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col xs={1}/>
-                        <Col xs={10}>
-                            <FormGroup>
-                                <Button type="primary" name="login" onClick={this.login}>Login</Button>
-                            </FormGroup>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col xs={1}/>
-                        <Col xs={10}>
-                            <FormGroup>
-                                <div style={{color: "red", fontSize: "0.8em"}}>{this.props.data.loginError}</div>
-                            </FormGroup>
-                        </Col>
-                    </Row>
-                </ListGroupItem>
+                {this.props.data.load ? loading() : (
+                    <ListGroupItem>
+                        <Row>
+                            <Col xs={1}/>
+                            <Col xs={10}>
+                                <FormGroup>
+                                    <br/>
+                                    <Label for="email">Email</Label>
+                                    <Input type="email" name="email" id="email"
+                                           onChange={this.updateEmail}
+                                           value={this.state.email}
+                                    />
+                                </FormGroup>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs={1}/>
+                            <Col xs={10}>
+                                <FormGroup>
+                                    <Label for="password">Password</Label>
+                                    <Input type="password" name="password" id="password"
+                                           onChange={this.updatePassword}
+                                           value={this.state.password}
+                                    />
+                                </FormGroup>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs={1}/>
+                            <Col xs={10}>
+                                <FormGroup>
+                                    <Button type="primary" name="login" onClick={this.login}>Login</Button>
+                                </FormGroup>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs={1}/>
+                            <Col xs={10}>
+                                <FormGroup>
+                                    <div style={{color: "red", fontSize: "0.8em"}}>{this.props.data.loginError}</div>
+                                </FormGroup>
+                            </Col>
+                        </Row>
+                    </ListGroupItem>)}
                 <Alert className="center"
                        color="danger"
                        style={{
