@@ -24,7 +24,7 @@ class GameDetail extends React.Component {
         return (
             <div id={'list' + name}>
                 <Row>
-                    <Col xs={4} onClick={this.toggle}>
+                    <Col xs={3} onClick={this.toggle}>
                         <b>{name}</b>
                     </Col>
                     <Col xs={2} onClick={this.toggle}>
@@ -36,7 +36,7 @@ class GameDetail extends React.Component {
                     <Col xs={1}>
                         <ThisGame today={game.date} style={{height: "1em", backgroundColor: "white"}}/>
                     </Col>
-                    <Col xs={1}/>
+                    <Col xs={2}/>
                 </Row>
                 <Popover placement="top" isOpen={this.state.popoverOpen}
                          target={'list' + name}

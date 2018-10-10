@@ -6,7 +6,6 @@ import {
     ModalFooter,
     ModalHeader, Row,
 } from "reactstrap";
-import icon from '../img/gamepad-solid.svg';
 import {connect} from "react-redux";
 import * as _ from 'lodash';
 import Highcharts from 'highcharts'
@@ -226,13 +225,13 @@ class ThisGame extends React.Component {
 
     render() {
         return (<div>
-            <img className="chart" src={icon} alt={"chart"} onClick={this.toggle}
-                 style={{height: "30px", backgroundColor: this.state.sumOk ? "" : "red"}}/>
+            <i className="fa fa-gamepad" onClick={this.toggle}
+               style={{fontSize: "30px", color: this.state.sumOk ? "" : "red"}}/>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                    onKeyPress={this.handleKeyPress}
-                   onBackButtonPress={() => this.setState({ modal: false })}
-                   >
+                   onBackButtonPress={() => this.setState({modal: false})}
+            >
                 <ModalHeader toggle={this.toggle}>This Game</ModalHeader>
                 <ModalBody>
                     <FormGroup>

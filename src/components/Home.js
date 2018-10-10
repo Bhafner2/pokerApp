@@ -12,9 +12,6 @@ import GeneralStatistic from "./GeneralStatistic";
 import Calc from "./Calc";
 import ReactLoading from 'react-loading';
 import ThisGame from "./ThisGame";
-import logout from '../img/sign-out-alt-solid.svg';
-import date from '../img/calendar-alt-solid.svg';
-import search from '../img/search-solid.svg';
 
 class Home extends Component {
     constructor(props) {
@@ -46,12 +43,12 @@ class Home extends Component {
 
     isToday() {
         if (this.state.date === '') {
-            return {backgroundColor: 'red'}
+            return 'red'
         }
         if (this.state.date !== this.state.today) {
-            return {backgroundColor: 'LightSkyBlue'}
+            return 'blue'
         } else {
-            return {backgroundColor: 'whitesmoke'}
+            return 'black'
         }
     }
 
@@ -148,26 +145,26 @@ class Home extends Component {
                             <Calc/>
                         </Col>
                         <Col xs="2">
-                            {connErr ? <div/> : <GeneralStatistic today={this.state.date}/>}
+                            <GeneralStatistic today={this.state.date}/>
                         </Col>
                         <Col xs="2">
-                            {connErr ? <div/> : <ThisGame today={this.state.date}/>}
+                            <ThisGame today={this.state.date}/>
                         </Col>
                         <Col xs="2">
-                            {connErr ? <div/> :
-                                <img className="date" src={date} alt={"date"} onClick={this.toggleDate}
-                                     style={{height: "30px"}} style={this.isToday()}/>}
+                            <i className="fa fa-calendar" onClick={this.toggleDate}
+                               style={{fontSize: "30px", color: this.isToday()}}/>
                         </Col>
+
                         <Col xs="2">
-                            {connErr ? <div/> :
-                                <img className="search" src={search} alt={"search"}
-                                     style={{height: "30px"}}/>}
+                            <i className="fa fa-search"
+                               style={{fontSize: "30px",}}/>
                         </Col>
+
                         <Col xs="2">
-                            {connErr ? <div/> :
-                                <img className="logout" src={logout} alt={"logout"} onClick={this.props.logout}
-                                     style={{height: "30px"}}/>}
+                            <i className="fa  fa-sign-out" onClick={this.props.logout}
+                               style={{fontSize: "30px",}}/>
                         </Col>
+
                     </Row>
                     {this.state.showDate ? <div/> :
                         <Row>
@@ -176,7 +173,7 @@ class Home extends Component {
                                 <Input type="date" name="date" id="date"
                                        value={this.state.date}
                                        onChange={this.updateDate}
-                                       style={this.isToday()}
+                                       style={{color: this.isToday()}}
                                 />
                             </Col>
                         </Row>}

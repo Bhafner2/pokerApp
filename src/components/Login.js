@@ -23,6 +23,7 @@ class Login extends Component {
         firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).catch(function (error) {
             store.dispatch(loginError(error.message));
         });
+
     }
 
     updateEmail(evt) {

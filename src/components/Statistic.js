@@ -11,7 +11,6 @@ import {
     Row, TabContent,
     Table, TabPane
 } from "reactstrap";
-import chart from '../img/chart-line-solid.svg';
 import {connect} from "react-redux";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
@@ -120,11 +119,11 @@ class Statistic extends React.Component {
         const actualUser = _.filter(users, (u) => {
             return user.name === u.name
         })[0];
-        if (this.state.fromDate === "2018-01-01" && this.state.toDate === this.props.today){
+        if (this.state.fromDate === "2018-01-01" && this.state.toDate === this.props.today) {
             this.setState({
                 filtered: true,
             })
-        }else {
+        } else {
             this.setState({
                 filtered: false,
             })
@@ -414,8 +413,8 @@ class Statistic extends React.Component {
             this.getData();
         })
     }
-    
-    resetFilter(){
+
+    resetFilter() {
         this.setState({
             showFilter: false,
             fromDate: '2018-01-01',
@@ -473,29 +472,31 @@ class Statistic extends React.Component {
         const {sumWon, sumBuyIn, sumTotal, sumBounty, avgWon, avgBuyIn, avgTotal, avgBounty, maxWon, maxBuyIn, maxTotal, maxBounty} = this.state;
 
         return (<div>
-            <img className="chart" src={chart} alt={"chart"} onClick={this.toggle} style={{height: "25px"}}/>
+            <i className="fa fa-line-chart" onClick={this.toggle}
+               style={{fontSize: "20px"}}/>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                    onKeyPress={this.handleKeyPress}
-                   onBackButtonPress={() => this.setState({ modal: false })}
-                   >
+                   onBackButtonPress={() => this.setState({modal: false})}
+            >
                 <ModalHeader toggle={this.toggle}>Statistic for {user.name}</ModalHeader>
                 <ModalBody>
                     <FormGroup>
-                            <Row>
-                                <Col>
-                                    <ButtonGroup>
-                                        <Button color={this.state.filtered ? "link" : "primary"} onClick={this.showFilter}>
-                                            Filter
-                                        </Button>
-                                        <Button style={{visibility: this.state.filtered ? "hidden" : "visible"}} onClick={this.resetFilter}>
-                                            X
-                                        </Button>
-                                    </ButtonGroup>
-                                </Col>
-                            </Row>
-                            {this.filter()}
-                        </FormGroup>
+                        <Row>
+                            <Col>
+                                <ButtonGroup>
+                                    <Button color={this.state.filtered ? "link" : "primary"} onClick={this.showFilter}>
+                                        Filter
+                                    </Button>
+                                    <Button style={{visibility: this.state.filtered ? "hidden" : "visible"}}
+                                            onClick={this.resetFilter}>
+                                        X
+                                    </Button>
+                                </ButtonGroup>
+                            </Col>
+                        </Row>
+                        {this.filter()}
+                    </FormGroup>
                     <Nav tabs>
                         <NavItem>
                             <NavLink

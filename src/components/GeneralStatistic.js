@@ -11,7 +11,6 @@ import {
     Row, TabContent,
     TabPane
 } from "reactstrap";
-import trophy from '../img/trophy-solid.svg';
 import {connect} from "react-redux";
 import * as _ from 'lodash';
 import classnames from 'classnames';
@@ -425,7 +424,8 @@ class GeneralStatistic extends React.Component {
         const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, top} = this.state;
 
         return (<div>
-            <img className="trophy" src={trophy} alt={"trophy"} onClick={this.toggle} style={{height: "30px"}}/>
+            <i className="fa fa-trophy" onClick={this.toggle}
+               style={{fontSize: "30px"}}/>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                    onKeyPress={this.handleKeyPress}
@@ -479,9 +479,12 @@ class GeneralStatistic extends React.Component {
                                     {top.map((user, i) => (
                                         <Row key={'toplist' + i}>
                                             <Col xs={4}>{user.name}</Col>
-                                            <Col xs={6}>total: {user.total}</Col>
-                                            <Col xs={2}><Statistic user={user} fromDate={this.state.fromDate}
-                                                                   today={this.state.toDate}/></Col>
+                                            <Col xs={5}>total: {user.total}</Col>
+                                            <Col xs={1}>
+                                                <Statistic user={user}
+                                                           fromDate={this.state.fromDate}
+                                                           today={this.state.toDate}/></Col>
+                                            <Col xs={2}/>
                                         </Row>
                                     ))}
                                 </Col>

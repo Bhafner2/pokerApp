@@ -80,10 +80,7 @@ class App extends Component {
                     </Row>
                 </header>
                 <div>
-                    {console.log("login status", this.props.data.login  )}
-                    {console.log("login con", this.props.data.connErr  )}
                     {this.props.data.login ? <Home logout={App.logout}/> : <Login login={App.login}/>}
-
                 </div>
             </div>
         );

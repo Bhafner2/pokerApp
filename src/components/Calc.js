@@ -13,8 +13,6 @@ import {
 import 'react-infinite-calendar/styles.css';
 import {connect} from "react-redux";
 import * as _ from 'lodash';
-import calc from '../img/calculator-solid.svg';
-
 
 class Calc extends React.Component {
     constructor(props) {
@@ -212,11 +210,13 @@ class Calc extends React.Component {
 
     render() {
         return (<div>
-                <img className="calc" src={calc} alt={"calc"} onClick={this.toggle} style={{height: "30px"}}/>
+                <i className="fa fa-calculator" onClick={this.toggle}
+                   style={{fontSize: "30px"}}/>
+
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                        onKeyPress={this.handleKeyPress}
-                       onBackButtonPress={() => this.setState({ modal: false })}
-                       >
+                       onBackButtonPress={() => this.setState({modal: false})}
+                >
                     <ModalHeader toggle={this.toggle}>Calculator</ModalHeader>
                     <ModalBody>
                         <Row>
