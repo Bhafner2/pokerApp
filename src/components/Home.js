@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Alert, Col, Input, ListGroup, ListGroupItem, Row} from 'reactstrap';
+import {Alert, Button, Col, Input, ListGroup, ListGroupItem, Row} from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
 import AddUser from "./AddUser";
 import {getUsers} from "../redux/actions";
@@ -39,23 +39,21 @@ class Home extends Component {
             alertSuccess: false,
             today: moment(new Date()).format('YYYY-MM-DD'),
             date: moment(new Date()).format('YYYY-MM-DD'),
+            search: '',
             showDate: true,
+            showSearch: true,
+            usersToRender: {},
+            filtered: false,
         };
 
         this.updateDate = this.updateDate.bind(this);
         this.showSaved = this.showSaved.bind(this);
         this.isToday = this.isToday.bind(this);
         this.updateDate = this.updateDate.bind(this);
+        this.updateSearch = this.updateSearch.bind(this);
         this.toggleDate = this.toggleDate.bind(this);
-    }
-
-    componentDidMount() {
-        store.dispatch(getUsers());
-        this.setState({
-            today: moment(new Date()).format('YYYY-MM-DD'),
-            date: moment(new Date()).format('YYYY-MM-DD'),
-            showDate: true,
-        });
+        this.toggleSearch = this.toggleSearch.bind(this);
+        this.filterUser = this.filterUser.bind(this);
     }
 
     isToday() {
@@ -67,6 +65,18 @@ class Home extends Component {
         } else {
             return 'black'
         }
+    }
+
+    componentWillMount() {
+        store.dispatch(getUsers());
+        this.setState({
+            today: moment(new Date()).format('YYYY-MM-DD'),
+            date: moment(new Date()).format('YYYY-MM-DD'),
+            showDate: true,
+            usersToRender: this.props.data.users,
+        }, () => {
+            this.filterUser();
+        });
     }
 
     showSaved() {
@@ -91,22 +101,53 @@ class Home extends Component {
         });
     }
 
+    updateSearch(evt) {
+        if (_.isNil(evt.target.value) || evt.target.value === '') {
+            this.setState({
+                filtered: false,
+                search: '',
+            });
+        } else {
+            this.setState({
+                search: evt.target.value,
+                filtered: true,
+            });
+        }
+    }
+
+    filterUser(users) {
+        if (!_.isNil(this.state.search) || this.state.search === '') {
+            return _.filter(users, (user) => {
+                console.log("filter", user.name, this.state.search, _.includes(user.name.toLowerCase(), this.state.search.toLowerCase()));
+                return _.includes(user.name.toLowerCase(), this.state.search.toLowerCase());
+            });
+        } else {
+            return users;
+        }
+    }
+
     renderUsers() {
-        const {date, today} = this.state;
         const {users} = this.props.data;
+        const {date, today} = this.state;
 
         if (_.isNil(users) || _.isNil(users[0])) {
             return (
                 loading()
             )
         }
-        console.log("users to render ", users);
+        let filteredUsers = this.filterUser(users);
 
+        if (filteredUsers.size < 1) {
+            return (
+                <div>
+                    No user found...
+                </div>
+            )
+        }
         return (
             <div>
-                {users.map((user, i) =>
+                {filteredUsers.map((user, i) =>
                     <UserList user={user} key={i} saved={this.showSaved} date={date} today={today}/>)}
-                {console.log("render Users: ", users)}
             </div>
         );
     };
@@ -130,6 +171,14 @@ class Home extends Component {
     toggleDate() {
         this.setState({
             showDate: !this.state.showDate,
+            showSearch: true,
+        });
+    }
+
+    toggleSearch() {
+        this.setState({
+            showSearch: !this.state.showSearch,
+            showDate: true,
         });
     }
 
@@ -158,15 +207,14 @@ class Home extends Component {
                         </Col>
 
                         <Col xs="2">
-                            <i className="fa fa-search"
-                               style={{fontSize: "30px",}}/>
+                            <i className="fa fa-search" onClick={this.toggleSearch}
+                               style={{fontSize: "30px", color: this.state.filtered ? "blue" : "black"}}/>
                         </Col>
 
                         <Col xs="2">
                             <i className="fa  fa-sign-out" onClick={this.props.logout}
                                style={{fontSize: "30px",}}/>
                         </Col>
-
                     </Row>
                     {this.state.showDate ? <div/> :
                         <Row>
@@ -179,11 +227,29 @@ class Home extends Component {
                                 />
                             </Col>
                         </Row>}
+                    {this.state.showSearch ? <div/> :
+                        <Row>
+                            <Col xs={10}>
+                                <br/>
+                                <Input type="text" name="search" id="search"
+                                       value={this.state.search}
+                                       onChange={this.updateSearch}
+                                       style={{color: "blue"}}
+                                />
+                            </Col>
+                            <Col xs={2}>
+                                <br/>
+                                <Button style={{visibility: this.state.filtered ? "visible" : "hidden"}}
+                                        onClick={this.updateSearch}>
+                                    X
+                                </Button>
+                            </Col>
+                        </Row>}
                 </ListGroupItem>
                 {connErr ? loading() : (
                     <div>
                         <ListGroup>
-                            {this.renderUsers()}
+                            {this.renderUsers(this.state.usersToRender)}
                         </ListGroup>
 
                         <div style={{
