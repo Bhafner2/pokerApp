@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Alert, Button, Col, Input, ListGroup, ListGroupItem, Row} from 'reactstrap';
+import {Alert, Button, Col, Input, InputGroup, InputGroupAddon, ListGroup, ListGroupItem, Row} from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
 import AddUser from "./AddUser";
 import {getUsers} from "../redux/actions";
@@ -40,8 +40,8 @@ class Home extends Component {
             today: moment(new Date()).format('YYYY-MM-DD'),
             date: moment(new Date()).format('YYYY-MM-DD'),
             search: '',
-            showDate: true,
-            showSearch: true,
+            showDate: false,
+            showSearch: false,
             usersToRender: {},
             filtered: false,
         };
@@ -54,6 +54,8 @@ class Home extends Component {
         this.toggleDate = this.toggleDate.bind(this);
         this.toggleSearch = this.toggleSearch.bind(this);
         this.filterUser = this.filterUser.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
+        this.resetSearch = this.resetSearch.bind(this);
     }
 
     isToday() {
@@ -72,7 +74,8 @@ class Home extends Component {
         this.setState({
             today: moment(new Date()).format('YYYY-MM-DD'),
             date: moment(new Date()).format('YYYY-MM-DD'),
-            showDate: true,
+            showDate: false,
+            showSearch: false,
             usersToRender: this.props.data.users,
         }, () => {
             this.filterUser();
@@ -102,7 +105,7 @@ class Home extends Component {
     }
 
     updateSearch(evt) {
-        if (_.isNil(evt.target.value) || evt.target.value === '') {
+        if (_.isNil(evt) || _.isNil(evt.target.value) || evt.target.value === '') {
             this.setState({
                 filtered: false,
                 search: '',
@@ -137,7 +140,7 @@ class Home extends Component {
         }
         let filteredUsers = this.filterUser(users);
 
-        if (filteredUsers.size < 1) {
+        if (_.isNil(filteredUsers[0])) {
             return (
                 <div>
                     No user found...
@@ -167,25 +170,41 @@ class Home extends Component {
 
              ])
          }*/
+    handleKeyPress(target) {
+        console.log("key pressed");
+        if (target.charCode === 13) {
+            this.setState({
+                showDate: false,
+                showSearch: false,
+            });
+        }
+    }
 
     toggleDate() {
         this.setState({
             showDate: !this.state.showDate,
-            showSearch: true,
+            showSearch: false,
         });
     }
 
     toggleSearch() {
         this.setState({
             showSearch: !this.state.showSearch,
-            showDate: true,
+            showDate: false,
+        });
+    }
+
+    resetSearch(evt) {
+        this.updateSearch(evt);
+        this.setState({
+            showSearch: false,
         });
     }
 
     render() {
         const {connErr} = this.props.data;
         return (
-            <div className="center">
+            <div className="center" onKeyPress={this.handleKeyPress}>
 
                 {/*
                 {this.dbInit()}
@@ -216,35 +235,34 @@ class Home extends Component {
                                style={{fontSize: "30px",}}/>
                         </Col>
                     </Row>
-                    {this.state.showDate ? <div/> :
-                        <Row>
+                    {this.state.showDate ?
+                        <Row style={{paddingTop: "12px"}}>
                             <Col>
-                                <br/>
                                 <Input type="date" name="date" id="date"
                                        value={this.state.date}
                                        onChange={this.updateDate}
                                        style={{color: this.isToday()}}
                                 />
                             </Col>
-                        </Row>}
-                    {this.state.showSearch ? <div/> :
-                        <Row>
-                            <Col xs={10}>
-                                <br/>
-                                <Input type="text" name="search" id="search"
-                                       value={this.state.search}
-                                       onChange={this.updateSearch}
-                                       style={{color: "blue"}}
-                                />
+                        </Row>
+                        : <div/>}
+                    {this.state.showSearch ?
+                        <Row style={{paddingTop: "12px"}}>
+                            <Col>
+                                <InputGroup>
+                                    <Input type="text" name="search" id="search"
+                                           value={this.state.search}
+                                           onChange={this.updateSearch}
+                                           style={{color: "blue"}}
+                                    />
+                                    <InputGroupAddon addonType="prepend"
+                                                     onClick={this.resetSearch}>
+                                        X
+                                    </InputGroupAddon>
+                                </InputGroup>
                             </Col>
-                            <Col xs={2}>
-                                <br/>
-                                <Button style={{visibility: this.state.filtered ? "visible" : "hidden"}}
-                                        onClick={this.updateSearch}>
-                                    X
-                                </Button>
-                            </Col>
-                        </Row>}
+                        </Row>
+                        : <div/>}
                 </ListGroupItem>
                 {connErr ? loading() : (
                     <div>

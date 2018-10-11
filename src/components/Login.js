@@ -55,7 +55,7 @@ class Login extends Component {
         return (
             <div onKeyPress={this.handleKeyPress}>
                 {this.props.data.load ? loading() : (
-                    <ListGroupItem>
+                    <ListGroupItem className="login">
                         <Row>
                             <Col xs={1}/>
                             <Col xs={10}>

@@ -29,6 +29,10 @@ i {
     font-weight: normal;
 }
 
+.login {
+    border: none;
+}
+
 .logo {
     width: auto;
     height: 12ch;
