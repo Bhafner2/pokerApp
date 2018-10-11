@@ -19,7 +19,14 @@ i {
     height: 150px;
     padding: 20px;
     color: black;
-    font-family: 'Cabin', sans-serif;
+}
+
+#title {
+    padding-left: 20px;
+    padding-top: 4px;
+    color: black;
+    font-family: 'Bree Serif', serif;
+    font-weight: normal;
 }
 
 .logo {

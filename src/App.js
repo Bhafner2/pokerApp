@@ -77,7 +77,7 @@ class App extends Component {
                             <img className="logo" src={logo} alt={"logo"}/>
                         </Col>
                         <Col xs="8">
-                            <h1>Poker Statistic</h1>
+                            <h1 id={"title"}>Poker Statistic</h1>
                         </Col>
                     </Row>
                 </header>
