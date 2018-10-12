@@ -23,6 +23,8 @@ class ThisGame extends React.Component {
             options: {},
             sum: 0,
             sumOk: true,
+            avgBuyIn: 0,
+            sumBuyIn: 0,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -60,6 +62,8 @@ class ThisGame extends React.Component {
         const date = new Date(this.state.date);
         let sum = 0;
         let sumOk;
+        let avgBuyIn = 0;
+        let sumBuyIn = 0;
 
         if (this.state.dateOk && !_.isNil(users)) {
 
@@ -82,15 +86,19 @@ class ThisGame extends React.Component {
                         total: user.games[0].won + user.games[0].bounty - user.games[0].buyIn
                     };
                     sum = sum + plainUser.total;
+                    sumBuyIn = sumBuyIn + (plainUser.buyIn * -1);
                     filteredUsers.push(plainUser);
                     console.log("filtered users", filteredUsers);
                 }
             }
+            avgBuyIn = Math.round(sumBuyIn / filteredUsers.length);
         }
         sumOk = sum === 0;
         this.setState({
             sum,
             sumOk,
+            avgBuyIn,
+            sumBuyIn,
         });
         this.chart(filteredUsers);
     }
@@ -258,6 +266,22 @@ class ThisGame extends React.Component {
                             </Col>
                             <Col xs="8">
                                 <div>{this.state.sum}</div>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs="4">
+                                <b>Sum BuyIn</b>
+                            </Col>
+                            <Col xs="8">
+                                <div>{this.state.sumBuyIn}</div>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs="4">
+                                <b>Avg BuyIn</b>
+                            </Col>
+                            <Col xs="8">
+                                <div>{this.state.avgBuyIn}</div>
                             </Col>
                         </Row>
                     </FormGroup>

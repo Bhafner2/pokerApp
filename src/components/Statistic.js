@@ -436,8 +436,7 @@ class Statistic extends React.Component {
                 <div>
                     <Row>
                         <Col>
-                            <br/>
-                            <InputGroup>
+                            <InputGroup style={{paddingTop: "12px"}}>
                                 <Input type="date" name="fromDate" id="fromDate"
                                        onChange={this.updateFormDate}
                                        value={this.state.fromDate}
