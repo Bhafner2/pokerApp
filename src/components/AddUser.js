@@ -76,6 +76,7 @@ class AddUser extends React.Component {
                             usernameOk: false,
                             errorText: 'already taken!'
                         });
+                        break;
                     } else {
                         this.setState({
                             usernameOk: true,

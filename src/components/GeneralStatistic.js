@@ -18,7 +18,6 @@ import Statistic from "./Statistic";
 import GameDetail from "./GameDetail";
 import moment from "moment/moment";
 
-
 let filteredUsers = [];
 let empty = {name: '', won: 0, buyIn: 0, bounty: 0, date: ''};
 
@@ -65,6 +64,15 @@ class GeneralStatistic extends React.Component {
         this.showFilter = this.showFilter.bind(this);
         this.resetFilter = this.resetFilter.bind(this);
     }
+
+    onBackButtonPressAndroid = () => {
+        alert("backbutton");
+        if (this.state.modal) {
+            this.toggle();
+            return true;
+        }
+        return false;
+    };
 
     toggleTab(tab) {
         if (this.state.activeTab !== tab) {
@@ -323,7 +331,7 @@ class GeneralStatistic extends React.Component {
         this.setState({
             fromDate: moment(d).format('YYYY-MM-DD'),
             toDate: this.props.today,
-            showFilter: false,
+            dateOk: true,
         }, () => {
             this.getData();
         })
@@ -336,7 +344,7 @@ class GeneralStatistic extends React.Component {
         this.setState({
             fromDate: moment(d).format('YYYY-MM-DD'),
             toDate: this.props.today,
-            showFilter: false,
+            dateOk: true,
         }, () => {
             this.getData();
         })
@@ -350,7 +358,7 @@ class GeneralStatistic extends React.Component {
         this.setState({
             fromDate: moment(d).format('YYYY-MM-DD'),
             toDate: this.props.today,
-            showFilter: false,
+            dateOk: true,
         }, () => {
             this.getData();
         })
@@ -361,7 +369,7 @@ class GeneralStatistic extends React.Component {
         this.setState({
             fromDate: d.getFullYear() + '-01-01',
             toDate: d.getFullYear() + '-12-31',
-            showFilter: false,
+            dateOk: true,
         }, () => {
             this.getData();
         })
@@ -426,10 +434,9 @@ class GeneralStatistic extends React.Component {
         return (<div>
             <i className="fa fa-trophy" onClick={this.toggle}
                style={{fontSize: "30px"}}/>
-
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                    onKeyPress={this.handleKeyPress}
-                   onBackButtonPress={() => this.setState({modal: false})}
+
             >
                 <ModalHeader toggle={this.toggle}>Top List</ModalHeader>
                 <ModalBody>
@@ -437,10 +444,15 @@ class GeneralStatistic extends React.Component {
                         <Row>
                             <Col>
                                 <ButtonGroup>
-                                    <Button color={this.state.filtered ? "link" : "primary"} onClick={this.showFilter}>
+                                    <Button color={"link"} onClick={this.showFilter}
+                                            style={{color: this.state.filtered ? "black" : "blue"}}
+                                    >
                                         <i className="fa fa-filter"> Filter</i>
                                     </Button>
-                                    <Button style={{visibility: this.state.filtered ? "hidden" : "visible"}}
+                                    <Button color={"link"} style={{
+                                        visibility: this.state.filtered ? "hidden" : "visible",
+                                        color: "blue"
+                                    }}
                                             onClick={this.resetFilter}>
                                         X
                                     </Button>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Alert, Button, Col, Input, InputGroup, InputGroupAddon, ListGroup, ListGroupItem, Row} from 'reactstrap';
+import {Alert, Col, Input, InputGroup, InputGroupAddon, ListGroup, ListGroupItem, Row} from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
 import AddUser from "./AddUser";
 import {getUsers} from "../redux/actions";
@@ -131,7 +131,7 @@ class Home extends Component {
 
     renderUsers() {
         const {users} = this.props.data;
-        const {date, today} = this.state;
+        const {date, today, filtered} = this.state;
 
         if (_.isNil(users) || _.isNil(users[0])) {
             return (
@@ -150,7 +150,7 @@ class Home extends Component {
         return (
             <div>
                 {filteredUsers.map((user, i) =>
-                    <UserList user={user} key={i} saved={this.showSaved} date={date} today={today}/>)}
+                    <UserList user={user} key={i} saved={this.showSaved} date={date} today={today} blue={filtered}/>)}
             </div>
         );
     };
@@ -254,6 +254,7 @@ class Home extends Component {
                                            value={this.state.search}
                                            onChange={this.updateSearch}
                                            style={{color: "blue"}}
+                                           placeholder="Search.."
                                     />
                                     <InputGroupAddon addonType="prepend"
                                                      onClick={this.resetSearch}>

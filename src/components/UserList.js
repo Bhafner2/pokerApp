@@ -221,7 +221,8 @@ class UserList extends React.Component {
     render() {
         const {user} = this.props;
         return (<div>
-                <ListGroupItem key={this.props.key}>
+                <ListGroupItem key={this.props.key}
+                               style={{backgroundColor: this.props.blue ? "lightblue" : "white"}}>
                     <Row>
                         <Col xs="4">
                             <Statistic user={user} today={this.props.date}/>

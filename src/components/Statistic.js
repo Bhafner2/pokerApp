@@ -370,7 +370,7 @@ class Statistic extends React.Component {
         this.setState({
             fromDate: moment(d).format('YYYY-MM-DD'),
             toDate: this.props.today,
-            showFilter: false,
+            dateOk: true,
         }, () => {
             this.getData();
         })
@@ -383,7 +383,7 @@ class Statistic extends React.Component {
         this.setState({
             fromDate: moment(d).format('YYYY-MM-DD'),
             toDate: this.props.today,
-            showFilter: false,
+            dateOk: true,
         }, () => {
             this.getData();
         })
@@ -397,7 +397,7 @@ class Statistic extends React.Component {
         this.setState({
             fromDate: moment(d).format('YYYY-MM-DD'),
             toDate: this.props.today,
-            showFilter: false,
+            dateOk: true,
         }, () => {
             this.getData();
         })
@@ -408,7 +408,7 @@ class Statistic extends React.Component {
         this.setState({
             fromDate: d.getFullYear() + '-01-01',
             toDate: d.getFullYear() + '-12-31',
-            showFilter: false,
+            dateOk: true,
         }, () => {
             this.getData();
         })
@@ -416,7 +416,7 @@ class Statistic extends React.Component {
 
     resetFilter() {
         this.setState({
-            showFilter: false,
+            dateOk: true,
             fromDate: '2018-01-01',
             toDate: this.props.today,
         }, () => {
@@ -485,10 +485,15 @@ class Statistic extends React.Component {
                         <Row>
                             <Col>
                                 <ButtonGroup>
-                                    <Button color={this.state.filtered ? "link" : "primary"} onClick={this.showFilter}>
+                                    <Button color={"link"} onClick={this.showFilter}
+                                            style={{color: this.state.filtered ? "black" : "blue"}}
+                                    >
                                         <i className="fa fa-filter"> Filter</i>
                                     </Button>
-                                    <Button style={{visibility: this.state.filtered ? "hidden" : "visible"}}
+                                    <Button color={"link"} style={{
+                                        visibility: this.state.filtered ? "hidden" : "visible",
+                                        color: "blue"
+                                    }}
                                             onClick={this.resetFilter}>
                                         X
                                     </Button>
