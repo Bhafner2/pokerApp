@@ -10,6 +10,7 @@ import {connect} from "react-redux";
 import * as _ from 'lodash';
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
+import moment from "moment";
 
 let filteredUsers = [];
 
@@ -25,12 +26,17 @@ class ThisGame extends React.Component {
             sumOk: true,
             avgBuyIn: 0,
             sumBuyIn: 0,
+            dates: [],
+            showFilter: false,
+            filtered: false,
         };
 
         this.toggle = this.toggle.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.updateDate = this.updateDate.bind(this);
         this.chart = this.chart.bind(this);
+        this.showFilter = this.showFilter.bind(this);
+        this.resetFilter = this.resetFilter.bind(this);
     }
 
     toggle() {
@@ -64,6 +70,20 @@ class ThisGame extends React.Component {
         let sumOk;
         let avgBuyIn = 0;
         let sumBuyIn = 0;
+        let dates = [];
+
+        for (let user in users) {
+            for (let game in users[user].games) {
+                if (users[user].games[game].buyIn > 0) {
+                    dates.push(users[user].games[game].date);
+                }
+            }
+        }
+        dates = _.uniqBy(dates);
+        dates = _.sortBy(dates, (d) => {
+            return -d
+        });
+        console.log("dates found", dates);
 
         if (this.state.dateOk && !_.isNil(users)) {
 
@@ -94,11 +114,16 @@ class ThisGame extends React.Component {
             avgBuyIn = Math.round(sumBuyIn / filteredUsers.length);
         }
         sumOk = sum === 0;
+        if (_.isNil(avgBuyIn) || _.isNaN(avgBuyIn)) {
+            avgBuyIn = 0;
+        }
         this.setState({
             sum,
             sumOk,
             avgBuyIn,
             sumBuyIn,
+            dates,
+            filtered: this.state.date === this.props.today,
         });
         this.chart(filteredUsers);
     }
@@ -218,6 +243,7 @@ class ThisGame extends React.Component {
                 } else {
                     this.setState({
                         dateOk: true,
+                        showFilter: false,
                     });
                 }
                 this.getData();
@@ -231,6 +257,39 @@ class ThisGame extends React.Component {
         }
     }
 
+    showFilter() {
+        this.setState({
+            showFilter: !this.state.showFilter,
+        })
+    }
+
+    resetFilter() {
+        this.setState({
+            showFilter: false,
+            date: this.props.today,
+        }, () => {
+            this.getData();
+        })
+    }
+
+    filter() {
+        if (this.state.showFilter) {
+            return (
+                <div style={{}}>
+                    {this.state.dates.map((date, i) =>
+                        <Row>
+                            <Col>
+                                <Button color={"link"} value={date} onClick={this.updateDate}
+                                        key={i}>{moment(date).format('D.M.YY')}</Button>
+                            </Col>
+                        </Row>
+                    )}
+                </div>)
+        } else {
+            return <div/>
+        }
+    }
+
     render() {
         return (<div>
             <i className="fa fa-gamepad" onClick={this.toggle}
@@ -240,14 +299,33 @@ class ThisGame extends React.Component {
                    onKeyPress={this.handleKeyPress}
                    onBackButtonPress={() => this.setState({modal: false})}
             >
-                <ModalHeader toggle={this.toggle}>This Game</ModalHeader>
+                <ModalHeader toggle={this.toggle}>Game {moment(this.state.date).format('D.M.YY')}</ModalHeader>
                 <ModalBody>
                     <FormGroup>
-                        <Row>
-                            <Col xs="4">
+                        <Row style={{align: "left"}}>
+                            <Col xs="5">
+                                <div onClick={this.showFilter}
+                                     style={{color: this.state.filtered ? "black" : "blue"}}
+                                >
+                                    <i className="fa fa-list"/> Last Games
+                                </div>
+                            </Col>
+                            <Col xs="7">
+                                <div style={{
+                                    visibility: this.state.filtered ? "hidden" : "visible",
+                                    color: "blue"
+                                }}
+                                     onClick={this.resetFilter}>
+                                    Today
+                                </div>
+                            </Col>
+                        </Row>
+                        {this.filter()}
+                        {/*<Row style={{paddingTop: "12px"}}>
+                            <Col xs="5">
                                 <b>Date</b>
                             </Col>
-                            <Col xs="8">
+                            <Col xs="7">
                                 <InputGroup>
                                     <Input type="date" name="date" id="date"
                                            onChange={this.updateDate}
@@ -256,31 +334,32 @@ class ThisGame extends React.Component {
                                     />
                                 </InputGroup>
                             </Col>
-                        </Row>
-                        <br/>
+                        </Row>*/}
                         <Row style={{
                             color: this.state.sumOk ? "green" : "red"
                         }}>
-                            <Col xs="4">
+                            <Col xs="5">
+                                <br/>
                                 <b>Checksum</b>
                             </Col>
-                            <Col xs="8">
+                            <Col xs="7">
+                                <br/>
                                 <div>{this.state.sum}</div>
                             </Col>
                         </Row>
                         <Row>
-                            <Col xs="4">
+                            <Col xs="5">
                                 <b>Sum BuyIn</b>
                             </Col>
-                            <Col xs="8">
+                            <Col xs="7">
                                 <div>{this.state.sumBuyIn}</div>
                             </Col>
                         </Row>
                         <Row>
-                            <Col xs="4">
+                            <Col xs="5">
                                 <b>Avg BuyIn</b>
                             </Col>
-                            <Col xs="8">
+                            <Col xs="7">
                                 <div>{this.state.avgBuyIn}</div>
                             </Col>
                         </Row>

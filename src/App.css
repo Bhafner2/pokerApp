@@ -10,11 +10,6 @@
     align-content: center;
 }
 
-i {
-    font-weight: bold;
-    font: solid;
-}
-
 .header {
     background-color: whitesmoke;
     height: 150px;
