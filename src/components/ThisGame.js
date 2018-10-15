@@ -29,6 +29,7 @@ class ThisGame extends React.Component {
             dates: [],
             showFilter: false,
             filtered: false,
+            onOpen: true,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -45,6 +46,7 @@ class ThisGame extends React.Component {
             date: this.props.today,
             dateOk: true,
             activeTab: '1',
+            onOpen: true,
         }, () => {
             this.getData()
         });
@@ -117,6 +119,11 @@ class ThisGame extends React.Component {
         if (_.isNil(avgBuyIn) || _.isNaN(avgBuyIn)) {
             avgBuyIn = 0;
         }
+
+        if (this.state.onOpen && sumBuyIn < 1) {
+            console.log("no games played today, goto game ", dates[0]);
+            this.updateDate(null, dates[0]);
+        }
         this.setState({
             sum,
             sumOk,
@@ -124,6 +131,7 @@ class ThisGame extends React.Component {
             sumBuyIn,
             dates,
             filtered: this.state.date === this.props.today,
+            onOpen: false,
         });
         this.chart(filteredUsers);
     }
@@ -231,24 +239,35 @@ class ThisGame extends React.Component {
         });
     }
 
-    updateDate(evt) {
-        this.setState({
-                date: evt.target.value
+    updateDate(evt, date) {
+        if (_.isNil(evt)) {
+            this.setState({
+                date: date,
+                dateOk: true,
+                showFilter: false,
+                onOpen: false,
             }, () => {
-                console.log("new date " + this.state.date);
-                if (this.state.date === '') {
-                    this.setState({
-                        dateOk: false,
-                    })
-                } else {
-                    this.setState({
-                        dateOk: true,
-                        showFilter: false,
-                    });
-                }
                 this.getData();
-            }
-        );
+            })
+        } else {
+            this.setState({
+                    date: evt.target.value
+                }, () => {
+                    console.log("new date " + this.state.date);
+                    if (this.state.date === '') {
+                        this.setState({
+                            dateOk: false,
+                        })
+                    } else {
+                        this.setState({
+                            dateOk: true,
+                            showFilter: false,
+                        });
+                    }
+                    this.getData();
+                }
+            );
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {

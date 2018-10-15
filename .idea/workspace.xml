@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9b843d04-d234-4560-a5d4-e527747186df" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/UserList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ThisGame.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ThisGame.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -54,11 +53,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ThisGame.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ThisGame.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/ThisGame.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1258">
-              <caret line="74" selection-start-line="74" selection-end-line="81" selection-end-column="32" />
+            <state relative-caret-position="310">
+              <caret line="247" column="30" selection-start-line="247" selection-start-column="30" selection-end-line="247" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -72,7 +71,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserList.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UserList.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/UserList.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="428">
@@ -92,8 +91,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>isTo</find>
-      <find>logo</find>
       <find>loading</find>
       <find>load</find>
       <find>font</find>
@@ -122,6 +119,8 @@
       <find>com</find>
       <find>getAvg</find>
       <find>sum</find>
+      <find>comp</find>
+      <find>toggle</find>
     </findStrings>
     <replaceStrings>
       <replace>this.props.date</replace>
@@ -204,11 +203,11 @@
         <option value="$PROJECT_DIR$/src/components/AddUser.js" />
         <option value="$PROJECT_DIR$/src/App.css" />
         <option value="$PROJECT_DIR$/src/components/Statistic.js" />
-        <option value="$PROJECT_DIR$/src/components/ThisGame.js" />
         <option value="$PROJECT_DIR$/src/components/GeneralStatistic.js" />
         <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/components/Home.js" />
         <option value="$PROJECT_DIR$/src/components/UserList.js" />
+        <option value="$PROJECT_DIR$/src/components/ThisGame.js" />
       </list>
     </option>
   </component>
@@ -383,14 +382,7 @@
       <workItem from="1539594983928" duration="8652000" />
       <workItem from="1539608831964" duration="398000" />
       <workItem from="1539610243277" duration="120000" />
-      <workItem from="1539611391458" duration="1592000" />
-    </task>
-    <task id="LOCAL-00025" summary="verschönert">
-      <created>1537204618944</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1537204618944</updated>
+      <workItem from="1539611391458" duration="3071000" />
     </task>
     <task id="LOCAL-00026" summary="verschönert">
       <created>1537280465081</created>
@@ -728,11 +720,18 @@
       <option name="project" value="LOCAL" />
       <updated>1539610353909</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="admin">
+      <created>1539613053575</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1539613053575</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="306123000" />
+    <option name="totallyTimeSpent" value="307602000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -781,7 +780,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="chart aus store" />
     <MESSAGE value="add User aus store" />
     <MESSAGE value="UserList aus store" />
     <MESSAGE value="general max" />
@@ -806,7 +804,8 @@
     <MESSAGE value="more stats" />
     <MESSAGE value="avg" />
     <MESSAGE value="general stat" />
-    <option name="LAST_COMMIT_MESSAGE" value="general stat" />
+    <MESSAGE value="admin" />
+    <option name="LAST_COMMIT_MESSAGE" value="admin" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1055,13 +1054,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/ThisGame.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1258">
-          <caret line="74" selection-start-line="74" selection-end-line="81" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
@@ -1094,6 +1086,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="428">
           <caret line="286" column="82" selection-start-line="286" selection-start-column="82" selection-end-line="286" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/ThisGame.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="247" column="30" selection-start-line="247" selection-start-column="30" selection-end-line="247" selection-end-column="30" />
         </state>
       </provider>
     </entry>
