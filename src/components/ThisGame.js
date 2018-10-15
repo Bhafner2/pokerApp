@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Button, Col, FormGroup, Input, InputGroup,
+    Button, Col, FormGroup,
     Modal,
     ModalBody,
     ModalFooter,
@@ -321,20 +321,6 @@ class ThisGame extends React.Component {
                             </Col>
                         </Row>
                         {this.filter()}
-                        {/*<Row style={{paddingTop: "12px"}}>
-                            <Col xs="5">
-                                <b>Date</b>
-                            </Col>
-                            <Col xs="7">
-                                <InputGroup>
-                                    <Input type="date" name="date" id="date"
-                                           onChange={this.updateDate}
-                                           value={this.state.date}
-                                           style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
-                                    />
-                                </InputGroup>
-                            </Col>
-                        </Row>*/}
                         <Row style={{
                             color: this.state.sumOk ? "green" : "red"
                         }}>
