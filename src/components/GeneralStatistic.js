@@ -251,6 +251,7 @@ class GeneralStatistic extends React.Component {
                         user.won = user.won / user.games.length;
                         user.bounty = user.bounty / user.games.length;
                         user.total = user.total / user.games.length;
+                        user.buyIn = user.buyIn / user.games.length;
                         user.played = (user.played / dates.length) * 100;
                     }
                     filteredUsers.push(user);
