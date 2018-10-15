@@ -39,8 +39,8 @@
       <file leaf-file-name="GeneralStatistic.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="523">
-              <caret line="545" column="42" selection-start-line="545" selection-start-column="42" selection-end-line="545" selection-end-column="42" />
+            <state relative-caret-position="404">
+              <caret line="157" column="65" selection-start-line="157" selection-start-column="65" selection-end-line="157" selection-end-column="65" />
             </state>
           </provider>
         </entry>
@@ -57,7 +57,7 @@
       <file leaf-file-name="ThisGame.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/ThisGame.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
+            <state relative-caret-position="1258">
               <caret line="74" selection-start-line="74" selection-end-line="81" selection-end-column="32" />
             </state>
           </provider>
@@ -242,7 +242,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -283,12 +282,13 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="pack&#9;FILE&#9;file://C:/Users/bha/Google Drive/PokerApp/poker-app/package.json&#10;pac&#9;FILE&#9;file://C:/Users/bha/Google Drive/PokerApp/poker-app/package.json&#10;save users saga&#9;null&#9;null&#10;save users saga err&#9;null&#9;null&#10;pacj&#9;FILE&#9;file://C:/Users/bha/Google Drive/PokerApp/poker-app/package.json&#10;tod&#9;ACTION&#9;ActivateTODOToolWindow&#10;b.appl&#9;null&#9;null&#10;apply&#9;FILE&#9;file://C:/Users/bha/Google Drive/PokerApp/poker-app/node_modules/redux/src/applyMiddleware.js&#10;andr&#9;FILE&#9;file://C:/Users/bha/Google Drive/PokerApp/poker-app/build/android-chrome-256x256.png&#10;inde&#9;FILE&#9;file://C:/Users/bha/Google Drive/PokerApp/poker-app/public/index.html&#10;store&#9;null&#9;null&#10;toDol&#9;FILE&#9;file://C:/Users/bha/Google Drive/PokerApp/poker-app/build/static/media/ToDoList.6a62b294.bin&#10;web&#9;FILE&#9;file://C:/Users/bha/Google Drive/PokerApp/poker-app/node_modules/react-scripts/config/webpack.config.dev.js&#10;webpac&#9;FILE&#9;file://C:/Users/bha/Google Drive/PokerApp/poker-app/node_modules/react-scripts/config/webpack.config.dev.js&#10;fav&#9;FILE&#9;file://C:/Users/bha/Google Drive/PokerApp/poker-app/public/favicon.ico" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="C:/dev/workspace/brugg-kabel/autexis-mes-backend" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -380,14 +380,8 @@
       <workItem from="1539185310103" duration="9454000" />
       <workItem from="1539255506688" duration="11547000" />
       <workItem from="1539351623252" duration="6605000" />
-      <workItem from="1539594983928" duration="8507000" />
-    </task>
-    <task id="LOCAL-00022" summary="Users statisics">
-      <created>1537194895761</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1537194895761</updated>
+      <workItem from="1539594983928" duration="8652000" />
+      <workItem from="1539608831964" duration="369000" />
     </task>
     <task id="LOCAL-00023" summary="Users statisics final">
       <created>1537195677918</created>
@@ -725,11 +719,18 @@
       <option name="project" value="LOCAL" />
       <updated>1539606721886</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="general stat">
+      <created>1539608381959</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1539608381959</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="303868000" />
+    <option name="totallyTimeSpent" value="304382000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -742,15 +743,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="9" />
       <window_info id="DB Browser" order="3" />
       <window_info anchor="bottom" id="DB Execution Console" order="1" />
       <window_info anchor="bottom" id="Event Log" order="14" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="11" />
-      <window_info anchor="bottom" id="Run" order="4" weight="0.32906404" />
       <window_info id="npm" order="5" side_tool="true" />
+      <window_info anchor="bottom" id="Run" order="4" weight="0.32906404" />
       <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.3369458" />
       <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.15542677" />
       <window_info id="Project Explorer" order="0" />
@@ -778,7 +778,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="loading" />
     <MESSAGE value="chart aus store" />
     <MESSAGE value="add User aus store" />
     <MESSAGE value="UserList aus store" />
@@ -803,7 +802,8 @@
     <MESSAGE value="last games" />
     <MESSAGE value="more stats" />
     <MESSAGE value="avg" />
-    <option name="LAST_COMMIT_MESSAGE" value="avg" />
+    <MESSAGE value="general stat" />
+    <option name="LAST_COMMIT_MESSAGE" value="general stat" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1082,15 +1082,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/ThisGame.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
+        <state relative-caret-position="1258">
           <caret line="74" selection-start-line="74" selection-end-line="81" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="523">
-          <caret line="545" column="42" selection-start-line="545" selection-start-column="42" selection-end-line="545" selection-end-column="42" />
+        <state relative-caret-position="404">
+          <caret line="157" column="65" selection-start-line="157" selection-start-column="65" selection-end-line="157" selection-end-column="65" />
         </state>
       </provider>
     </entry>

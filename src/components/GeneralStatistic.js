@@ -154,7 +154,7 @@ class GeneralStatistic extends React.Component {
 
             for (let user in users) {
                 for (let game in users[user].games) {
-                    if (users[user].games[game].buyIn > 0) {
+                    if (users[user].games[game].buyIn > 0 && from <= new Date(users[user].games[game].date) && to >= new Date(users[user].games[game].date)) {
                         dates.push(users[user].games[game].date);
                     }
                 }
