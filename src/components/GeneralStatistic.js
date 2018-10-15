@@ -54,6 +54,7 @@ class GeneralStatistic extends React.Component {
             filtered: false,
             getAvg: false,
             dates: [],
+            filteredUsers: [],
         };
 
         this.toggle = this.toggle.bind(this);
@@ -71,6 +72,7 @@ class GeneralStatistic extends React.Component {
         this.resetFilter = this.resetFilter.bind(this);
         this.setSum = this.setSum.bind(this);
         this.setAvg = this.setAvg.bind(this);
+        this.userFilter = this.userFilter.bind(this);
     }
 
     onBackButtonPressAndroid = () => {
@@ -480,10 +482,32 @@ class GeneralStatistic extends React.Component {
                             </ButtonGroup>
                         </Col>
                     </Row>
+                    <Row>
+
+                        {this.props.data.users.map((user) =>
+                            <Col xs={4} style={{paddingTop: "6px"}}>
+                                <Button size={"sm"} outline color={"primary"} value={user.name} active={this.isFiltered}
+                                        onClick={this.userFilter}
+                                        key={"filter" + user.name}>{user.name}</Button>
+                            </Col>
+                        )}
+                    </Row>
+
                 </div>)
         } else {
             return <div/>
         }
+    }
+
+    userFilter(evt) {
+        let found = _.indexOf(this.state.filteredUsers, evt.target.value);
+
+        if (found >= 0) {
+            this.state.filteredUsers.splice(found, 1);
+        } else {
+            this.state.filteredUsers.push(evt.target.value);
+        }
+        console.log("filtered Users list", this.state.filteredUsers);
     }
 
     setAvg() {
