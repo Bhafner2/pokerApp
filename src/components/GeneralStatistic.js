@@ -53,6 +53,7 @@ class GeneralStatistic extends React.Component {
             showFilter: false,
             filtered: false,
             getAvg: false,
+            dates: [],
         };
 
         this.toggle = this.toggle.bind(this);
@@ -297,6 +298,7 @@ class GeneralStatistic extends React.Component {
                 usersBounty,
                 usersBuyIn,
                 usersPlayed,
+                dates,
             });
         }
     }
@@ -500,7 +502,7 @@ class GeneralStatistic extends React.Component {
     }
 
     render() {
-        const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, usersTop, usersBounty, usersWon, usersBuyIn, usersPlayed, getAvg} = this.state;
+        const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, usersTop, usersBounty, usersWon, usersBuyIn, usersPlayed, getAvg, dates} = this.state;
 
         return (<div>
                 <i className="fa fa-trophy" onClick={this.toggle}
@@ -513,7 +515,7 @@ class GeneralStatistic extends React.Component {
                     <ModalBody>
                         <FormGroup>
                             <Row>
-                                <Col xs={4}>
+                                <Col xs={5}>
                                     <ButtonGroup>
                                         <Button color={"link"} onClick={this.showFilter}
                                                 style={{color: this.state.filtered ? "black" : "blue"}}
@@ -529,21 +531,19 @@ class GeneralStatistic extends React.Component {
                                         </Button>
                                     </ButtonGroup>
                                 </Col>
-                                <Col xs={4}>
+                                <Col xs={5}>
                                     <ButtonGroup>
-                                        <Button color={"link"}
-                                                style={{color: getAvg ? "black" : "blue"}}
+                                        <Button size={"sm"} outline color={"primary"} active={!getAvg}
                                                 onClick={this.setSum}>
                                             Sum
                                         </Button>
-                                        <Button color={"link"}
-                                                style={{color: getAvg ? "blue" : "black"}}
+                                        <Button size={"sm"} outline color="primary" active={getAvg}
                                                 onClick={this.setAvg}>
                                             Avg
                                         </Button>
                                     </ButtonGroup>
                                 </Col>
-                                <Col xs={4}/>
+                                <Col xs={2}/>
                             </Row>
                             {this.filter()}
                         </FormGroup>
@@ -733,6 +733,14 @@ class GeneralStatistic extends React.Component {
                                     </Col>
                                     <Col xs={6}>
                                         {avgBuyIn}
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col xs={6}>
+                                        <b>Played</b> games
+                                    </Col>
+                                    <Col xs={6}>
+                                        {dates.length}
                                     </Col>
                                 </Row>
                             </TabPane>
