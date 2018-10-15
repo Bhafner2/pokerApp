@@ -28,6 +28,8 @@ class App extends Component {
             store.dispatch(setLoad(false));
             if (user) {
                 App.login();
+                console.log("name of login user", firebase.auth().currentUser.email);
+
             } else {
                 App.logout();
             }

@@ -6,6 +6,7 @@ import {saveUsers} from "../redux/actions";
 import {connect} from "react-redux";
 import * as _ from 'lodash';
 import Statistic from "./Statistic";
+import firebase from "../config/firebase";
 
 
 class UserList extends React.Component {
@@ -218,6 +219,10 @@ class UserList extends React.Component {
         }
     }
 
+    static isAdmin() {
+        return firebase.auth().currentUser.email === "admin@statistic.com"
+    }
+
     render() {
         const {user} = this.props;
         return (<div>
@@ -255,40 +260,72 @@ class UserList extends React.Component {
                                 />
                             </Col>
                         </Row>
-                        <Row>
-                            <Col xs="4">
-                                <div>Buy In</div>
-                            </Col>
-                            <Col xs="8">
-                                <Input autoFocus="true"
-                                       type="number" name="buyIn" id="buyIn"
-                                       onChange={this.updateBuyIn}
-                                       value={this.state.buyIn}
-                                />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs="4">
-                                <div style={{display: 'inline-block'}}>Won</div>
-                            </Col>
-                            <Col xs="8">
-                                <Input type="number" name="won" id="won"
-                                       onChange={this.updateWon}
-                                       value={this.state.won}
-                                />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs="4">
-                                <div style={{display: 'inline-block'}}>Bounty's Won</div>
-                            </Col>
-                            <Col xs="8">
-                                <Input type="number" name="bounty" id="bounty"
-                                       onChange={this.updateBounty}
-                                       value={this.state.bounty}
-                                />
-                            </Col>
-                        </Row>
+
+                        {!UserList.isAdmin() ?
+                            <div>
+                                <Row style={{paddingTop: "6px"}}>
+                                    <Col xs="4">
+                                        <div style={{display: 'inline-block'}}>Buy In</div>
+                                    </Col>
+                                    <Col xs="8">
+                                        {this.state.buyIn > 0 ? this.state.buyIn : 0}
+                                    </Col>
+                                </Row>
+                                <Row style={{paddingTop: "6px"}}>
+                                    <Col xs="4">
+                                        <div style={{display: 'inline-block'}}>Won</div>
+                                    </Col>
+                                    <Col xs="8">
+                                        {this.state.won > 0 ? this.state.won : 0}
+                                    </Col>
+                                </Row>
+                                <Row style={{paddingTop: "6px"}}>
+                                    <Col xs="4">
+                                        <div style={{display: 'inline-block'}}>Bounty's</div>
+                                    </Col>
+                                    <Col xs="8">
+                                        {this.state.bounty > 0 ? this.state.bounty : 0}
+                                    </Col>
+                                </Row>
+                            </div>
+                            :
+                            <div>
+                                <Row>
+                                    <Col xs="4">
+                                        <div>Buy In</div>
+                                    </Col>
+                                    <Col xs="8">
+                                        <Input autoFocus="true"
+                                               type="number" name="buyIn" id="buyIn"
+                                               onChange={this.updateBuyIn}
+                                               value={this.state.buyIn}
+                                        />
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col xs="4">
+                                        <div style={{display: 'inline-block'}}>Won</div>
+                                    </Col>
+                                    <Col xs="8">
+                                        <Input type="number" name="won" id="won"
+                                               onChange={this.updateWon}
+                                               value={this.state.won}
+                                        />
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col xs="4">
+                                        <div style={{display: 'inline-block'}}>Bounty's Won</div>
+                                    </Col>
+                                    <Col xs="8">
+                                        <Input type="number" name="bounty" id="bounty"
+                                               onChange={this.updateBounty}
+                                               value={this.state.bounty}
+                                        />
+                                    </Col>
+                                </Row>
+                            </div>
+                        }
                     </ModalBody>
                     <ModalFooter>
                         <Button color="primary" onClick={this.saveGame} disabled={!this.state.dateOk}>Save</Button>
