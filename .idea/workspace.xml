@@ -38,8 +38,8 @@
       <file leaf-file-name="GeneralStatistic.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="506">
-              <caret line="221" column="56" selection-start-line="221" selection-start-column="56" selection-end-line="221" selection-end-column="56" />
+            <state relative-caret-position="362">
+              <caret line="656" column="38" lean-forward="true" selection-start-line="656" selection-start-column="38" selection-end-line="656" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -119,6 +119,8 @@
       <find>Filter</find>
       <find>&lt;i</find>
       <find>top</find>
+      <find>usersBuyIn</find>
+      <find>games.l</find>
     </findStrings>
     <replaceStrings>
       <replace>this.props.date</replace>
@@ -377,14 +379,7 @@
       <workItem from="1539185310103" duration="9454000" />
       <workItem from="1539255506688" duration="11547000" />
       <workItem from="1539351623252" duration="6605000" />
-      <workItem from="1539594983928" duration="2253000" />
-    </task>
-    <task id="LOCAL-00019" summary="with stat amount">
-      <created>1537179987869</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1537179987869</updated>
+      <workItem from="1539594983928" duration="2934000" />
     </task>
     <task id="LOCAL-00020" summary="statisics with higtcharts">
       <created>1537189118148</created>
@@ -722,11 +717,18 @@
       <option name="project" value="LOCAL" />
       <updated>1539360610064</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="more stats">
+      <created>1539601963712</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1539601963712</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="297614000" />
+    <option name="totallyTimeSpent" value="298295000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -775,7 +777,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="calc" />
     <MESSAGE value="verscönert" />
     <MESSAGE value="loading" />
     <MESSAGE value="chart aus store" />
@@ -800,7 +801,8 @@
     <MESSAGE value="search with blue and bugfix" />
     <MESSAGE value="this game" />
     <MESSAGE value="last games" />
-    <option name="LAST_COMMIT_MESSAGE" value="last games" />
+    <MESSAGE value="more stats" />
+    <option name="LAST_COMMIT_MESSAGE" value="more stats" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1086,8 +1088,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="221" column="56" selection-start-line="221" selection-start-column="56" selection-end-line="221" selection-end-column="56" />
+        <state relative-caret-position="362">
+          <caret line="656" column="38" lean-forward="true" selection-start-line="656" selection-start-column="38" selection-end-line="656" selection-end-column="38" />
         </state>
       </provider>
     </entry>

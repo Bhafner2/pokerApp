@@ -48,6 +48,7 @@ class GeneralStatistic extends React.Component {
             usersBounty: [],
             usersWon: [],
             usersBuyIn: [],
+            usersPlayed: [],
             popoverOpen: false,
             showFilter: false,
             filtered: false,
@@ -129,6 +130,7 @@ class GeneralStatistic extends React.Component {
         let avgBounty = 0;
         let counter = 0;
         let usersBuyIn = [];
+        let usersPlayed = [];
         let usersWon = [];
         let usersTop = [];
         let usersBounty = [];
@@ -215,6 +217,8 @@ class GeneralStatistic extends React.Component {
                         return o.buyIn
                     });
 
+                    user.played = user.games.length;
+
                     sumWon = sumWon + user.won;
 
                     sumBuyIn = sumBuyIn + user.buyIn;
@@ -246,6 +250,9 @@ class GeneralStatistic extends React.Component {
             usersBuyIn = _.sortBy(filteredUsers, function (o) {
                 return -o.buyIn
             });
+            usersPlayed = _.sortBy(filteredUsers, function (o) {
+                return -o.played
+            });
 
             avgWon = Math.round(sumWon / counter);
             avgBuyIn = Math.round(sumBuyIn / counter);
@@ -269,6 +276,7 @@ class GeneralStatistic extends React.Component {
                 usersWon,
                 usersBounty,
                 usersBuyIn,
+                usersPlayed,
             });
         }
     }
@@ -294,6 +302,7 @@ class GeneralStatistic extends React.Component {
             usersBounty: [],
             usersWon: [],
             usersBuyIn: [],
+            usersPlayed: [],
         });
     }
 
@@ -455,7 +464,7 @@ class GeneralStatistic extends React.Component {
     }
 
     render() {
-        const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, usersTop, usersBounty, usersWon, usersBuyIn} = this.state;
+        const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, usersTop, usersBounty, usersWon, usersBuyIn, usersPlayed} = this.state;
 
         return (<div>
             <i className="fa fa-trophy" onClick={this.toggle}
@@ -535,6 +544,16 @@ class GeneralStatistic extends React.Component {
                                     this.toggleTab('5');
                                 }}
                             >
+                                Played
+                            </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink
+                                className={classnames({active: this.state.activeTab === '6'})}
+                                onClick={() => {
+                                    this.toggleTab('6');
+                                }}
+                            >
                                 Peaks
                             </NavLink>
                         </NavItem>
@@ -607,7 +626,7 @@ class GeneralStatistic extends React.Component {
                                     {usersBuyIn.map((user, i) => (
                                         <Row key={'buyIn' + i}>
                                             <Col xs={4}>{user.name}</Col>
-                                            <Col xs={5}>BuyIn: {user.buyIn}</Col>
+                                            <Col xs={5}>buyIn: {user.buyIn}</Col>
                                             <Col xs={1}>
                                                 <Statistic user={user}
                                                            fromDate={this.state.fromDate}
@@ -621,6 +640,26 @@ class GeneralStatistic extends React.Component {
                     </TabContent>
                     <TabContent activeTab={this.state.activeTab}>
                         <TabPane tabId="5">
+                            <br/>
+                            <Row>
+                                <Col>
+                                    {usersPlayed.map((user, i) => (
+                                        <Row key={'played' + i}>
+                                            <Col xs={4}>{user.name}</Col>
+                                            <Col xs={5}>played: {user.played}</Col>
+                                            <Col xs={1}>
+                                                <Statistic user={user}
+                                                           fromDate={this.state.fromDate}
+                                                           today={this.state.toDate}/></Col>
+                                            <Col xs={2}/>
+                                        </Row>
+                                    ))}
+                                </Col>
+                            </Row>
+                        </TabPane>
+                    </TabContent>
+                    <TabContent activeTab={this.state.activeTab}>
+                        <TabPane tabId="6">
 
                             <br/>
                             <GameDetail game={maxBuyIn} name={'BuyIn'} value={maxBuyIn.buyIn}/>
