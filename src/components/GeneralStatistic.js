@@ -516,7 +516,7 @@ class GeneralStatistic extends React.Component {
                     <ModalBody>
                         <FormGroup>
                             <Row>
-                                <Col xs={5}>
+                                <Col xs={6}>
                                     <ButtonGroup>
                                         <Button color={"link"} onClick={this.showFilter}
                                                 style={{color: this.state.filtered ? "black" : "blue"}}
@@ -533,7 +533,7 @@ class GeneralStatistic extends React.Component {
                                     </ButtonGroup>
                                 </Col>
                                 <Col xs={5}>
-                                    <ButtonGroup>
+                                    <ButtonGroup style={{paddingTop: "4px"}}>
                                         <Button size={"sm"} outline color={"primary"} active={!getAvg}
                                                 onClick={this.setSum}>
                                             Sum
@@ -544,7 +544,7 @@ class GeneralStatistic extends React.Component {
                                         </Button>
                                     </ButtonGroup>
                                 </Col>
-                                <Col xs={2}/>
+                                <Col xs={1}/>
                             </Row>
                             {this.filter()}
                         </FormGroup>

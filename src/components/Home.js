@@ -224,7 +224,6 @@ class Home extends Component {
                             <i className="fa fa-calendar" onClick={this.toggleDate}
                                style={{fontSize: "30px", color: this.isToday()}}/>
                         </Col>
-
                         <Col xs="2">
                             <i className="fa fa-search" onClick={this.toggleSearch}
                                style={{fontSize: "30px", color: this.state.filtered ? "blue" : "black"}}/>
