@@ -275,7 +275,7 @@ class Home extends Component {
                             paddingTop: '10px',
                             paddingBottom: '20px',
                         }}>
-                            <AddUser saved={this.showSaved}/>
+                            {UserList.isAdmin() ? <AddUser saved={this.showSaved}/> : <div/>}
                         </div>
                     </div>
                 )}
