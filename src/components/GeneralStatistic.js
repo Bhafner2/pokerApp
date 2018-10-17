@@ -100,6 +100,7 @@ class GeneralStatistic extends React.Component {
             dateOk: true,
             activeTab: '1',
             showFilter: false,
+            filteredUsers: [],
         }, () => {
             this.getData()
         });
@@ -143,13 +144,13 @@ class GeneralStatistic extends React.Component {
         let dates = [];
 
         console.log("users for generalstat", users);
-        if (this.state.fromDate === "2018-01-01" && this.state.toDate === this.props.today) {
+        if (this.state.fromDate === '2018-01-01' && this.state.toDate === this.props.today && this.state.filteredUsers.length < 1) {
             this.setState({
-                filtered: true,
+                filtered: false,
             })
         } else {
             this.setState({
-                filtered: false,
+                filtered: true,
             })
         }
         if (this.state.dateOk && !_.isNil(users)) {
@@ -168,6 +169,10 @@ class GeneralStatistic extends React.Component {
                 let user = {...users[i]};
                 console.log("user for generalstat", user);
 
+                if (_.indexOf(this.state.filteredUsers, user.name) >= 0) {
+                    console.log("user will be filtered", user);
+                    continue;
+                }
                 user.games = _.filter(user.games, function (g) {
                     if (_.isNil(g) || _.isNil(g.date)) {
                         return false;
@@ -260,7 +265,6 @@ class GeneralStatistic extends React.Component {
                     console.log("users", filteredUsers);
                 }
             }
-
 
             usersTop = _.sortBy(filteredUsers, function (o) {
                 return -o.total
@@ -447,6 +451,7 @@ class GeneralStatistic extends React.Component {
             showFilter: false,
             fromDate: '2018-01-01',
             toDate: this.props.today,
+            filteredUsers: [],
         }, () => {
             this.getData();
         })
@@ -486,7 +491,8 @@ class GeneralStatistic extends React.Component {
 
                         {this.props.data.users.map((user) =>
                             <Col xs={4} style={{paddingTop: "6px"}}>
-                                <Button size={"sm"} outline color={"primary"} value={user.name} active={this.isFiltered}
+                                <Button size={"sm"} outline color={"primary"} value={user.name}
+                                        active={!this.isFiltered(user.name)}
                                         onClick={this.userFilter}
                                         key={"filter" + user.name}>{user.name}</Button>
                             </Col>
@@ -499,6 +505,10 @@ class GeneralStatistic extends React.Component {
         }
     }
 
+    isFiltered(name) {
+        return _.indexOf(this.state.filteredUsers, name) >= 0;
+    }
+
     userFilter(evt) {
         let found = _.indexOf(this.state.filteredUsers, evt.target.value);
 
@@ -508,6 +518,7 @@ class GeneralStatistic extends React.Component {
             this.state.filteredUsers.push(evt.target.value);
         }
         console.log("filtered Users list", this.state.filteredUsers);
+        this.getData();
     }
 
     setAvg() {
@@ -543,12 +554,12 @@ class GeneralStatistic extends React.Component {
                                 <Col xs={6}>
                                     <ButtonGroup>
                                         <Button color={"link"} onClick={this.showFilter}
-                                                style={{color: this.state.filtered ? "black" : "blue"}}
+                                                style={{color: this.state.filtered ? "blue" : "black"}}
                                         >
                                             <i className="fa fa-filter"/> Filter
                                         </Button>
                                         <Button color={"link"} style={{
-                                            visibility: this.state.filtered ? "hidden" : "visible",
+                                            visibility: this.state.filtered ? "visible" : "hidden",
                                             color: "blue"
                                         }}
                                                 onClick={this.resetFilter}>
