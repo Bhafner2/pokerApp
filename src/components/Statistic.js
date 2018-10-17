@@ -419,6 +419,7 @@ class Statistic extends React.Component {
             dateOk: true,
             fromDate: '2018-01-01',
             toDate: this.props.today,
+            showFilter: false,
         }, () => {
             this.getData();
         })
@@ -472,7 +473,6 @@ class Statistic extends React.Component {
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                    onKeyPress={this.handleKeyPress}
-                   onBackButtonPress={() => this.setState({modal: false})}
             >
                 <ModalHeader toggle={this.toggle}>Statistic for {user.name}</ModalHeader>
                 <ModalBody>

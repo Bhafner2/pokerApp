@@ -103,6 +103,7 @@ class GeneralStatistic extends React.Component {
             showFilter: false,
             filteredUsers: [],
             getAvg: false,
+            reload: false,
         }, () => {
             this.getData()
         });
@@ -487,18 +488,18 @@ class GeneralStatistic extends React.Component {
                     <Button color="link" onClick={this.this12m}>This Year</Button>
                 </ButtonGroup>
                 <Row>
-
-                    {this.state.usersButtons.map((name) =>
-                        <Col xs={4} style={{paddingTop: "6px"}}>
-                            <Button size={"sm"} outline color={"primary"} value={name}
-                                    active={!this.isFiltered(name)}
-                                    onClick={this.userFilter}
-                                    key={"filter" + name}
-                            >
-                                {name}
-                            </Button>
-                        </Col>
-                    )}
+                    {!this.state.reload ?
+                        this.state.usersButtons.map((name) =>
+                            <Col xs={4} style={{paddingTop: "6px"}}>
+                                <Button size={"sm"} outline color={"primary"} value={name}
+                                        active={!this.isFiltered(name)}
+                                        onClick={this.userFilter}
+                                        key={"filter" + name}
+                                >
+                                    {name}
+                                </Button>
+                            </Col>
+                        ) : <div/>}
                 </Row>
             </Collapse>)
     }
@@ -522,11 +523,10 @@ class GeneralStatistic extends React.Component {
         this.getData();
 
         this.setState({
-            showFilter: false,
+            reload: true,
         }, () => {
             this.setState({
-
-                showFilter: true,
+                reload: false,
             })
         })
     }
