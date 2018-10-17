@@ -1,5 +1,17 @@
 import React, {Component} from 'react';
-import {Alert, Col, Input, InputGroup, InputGroupAddon, ListGroup, ListGroupItem, Row} from 'reactstrap';
+import {
+    Alert,
+    Col,
+    Collapse,
+    Input,
+    InputGroup,
+    InputGroupAddon,
+    ListGroup,
+    Nav,
+    Navbar,
+    NavbarBrand,
+    Row
+} from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
 import AddUser from "./AddUser";
 import {getUsers} from "../redux/actions";
@@ -209,61 +221,55 @@ class Home extends Component {
                 {/*
                 {this.dbInit()}
 */}
-                <ListGroupItem key="global" style={{backgroundColor: "whitesmoke"}}>
-                    <Row>
-                        <Col xs="2">
-                            <Calc/>
-                        </Col>
-                        <Col xs="2">
-                            <GeneralStatistic today={this.state.date}/>
-                        </Col>
-                        <Col xs="2">
-                            <ThisGame today={this.state.date}/>
-                        </Col>
-                        <Col xs="2">
-                            <i className="fa fa-calendar" onClick={this.toggleDate}
-                               style={{fontSize: "30px", color: this.isToday()}}/>
-                        </Col>
-                        <Col xs="2">
-                            <i className="fa fa-search" onClick={this.toggleSearch}
-                               style={{fontSize: "30px", color: this.state.filtered ? "#007BFF" : "black"}}/>
-                        </Col>
+                <Navbar sticky="top" style={{backgroundColor: "whitesmoke",}}>
+                    <NavbarBrand>
+                        <Calc/>
+                    </NavbarBrand>
+                    <NavbarBrand>
+                        <GeneralStatistic today={this.state.date}/>
+                    </NavbarBrand>
+                    <NavbarBrand>
+                        <ThisGame today={this.state.date}/>
+                    </NavbarBrand>
+                    <NavbarBrand>
+                        <i className="fa fa-calendar" onClick={this.toggleDate}
+                           style={{fontSize: "30px", color: this.isToday()}}/>
+                    </NavbarBrand>
+                    <NavbarBrand>
+                        <i className="fa fa-search" onClick={this.toggleSearch}
+                           style={{fontSize: "30px", color: this.state.filtered ? "#007BFF" : "black"}}/>
+                    </NavbarBrand>
+                    <NavbarBrand>
+                        <i className="fa  fa-sign-out" onClick={this.props.logout}
+                           style={{fontSize: "30px",}}/>
+                    </NavbarBrand>
 
-                        <Col xs="2">
-                            <i className="fa  fa-sign-out" onClick={this.props.logout}
-                               style={{fontSize: "30px",}}/>
-                        </Col>
-                    </Row>
-                    {this.state.showDate ?
-                        <Row style={{paddingTop: "12px"}}>
-                            <Col>
-                                <Input type="date" name="date" id="date"
-                                       value={this.state.date}
-                                       onChange={this.updateDate}
-                                       style={{color: this.isToday()}}
+                    <Collapse isOpen={this.state.showDate} navbar style={{paddingTop: "12px"}}>
+                        <Nav navbar>
+                            <Input type="date" name="date" id="date"
+                                   value={this.state.date}
+                                   onChange={this.updateDate}
+                                   style={{color: this.isToday()}}
+                            />
+                        </Nav>
+                    </Collapse>
+                    <Collapse isOpen={this.state.showSearch} navbar style={{paddingTop: "12px"}}>
+                        <Nav navbar>
+                            <InputGroup>
+                                <Input type="text" name="search" id="search"
+                                       value={this.state.search}
+                                       onChange={this.updateSearch}
+                                       style={{color: "#007BFF"}}
+                                       placeholder="Search.."
                                 />
-                            </Col>
-                        </Row>
-                        : <div/>}
-                    {this.state.showSearch ?
-                        <Row style={{paddingTop: "12px"}}>
-                            <Col>
-                                <InputGroup>
-                                    <Input type="text" name="search" id="search"
-                                           value={this.state.search}
-                                           onChange={this.updateSearch}
-                                           style={{color: "#007BFF"}}
-                                           placeholder="Search.."
-                                    />
-                                    <InputGroupAddon addonType="prepend"
-                                                     onClick={this.resetSearch}>
-                                        X
-                                    </InputGroupAddon>
-                                </InputGroup>
-                            </Col>
-                        </Row>
-                        : <div/>}
-                </ListGroupItem>
+                                <InputGroupAddon addonType="prepend"
+                                                 onClick={this.resetSearch}>
+                                    X
+                                </InputGroupAddon>
+                            </InputGroup>
+                        </Nav>
+                    </Collapse>
+                </Navbar>
                 {connErr ? loading() : (
                     <div>
                         <ListGroup>
