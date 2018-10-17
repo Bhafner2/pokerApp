@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     Button, ButtonGroup,
-    Col,
+    Col, Collapse,
     FormGroup,
     Input, InputGroup,
     Modal,
@@ -461,53 +461,45 @@ class GeneralStatistic extends React.Component {
     }
 
     filter() {
-        if (this.state.showFilter) {
-            return (
-                <div style={{}}>
-                    <Row>
-                        <Col>
-                            <InputGroup style={{paddingTop: "12px"}}>
-                                <Input type="date" name="fromDate" id="fromDate"
-                                       onChange={this.updateFormDate}
-                                       value={this.state.fromDate}
-                                       style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
-                                />
-                                <Input type="date" name="toDate" id="toDate"
-                                       onChange={this.updateToDate}
-                                       value={this.state.toDate}
-                                       style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
-                                />
-                            </InputGroup>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <ButtonGroup>
-                                <Button color="link" onClick={this.last3m}>3 Month</Button>
-                                <Button color="link" onClick={this.last6m}>6 Month</Button>
-                                <Button color="link" onClick={this.last12m}>Year</Button>
-                                <Button color="link" onClick={this.this12m}>This Year</Button>
-                            </ButtonGroup>
-                        </Col>
-                    </Row>
-                    <Row>
+        return (
+            <Collapse isOpen={this.state.showFilter}>
+                <Row>
+                    <Col>
+                        <InputGroup style={{paddingTop: "12px"}}>
+                            <Input type="date" name="fromDate" id="fromDate"
+                                   onChange={this.updateFormDate}
+                                   value={this.state.fromDate}
+                                   style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
+                            />
+                            <Input type="date" name="toDate" id="toDate"
+                                   onChange={this.updateToDate}
+                                   value={this.state.toDate}
+                                   style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
+                            />
+                        </InputGroup>
+                    </Col>
+                </Row>
+                <ButtonGroup>
+                    <Button color="link" onClick={this.last3m}>3 Month</Button>
+                    <Button color="link" onClick={this.last6m}>6 Month</Button>
+                    <Button color="link" onClick={this.last12m}>Year</Button>
+                    <Button color="link" onClick={this.this12m}>This Year</Button>
+                </ButtonGroup>
+                <Row>
 
-                        {this.state.usersButtons.map((name) =>
-                            <Col xs={4} style={{paddingTop: "6px"}}>
-                                <Button size={"sm"} outline color={"primary"} value={name}
-                                        active={!this.isFiltered(name)}
-                                        onClick={this.userFilter}
-                                        key={"filter" + name}
-                                >
-                                    {name}
-                                </Button>
-                            </Col>
-                        )}
-                    </Row>
-                </div>)
-        } else {
-            return <div/>
-        }
+                    {this.state.usersButtons.map((name) =>
+                        <Col xs={4} style={{paddingTop: "6px"}}>
+                            <Button size={"sm"} outline color={"primary"} value={name}
+                                    active={!this.isFiltered(name)}
+                                    onClick={this.userFilter}
+                                    key={"filter" + name}
+                            >
+                                {name}
+                            </Button>
+                        </Col>
+                    )}
+                </Row>
+            </Collapse>)
     }
 
 

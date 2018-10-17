@@ -221,7 +221,7 @@ class Home extends Component {
                 {/*
                 {this.dbInit()}
 */}
-                <Navbar sticky="top" style={{backgroundColor: "whitesmoke",}}>
+                <Navbar sticky="top" style={{backgroundColor: "whitesmoke", borderTop: "0.5px solid", borderColor: "#DFDFDF"}}>
                     <NavbarBrand>
                         <Calc/>
                     </NavbarBrand>
