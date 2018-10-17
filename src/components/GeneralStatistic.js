@@ -528,7 +528,14 @@ class GeneralStatistic extends React.Component {
         console.log("filtered Users list", this.state.filteredUsers);
         this.getData();
 
-        document.getElementById('filter').click();
+        this.setState({
+            showFilter: false,
+        }, () => {
+            this.setState({
+
+                showFilter: true,
+            })
+        })
     }
 
     setAvg() {
