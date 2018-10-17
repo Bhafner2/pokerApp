@@ -35,12 +35,12 @@ class UserList extends React.Component {
 
     isToday() {
         if (this.state.date === '') {
-            return {backgroundColor: 'red'}
+            return {color: 'red'}
         }
         if (this.state.date !== this.props.today) {
-            return {backgroundColor: 'LightSkyBlue'}
+            return {color: '#007BFF'}
         } else {
-            return {backgroundColor: 'white'}
+            return {color: 'black'}
         }
     }
 
@@ -227,7 +227,7 @@ class UserList extends React.Component {
         const {user} = this.props;
         return (<div>
                 <ListGroupItem key={this.props.key}
-                               style={{backgroundColor: this.props.blue ? "lightblue" : "white"}}>
+                               style={{color: this.props.blue ? "#007BFF" : "black"}}>
                     <Row>
                         <Col xs="4">
                             <Statistic user={user} today={this.props.date}/>

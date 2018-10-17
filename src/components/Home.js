@@ -63,7 +63,7 @@ class Home extends Component {
             return 'red'
         }
         if (this.state.date !== this.state.today) {
-            return 'blue'
+            return '#007BFF'
         } else {
             return 'black'
         }
@@ -226,7 +226,7 @@ class Home extends Component {
                         </Col>
                         <Col xs="2">
                             <i className="fa fa-search" onClick={this.toggleSearch}
-                               style={{fontSize: "30px", color: this.state.filtered ? "blue" : "black"}}/>
+                               style={{fontSize: "30px", color: this.state.filtered ? "#007BFF" : "black"}}/>
                         </Col>
 
                         <Col xs="2">
@@ -252,7 +252,7 @@ class Home extends Component {
                                     <Input type="text" name="search" id="search"
                                            value={this.state.search}
                                            onChange={this.updateSearch}
-                                           style={{color: "blue"}}
+                                           style={{color: "#007BFF"}}
                                            placeholder="Search.."
                                     />
                                     <InputGroupAddon addonType="prepend"

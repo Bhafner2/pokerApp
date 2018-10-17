@@ -324,7 +324,7 @@ class ThisGame extends React.Component {
                         <Row style={{align: "left"}}>
                             <Col xs="5">
                                 <div onClick={this.showFilter}
-                                     style={{color: this.state.filtered ? "black" : "blue"}}
+                                     style={{color: this.state.filtered ? "black" : "#007BFF"}}
                                 >
                                     <i className="fa fa-list"/> Last Games
                                 </div>
@@ -332,7 +332,7 @@ class ThisGame extends React.Component {
                             <Col xs="7">
                                 <div style={{
                                     visibility: this.state.filtered ? "hidden" : "visible",
-                                    color: "blue"
+                                    color: "#007BFF"
                                 }}
                                      onClick={this.resetFilter}>
                                     Today

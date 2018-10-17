@@ -485,13 +485,13 @@ class Statistic extends React.Component {
                             <Col>
                                 <ButtonGroup>
                                     <Button color={"link"} onClick={this.showFilter}
-                                            style={{color: this.state.filtered ? "black" : "blue"}}
+                                            style={{color: this.state.filtered ? "black" : "#007BFF"}}
                                     >
                                         <i className="fa fa-filter"/> Filter
                                     </Button>
                                     <Button color={"link"} style={{
                                         visibility: this.state.filtered ? "hidden" : "visible",
-                                        color: "blue"
+                                        color: "#007BFF"
                                     }}
                                             onClick={this.resetFilter}>
                                         X

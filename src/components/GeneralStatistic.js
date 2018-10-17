@@ -554,13 +554,13 @@ class GeneralStatistic extends React.Component {
                                 <Col xs={6}>
                                     <ButtonGroup>
                                         <Button color={"link"} onClick={this.showFilter}
-                                                style={{color: this.state.filtered ? "blue" : "black"}}
+                                                style={{color: this.state.filtered ? "#007BFF" : "black"}}
                                         >
                                             <i className="fa fa-filter"/> Filter
                                         </Button>
                                         <Button color={"link"} style={{
                                             visibility: this.state.filtered ? "visible" : "hidden",
-                                            color: "blue"
+                                            color: "#007BFF"
                                         }}
                                                 onClick={this.resetFilter}>
                                             X
