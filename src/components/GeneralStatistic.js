@@ -102,6 +102,7 @@ class GeneralStatistic extends React.Component {
             activeTab: '1',
             showFilter: false,
             filteredUsers: [],
+            getAvg: false,
         }, () => {
             this.getData()
         });
@@ -743,7 +744,7 @@ class GeneralStatistic extends React.Component {
                                         {usersPlayed.map((user, i) => (
                                             <Row key={'played' + i}>
                                                 <Col xs={4}>{user.name}</Col>
-                                                <Col xs={5}>played: {user.played} {getAvg ? "%" : ""}</Col>
+                                                <Col xs={5}>played: {user.played}{getAvg ? "%" : ""}</Col>
                                                 <Col xs={1}>
                                                     <Statistic user={user}
                                                                fromDate={this.state.fromDate}
