@@ -5,7 +5,6 @@ import {saveUsers} from "../redux/actions"
 import {connect} from "react-redux";
 import * as _ from 'lodash';
 
-
 class AddUser extends React.Component {
     constructor(props) {
         super(props);
@@ -16,6 +15,7 @@ class AddUser extends React.Component {
             onOpen: true,
             field: false,
         };
+
 
         this.toggle = this.toggle.bind(this);
         this.addUser = this.addUser.bind(this);
@@ -146,8 +146,7 @@ class AddUser extends React.Component {
                    toggle={this.toggle}
                    className={this.props.className}
                    onKeyPress={this.handleKeyPress}
-                   onBackButtonPress={() => this.setState({ modal: false })}
-                   >
+            >
                 <ModalHeader toggle={this.toggle}>New User</ModalHeader>
                 <ModalBody>
                     <FormGroup>

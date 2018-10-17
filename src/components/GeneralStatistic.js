@@ -55,6 +55,7 @@ class GeneralStatistic extends React.Component {
             getAvg: false,
             dates: [],
             filteredUsers: [],
+            usersButtons: [],
         };
 
         this.toggle = this.toggle.bind(this);
@@ -142,7 +143,7 @@ class GeneralStatistic extends React.Component {
         let usersTop = [];
         let usersBounty = [];
         let dates = [];
-
+        let usersButtons = [];
         console.log("users for generalstat", users);
         if (this.state.fromDate === '2018-01-01' && this.state.toDate === this.props.today && this.state.filteredUsers.length < 1) {
             this.setState({
@@ -169,6 +170,7 @@ class GeneralStatistic extends React.Component {
                 let user = {...users[i]};
                 console.log("user for generalstat", user);
 
+                usersButtons.push(user.name);
                 if (_.indexOf(this.state.filteredUsers, user.name) >= 0) {
                     console.log("user will be filtered", user);
                     continue;
@@ -306,6 +308,7 @@ class GeneralStatistic extends React.Component {
                 usersBuyIn,
                 usersPlayed,
                 dates,
+                usersButtons,
             });
         }
     }
@@ -489,21 +492,24 @@ class GeneralStatistic extends React.Component {
                     </Row>
                     <Row>
 
-                        {this.props.data.users.map((user) =>
+                        {this.state.usersButtons.map((name) =>
                             <Col xs={4} style={{paddingTop: "6px"}}>
-                                <Button size={"sm"} outline color={"primary"} value={user.name}
-                                        active={!this.isFiltered(user.name)}
+                                <Button size={"sm"} outline color={"primary"} value={name}
+                                        active={!this.isFiltered(name)}
                                         onClick={this.userFilter}
-                                        key={"filter" + user.name}>{user.name}</Button>
+                                        key={"filter" + name}
+                                >
+                                    {name}
+                                </Button>
                             </Col>
                         )}
                     </Row>
-
                 </div>)
         } else {
             return <div/>
         }
     }
+
 
     isFiltered(name) {
         return _.indexOf(this.state.filteredUsers, name) >= 0;
@@ -514,11 +520,15 @@ class GeneralStatistic extends React.Component {
 
         if (found >= 0) {
             this.state.filteredUsers.splice(found, 1);
+            document.activeElement.setAttribute("class", "btn btn-outline-primary btn-sm active");
         } else {
             this.state.filteredUsers.push(evt.target.value);
+            document.activeElement.setAttribute("class", "btn btn-outline-primary btn-sm");
         }
         console.log("filtered Users list", this.state.filteredUsers);
         this.getData();
+
+        document.getElementById('filter').click();
     }
 
     setAvg() {
@@ -553,7 +563,7 @@ class GeneralStatistic extends React.Component {
                             <Row>
                                 <Col xs={6}>
                                     <ButtonGroup>
-                                        <Button color={"link"} onClick={this.showFilter}
+                                        <Button color={"link"} onClick={this.showFilter} id={'filter'} key={'filter'}
                                                 style={{color: this.state.filtered ? "#007BFF" : "black"}}
                                         >
                                             <i className="fa fa-filter"/> Filter
@@ -586,6 +596,7 @@ class GeneralStatistic extends React.Component {
                         <Nav tabs>
                             <NavItem>
                                 <NavLink
+                                    id={'total'} key={'total'}
                                     className={classnames({active: this.state.activeTab === '1'})}
                                     onClick={() => {
                                         this.toggleTab('1');
