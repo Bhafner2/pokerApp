@@ -121,11 +121,11 @@ class Statistic extends React.Component {
         })[0];
         if (this.state.fromDate === "2018-01-01" && this.state.toDate === this.props.today) {
             this.setState({
-                filtered: true,
+                filtered: false,
             })
         } else {
             this.setState({
-                filtered: false,
+                filtered: true,
             })
         }
         if (this.state.dateOk) {
@@ -485,12 +485,12 @@ class Statistic extends React.Component {
                             <Col>
                                 <ButtonGroup>
                                     <Button color={"link"} onClick={this.showFilter}
-                                            style={{color: this.state.filtered ? "black" : "#007BFF"}}
+                                            style={{color: this.state.filtered ? "#007BFF" : "black"}}
                                     >
                                         <i className="fa fa-filter"/> Filter
                                     </Button>
                                     <Button color={"link"} style={{
-                                        visibility: this.state.filtered ? "hidden" : "visible",
+                                        visibility: this.state.filtered ? "visible" : "hidden",
                                         color: "#007BFF"
                                     }}
                                             onClick={this.resetFilter}>
