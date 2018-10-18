@@ -675,8 +675,8 @@ class GeneralStatistic extends React.Component {
                                 <FlipMove
                                     duration={250}
                                     easing={'linear'}
-                                    staggerDelayBy={50}
-                                    staggerDurationBy={50}
+                                    staggerDelayBy={30}
+                                    staggerDurationBy={30}
                                     typeName="div"
                                 >
                                     {usersTop.map((user, i) => (
@@ -689,7 +689,13 @@ class GeneralStatistic extends React.Component {
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="2">
                                 <br/>
-                                <FlipMove>
+                                <FlipMove
+                                    duration={250}
+                                    easing={'linear'}
+                                    staggerDelayBy={30}
+                                    staggerDurationBy={30}
+                                    typeName="div"
+                                >
                                     {usersWon.map((user, i) => (
                                         <TopList name={'won'} user={user} value={user.won}
                                                  from={this.state.fromDate} to={this.state.toDate} i={i}/>
@@ -700,7 +706,13 @@ class GeneralStatistic extends React.Component {
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="3">
                                 <br/>
-                                <FlipMove>
+                                <FlipMove
+                                    duration={250}
+                                    easing={'linear'}
+                                    staggerDelayBy={30}
+                                    staggerDurationBy={30}
+                                    typeName="div"
+                                >
                                     {usersBounty.map((user, i) => (
                                         <TopList name={'bounty'} user={user} value={user.bounty}
                                                  from={this.state.fromDate} to={this.state.toDate} i={i}/>
@@ -711,7 +723,13 @@ class GeneralStatistic extends React.Component {
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="4">
                                 <br/>
-                                <FlipMove>
+                                <FlipMove
+                                    duration={250}
+                                    easing={'linear'}
+                                    staggerDelayBy={30}
+                                    staggerDurationBy={30}
+                                    typeName="div"
+                                >
                                     {usersBuyIn.map((user, i) => (
                                         <TopList name={'buyIn'} user={user} value={user.buyIn}
                                                  from={this.state.fromDate} to={this.state.toDate} i={i}/>
@@ -722,7 +740,13 @@ class GeneralStatistic extends React.Component {
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="5">
                                 <br/>
-                                <FlipMove>
+                                <FlipMove
+                                    duration={250}
+                                    easing={'linear'}
+                                    staggerDelayBy={30}
+                                    staggerDurationBy={30}
+                                    typeName="div"
+                                >
                                     {usersPlayed.map((user, i) => (
                                         <TopList name={'played'} user={user} value={user.played}
                                                  extension={getAvg ? "%" : ""}
