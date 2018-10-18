@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Button, ButtonGroup,
+    Button, ButtonGroup, Card, CardBody,
     Col, Collapse,
     FormGroup,
     Input, InputGroup,
@@ -465,42 +465,54 @@ class GeneralStatistic extends React.Component {
     filter() {
         return (
             <Collapse isOpen={this.state.showFilter}>
-                <Row>
-                    <Col>
-                        <InputGroup style={{paddingTop: "12px"}}>
-                            <Input type="date" name="fromDate" id="fromDate"
-                                   onChange={this.updateFormDate}
-                                   value={this.state.fromDate}
-                                   style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
-                            />
-                            <Input type="date" name="toDate" id="toDate"
-                                   onChange={this.updateToDate}
-                                   value={this.state.toDate}
-                                   style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
-                            />
-                        </InputGroup>
-                    </Col>
-                </Row>
-                <ButtonGroup>
-                    <Button color="link" onClick={this.last3m}>3 Month</Button>
-                    <Button color="link" onClick={this.last6m}>6 Month</Button>
-                    <Button color="link" onClick={this.last12m}>Year</Button>
-                    <Button color="link" onClick={this.this12m}>This Year</Button>
-                </ButtonGroup>
-                <Row>
-                    {!this.state.reload ?
-                        this.state.usersButtons.map((name) =>
-                            <Col xs={4} style={{paddingTop: "6px"}}>
-                                <Button size={"sm"} outline color={"primary"} value={name}
-                                        active={!this.isFiltered(name)}
-                                        onClick={this.userFilter}
-                                        key={"filter" + name}
-                                >
-                                    {name}
-                                </Button>
+                <Card>
+                    <CardBody>
+                        <Row>
+                            <Col>
+                                <InputGroup>
+                                    <Input type="date" name="fromDate" id="fromDate"
+                                           onChange={this.updateFormDate}
+                                           value={this.state.fromDate}
+                                           style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
+                                    />
+                                    <Input type="date" name="toDate" id="toDate"
+                                           onChange={this.updateToDate}
+                                           value={this.state.toDate}
+                                           style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
+                                    />
+                                </InputGroup>
                             </Col>
-                        ) : <div/>}
-                </Row>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Button size="sm" color="link" onClick={this.last3m}>3 Month</Button>
+                            </Col>
+                            <Col>
+                                <Button size="sm" color="link" onClick={this.last6m}>6 Month</Button>
+                            </Col>
+                            <Col>
+                                <Button size="sm" color="link" onClick={this.last12m}>Year</Button>
+                            </Col>
+                            <Col>
+                                <Button size="sm" color="link" onClick={this.this12m}>This Year</Button>
+                            </Col>
+                        </Row>
+                        <Row style={{paddingTop: "12px"}}>
+                            {!this.state.reload ?
+                                this.state.usersButtons.map((name) =>
+                                    <Col xs={4} style={{paddingTop: "6px"}}>
+                                        <Button size={"sm"} outline color={"primary"} value={name}
+                                                active={!this.isFiltered(name)}
+                                                onClick={this.userFilter}
+                                                key={"filter" + name}
+                                        >
+                                            {name}
+                                        </Button>
+                                    </Col>
+                                ) : <div/>}
+                        </Row>
+                    </CardBody>
+                </Card>
             </Collapse>)
     }
 
@@ -758,15 +770,14 @@ class GeneralStatistic extends React.Component {
                         </TabContent>
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="6">
-
                                 <br/>
                                 <GameDetail game={maxBuyIn} name={'BuyIn'} value={maxBuyIn.buyIn}/>
                                 <GameDetail game={maxWon} name={'Won'} value={maxWon.won}/>
                                 <GameDetail game={maxBounty} name={'Bounty'} value={maxBounty.bounty}/>
                                 <GameDetail game={maxTotal} name={'Total'}
                                             value={maxTotal.won + maxTotal.bounty - maxTotal.buyIn}/>
-                                <br/>
-                                <Row>
+
+                                <Row style={{paddingTop: "12px"}}>
                                     <Col xs={6}>
                                         <b>Sum</b> of all Buy In's
                                     </Col>
@@ -774,7 +785,7 @@ class GeneralStatistic extends React.Component {
                                         {sumBuyIn}
                                     </Col>
                                 </Row>
-                                <Row>
+                                <Row style={{paddingTop: "12px"}}>
                                     <Col xs={6}>
                                         <b>Average</b> Buy In
                                     </Col>
@@ -782,7 +793,7 @@ class GeneralStatistic extends React.Component {
                                         {avgBuyIn}
                                     </Col>
                                 </Row>
-                                <Row>
+                                <Row style={{paddingTop: "12px"}}>
                                     <Col xs={6}>
                                         <b>Played</b> games
                                     </Col>

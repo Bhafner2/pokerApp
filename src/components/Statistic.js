@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Button, ButtonGroup,
+    Button, ButtonGroup, Card, CardBody,
     Col, Collapse,
     FormGroup,
     Input, InputGroup,
@@ -434,32 +434,40 @@ class Statistic extends React.Component {
     filter() {
         return (
             <Collapse isOpen={this.state.showFilter}>
-                <Row>
-                    <Col>
-                        <InputGroup style={{paddingTop: "12px"}}>
-                            <Input type="date" name="fromDate" id="fromDate"
-                                   onChange={this.updateFormDate}
-                                   value={this.state.fromDate}
-                                   style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
-                            />
-                            <Input type="date" name="toDate" id="toDate"
-                                   onChange={this.updateToDate}
-                                   value={this.state.toDate}
-                                   style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
-                            />
-                        </InputGroup>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <ButtonGroup>
-                            <Button color="link" onClick={this.last3m}>3 Month</Button>
-                            <Button color="link" onClick={this.last6m}>6 Month</Button>
-                            <Button color="link" onClick={this.last12m}>Year</Button>
-                            <Button color="link" onClick={this.this12m}>This Year</Button>
-                        </ButtonGroup>
-                    </Col>
-                </Row>
+                <Card>
+                    <CardBody>
+                        <Row>
+                            <Col>
+                                <InputGroup>
+                                    <Input type="date" name="fromDate" id="fromDate"
+                                           onChange={this.updateFormDate}
+                                           value={this.state.fromDate}
+                                           style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
+                                    />
+                                    <Input type="date" name="toDate" id="toDate"
+                                           onChange={this.updateToDate}
+                                           value={this.state.toDate}
+                                           style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
+                                    />
+                                </InputGroup>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Button size="sm" color="link" onClick={this.last3m}>3 Month</Button>
+                            </Col>
+                            <Col>
+                                <Button size="sm" color="link" onClick={this.last6m}>6 Month</Button>
+                            </Col>
+                            <Col>
+                                <Button size="sm" color="link" onClick={this.last12m}>Year</Button>
+                            </Col>
+                            <Col>
+                                <Button size="sm" color="link" onClick={this.this12m}>This Year</Button>
+                            </Col>
+                        </Row>
+                    </CardBody>
+                </Card>
             </Collapse>)
     }
 

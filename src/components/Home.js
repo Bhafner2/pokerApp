@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {
     Alert,
     Col,
-    Collapse,
+    Collapse, Fade,
     Input,
     InputGroup,
     InputGroupAddon,
@@ -221,7 +221,12 @@ class Home extends Component {
                 {/*
                 {this.dbInit()}
 */}
-                <Navbar sticky="top" style={{backgroundColor: "whitesmoke", borderTop: "0.5px solid", borderColor: "#DFDFDF"}}>
+                <Navbar sticky="top"
+                        style={{
+                            backgroundColor: "whitesmoke",
+                            borderTop: "0.5px solid",
+                            borderColor: "#DFDFDF",
+                        }}>
                     <NavbarBrand>
                         <Calc/>
                     </NavbarBrand>
@@ -244,18 +249,21 @@ class Home extends Component {
                            style={{fontSize: "30px",}}/>
                     </NavbarBrand>
 
-                    <Collapse isOpen={this.state.showDate} navbar style={{paddingTop: "12px"}}>
+                    <Collapse isOpen={this.state.showDate} navbar>
                         <Nav navbar>
-                            <Input type="date" name="date" id="date"
-                                   value={this.state.date}
-                                   onChange={this.updateDate}
-                                   style={{color: this.isToday()}}
-                            />
+                            <InputGroup style={{paddingTop: "12px"}}>
+
+                                <Input type="date" name="date" id="date"
+                                       value={this.state.date}
+                                       onChange={this.updateDate}
+                                       style={{color: this.isToday()}}
+                                />
+                            </InputGroup>
                         </Nav>
                     </Collapse>
-                    <Collapse isOpen={this.state.showSearch} navbar style={{paddingTop: "12px"}}>
+                    <Collapse isOpen={this.state.showSearch} navbar>
                         <Nav navbar>
-                            <InputGroup>
+                            <InputGroup style={{paddingTop: "12px"}}>
                                 <Input type="text" name="search" id="search"
                                        value={this.state.search}
                                        onChange={this.updateSearch}
@@ -285,7 +293,7 @@ class Home extends Component {
                     </div>
                 )}
                 <Row>
-                    <Alert color={this.state.alertSuccess ? "success" : "danger"}
+                    <Alert animation={Fade} color={this.state.alertSuccess ? "success" : "danger"}
                            style={{
                                visibility: this.state.showAlert ? 'visible' : 'hidden',
                                position: "fixed",

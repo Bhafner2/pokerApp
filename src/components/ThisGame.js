@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Button, Col, FormGroup,
+    Button, Col, Collapse, FormGroup,
     Modal,
     ModalBody,
     ModalFooter,
@@ -292,21 +292,17 @@ class ThisGame extends React.Component {
     }
 
     filter() {
-        if (this.state.showFilter) {
-            return (
-                <div style={{}}>
-                    {this.state.dates.map((date, i) =>
-                        <Row>
-                            <Col>
-                                <Button color={"link"} value={date} onClick={this.updateDate}
-                                        key={i}>{moment(date).format('D.M.YY')}</Button>
-                            </Col>
-                        </Row>
-                    )}
-                </div>)
-        } else {
-            return <div/>
-        }
+        return (
+            <Collapse isOpen={this.state.showFilter}>
+                {this.state.dates.map((date, i) =>
+                    <Row>
+                        <Col>
+                            <Button color={"link"} value={date} onClick={this.updateDate}
+                                    key={i}>{moment(date).format('D.M.YY')}</Button>
+                        </Col>
+                    </Row>
+                )}
+            </Collapse>)
     }
 
     render() {
@@ -354,7 +350,7 @@ class ThisGame extends React.Component {
                         </Row>
                         <Row>
                             <Col xs="5">
-                                <b>Sum BuyIn</b>
+                                <b>Pot size</b>
                             </Col>
                             <Col xs="7">
                                 <div>{this.state.sumBuyIn}</div>
