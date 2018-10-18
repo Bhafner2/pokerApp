@@ -17,6 +17,7 @@ import classnames from 'classnames';
 import Statistic from "./Statistic";
 import GameDetail from "./GameDetail";
 import moment from "moment/moment";
+import FlipMove from 'react-flip-move';
 
 let filteredUsers = [];
 let empty = {name: '', won: 0, buyIn: 0, bounty: 0, date: ''};
@@ -671,101 +672,63 @@ class GeneralStatistic extends React.Component {
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="1">
                                 <br/>
-                                <Row>
-                                    <Col>
-                                        {usersTop.map((user, i) => (
-                                            <Row key={'toplist' + i}>
-                                                <Col xs={4}>{user.name}</Col>
-                                                <Col xs={5}>total: {user.total}</Col>
-                                                <Col xs={1}>
-                                                    <Statistic user={user}
-                                                               fromDate={this.state.fromDate}
-                                                               today={this.state.toDate}/></Col>
-                                                <Col xs={2}/>
-                                            </Row>
-                                        ))}
-                                    </Col>
-                                </Row>
+                                <FlipMove
+                                    duration={250}
+                                    easing={'linear'}
+                                    staggerDelayBy={50}
+                                    staggerDurationBy={50}
+                                    typeName="div"
+                                >
+                                    {usersTop.map((user, i) => (
+                                        <TopList name={'total'} user={user} value={user.total}
+                                                 from={this.state.fromDate} to={this.state.toDate} i={i}/>
+                                    ))}
+                                </FlipMove>
                             </TabPane>
                         </TabContent>
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="2">
                                 <br/>
-                                <Row>
-                                    <Col>
-                                        {usersWon.map((user, i) => (
-                                            <Row key={'won' + i}>
-                                                <Col xs={4}>{user.name}</Col>
-                                                <Col xs={5}>won: {user.won}</Col>
-                                                <Col xs={1}>
-                                                    <Statistic user={user}
-                                                               fromDate={this.state.fromDate}
-                                                               today={this.state.toDate}/></Col>
-                                                <Col xs={2}/>
-                                            </Row>
-                                        ))}
-                                    </Col>
-                                </Row>
+                                <FlipMove>
+                                    {usersWon.map((user, i) => (
+                                        <TopList name={'won'} user={user} value={user.won}
+                                                 from={this.state.fromDate} to={this.state.toDate} i={i}/>
+                                    ))}
+                                </FlipMove>
                             </TabPane>
                         </TabContent>
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="3">
                                 <br/>
-                                <Row>
-                                    <Col>
-                                        {usersBounty.map((user, i) => (
-                                            <Row key={'bounty' + i}>
-                                                <Col xs={4}>{user.name}</Col>
-                                                <Col xs={5}>bounty: {user.bounty}</Col>
-                                                <Col xs={1}>
-                                                    <Statistic user={user}
-                                                               fromDate={this.state.fromDate}
-                                                               today={this.state.toDate}/></Col>
-                                                <Col xs={2}/>
-                                            </Row>
-                                        ))}
-                                    </Col>
-                                </Row>
+                                <FlipMove>
+                                    {usersBounty.map((user, i) => (
+                                        <TopList name={'bounty'} user={user} value={user.bounty}
+                                                 from={this.state.fromDate} to={this.state.toDate} i={i}/>
+                                    ))}
+                                </FlipMove>
                             </TabPane>
                         </TabContent>
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="4">
                                 <br/>
-                                <Row>
-                                    <Col>
-                                        {usersBuyIn.map((user, i) => (
-                                            <Row key={'buyIn' + i}>
-                                                <Col xs={4}>{user.name}</Col>
-                                                <Col xs={5}>buyIn: {user.buyIn}</Col>
-                                                <Col xs={1}>
-                                                    <Statistic user={user}
-                                                               fromDate={this.state.fromDate}
-                                                               today={this.state.toDate}/></Col>
-                                                <Col xs={2}/>
-                                            </Row>
-                                        ))}
-                                    </Col>
-                                </Row>
+                                <FlipMove>
+                                    {usersBuyIn.map((user, i) => (
+                                        <TopList name={'buyIn'} user={user} value={user.buyIn}
+                                                 from={this.state.fromDate} to={this.state.toDate} i={i}/>
+                                    ))}
+                                </FlipMove>
                             </TabPane>
                         </TabContent>
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="5">
                                 <br/>
-                                <Row>
-                                    <Col>
-                                        {usersPlayed.map((user, i) => (
-                                            <Row key={'played' + i}>
-                                                <Col xs={4}>{user.name}</Col>
-                                                <Col xs={5}>played: {user.played}{getAvg ? "%" : ""}</Col>
-                                                <Col xs={1}>
-                                                    <Statistic user={user}
-                                                               fromDate={this.state.fromDate}
-                                                               today={this.state.toDate}/></Col>
-                                                <Col xs={2}/>
-                                            </Row>
-                                        ))}
-                                    </Col>
-                                </Row>
+                                <FlipMove>
+                                    {usersPlayed.map((user, i) => (
+                                        <TopList name={'played'} user={user} value={user.played}
+                                                 extension={getAvg ? "%" : ""}
+                                                 from={this.state.fromDate} to={this.state.toDate} i={i}/>
+                                    ))}
+                                </FlipMove>
                             </TabPane>
                         </TabContent>
                         <TabContent activeTab={this.state.activeTab}>
@@ -813,6 +776,22 @@ class GeneralStatistic extends React.Component {
     }
 }
 
+class TopList extends React.Component {
+    render() {
+        const {name, user, value, from, to, i, extension} = this.props;
+        return (
+            <Row key={i}>
+                <Col xs={4}>{user.name}</Col>
+                <Col xs={5}>{name}: {value}{extension}</Col>
+                <Col xs={1}>
+                    <Statistic user={user}
+                               fromDate={from}
+                               today={to}/></Col>
+                <Col xs={2}/>
+            </Row>
+        );
+    }
+}
 
 const mapStateToProps = state => {
     return {
