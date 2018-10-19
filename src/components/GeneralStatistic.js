@@ -89,7 +89,8 @@ class GeneralStatistic extends React.Component {
     toggleTab(tab) {
         if (this.state.activeTab !== tab) {
             this.setState({
-                activeTab: tab
+                activeTab: tab,
+                showFilter: false,
             });
         }
     }
@@ -547,6 +548,7 @@ class GeneralStatistic extends React.Component {
     setAvg() {
         this.setState({
             getAvg: true,
+            showFilter: false,
         }, () => {
             this.getData();
         })
@@ -555,6 +557,7 @@ class GeneralStatistic extends React.Component {
     setSum() {
         this.setState({
             getAvg: false,
+            showFilter: false,
         }, () => {
             this.getData();
         })
@@ -695,6 +698,8 @@ class GeneralStatistic extends React.Component {
                                     staggerDelayBy={30}
                                     staggerDurationBy={30}
                                     typeName="div"
+                                    enterAnimation={"accordionHorizontal"}
+                                    leaveAnimation={"accordionHorizontal"}
                                 >
                                     {usersWon.map((user, i) => (
                                         <TopList name={'won'} user={user} value={user.won}
