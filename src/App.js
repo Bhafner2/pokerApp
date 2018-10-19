@@ -66,7 +66,6 @@ class App extends Component {
             console.log("logout");
             store.dispatch(login(false));
         }).catch(function (error) {
-            alert(error);
         });
     }
 

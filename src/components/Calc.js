@@ -161,8 +161,6 @@ class Calc extends React.Component {
                 this.state.p3 +
                 this.state.p4)
                 !== this.state.amount) {
-
-                alert("not Ok");
             }
         });
     }

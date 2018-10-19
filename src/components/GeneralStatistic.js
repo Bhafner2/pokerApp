@@ -17,7 +17,6 @@ import classnames from 'classnames';
 import Statistic from "./Statistic";
 import GameDetail from "./GameDetail";
 import moment from "moment/moment";
-import FlipMove from 'react-flip-move';
 
 let filteredUsers = [];
 let empty = {name: '', won: 0, buyIn: 0, bounty: 0, date: ''};
@@ -76,15 +75,6 @@ class GeneralStatistic extends React.Component {
         this.setAvg = this.setAvg.bind(this);
         this.userFilter = this.userFilter.bind(this);
     }
-
-    onBackButtonPressAndroid = () => {
-        alert("backbutton");
-        if (this.state.modal) {
-            this.toggle();
-            return true;
-        }
-        return false;
-    };
 
     toggleTab(tab) {
         if (this.state.activeTab !== tab) {
@@ -344,7 +334,7 @@ class GeneralStatistic extends React.Component {
 
     updateFormDate(evt) {
         this.setState({
-                fromDate: evt.target.value
+                fromDate: evt.target.value,
             }, () => {
                 if (this.state.fromDate === '' || new Date(this.state.toDate) < new Date(this.state.fromDate)) {
                     this.setState({
@@ -365,7 +355,7 @@ class GeneralStatistic extends React.Component {
 
     updateToDate(evt) {
         this.setState({
-                toDate: evt.target.value
+                toDate: evt.target.value,
             }, () => {
                 if (this.state.toDate === '' || new Date(this.state.toDate) < new Date(this.state.fromDate)) {
                     this.setState({
@@ -528,10 +518,8 @@ class GeneralStatistic extends React.Component {
 
         if (found >= 0) {
             this.state.filteredUsers.splice(found, 1);
-            document.activeElement.setAttribute("class", "btn btn-outline-primary btn-sm active");
         } else {
             this.state.filteredUsers.push(evt.target.value);
-            document.activeElement.setAttribute("class", "btn btn-outline-primary btn-sm");
         }
         console.log("filtered Users list", this.state.filteredUsers);
         this.getData();
@@ -675,89 +663,49 @@ class GeneralStatistic extends React.Component {
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="1">
                                 <br/>
-                                <FlipMove
-                                    duration={250}
-                                    easing={'linear'}
-                                    staggerDelayBy={30}
-                                    staggerDurationBy={30}
-                                    typeName="div"
-                                >
                                     {usersTop.map((user, i) => (
                                         <TopList name={'total'} user={user} value={user.total}
                                                  from={this.state.fromDate} to={this.state.toDate} i={i}/>
                                     ))}
-                                </FlipMove>
                             </TabPane>
                         </TabContent>
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="2">
                                 <br/>
-                                <FlipMove
-                                    duration={250}
-                                    easing={'linear'}
-                                    staggerDelayBy={30}
-                                    staggerDurationBy={30}
-                                    typeName="div"
-                                    enterAnimation={"accordionHorizontal"}
-                                    leaveAnimation={"accordionHorizontal"}
-                                >
+
                                     {usersWon.map((user, i) => (
                                         <TopList name={'won'} user={user} value={user.won}
                                                  from={this.state.fromDate} to={this.state.toDate} i={i}/>
                                     ))}
-                                </FlipMove>
                             </TabPane>
                         </TabContent>
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="3">
                                 <br/>
-                                <FlipMove
-                                    duration={250}
-                                    easing={'linear'}
-                                    staggerDelayBy={30}
-                                    staggerDurationBy={30}
-                                    typeName="div"
-                                >
+      
                                     {usersBounty.map((user, i) => (
                                         <TopList name={'bounty'} user={user} value={user.bounty}
                                                  from={this.state.fromDate} to={this.state.toDate} i={i}/>
                                     ))}
-                                </FlipMove>
                             </TabPane>
                         </TabContent>
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="4">
                                 <br/>
-                                <FlipMove
-                                    duration={250}
-                                    easing={'linear'}
-                                    staggerDelayBy={30}
-                                    staggerDurationBy={30}
-                                    typeName="div"
-                                >
-                                    {usersBuyIn.map((user, i) => (
+                                                                {usersBuyIn.map((user, i) => (
                                         <TopList name={'buyIn'} user={user} value={user.buyIn}
                                                  from={this.state.fromDate} to={this.state.toDate} i={i}/>
                                     ))}
-                                </FlipMove>
                             </TabPane>
                         </TabContent>
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="5">
                                 <br/>
-                                <FlipMove
-                                    duration={250}
-                                    easing={'linear'}
-                                    staggerDelayBy={30}
-                                    staggerDurationBy={30}
-                                    typeName="div"
-                                >
-                                    {usersPlayed.map((user, i) => (
+                                {usersPlayed.map((user, i) => (
                                         <TopList name={'played'} user={user} value={user.played}
                                                  extension={getAvg ? "%" : ""}
                                                  from={this.state.fromDate} to={this.state.toDate} i={i}/>
                                     ))}
-                                </FlipMove>
                             </TabPane>
                         </TabContent>
                         <TabContent activeTab={this.state.activeTab}>
