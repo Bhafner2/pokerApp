@@ -245,7 +245,7 @@ class Statistic extends React.Component {
                     type: 'column',
                     data: buyIn,
                     lineWidth: 1,
-                    color: 'rgb(255, 0, 0)',
+                    color: '#DC3545',
                     marker: {
                         enabled: showDots,
                     },
@@ -255,7 +255,7 @@ class Statistic extends React.Component {
                     type: 'column',
                     data: bounty,
                     lineWidth: 1,
-                    color: 'rgb(125, 125, 125)',
+                    color: '#155724',
                     marker: {
                         enabled: showDots,
                     },
@@ -265,7 +265,7 @@ class Statistic extends React.Component {
                     type: 'column',
                     data: won,
                     lineWidth: 1,
-                    color: 'rgb(0, 255, 0)',
+                    color: '#28A745',
                     marker: {
                         enabled: showDots,
                     },
@@ -273,7 +273,7 @@ class Statistic extends React.Component {
                     name: 'Total',
                     type: 'spline',
                     data: total,
-                    color: 'rgb(0, 0, 0)',
+                    color: '#6C757D',
                     marker: {
                         enabled: showDots,
                     },
@@ -282,7 +282,7 @@ class Statistic extends React.Component {
                     type: 'spline',
                     data: trend,
                     lineWidth: 1,
-                    color: 'rgb(0, 0, 255)',
+                    color: '#007BFF',
                     marker: {
                         enabled: showDots,
                     },

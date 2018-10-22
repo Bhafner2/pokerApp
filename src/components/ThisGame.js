@@ -195,7 +195,7 @@ class ThisGame extends React.Component {
                         return u.buyIn
                     }),
                     lineWidth: 1,
-                    color: 'rgb(255, 0, 0)',
+                    color: '#DC3545',
                     marker: {
                         enabled: false,
                     },
@@ -207,7 +207,7 @@ class ThisGame extends React.Component {
                         return u.bounty
                     }),
                     lineWidth: 1,
-                    color: 'rgb(125, 125, 125)',
+                    color: '#155724',
                     marker: {
                         enabled: false,
                     },
@@ -219,7 +219,7 @@ class ThisGame extends React.Component {
                         return u.won
                     }),
                     lineWidth: 1,
-                    color: 'rgb(0, 255, 0)',
+                    color: '#28A745',
                     marker: {
                         enabled: false,
                     },
@@ -229,7 +229,7 @@ class ThisGame extends React.Component {
                     data: _.map(users, (u) => {
                         return u.total
                     }),
-                    color: 'rgb(0, 0, 0)',
+                    color: '#6C757D',
                     marker: {
                         enabled: false,
                     },
