@@ -27,10 +27,10 @@ class GameDetail extends React.Component {
                     <Col xs={3} onClick={this.toggle}>
                         <b>{name}</b>
                     </Col>
-                    <Col xs={2} onClick={this.toggle}>
+                    <Col xs={3} onClick={this.toggle}>
                         {value}
                     </Col>
-                    <Col xs={4} onClick={this.toggle}>
+                    <Col xs={3} onClick={this.toggle}>
                         {game.name}
                     </Col>
                     <Col xs={1}>

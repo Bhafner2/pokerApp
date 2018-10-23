@@ -26,6 +26,7 @@ class ThisGame extends React.Component {
             sumOk: true,
             avgBuyIn: 0,
             sumBuyIn: 0,
+            sumBounty: 0,
             dates: [],
             showFilter: false,
             filtered: false,
@@ -72,6 +73,7 @@ class ThisGame extends React.Component {
         let sumOk;
         let avgBuyIn = 0;
         let sumBuyIn = 0;
+        let sumBounty = 0;
         let dates = [];
 
         for (let user in users) {
@@ -108,7 +110,8 @@ class ThisGame extends React.Component {
                         total: user.games[0].won + user.games[0].bounty - user.games[0].buyIn
                     };
                     sum = sum + plainUser.total;
-                    sumBuyIn = sumBuyIn + (plainUser.buyIn * -1);
+                    sumBuyIn = sumBuyIn + (plainUser.buyIn * -1) - plainUser.bounty;
+                    sumBounty = sumBounty + plainUser.bounty;
                     filteredUsers.push(plainUser);
                     console.log("filtered users", filteredUsers);
                 }
@@ -129,6 +132,7 @@ class ThisGame extends React.Component {
             sumOk,
             avgBuyIn,
             sumBuyIn,
+            sumBounty,
             dates,
             filtered: this.state.date === this.props.today,
             onOpen: false,
@@ -150,7 +154,7 @@ class ThisGame extends React.Component {
         this.setState({
             options: {
                 chart: {
-                    height: 280,
+                    height: 320,
                     type: 'spline',
                 },
                 title: {
@@ -308,7 +312,7 @@ class ThisGame extends React.Component {
     render() {
         return (<div>
             <i className="fa fa-gamepad" onClick={this.toggle}
-               style={{fontSize: "30px", color: this.state.sumOk ? "" : "red"}}/>
+               style={{fontSize: "30px", color: this.state.sumOk ? "" : "#DC3545"}}/>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                    onKeyPress={this.handleKeyPress}
@@ -336,24 +340,37 @@ class ThisGame extends React.Component {
                             </Col>
                         </Row>
                         {this.filter()}
-                        <Row style={{
-                            color: this.state.sumOk ? "green" : "red"
-                        }}>
-                            <Col xs="5">
-                                <br/>
-                                <b>Checksum</b>
-                            </Col>
-                            <Col xs="7">
-                                <br/>
-                                <div>{this.state.sum}</div>
-                            </Col>
-                        </Row>
-                        <Row>
+                        {this.state.sumOk ? '' :
+                            <Row style={{
+                                color: "#DC3545",
+                                paddingTop: "12px",
+                            }}>
+                                <Col xs="5">
+                                    <b>Checksum</b>
+                                </Col>
+                                <Col xs="2">
+                                    {this.state.sum}
+                                </Col>
+                                <Col xs="5" style={{
+                                    fontSize: "0.8em",
+                                }}>
+                                    the result of (won + bounty - buyIn), should be 0
+                                </Col>
+                            </Row>}
+                        <Row style={{paddingTop: "12px"}}>
                             <Col xs="5">
                                 <b>Pot size</b>
                             </Col>
                             <Col xs="7">
                                 <div>{this.state.sumBuyIn}</div>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs="5">
+                                <b>Bounty's</b>
+                            </Col>
+                            <Col xs="7">
+                                <div>{this.state.sumBounty}</div>
                             </Col>
                         </Row>
                         <Row>
