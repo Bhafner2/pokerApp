@@ -283,6 +283,7 @@ class Statistic extends React.Component {
                     data: trend,
                     lineWidth: 1,
                     color: '#007BFF',
+                    visible: false,
                     marker: {
                         enabled: showDots,
                     },

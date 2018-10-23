@@ -17,6 +17,8 @@ import classnames from 'classnames';
 import Statistic from "./Statistic";
 import GameDetail from "./GameDetail";
 import moment from "moment/moment";
+import Highcharts from 'highcharts'
+import HighchartsReact from 'highcharts-react-official'
 
 let filteredUsers = [];
 let empty = {name: '', won: 0, buyIn: 0, bounty: 0, date: ''};
@@ -74,6 +76,7 @@ class GeneralStatistic extends React.Component {
         this.setSum = this.setSum.bind(this);
         this.setAvg = this.setAvg.bind(this);
         this.userFilter = this.userFilter.bind(this);
+        this.chart = this.chart.bind(this);
     }
 
     toggleTab(tab) {
@@ -305,6 +308,7 @@ class GeneralStatistic extends React.Component {
                 usersButtons,
             });
         }
+        this.chart(filteredUsers);
     }
 
 
@@ -551,205 +555,335 @@ class GeneralStatistic extends React.Component {
         })
     }
 
+    chart(users) {
+        users = _.sortBy(users, function (g) {
+            return -g.total;
+        });
+
+        this.setState({
+            options: {
+                chart: {
+                    height: 280,
+                    type: 'spline',
+                },
+                title: {
+                    text: 'Players',
+                    style: {
+                        fontWeight: 'bold',
+                        display: 'none'
+                    },
+                },
+                yAxis: {
+                    title: {
+                        text: ''
+                    },
+                    plotLines: [{
+                        value: 0,
+                        color: 'lightGrey',
+                        dashStyle: 'shortdash',
+                        width: 0.5,
+                    }],
+                },
+                plotOptions: {
+                    column: {
+                        stacking: 'normal'
+                    },
+                },
+                xAxis: [{
+                    categories: _.map(users, (u) => {
+                        return u.name
+                    }),
+                }],
+
+                legend: {
+                    itemStyle: {
+                        fontSize: '16px',
+                        font: '12pt Trebuchet MS, Verdana, sans-serif',
+                    },
+                },
+                series: [{
+                    name: 'Buy In',
+                    stack: 'data',
+                    type: 'column',
+                    data: _.map(users, (u) => {
+                        return -u.buyIn
+                    }),
+                    lineWidth: 1,
+                    color: '#DC3545',
+                    marker: {
+                        enabled: false,
+                    },
+                }, {
+                    name: 'Bounty',
+                    stack: 'data',
+                    type: 'column',
+                    data: _.map(users, (u) => {
+                        return u.bounty
+                    }),
+                    lineWidth: 1,
+                    color: '#155724',
+                    marker: {
+                        enabled: false,
+                    },
+                }, {
+                    name: 'Won',
+                    stack: 'data',
+                    type: 'column',
+                    data: _.map(users, (u) => {
+                        return u.won
+                    }),
+                    lineWidth: 1,
+                    color: '#28A745',
+                    marker: {
+                        enabled: false,
+                    },
+                }, {
+                    name: 'Total',
+                    type: 'spline',
+                    data: _.map(users, (u) => {
+                        return u.total
+                    }),
+                    color: '#6C757D',
+                    marker: {
+                        enabled: false,
+                    },
+                }, {
+                    name: 'Played',
+                    stack: 'none',
+                    type: 'column',
+                    data: _.map(users, (u) => {
+                        return u.played
+                    }),
+                    lineWidth: 1,
+                    color: '#FFC107',
+                    visible: false,
+                    marker: {
+                        enabled: false,
+                    },
+                },
+                ],
+            }
+        });
+    }
+
     render() {
         const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, usersTop, usersBounty, usersWon, usersBuyIn, usersPlayed, getAvg, dates} = this.state;
 
         return (<div>
-                <i className="fa fa-trophy" onClick={this.toggle}
-                   style={{fontSize: "30px"}}/>
-                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
-                       onKeyPress={this.handleKeyPress}
+            <i className="fa fa-trophy" onClick={this.toggle}
+               style={{fontSize: "30px"}}/>
+            <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
+                   onKeyPress={this.handleKeyPress}
 
-                >
-                    <ModalHeader toggle={this.toggle}>Top List</ModalHeader>
-                    <ModalBody>
-                        <FormGroup>
-                            <Row>
+            >
+                <ModalHeader toggle={this.toggle}>Top List</ModalHeader>
+                <ModalBody>
+                    <FormGroup>
+                        <Row>
+                            <Col xs={6}>
+                                <ButtonGroup>
+                                    <Button color={"link"} onClick={this.showFilter} id={'filter'} key={'filter'}
+                                            style={{color: this.state.filtered ? "#007BFF" : "black"}}
+                                    >
+                                        <i className="fa fa-filter"/> Filter
+                                    </Button>
+                                    <Button color={"link"} style={{
+                                        visibility: this.state.filtered ? "visible" : "hidden",
+                                        color: "#007BFF"
+                                    }}
+                                            onClick={this.resetFilter}>
+                                        X
+                                    </Button>
+                                </ButtonGroup>
+                            </Col>
+                            <Col xs={5}>
+                                <ButtonGroup style={{paddingTop: "4px"}}>
+                                    <Button size={"sm"} outline color={"primary"} active={!getAvg}
+                                            onClick={this.setSum}>
+                                        Sum
+                                    </Button>
+                                    <Button size={"sm"} outline color="primary" active={getAvg}
+                                            onClick={this.setAvg}>
+                                        Avg
+                                    </Button>
+                                </ButtonGroup>
+                            </Col>
+                            <Col xs={1}/>
+                        </Row>
+                        {this.filter()}
+                    </FormGroup>
+                    <Nav tabs>
+                        <NavItem>
+                            <NavLink
+                                id={'total'} key={'total'}
+                                className={classnames({active: this.state.activeTab === '1'})}
+                                onClick={() => {
+                                    this.toggleTab('1');
+                                }}
+                            >
+                                Total
+                            </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink
+                                className={classnames({active: this.state.activeTab === '2'})}
+                                onClick={() => {
+                                    this.toggleTab('2');
+                                }}
+                            >
+                                Won
+                            </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink
+                                className={classnames({active: this.state.activeTab === '3'})}
+                                onClick={() => {
+                                    this.toggleTab('3');
+                                }}
+                            >
+                                Bounty
+                            </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink
+                                className={classnames({active: this.state.activeTab === '4'})}
+                                onClick={() => {
+                                    this.toggleTab('4');
+                                }}
+                            >
+                                BuyIn
+                            </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink
+                                className={classnames({active: this.state.activeTab === '5'})}
+                                onClick={() => {
+                                    this.toggleTab('5');
+                                }}
+                            >
+                                Played
+                            </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink
+                                className={classnames({active: this.state.activeTab === '6'})}
+                                onClick={() => {
+                                    this.toggleTab('6');
+                                }}
+                            >
+                                Chart
+                            </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink
+                                className={classnames({active: this.state.activeTab === '7'})}
+                                onClick={() => {
+                                    this.toggleTab('7');
+                                }}
+                            >
+                                Peaks
+                            </NavLink>
+                        </NavItem>
+                    </Nav>
+                    <TabContent activeTab={this.state.activeTab}>
+                        <TabPane tabId="1">
+                            <br/>
+                            {usersTop.map((user, i) => (
+                                <TopList name={'total'} user={user} value={user.total}
+                                         from={this.state.fromDate} to={this.state.toDate} i={i}/>
+                            ))}
+                        </TabPane>
+                    </TabContent>
+                    <TabContent activeTab={this.state.activeTab}>
+                        <TabPane tabId="2">
+                            <br/>
+
+                            {usersWon.map((user, i) => (
+                                <TopList name={'won'} user={user} value={user.won}
+                                         from={this.state.fromDate} to={this.state.toDate} i={i}/>
+                            ))}
+                        </TabPane>
+                    </TabContent>
+                    <TabContent activeTab={this.state.activeTab}>
+                        <TabPane tabId="3">
+                            <br/>
+
+                            {usersBounty.map((user, i) => (
+                                <TopList name={'bounty'} user={user} value={user.bounty}
+                                         from={this.state.fromDate} to={this.state.toDate} i={i}/>
+                            ))}
+                        </TabPane>
+                    </TabContent>
+                    <TabContent activeTab={this.state.activeTab}>
+                        <TabPane tabId="4">
+                            <br/>
+                            {usersBuyIn.map((user, i) => (
+                                <TopList name={'buyIn'} user={user} value={user.buyIn}
+                                         from={this.state.fromDate} to={this.state.toDate} i={i}/>
+                            ))}
+                        </TabPane>
+                    </TabContent>
+                    <TabContent activeTab={this.state.activeTab}>
+                        <TabPane tabId="5">
+                            <br/>
+                            {usersPlayed.map((user, i) => (
+                                <TopList name={'played'} user={user} value={user.played}
+                                         extension={getAvg ? "%" : ""}
+                                         from={this.state.fromDate} to={this.state.toDate} i={i}/>
+                            ))}
+                        </TabPane>
+                    </TabContent>
+                    <TabContent activeTab={this.state.activeTab}>
+                        <TabPane tabId="6">
+                            <br/>
+                            <HighchartsReact
+                                style={{visibility: this.state.dateOk ? 'visible' : 'hidden'}}
+                                highcharts={Highcharts}
+                                options={this.state.options}
+                            />
+                        </TabPane>
+                    </TabContent>
+                    <TabContent activeTab={this.state.activeTab}>
+                        <TabPane tabId="7">
+                            <br/>
+                            <GameDetail game={maxBuyIn} name={'BuyIn'} value={maxBuyIn.buyIn}/>
+                            <GameDetail game={maxWon} name={'Won'} value={maxWon.won}/>
+                            <GameDetail game={maxBounty} name={'Bounty'} value={maxBounty.bounty}/>
+                            <GameDetail game={maxTotal} name={'Total'}
+                                        value={maxTotal.won + maxTotal.bounty - maxTotal.buyIn}/>
+                            <br/>
+                            <Row style={{paddingTop: "12px"}}>
                                 <Col xs={6}>
-                                    <ButtonGroup>
-                                        <Button color={"link"} onClick={this.showFilter} id={'filter'} key={'filter'}
-                                                style={{color: this.state.filtered ? "#007BFF" : "black"}}
-                                        >
-                                            <i className="fa fa-filter"/> Filter
-                                        </Button>
-                                        <Button color={"link"} style={{
-                                            visibility: this.state.filtered ? "visible" : "hidden",
-                                            color: "#007BFF"
-                                        }}
-                                                onClick={this.resetFilter}>
-                                            X
-                                        </Button>
-                                    </ButtonGroup>
+                                    <b>Sum</b> of all Buy In's
                                 </Col>
-                                <Col xs={5}>
-                                    <ButtonGroup style={{paddingTop: "4px"}}>
-                                        <Button size={"sm"} outline color={"primary"} active={!getAvg}
-                                                onClick={this.setSum}>
-                                            Sum
-                                        </Button>
-                                        <Button size={"sm"} outline color="primary" active={getAvg}
-                                                onClick={this.setAvg}>
-                                            Avg
-                                        </Button>
-                                    </ButtonGroup>
+                                <Col xs={6}>
+                                    {sumBuyIn}
                                 </Col>
-                                <Col xs={1}/>
                             </Row>
-                            {this.filter()}
-                        </FormGroup>
-                        <Nav tabs>
-                            <NavItem>
-                                <NavLink
-                                    id={'total'} key={'total'}
-                                    className={classnames({active: this.state.activeTab === '1'})}
-                                    onClick={() => {
-                                        this.toggleTab('1');
-                                    }}
-                                >
-                                    Total
-                                </NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink
-                                    className={classnames({active: this.state.activeTab === '2'})}
-                                    onClick={() => {
-                                        this.toggleTab('2');
-                                    }}
-                                >
-                                    Won
-                                </NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink
-                                    className={classnames({active: this.state.activeTab === '3'})}
-                                    onClick={() => {
-                                        this.toggleTab('3');
-                                    }}
-                                >
-                                    Bounty
-                                </NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink
-                                    className={classnames({active: this.state.activeTab === '4'})}
-                                    onClick={() => {
-                                        this.toggleTab('4');
-                                    }}
-                                >
-                                    BuyIn
-                                </NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink
-                                    className={classnames({active: this.state.activeTab === '5'})}
-                                    onClick={() => {
-                                        this.toggleTab('5');
-                                    }}
-                                >
-                                    Played
-                                </NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink
-                                    className={classnames({active: this.state.activeTab === '6'})}
-                                    onClick={() => {
-                                        this.toggleTab('6');
-                                    }}
-                                >
-                                    Peaks
-                                </NavLink>
-                            </NavItem>
-                        </Nav>
-                        <TabContent activeTab={this.state.activeTab}>
-                            <TabPane tabId="1">
-                                <br/>
-                                    {usersTop.map((user, i) => (
-                                        <TopList name={'total'} user={user} value={user.total}
-                                                 from={this.state.fromDate} to={this.state.toDate} i={i}/>
-                                    ))}
-                            </TabPane>
-                        </TabContent>
-                        <TabContent activeTab={this.state.activeTab}>
-                            <TabPane tabId="2">
-                                <br/>
-
-                                    {usersWon.map((user, i) => (
-                                        <TopList name={'won'} user={user} value={user.won}
-                                                 from={this.state.fromDate} to={this.state.toDate} i={i}/>
-                                    ))}
-                            </TabPane>
-                        </TabContent>
-                        <TabContent activeTab={this.state.activeTab}>
-                            <TabPane tabId="3">
-                                <br/>
-      
-                                    {usersBounty.map((user, i) => (
-                                        <TopList name={'bounty'} user={user} value={user.bounty}
-                                                 from={this.state.fromDate} to={this.state.toDate} i={i}/>
-                                    ))}
-                            </TabPane>
-                        </TabContent>
-                        <TabContent activeTab={this.state.activeTab}>
-                            <TabPane tabId="4">
-                                <br/>
-                                                                {usersBuyIn.map((user, i) => (
-                                        <TopList name={'buyIn'} user={user} value={user.buyIn}
-                                                 from={this.state.fromDate} to={this.state.toDate} i={i}/>
-                                    ))}
-                            </TabPane>
-                        </TabContent>
-                        <TabContent activeTab={this.state.activeTab}>
-                            <TabPane tabId="5">
-                                <br/>
-                                {usersPlayed.map((user, i) => (
-                                        <TopList name={'played'} user={user} value={user.played}
-                                                 extension={getAvg ? "%" : ""}
-                                                 from={this.state.fromDate} to={this.state.toDate} i={i}/>
-                                    ))}
-                            </TabPane>
-                        </TabContent>
-                        <TabContent activeTab={this.state.activeTab}>
-                            <TabPane tabId="6">
-                                <br/>
-                                <GameDetail game={maxBuyIn} name={'BuyIn'} value={maxBuyIn.buyIn}/>
-                                <GameDetail game={maxWon} name={'Won'} value={maxWon.won}/>
-                                <GameDetail game={maxBounty} name={'Bounty'} value={maxBounty.bounty}/>
-                                <GameDetail game={maxTotal} name={'Total'}
-                                            value={maxTotal.won + maxTotal.bounty - maxTotal.buyIn}/>
-
-                                <Row style={{paddingTop: "12px"}}>
-                                    <Col xs={6}>
-                                        <b>Sum</b> of all Buy In's
-                                    </Col>
-                                    <Col xs={6}>
-                                        {sumBuyIn}
-                                    </Col>
-                                </Row>
-                                <Row style={{paddingTop: "12px"}}>
-                                    <Col xs={6}>
-                                        <b>Average</b> Buy In
-                                    </Col>
-                                    <Col xs={6}>
-                                        {avgBuyIn}
-                                    </Col>
-                                </Row>
-                                <Row style={{paddingTop: "12px"}}>
-                                    <Col xs={6}>
-                                        <b>Played</b> games
-                                    </Col>
-                                    <Col xs={6}>
-                                        {dates.length}
-                                    </Col>
-                                </Row>
-                            </TabPane>
-                        </TabContent>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button color="secondary" onClick={this.toggle}>Exit</Button>
-                    </ModalFooter>
-                </Modal>
-            </div>
-        );
+                            <Row style={{paddingTop: "12px"}}>
+                                <Col xs={6}>
+                                    <b>Average</b> Buy In
+                                </Col>
+                                <Col xs={6}>
+                                    {avgBuyIn}
+                                </Col>
+                            </Row>
+                            <Row style={{paddingTop: "12px"}}>
+                                <Col xs={6}>
+                                    <b>Played</b> games
+                                </Col>
+                                <Col xs={6}>
+                                    {dates.length}
+                                </Col>
+                            </Row>
+                        </TabPane>
+                    </TabContent>
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="secondary" onClick={this.toggle}>Exit</Button>
+                </ModalFooter>
+            </Modal>
+        </div>);
     }
 }
 
