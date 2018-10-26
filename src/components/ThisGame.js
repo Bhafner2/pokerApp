@@ -154,7 +154,7 @@ class ThisGame extends React.Component {
         this.setState({
             options: {
                 chart: {
-                    height: 320,
+                    height: 300,
                     type: 'spline',
                 },
                 title: {
@@ -184,11 +184,10 @@ class ThisGame extends React.Component {
                         return u.name
                     }),
                 }],
-
                 legend: {
+                    itemMarginBottom: 12,
                     itemStyle: {
-                        fontSize: '16px',
-                        font: '12pt Trebuchet MS, Verdana, sans-serif',
+                        fontSize: '1.2em',
                     },
                 },
                 series: [{
