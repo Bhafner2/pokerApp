@@ -569,7 +569,7 @@ class GeneralStatistic extends React.Component {
         this.setState({
             options: {
                 chart: {
-                    height: 280,
+                    height: 260,
                     type: 'spline',
                 },
                 title: {
@@ -602,9 +602,9 @@ class GeneralStatistic extends React.Component {
                 }],
 
                 legend: {
+                    itemMarginBottom: 12,
                     itemStyle: {
-                        fontSize: '16px',
-                        font: '12pt Trebuchet MS, Verdana, sans-serif',
+                        fontSize: '1.2em',
                     },
                 },
                 series: [{

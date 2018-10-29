@@ -234,9 +234,9 @@ class Statistic extends React.Component {
                     categories: date,
                 }],
                 legend: {
+                    itemMarginBottom: 12,
                     itemStyle: {
-                        fontSize: '16px',
-                        font: '12pt Trebuchet MS, Verdana, sans-serif',
+                        fontSize: '1.2em',
                     },
                 },
                 series: [{
