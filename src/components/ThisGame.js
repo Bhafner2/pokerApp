@@ -146,10 +146,6 @@ class ThisGame extends React.Component {
         users = _.sortBy(users, function (g) {
             return -g.total;
         });
-        console.log("list", users);
-        console.log("name list ", _.map(users, (u) => {
-            return u.name
-        }));
 
         this.setState({
             options: {
