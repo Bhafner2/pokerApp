@@ -58,6 +58,7 @@ class GeneralStatistic extends React.Component {
             dates: [],
             filteredUsers: [],
             usersButtons: [],
+            avgPlayerPerGame: 0,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -141,6 +142,8 @@ class GeneralStatistic extends React.Component {
         let usersBounty = [];
         let dates = [];
         let usersButtons = [];
+        let avgPlayerPerGame = 0;
+
         console.log("users for generalstat", users);
         if (this.state.fromDate === '2018-01-01' && this.state.toDate === this.props.today && this.state.filteredUsers.length < 1) {
             this.setState({
@@ -240,6 +243,8 @@ class GeneralStatistic extends React.Component {
 
                     user.played = user.games.length;
 
+                    avgPlayerPerGame = avgPlayerPerGame + (user.played / dates.length);
+
                     sumWon = sumWon + user.won;
 
                     sumBuyIn = sumBuyIn + user.buyIn;
@@ -254,11 +259,11 @@ class GeneralStatistic extends React.Component {
                     console.log("user total", user.total);
 
                     if (this.state.getAvg) {
-                        user.won = user.won / user.games.length;
-                        user.bounty = user.bounty / user.games.length;
-                        user.total = user.total / user.games.length;
-                        user.buyIn = user.buyIn / user.games.length;
-                        user.played = (user.played / dates.length) * 100;
+                        user.won = Math.round(user.won / user.games.length);
+                        user.bounty = Math.round(user.bounty / user.games.length);
+                        user.total = Math.round(user.total / user.games.length);
+                        user.buyIn = Math.round(user.buyIn / user.games.length);
+                        user.played = Math.round((user.played / dates.length) * 100);
                     }
                     filteredUsers.push(user);
                     console.log("users", filteredUsers);
@@ -306,6 +311,7 @@ class GeneralStatistic extends React.Component {
                 usersPlayed,
                 dates,
                 usersButtons,
+                avgPlayerPerGame,
             });
         }
         this.chart(filteredUsers);
@@ -667,7 +673,7 @@ class GeneralStatistic extends React.Component {
     }
 
     render() {
-        const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, usersTop, usersBounty, usersWon, usersBuyIn, usersPlayed, getAvg, dates} = this.state;
+        const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, usersTop, usersBounty, usersWon, usersBuyIn, usersPlayed, getAvg, dates, avgPlayerPerGame} = this.state;
 
         return (<div>
             <i className="fa fa-trophy" onClick={this.toggle}
@@ -874,6 +880,14 @@ class GeneralStatistic extends React.Component {
                                 </Col>
                                 <Col xs={6}>
                                     {dates.length}
+                                </Col>
+                            </Row>
+                            <Row style={{paddingTop: "12px"}}>
+                                <Col xs={6}>
+                                    <b>Players / Game</b>
+                                </Col>
+                                <Col xs={6}>
+                                    {Math.round(avgPlayerPerGame)}
                                 </Col>
                             </Row>
                         </TabPane>

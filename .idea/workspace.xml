@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9b843d04-d234-4560-a5d4-e527747186df" name="Default" comment="colors">
+    <list default="true" id="9b843d04-d234-4560-a5d4-e527747186df" name="Default" comment="global stat with chart">
       <change beforePath="$PROJECT_DIR$/.firebase/hosting.YnVpbGQ.cache" beforeDir="false" afterPath="$PROJECT_DIR$/.firebase/hosting.YnVpbGQ.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/GameDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/GameDetail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ThisGame.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ThisGame.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/GeneralStatistic.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/GeneralStatistic.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -28,11 +27,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GeneralStatistic.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="GeneralStatistic.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="713" column="38" lean-forward="true" selection-start-line="713" selection-start-column="38" selection-end-line="713" selection-end-column="38" />
+            <state relative-caret-position="227">
+              <caret line="886" column="36" selection-start-line="886" selection-start-column="36" selection-end-line="886" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -40,17 +39,17 @@
       <file leaf-file-name="Statistic.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Statistic.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="448">
-              <caret line="192" column="35" selection-start-line="192" selection-start-column="35" selection-end-line="192" selection-end-column="35" />
+            <state relative-caret-position="193">
+              <caret line="267" column="37" selection-start-line="267" selection-start-column="37" selection-end-line="267" selection-end-column="37" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ThisGame.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ThisGame.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/ThisGame.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="567">
-              <caret line="354" column="50" selection-start-line="354" selection-start-column="50" selection-end-line="354" selection-end-column="50" />
+            <state relative-caret-position="2516">
+              <caret line="148" column="35" selection-start-line="148" selection-start-column="35" selection-end-line="148" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -93,12 +92,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>last</find>
-      <find>last g</find>
-      <find>.format('D.M.YY');filter</find>
-      <find>Filter</find>
-      <find>top</find>
-      <find>usersBuyIn</find>
       <find>games.l</find>
       <find>&gt; filter</find>
       <find>com</find>
@@ -123,6 +116,12 @@
       <find>sumBuyIn</find>
       <find>#28A745green</find>
       <find>red</find>
+      <find>350</find>
+      <find>chart</find>
+      <find>players</find>
+      <find>math</find>
+      <find>filteredUsers</find>
+      <find>avgPlayerPerGame</find>
     </findStrings>
     <replaceStrings>
       <replace>this.props.date</replace>
@@ -206,10 +205,10 @@
         <option value="$PROJECT_DIR$/src/components/AddUser.js" />
         <option value="$PROJECT_DIR$/src/components/Home.js" />
         <option value="$PROJECT_DIR$/src/components/Login.js" />
-        <option value="$PROJECT_DIR$/src/components/GeneralStatistic.js" />
-        <option value="$PROJECT_DIR$/src/components/Statistic.js" />
         <option value="$PROJECT_DIR$/src/components/GameDetail.js" />
         <option value="$PROJECT_DIR$/src/components/ThisGame.js" />
+        <option value="$PROJECT_DIR$/src/components/Statistic.js" />
+        <option value="$PROJECT_DIR$/src/components/GeneralStatistic.js" />
       </list>
     </option>
   </component>
@@ -243,7 +242,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -278,6 +276,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -383,21 +382,8 @@
       <workItem from="1539622053598" duration="3621000" />
       <workItem from="1539768029499" duration="11219000" />
       <workItem from="1539856588812" duration="9383000" />
-      <workItem from="1540307413032" duration="1251000" />
-    </task>
-    <task id="LOCAL-00038" summary="add User aus store">
-      <created>1537448906416</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1537448906416</updated>
-    </task>
-    <task id="LOCAL-00039" summary="UserList aus store">
-      <created>1537449021045</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1537449021045</updated>
+      <workItem from="1540307413032" duration="3210000" />
+      <workItem from="1540807476037" duration="1163000" />
     </task>
     <task id="LOCAL-00040" summary="verschönert">
       <created>1537451182612</created>
@@ -728,11 +714,25 @@
       <option name="project" value="LOCAL" />
       <updated>1540205384307</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="game with checksum">
+      <created>1540308729496</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1540308729496</updated>
+    </task>
+    <task id="LOCAL-00088" summary="global stat with chart">
+      <created>1540310292576</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1540310292576</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="337008000" />
+    <option name="totallyTimeSpent" value="340130000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -751,27 +751,27 @@
       <window_info id="DB Browser" order="3" />
       <window_info anchor="bottom" id="DB Execution Console" order="1" />
       <window_info anchor="bottom" id="Event Log" order="14" side_tool="true" />
+      <window_info anchor="bottom" id="Run" order="4" weight="0.32906404" />
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info id="npm" order="5" side_tool="true" />
-      <window_info anchor="bottom" id="Run" order="4" weight="0.32906404" />
-      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.18325123" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.15542677" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.18325123" />
+      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.15542677" />
       <window_info id="Project Explorer" order="0" />
       <window_info id="Job Explorer" order="1" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Console" order="0" />
       <window_info id="Structure" order="4" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="5" weight="0.4" />
+      <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="TypeScript" order="13" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.32906404" />
       <window_info anchor="bottom" id="Message" order="2" />
       <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="3" weight="0.34778324" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.32906404" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -781,8 +781,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="general stat with popup + einkauf ohne 0" />
-    <MESSAGE value="general stat with popup" />
     <MESSAGE value="stat with date" />
     <MESSAGE value="login prepared" />
     <MESSAGE value="login" />
@@ -806,7 +804,9 @@
     <MESSAGE value="menue" />
     <MESSAGE value="filter" />
     <MESSAGE value="colors" />
-    <option name="LAST_COMMIT_MESSAGE" value="colors" />
+    <MESSAGE value="game with checksum" />
+    <MESSAGE value="global stat with chart" />
+    <option name="LAST_COMMIT_MESSAGE" value="global stat with chart" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1081,13 +1081,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Statistic.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="448">
-          <caret line="192" column="35" selection-start-line="192" selection-start-column="35" selection-end-line="192" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/GameDetail.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="407">
@@ -1095,17 +1088,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
+    <entry file="file://$PROJECT_DIR$/src/components/ThisGame.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="713" column="38" lean-forward="true" selection-start-line="713" selection-start-column="38" selection-end-line="713" selection-end-column="38" />
+        <state relative-caret-position="2516">
+          <caret line="148" column="35" selection-start-line="148" selection-start-column="35" selection-end-line="148" selection-end-column="35" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/ThisGame.js">
+    <entry file="file://$PROJECT_DIR$/src/components/Statistic.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="567">
-          <caret line="354" column="50" selection-start-line="354" selection-start-column="50" selection-end-line="354" selection-end-column="50" />
+        <state relative-caret-position="193">
+          <caret line="267" column="37" selection-start-line="267" selection-start-column="37" selection-end-line="267" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/GeneralStatistic.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="886" column="36" selection-start-line="886" selection-start-column="36" selection-end-line="886" selection-end-column="36" />
         </state>
       </provider>
     </entry>
