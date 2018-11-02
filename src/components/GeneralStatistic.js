@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Button, ButtonGroup, Card, CardBody,
+    Button, ButtonGroup, Card, CardBody, CardFooter,
     Col, Collapse,
     FormGroup,
     Input, InputGroup,
@@ -19,6 +19,7 @@ import GameDetail from "./GameDetail";
 import moment from "moment/moment";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
+import {showNumber}  from '../App';
 
 let filteredUsers = [];
 let empty = {name: '', won: 0, buyIn: 0, bounty: 0, date: ''};
@@ -467,7 +468,7 @@ class GeneralStatistic extends React.Component {
     filter() {
         return (
             <Collapse isOpen={this.state.showFilter}>
-                <Card>
+                <Card outline color="primary">
                     <CardBody>
                         <Row>
                             <Col>
@@ -514,6 +515,9 @@ class GeneralStatistic extends React.Component {
                                 ) : <div/>}
                         </Row>
                     </CardBody>
+                    <CardFooter >
+                        <Button color="link" size="sm" block onClick={this.showFilter} >Apply</Button>
+                    </CardFooter>
                 </Card>
             </Collapse>)
     }
@@ -863,7 +867,7 @@ class GeneralStatistic extends React.Component {
                                     <b>Sum</b> of all Buy In's
                                 </Col>
                                 <Col xs={6}>
-                                    {sumBuyIn}
+                                    {showNumber(sumBuyIn)}
                                 </Col>
                             </Row>
                             <Row style={{paddingTop: "12px"}}>
@@ -907,7 +911,7 @@ class TopList extends React.Component {
         return (
             <Row key={i}>
                 <Col xs={4}>{user.name}</Col>
-                <Col xs={5}>{name}: {value}{extension}</Col>
+                <Col xs={5}>{name}: {showNumber(value)}{extension}</Col>
                 <Col xs={1}>
                     <Statistic user={user}
                                fromDate={from}

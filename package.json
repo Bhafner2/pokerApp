@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "merge": "^1.2.1",
     "bootstrap": "^4.1.3",
     "classnames": "latest",
     "firebase": "^5.5.0",

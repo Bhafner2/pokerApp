@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Button, ButtonGroup, Card, CardBody,
+    Button, ButtonGroup, Card, CardBody, CardFooter,
     Col, Collapse,
     FormGroup,
     Input, InputGroup,
@@ -17,7 +17,8 @@ import HighchartsReact from 'highcharts-react-official'
 import * as _ from 'lodash';
 import classnames from 'classnames';
 import moment from "moment";
-
+import {showNumber}  from '../App';
+ 
 let buyIn = [];
 let won = [];
 let total = [];
@@ -164,7 +165,7 @@ class Statistic extends React.Component {
             });
 
             trend = _.map(filteredGames, (game) => {
-                return (Math.round(game.won - game.buyIn) / 3);
+                return (Math.round((game.won - game.buyIn) / 3));
             });
 
             this.setState({
@@ -436,7 +437,7 @@ class Statistic extends React.Component {
     filter() {
         return (
             <Collapse isOpen={this.state.showFilter}>
-                <Card>
+                <Card outline color="primary">
                     <CardBody>
                         <Row>
                             <Col>
@@ -469,6 +470,9 @@ class Statistic extends React.Component {
                             </Col>
                         </Row>
                     </CardBody>
+                    <CardFooter >
+                        <Button color="link" size="sm" block onClick={this.showFilter} >Apply</Button>
+                    </CardFooter>
                 </Card>
             </Collapse>)
     }
@@ -561,24 +565,24 @@ class Statistic extends React.Component {
                                         <tbody>
                                         <tr>
                                             <th scope="row">Sum</th>
-                                            <td>{sumBuyIn}</td>
-                                            <td>{sumWon}</td>
-                                            <td>{sumBounty}</td>
-                                            <th>{sumTotal}</th>
+                                            <td>{showNumber(sumBuyIn)}</td>
+                                            <td>{showNumber(sumWon)}</td>
+                                            <td>{showNumber(sumBounty)}</td>
+                                            <th>{showNumber(sumTotal)}</th>
                                         </tr>
                                         <tr>
                                             <th scope="row">Avg</th>
-                                            <td>{avgBuyIn}</td>
-                                            <td>{avgWon}</td>
-                                            <td>{avgBounty}</td>
-                                            <td>{avgTotal}</td>
+                                            <td>{showNumber(avgBuyIn)}</td>
+                                            <td>{showNumber(avgWon)}</td>
+                                            <td>{showNumber(avgBounty)}</td>
+                                            <td>{showNumber(avgTotal)}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Max</th>
-                                            <td>{maxBuyIn}</td>
-                                            <td>{maxWon}</td>
-                                            <td>{maxBounty}</td>
-                                            <td>{maxTotal}</td>
+                                            <td>{showNumber(maxBuyIn)}</td>
+                                            <td>{showNumber(maxWon)}</td>
+                                            <td>{showNumber(maxBounty)}</td>
+                                            <td>{showNumber(maxTotal)}</td>
                                         </tr>
                                         </tbody>
                                     </Table>

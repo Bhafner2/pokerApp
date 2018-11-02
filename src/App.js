@@ -9,6 +9,20 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import {Col, Row} from "reactstrap";
 import logo from './img/Poker.png';
+import * as _ from 'lodash';
+
+
+export function showNumber(number){
+    if(_.isNil(number) || _.isNaN(number)){
+        return 0;
+    };
+    
+    if (number >= 1000){
+        return (Math.round(number / 100) / 10) + 'K';
+    };
+    
+    return Math.round(number, 1);
+}
 
 class App extends Component {
     constructor(props) {
