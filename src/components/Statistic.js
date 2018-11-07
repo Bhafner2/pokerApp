@@ -17,8 +17,8 @@ import HighchartsReact from 'highcharts-react-official'
 import * as _ from 'lodash';
 import classnames from 'classnames';
 import moment from "moment";
-import {showNumber}  from '../App';
- 
+import {showNumber} from '../App';
+
 let buyIn = [];
 let won = [];
 let total = [];
@@ -470,8 +470,8 @@ class Statistic extends React.Component {
                             </Col>
                         </Row>
                     </CardBody>
-                    <CardFooter >
-                        <Button color="link" size="sm" block onClick={this.showFilter} >Apply</Button>
+                    <CardFooter>
+                        <Button color="link" size="sm" block onClick={this.showFilter}>Apply</Button>
                     </CardFooter>
                 </Card>
             </Collapse>)

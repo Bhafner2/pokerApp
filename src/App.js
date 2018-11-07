@@ -10,18 +10,32 @@ import Login from "./components/Login";
 import {Col, Row} from "reactstrap";
 import logo from './img/Poker.png';
 import * as _ from 'lodash';
+import ReactLoading from 'react-loading';
 
+export function showLoading() {
+    return (
+        <Row>
+            <Col xs={5}/>
+            <Col xs={2}>
+                <br/>
+                <ReactLoading type="spin" color="black" height={50} width={50}/>
+                <br/>
+            </Col>
+            < Col
+                xs={5}
+            />
+        </Row>
+    )
+}
 
-export function showNumber(number){
-    if(_.isNil(number) || _.isNaN(number)){
+export function showNumber(number) {
+    if (_.isNil(number) || _.isNaN(number)) {
         return 0;
-    };
-    
-    if (number >= 1000){
+    }
+    if (number >= 1000) {
         return (Math.round(number / 100) / 10) + 'K';
-    };
-    
-    return Math.round(number, 1);
+    }
+    return Math.round(number);
 }
 
 class App extends Component {
@@ -32,7 +46,9 @@ class App extends Component {
     }
 
     componentWillMount() {
-        App.logout();
+        /*
+                App.logout();
+        */
         setTimeout(() => {
             this.connectionCheck()
         }, 3000);
@@ -63,7 +79,6 @@ class App extends Component {
             } else {
                 store.dispatch(connectionError(true));
                 store.dispatch(setLoad(false));
-                App.logout();
                 console.log("disconnected");
             }
         });
@@ -84,6 +99,7 @@ class App extends Component {
     }
 
     render() {
+        const {connErr, login} = this.props.data;
         return (
             <div>
                 <header className="header">
@@ -96,9 +112,12 @@ class App extends Component {
                         </Col>
                     </Row>
                 </header>
-                <div>
-                    {this.props.data.login ? <Home logout={App.logout}/> : <Login login={App.login}/>}
-                </div>
+                {connErr ? showLoading() : (
+                    <div>
+                        {login ? <Home logout={App.logout}/> : <Login login={App.login}/>}
+                    </div>
+                )}
+
             </div>
         );
     }

@@ -19,7 +19,7 @@ import GameDetail from "./GameDetail";
 import moment from "moment/moment";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
-import {showNumber}  from '../App';
+import {showNumber} from '../App';
 
 let filteredUsers = [];
 let empty = {name: '', won: 0, buyIn: 0, bounty: 0, date: ''};
@@ -165,7 +165,6 @@ class GeneralStatistic extends React.Component {
                 }
             }
             dates = _.uniqBy(dates);
-
 
             for (let i in users) {
                 let user = {...users[i]};
@@ -515,8 +514,8 @@ class GeneralStatistic extends React.Component {
                                 ) : <div/>}
                         </Row>
                     </CardBody>
-                    <CardFooter >
-                        <Button color="link" size="sm" block onClick={this.showFilter} >Apply</Button>
+                    <CardFooter>
+                        <Button color="link" size="sm" block onClick={this.showFilter}>Apply</Button>
                     </CardFooter>
                 </Card>
             </Collapse>)

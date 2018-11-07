@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 import {Alert, Button, Col, Fade, FormGroup, Input, Label, ListGroupItem, Row} from "reactstrap";
 import {loginError, setLoad} from "../redux/actions";
 import {store} from "../redux/store";
-import {loading} from "./Home";
+import {showLoading} from "../App";
 
 class Login extends Component {
     constructor(props) {
@@ -51,10 +51,10 @@ class Login extends Component {
     }
 
     render() {
-        const {connErr} = this.props.data;
+        const {connErr, load} = this.props.data;
         return (
             <div onKeyPress={this.handleKeyPress}>
-                {this.props.data.load ? loading() : (
+                {load ? showLoading() : (
                     <ListGroupItem className="login">
                         <Row>
                             <Col xs={1}/>

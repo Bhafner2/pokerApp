@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {
     Alert,
-    Col,
     Collapse, Fade,
     Input,
     InputGroup,
@@ -22,25 +21,8 @@ import {connect} from 'react-redux'
 import {store} from '../redux/store'
 import GeneralStatistic from "./GeneralStatistic";
 import Calc from "./Calc";
-import ReactLoading from 'react-loading';
 import ThisGame from "./ThisGame";
-
-export function loading() {
-    return (
-        <Row>
-            <Col xs={5}/>
-            <Col xs={2}>
-                <br/>
-                <ReactLoading type="spin" color="black" height={50} width={50}/>
-                <br/>
-            </Col>
-            < Col
-                xs={5}
-            />
-        </Row>
-    )
-}
-
+import {showLoading} from "../App";
 
 class Home extends Component {
     constructor(props) {
@@ -147,7 +129,7 @@ class Home extends Component {
 
         if (_.isNil(users) || _.isNil(users[0])) {
             return (
-                loading()
+                showLoading()
             )
         }
         let filteredUsers = this.filterUser(users);
@@ -214,7 +196,6 @@ class Home extends Component {
     }
 
     render() {
-        const {connErr} = this.props.data;
         return (
             <div className="center" onKeyPress={this.handleKeyPress}>
 
@@ -278,20 +259,18 @@ class Home extends Component {
                         </Nav>
                     </Collapse>
                 </Navbar>
-                {connErr ? loading() : (
-                    <div>
-                        <ListGroup>
-                            {this.renderUsers(this.state.usersToRender)}
-                        </ListGroup>
+                <div>
+                    <ListGroup>
+                        {this.renderUsers(this.state.usersToRender)}
+                    </ListGroup>
 
-                        <div style={{
-                            paddingTop: '10px',
-                            paddingBottom: '20px',
-                        }}>
-                            {UserList.isAdmin() ? <AddUser saved={this.showSaved}/> : <div/>}
-                        </div>
+                    <div style={{
+                        paddingTop: '10px',
+                        paddingBottom: '20px',
+                    }}>
+                        {UserList.isAdmin() ? <AddUser saved={this.showSaved}/> : <div/>}
                     </div>
-                )}
+                </div>
                 <Row>
                     <Alert animation={Fade} color={this.state.alertSuccess ? "success" : "danger"}
                            style={{
