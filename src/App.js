@@ -29,7 +29,8 @@ export function showLoading() {
 }
 
 let flanke = false;
-let timeout;
+let timeoutError;
+let timeoutConn;
 
 export function showNumber(number) {
     if (_.isNil(number) || _.isNaN(number)) {
@@ -55,8 +56,9 @@ class App extends Component {
         /*
                 App.logout();
         */
-        this.showError();
-
+        this.setState({
+            showError: false,
+        });
         this.connectionCheck();
 
         firebase.auth().onAuthStateChanged(function (user) {
@@ -77,15 +79,20 @@ class App extends Component {
         const {connErr} = this.props.data;
         connectedRef.on("value", function (snap) {
             if (snap.val()) {
+                if (!_.isNil(timeoutConn)) {
+                    clearTimeout(timeoutConn);
+                }
                 console.log("connected");
                 if (connErr) {
                     store.dispatch(getUsers());
                 }
                 store.dispatch(connectionError(false));
             } else {
-                store.dispatch(setLoad(false));
-                console.log("disconnected");
-                store.dispatch(connectionError(true));
+                timeoutConn = setTimeout(() => {
+                    store.dispatch(setLoad(false));
+                    console.log("disconnected");
+                    store.dispatch(connectionError(true));
+                }, 1000);
             }
         });
         connectedRef.on("value", this.showError);
@@ -94,18 +101,18 @@ class App extends Component {
     showError() {
         if (this.props.data.connErr && !flanke) {
             flanke = true;
-            timeout = setTimeout(() => {
+            timeoutError = setTimeout(() => {
                 this.setState({
                     showError: true,
                 }, () => {
                     console.log("show Error set")
                 });
                 App.logout();
-            }, 3000);
+            }, 4000);
         } else {
             flanke = false;
-            if (!_.isNil(timeout)) {
-                clearTimeout(timeout);
+            if (!_.isNil(timeoutError)) {
+                clearTimeout(timeoutError);
             }
             this.setState({
                 showError: false,
