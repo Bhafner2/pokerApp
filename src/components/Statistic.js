@@ -664,13 +664,31 @@ class Statistic extends React.Component {
                                         </tbody>
                                     </Table>
                                     <Row style={{paddingTop: "12px"}}>
-                                        <Col xs={6}>
-                                            <b>Won pot</b>
+                                        <Col xs={8}>
+                                            Games <b>played</b>
                                         </Col>
-                                        <Col xs={6}>
+                                        <Col xs={4}>
+                                            {dates.length}
+                                        </Col>
+                                    </Row>
+                                    <Row style={{paddingTop: "12px"}}>
+                                        <Col xs={8}>
+                                            Chances of <b>winning</b>
+                                        </Col>
+                                        <Col xs={4}>
                                             {Math.round(_.filter(wons, (won) => {
                                                 return won > 0;
-                                            }).length / dates.length * 100)} %
+                                            }).length / dates.length * 100)}%
+                                        </Col>
+                                    </Row>
+                                    <Row style={{paddingTop: "12px"}}>
+                                        <Col xs={8}>
+                                            Chances of making <b>plus</b>
+                                        </Col>
+                                        <Col xs={4}>
+                                            {Math.round(_.filter(totals, (total) => {
+                                                return total > 0;
+                                            }).length / dates.length * 100)}%
                                         </Col>
                                     </Row>
                                 </Col>

@@ -52,6 +52,7 @@ class GeneralStatistic extends React.Component {
             usersWon: [],
             usersBuyIn: [],
             usersPlayed: [],
+            usersHero: [],
             popoverOpen: false,
             showFilter: false,
             filtered: false,
@@ -138,6 +139,7 @@ class GeneralStatistic extends React.Component {
         let counter = 0;
         let usersBuyIn = [];
         let usersPlayed = [];
+        let usersHero = [];
         let usersWon = [];
         let usersTop = [];
         let usersBounty = [];
@@ -256,7 +258,8 @@ class GeneralStatistic extends React.Component {
                     });
 
                     sumTotal = sumTotal + user.total;
-                    console.log("user total", user.total);
+
+                    user.hero = (user.played * 10) + (user.won * user.played) - user.total + (user.buyIn * 3) + (user.bounty * 5);
 
                     if (this.state.getAvg) {
                         user.won = Math.round(user.won / user.games.length);
@@ -264,6 +267,7 @@ class GeneralStatistic extends React.Component {
                         user.total = Math.round(user.total / user.games.length);
                         user.buyIn = Math.round(user.buyIn / user.games.length);
                         user.played = Math.round((user.played / dates.length) * 100);
+                        user.hero = Math.round(user.hero / (user.games.length));
                     }
                     filteredUsers.push(user);
                     console.log("users", filteredUsers);
@@ -284,6 +288,9 @@ class GeneralStatistic extends React.Component {
             });
             usersPlayed = _.sortBy(filteredUsers, function (o) {
                 return -o.played
+            });
+            usersHero = _.sortBy(filteredUsers, function (o) {
+                return -o.hero
             });
 
             avgWon = Math.round(sumWon / counter);
@@ -309,6 +316,7 @@ class GeneralStatistic extends React.Component {
                 usersBounty,
                 usersBuyIn,
                 usersPlayed,
+                usersHero,
                 dates,
                 usersButtons,
                 avgPlayerPerGame,
@@ -339,6 +347,7 @@ class GeneralStatistic extends React.Component {
             usersWon: [],
             usersBuyIn: [],
             usersPlayed: [],
+            usersHero: [],
         });
     }
 
@@ -676,7 +685,7 @@ class GeneralStatistic extends React.Component {
     }
 
     render() {
-        const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, usersTop, usersBounty, usersWon, usersBuyIn, usersPlayed, getAvg, dates, avgPlayerPerGame} = this.state;
+        const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, usersTop, usersBounty, usersWon, usersBuyIn, usersPlayed, usersHero, getAvg, dates, avgPlayerPerGame} = this.state;
 
         return (<div>
             <i className="fa fa-trophy" onClick={this.toggle}
@@ -793,7 +802,26 @@ class GeneralStatistic extends React.Component {
                                 Peaks
                             </NavLink>
                         </NavItem>
+                        <NavItem>
+                            <NavLink
+                                className={classnames({active: this.state.activeTab === '8'})}
+                                onClick={() => {
+                                    this.toggleTab('8');
+                                }}
+                            >
+                                Hero
+                            </NavLink>
+                        </NavItem>
                     </Nav>
+                    <TabContent activeTab={this.state.activeTab}>
+                        <TabPane tabId="8">
+                            <br/>
+                            {usersHero.map((user, i) => (
+                                <TopList name={'index'} user={user} value={user.hero}
+                                         from={this.state.fromDate} to={this.state.toDate} i={i}/>
+                            ))}
+                        </TabPane>
+                    </TabContent>
                     <TabContent activeTab={this.state.activeTab}>
                         <TabPane tabId="1">
                             <br/>
