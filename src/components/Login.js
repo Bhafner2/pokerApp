@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import 'react-infinite-calendar/styles.css';
 import firebase from "../config/firebase";
 import {connect} from 'react-redux'
-import {Alert, Button, Col, Fade, FormGroup, Input, Label, ListGroupItem, Row} from "reactstrap";
+import {Button, Col, FormGroup, Input, Label, ListGroupItem, Row} from "reactstrap";
 import {loginError, setLoad} from "../redux/actions";
 import {store} from "../redux/store";
 import {showLoading} from "../App";
@@ -51,7 +51,7 @@ class Login extends Component {
     }
 
     render() {
-        const {connErr, load} = this.props.data;
+        const {load} = this.props.data;
         return (
             <div onKeyPress={this.handleKeyPress}>
                 {load ? showLoading() : (
@@ -98,18 +98,6 @@ class Login extends Component {
                             </Col>
                         </Row>
                     </ListGroupItem>)}
-                <Alert className="center"
-                       color="danger"
-                       animation={Fade}
-                       style={{
-                           visibility: connErr ? 'visible' : 'hidden',
-                           position: "fixed",
-                           left: "0",
-                           bottom: "0",
-                           width: "100%",
-                       }}>
-                    No connection to Server!
-                </Alert>
             </div>
         )
     }

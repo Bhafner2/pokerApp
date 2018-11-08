@@ -220,6 +220,9 @@ class UserList extends React.Component {
     }
 
     static isAdmin() {
+        if (_.isNil(firebase.auth().currentUser)) {
+            return false;
+        }
         return firebase.auth().currentUser.email === "admin@statistic.com"
     }
 

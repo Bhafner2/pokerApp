@@ -7,7 +7,7 @@ import {store} from './redux/store'
 import firebase from "./config/firebase";
 import Home from "./components/Home";
 import Login from "./components/Login";
-import {Col, Row} from "reactstrap";
+import {Alert, Col, Fade, Row} from "reactstrap";
 import logo from './img/Poker.png';
 import * as _ from 'lodash';
 import ReactLoading from 'react-loading';
@@ -28,6 +28,9 @@ export function showLoading() {
     )
 }
 
+let flanke = false;
+let timeout;
+
 export function showNumber(number) {
     if (_.isNil(number) || _.isNaN(number)) {
         return 0;
@@ -41,17 +44,20 @@ export function showNumber(number) {
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            showError: false,
+        };
         this.connectionCheck = this.connectionCheck.bind(this);
+        this.showError = this.showError.bind(this);
     }
 
     componentWillMount() {
         /*
                 App.logout();
         */
-        setTimeout(() => {
-            this.connectionCheck()
-        }, 3000);
+        this.showError();
+
+        this.connectionCheck();
 
         firebase.auth().onAuthStateChanged(function (user) {
             console.log("auth change");
@@ -77,13 +83,36 @@ class App extends Component {
                 }
                 store.dispatch(connectionError(false));
             } else {
-                store.dispatch(connectionError(true));
                 store.dispatch(setLoad(false));
                 console.log("disconnected");
+                store.dispatch(connectionError(true));
             }
         });
+        connectedRef.on("value", this.showError);
     }
 
+    showError() {
+        if (this.props.data.connErr && !flanke) {
+            flanke = true;
+            timeout = setTimeout(() => {
+                this.setState({
+                    showError: true,
+                }, () => {
+                    console.log("show Error set")
+                });
+                App.logout();
+            }, 3000);
+        } else {
+            flanke = false;
+            if (!_.isNil(timeout)) {
+                clearTimeout(timeout);
+            }
+            this.setState({
+                showError: false,
+            });
+            console.log("show Error reset");
+        }
+    }
 
     static login() {
         console.log("login");
@@ -117,7 +146,18 @@ class App extends Component {
                         {login ? <Home logout={App.logout}/> : <Login login={App.login}/>}
                     </div>
                 )}
-
+                <Alert className="center"
+                       color="danger"
+                       animation={Fade}
+                       style={{
+                           visibility: this.state.showError ? 'visible' : 'hidden',
+                           position: "fixed",
+                           left: "0",
+                           bottom: "0",
+                           width: "100%",
+                       }}>
+                    No connection to Server!
+                </Alert>
             </div>
         );
     }
