@@ -19,12 +19,12 @@ import classnames from 'classnames';
 import moment from "moment";
 import {showNumber} from '../App';
 
-let buyIn = [];
-let won = [];
-let total = [];
-let bounty = [];
-let trend = [];
-let date = [];
+let buyIns = [];
+let wons = [];
+let totals = [];
+let bountys = [];
+let trends = [];
+let dates = [];
 
 class Statistic extends React.Component {
     constructor(props) {
@@ -50,6 +50,11 @@ class Statistic extends React.Component {
             maxBounty: 0,
             showFilter: false,
             filtered: false,
+            wons: [],
+            buyIns: [],
+            bountys: [],
+            dates: [],
+            totals: [],
         };
 
         this.toggle = this.toggle.bind(this);
@@ -144,39 +149,44 @@ class Statistic extends React.Component {
 
             console.log("filtered games ", filteredGames);
 
-            buyIn = _.map(filteredGames, (game) => {
+            buyIns = _.map(filteredGames, (game) => {
                 return -game.buyIn;
             });
 
-            won = _.map(filteredGames, (game) => {
+            wons = _.map(filteredGames, (game) => {
                 return game.won;
             });
 
-            bounty = _.map(filteredGames, (game) => {
+            bountys = _.map(filteredGames, (game) => {
                 return game.bounty;
             });
 
-            date = _.map(filteredGames, (game) => {
+            dates = _.map(filteredGames, (game) => {
                 return moment(game.date).format('D.M.YY');
             });
 
-            total = _.map(filteredGames, (game) => {
+            totals = _.map(filteredGames, (game) => {
                 return game.won + game.bounty - game.buyIn;
             });
 
-            trend = _.map(filteredGames, (game) => {
+            trends = _.map(filteredGames, (game) => {
                 return (Math.round((game.won - game.buyIn) / 3));
             });
 
             this.setState({
-                sumWon: _.sum(won),
-                sumBounty: _.sum(bounty),
-                sumBuyIn: _.sum(buyIn) * -1,
+                sumWon: _.sum(wons),
+                sumBounty: _.sum(bountys),
+                sumBuyIn: _.sum(buyIns) * -1,
 
-                maxBuyIn: _.min(buyIn) * -1,
-                maxWon: _.max(won),
-                maxBounty: _.max(bounty),
-                maxTotal: _.max(total),
+                maxBuyIn: _.min(buyIns) * -1,
+                maxWon: _.max(wons),
+                maxBounty: _.max(bountys),
+                maxTotal: _.max(totals),
+                wons,
+                buyIns,
+                bountys,
+                dates,
+                totals,
             }, () => {
                 const {sumWon, sumBuyIn, sumBounty} = this.state;
                 this.setState({
@@ -191,14 +201,14 @@ class Statistic extends React.Component {
 
             console.log("games for stat ", filteredGames);
 
-            if (buyIn.length > 1) {
-                this.chart(date, buyIn, won, bounty, total, trend, false);
+            if (buyIns.length > 1) {
+                this.chart(dates, buyIns, wons, bountys, totals, trends, false);
             } else {
-                this.chart(date, buyIn, won, bounty, total, trend, true);
+                this.chart(dates, buyIns, wons, bountys, totals, trends, true);
             }
         } else {
             this.init();
-            this.chart(date, buyIn, won, total, bounty, trend, true);
+            this.chart(dates, buyIns, wons, totals, bountys, trends, true);
         }
     }
 
@@ -310,12 +320,12 @@ class Statistic extends React.Component {
             maxBounty: 0,
         });
 
-        buyIn = [];
-        won = [];
-        total = [];
-        trend = [];
-        date = [];
-        bounty = [];
+        buyIns = [];
+        wons = [];
+        totals = [];
+        trends = [];
+        dates = [];
+        bountys = [];
     }
 
     updateFormDate(evt) {
@@ -479,7 +489,8 @@ class Statistic extends React.Component {
 
     render() {
         const {user} = this.props;
-        const {sumWon, sumBuyIn, sumTotal, sumBounty, avgWon, avgBuyIn, avgTotal, avgBounty, maxWon, maxBuyIn, maxTotal, maxBounty} = this.state;
+        const {sumWon, sumBuyIn, sumTotal, sumBounty, avgWon, avgBuyIn, avgTotal, avgBounty, maxWon, maxBuyIn, maxTotal, maxBounty, dates,} = this.state;
+        let {wons} = this.state;
 
         return (<div>
             <i className="fa fa-line-chart" onClick={this.toggle}
@@ -586,12 +597,20 @@ class Statistic extends React.Component {
                                         </tr>
                                         </tbody>
                                     </Table>
+                                    <Row style={{paddingTop: "12px"}}>
+                                        <Col xs={6}>
+                                            <b>Won pot</b>
+                                        </Col>
+                                        <Col xs={6}>
+                                            {Math.round(_.filter(wons, (won) => {
+                                                return won > 0;
+                                            }).length / dates.length * 100)} %
+                                        </Col>
+                                    </Row>
                                 </Col>
                             </Row>
                         </TabPane>
                     </TabContent>
-
-
                 </ModalBody>
                 <ModalFooter>
                     <Button color="secondary" onClick={this.toggle}>Exit</Button>
