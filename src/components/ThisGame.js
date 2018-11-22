@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Button, Col, Collapse, FormGroup,
+    Button, Card, CardBody, Col, Collapse, FormGroup,
     Modal,
     ModalBody,
     ModalFooter,
@@ -85,7 +85,7 @@ class ThisGame extends React.Component {
         }
         dates = _.uniqBy(dates);
         dates = _.sortBy(dates, (d) => {
-            return -d
+            return -new Date(d)
         });
         console.log("dates found", dates);
 
@@ -293,14 +293,18 @@ class ThisGame extends React.Component {
     filter() {
         return (
             <Collapse isOpen={this.state.showFilter}>
-                {this.state.dates.map((date, i) =>
-                    <Row>
-                        <Col>
-                            <Button color={"link"} value={date} onClick={this.updateDate}
-                                    key={i}>{moment(date).format('D.M.YY')}</Button>
-                        </Col>
-                    </Row>
-                )}
+                <Card outline>
+                    <CardBody>
+                        <Row>
+                            {this.state.dates.map((date, i) =>
+                                <Col xs={6}>
+                                    <Button color={"link"} value={date} onClick={this.updateDate}
+                                            key={i}>{moment(date).format('dd D.M.YY')}</Button>
+                                </Col>
+                            )}
+                        </Row>
+                    </CardBody>
+                </Card>
             </Collapse>)
     }
 
