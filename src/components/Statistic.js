@@ -532,18 +532,19 @@ class Statistic extends React.Component {
                             </Col>
                         </Row>
                         <Row>
-                            <Col>
+                            <Col xs={3}>
                                 <Button size="sm" color="link" onClick={this.last3m}>3 Month</Button>
                             </Col>
-                            <Col>
+                            <Col xs={3}>
                                 <Button size="sm" color="link" onClick={this.last6m}>6 Month</Button>
                             </Col>
-                            <Col>
+                            <Col xs={2}>
                                 <Button size="sm" color="link" onClick={this.last12m}>Year</Button>
                             </Col>
-                            <Col>
+                            <Col xs={3}>
                                 <Button size="sm" color="link" onClick={this.this12m}>This Year</Button>
                             </Col>
+                            <Col xs={1}/>
                         </Row>
                     </CardBody>
                     <CardFooter>

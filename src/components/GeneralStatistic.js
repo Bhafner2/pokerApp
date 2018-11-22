@@ -565,18 +565,19 @@ class GeneralStatistic extends React.Component {
                             <Col xs={3}>
                                 <Button size="sm" color="link" onClick={this.last6m}>6 Month</Button>
                             </Col>
-                            <Col xs={3}>
+                            <Col xs={2}>
                                 <Button size="sm" color="link" onClick={this.last12m}>Year</Button>
                             </Col>
                             <Col xs={3}>
                                 <Button size="sm" color="link" onClick={this.this12m}>This Year</Button>
                             </Col>
+                            <Col xs={1}/>
                         </Row>
                         <Row style={{paddingTop: "12px"}}>
                             <Col>User filter</Col>
                         </Row>
                         <Row>
-                            <Col xs={3}>
+                            <Col xs={2}>
                                 <Button size="sm" color="link" onClick={this.usersAll}>All</Button>
                             </Col>
                             <Col xs={3}>
@@ -591,6 +592,7 @@ class GeneralStatistic extends React.Component {
                                 <Button size="sm" color="link" value={75}
                                         onClick={this.usersPercentFilter}>>75%</Button>
                             </Col>
+                            <Col xs={1}/>
                         </Row>
                         <Row style={{paddingTop: "6px"}}>
                             {!this.state.reload ?
