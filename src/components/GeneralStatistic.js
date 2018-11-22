@@ -71,6 +71,7 @@ class GeneralStatistic extends React.Component {
             filteredUsers: [],
             usersButtons: [],
             avgPlayerPerGame: 0,
+            userPercent: [],
         };
 
         this.toggle = this.toggle.bind(this);
@@ -158,6 +159,7 @@ class GeneralStatistic extends React.Component {
         let dates = [];
         let usersButtons = [];
         let avgPlayerPerGame = 0;
+        let userPercent = [];
 
         console.log("users for generalstat", users);
         if (this.state.fromDate === '2018-01-01' && this.state.toDate === this.props.today && this.state.filteredUsers.length < 1) {
@@ -187,6 +189,18 @@ class GeneralStatistic extends React.Component {
                 usersButtons.push(user.name);
                 if (_.indexOf(this.state.filteredUsers, user.name) >= 0) {
                     console.log("user will be filtered", user);
+                    user.games = _.filter(user.games, function (g) {
+                        if (_.isNil(g) || _.isNil(g.date)) {
+                            return false;
+                        }
+                        return (from <= new Date(g.date) && to >= new Date(g.date)) && g.buyIn > 0;
+                    });
+                    if (user.games.length > 0) {
+                        userPercent.push({
+                            name: user.name,
+                            percent: Math.round((user.games.length / dates.length) * 100)
+                        });
+                    }
                     continue;
                 }
                 user.games = _.filter(user.games, function (g) {
@@ -273,7 +287,7 @@ class GeneralStatistic extends React.Component {
 
                     user.hero = (user.played * 10) + (user.won * user.played) - user.total + (user.buyIn * 3) + (user.bounty * 5);
 
-                    user.percent = Math.round((user.played / dates.length) * 100);
+                    userPercent.push({name: user.name, percent: Math.round((user.games.length / dates.length) * 100)});
 
                     if (this.state.getAvg) {
                         user.won = Math.round(user.won / user.games.length);
@@ -335,6 +349,7 @@ class GeneralStatistic extends React.Component {
                 dates,
                 usersButtons,
                 avgPlayerPerGame,
+                userPercent,
             });
         }
         this.chart(filteredUsers);
@@ -490,7 +505,7 @@ class GeneralStatistic extends React.Component {
             }
         );
 
-        let playedLess = _.filter(this.state.usersPlayed, function (u) {
+        let playedLess = _.filter(this.state.userPercent, function (u) {
             return u.percent < value;
         });
 
@@ -525,7 +540,7 @@ class GeneralStatistic extends React.Component {
     filter() {
         return (
             <Collapse isOpen={this.state.showFilter}>
-                <Card outline color="primary">
+                <Card outline>
                     <CardBody>
                         <Row>
                             <Col>
@@ -544,16 +559,16 @@ class GeneralStatistic extends React.Component {
                             </Col>
                         </Row>
                         <Row>
-                            <Col>
+                            <Col xs={3}>
                                 <Button size="sm" color="link" onClick={this.last3m}>3 Month</Button>
                             </Col>
-                            <Col>
+                            <Col xs={3}>
                                 <Button size="sm" color="link" onClick={this.last6m}>6 Month</Button>
                             </Col>
-                            <Col>
+                            <Col xs={3}>
                                 <Button size="sm" color="link" onClick={this.last12m}>Year</Button>
                             </Col>
-                            <Col>
+                            <Col xs={3}>
                                 <Button size="sm" color="link" onClick={this.this12m}>This Year</Button>
                             </Col>
                         </Row>
@@ -561,17 +576,20 @@ class GeneralStatistic extends React.Component {
                             <Col>User filter</Col>
                         </Row>
                         <Row>
-                            <Col>
+                            <Col xs={3}>
                                 <Button size="sm" color="link" onClick={this.usersAll}>All</Button>
                             </Col>
-                            <Col>
-                                <Button size="sm" color="link" value={25} onClick={this.usersPercentFilter}>25%</Button>
+                            <Col xs={3}>
+                                <Button size="sm" color="link" value={25}
+                                        onClick={this.usersPercentFilter}>>25%</Button>
                             </Col>
-                            <Col>
-                                <Button size="sm" color="link" value={50} onClick={this.usersPercentFilter}>50%</Button>
+                            <Col xs={3}>
+                                <Button size="sm" color="link" value={50}
+                                        onClick={this.usersPercentFilter}>>50%</Button>
                             </Col>
-                            <Col>
-                                <Button size="sm" color="link" value={75} onClick={this.usersPercentFilter}>75%</Button>
+                            <Col xs={3}>
+                                <Button size="sm" color="link" value={75}
+                                        onClick={this.usersPercentFilter}>>75%</Button>
                             </Col>
                         </Row>
                         <Row style={{paddingTop: "6px"}}>
@@ -590,7 +608,8 @@ class GeneralStatistic extends React.Component {
                         </Row>
                     </CardBody>
                     <CardFooter>
-                        <Button color="link" size="sm" block onClick={this.showFilter}>Apply</Button>
+                        <Button color="link" size="sm" block style={{padding: "0 0 0 0"}}
+                                onClick={this.showFilter}>Apply</Button>
                     </CardFooter>
                 </Card>
             </Collapse>)

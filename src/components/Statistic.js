@@ -513,7 +513,7 @@ class Statistic extends React.Component {
     filter() {
         return (
             <Collapse isOpen={this.state.showFilter}>
-                <Card outline color="primary">
+                <Card outline>
                     <CardBody>
                         <Row>
                             <Col>
@@ -547,7 +547,8 @@ class Statistic extends React.Component {
                         </Row>
                     </CardBody>
                     <CardFooter>
-                        <Button color="link" size="sm" block onClick={this.showFilter}>Apply</Button>
+                        <Button color="link" size="sm" block style={{padding: "0 0 0 0"}}
+                                onClick={this.showFilter}>Apply</Button>
                     </CardFooter>
                 </Card>
             </Collapse>)
