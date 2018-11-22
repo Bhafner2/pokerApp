@@ -1,14 +1,24 @@
 import React from 'react';
 import {
-    Button, ButtonGroup, Card, CardBody, CardFooter,
-    Col, Collapse,
+    Button,
+    ButtonGroup,
+    Card,
+    CardBody,
+    CardFooter,
+    Col,
+    Collapse,
     FormGroup,
-    Input, InputGroup,
+    Input,
+    InputGroup,
     Modal,
     ModalBody,
     ModalFooter,
-    ModalHeader, Nav, NavItem, NavLink,
-    Row, TabContent,
+    ModalHeader,
+    Nav,
+    NavItem,
+    NavLink,
+    Row,
+    TabContent,
     TabPane
 } from "reactstrap";
 import {connect} from "react-redux";
@@ -80,6 +90,8 @@ class GeneralStatistic extends React.Component {
         this.setAvg = this.setAvg.bind(this);
         this.userFilter = this.userFilter.bind(this);
         this.chart = this.chart.bind(this);
+        this.usersAll = this.usersAll.bind(this);
+        this.usersPercentFilter = this.usersPercentFilter.bind(this);
     }
 
     toggleTab(tab) {
@@ -261,6 +273,8 @@ class GeneralStatistic extends React.Component {
 
                     user.hero = (user.played * 10) + (user.won * user.played) - user.total + (user.buyIn * 3) + (user.bounty * 5);
 
+                    user.percent = Math.round((user.played / dates.length) * 100);
+
                     if (this.state.getAvg) {
                         user.won = Math.round(user.won / user.games.length);
                         user.bounty = Math.round(user.bounty / user.games.length);
@@ -269,6 +283,7 @@ class GeneralStatistic extends React.Component {
                         user.played = Math.round((user.played / dates.length) * 100);
                         user.hero = Math.round(user.hero / (user.games.length));
                     }
+
                     filteredUsers.push(user);
                     console.log("users", filteredUsers);
                 }
@@ -456,6 +471,40 @@ class GeneralStatistic extends React.Component {
         })
     }
 
+    usersAll() {
+        this.setState({
+            filteredUsers: [],
+        }, () => {
+            this.getData();
+        });
+    }
+
+
+    usersPercentFilter(evt) {
+        const value = evt.target.value;
+
+        this.setState({
+                filteredUsers: [],
+            }, () => {
+                this.getData();
+            }
+        );
+
+        let playedLess = _.filter(this.state.usersPlayed, function (u) {
+            return u.percent < value;
+        });
+
+        let filteredUsers = _.map(playedLess, 'name');
+
+        console.log('user filter', filteredUsers);
+
+        this.setState({
+            filteredUsers,
+        }, () => {
+            this.getData();
+        });
+    }
+
     showFilter() {
         this.setState({
             showFilter: !this.state.showFilter,
@@ -509,6 +558,23 @@ class GeneralStatistic extends React.Component {
                             </Col>
                         </Row>
                         <Row style={{paddingTop: "12px"}}>
+                            <Col>User filter</Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Button size="sm" color="link" onClick={this.usersAll}>All</Button>
+                            </Col>
+                            <Col>
+                                <Button size="sm" color="link" value={25} onClick={this.usersPercentFilter}>25%</Button>
+                            </Col>
+                            <Col>
+                                <Button size="sm" color="link" value={50} onClick={this.usersPercentFilter}>50%</Button>
+                            </Col>
+                            <Col>
+                                <Button size="sm" color="link" value={75} onClick={this.usersPercentFilter}>75%</Button>
+                            </Col>
+                        </Row>
+                        <Row style={{paddingTop: "6px"}}>
                             {!this.state.reload ?
                                 this.state.usersButtons.map((name) =>
                                     <Col xs={4} style={{paddingTop: "6px"}}>
