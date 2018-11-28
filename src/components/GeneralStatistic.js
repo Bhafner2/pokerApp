@@ -95,6 +95,11 @@ class GeneralStatistic extends React.Component {
         this.usersPercentFilter = this.usersPercentFilter.bind(this);
     }
 
+    componentWillMount() {
+        this.getData();
+        this.usersPercentFilter({target: {value: 25}});
+    }
+
     toggleTab(tab) {
         if (this.state.activeTab !== tab) {
             this.setState({
@@ -112,11 +117,11 @@ class GeneralStatistic extends React.Component {
             dateOk: true,
             activeTab: '1',
             showFilter: false,
-            filteredUsers: [],
             getAvg: false,
             reload: false,
         }, () => {
-            this.getData()
+            const evt = {target: {value: 25}};
+            this.usersPercentFilter(evt)
         });
     }
 
@@ -498,12 +503,7 @@ class GeneralStatistic extends React.Component {
     usersPercentFilter(evt) {
         const value = evt.target.value;
 
-        this.setState({
-                filteredUsers: [],
-            }, () => {
-                this.getData();
-            }
-        );
+        console.log('filter players with less than ', value, '%');
 
         let playedLess = _.filter(this.state.userPercent, function (u) {
             return u.percent < value;
@@ -511,7 +511,7 @@ class GeneralStatistic extends React.Component {
 
         let filteredUsers = _.map(playedLess, 'name');
 
-        console.log('user filter', filteredUsers);
+        console.log('filter players', filteredUsers);
 
         this.setState({
             filteredUsers,
