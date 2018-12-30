@@ -14,7 +14,6 @@
     "mdbreact": "^4.7.1",
     "merge": "^1.2.1",
     "moment": "^2.22.2",
-    "poker-odds-calculator": "^0.3.1",
     "prop-types": "latest",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",

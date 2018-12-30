@@ -23,7 +23,7 @@ import GeneralStatistic from "./GeneralStatistic";
 import Calc from "./Calc";
 import ThisGame from "./ThisGame";
 import {showLoading} from "../App";
-import Odds from "./Odds";
+// import Odds from "./Odds";
 
 class Home extends Component {
     constructor(props) {
@@ -209,9 +209,12 @@ class Home extends Component {
                             borderTop: "0.5px solid",
                             borderColor: "#DFDFDF",
                         }}>
+
+                            {/*
                     <NavbarBrand>
                         <Odds/>
                     </NavbarBrand>
+                */}
                     <NavbarBrand>
                         <Calc/>
                     </NavbarBrand>

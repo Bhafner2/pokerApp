@@ -96,8 +96,7 @@ class GeneralStatistic extends React.Component {
     }
 
     componentWillMount() {
-        this.getData();
-        this.usersPercentFilter({target: {value: 25}});
+        this.getData().then(() => {this.usersPercentFilter({target: {value: 25}})});
     }
 
     toggleTab(tab) {
@@ -137,7 +136,7 @@ class GeneralStatistic extends React.Component {
         }
     }
 
-    getData() {
+    async getData() {
         this.init();
         const {users} = this.props.data;
         const from = new Date(this.state.fromDate);

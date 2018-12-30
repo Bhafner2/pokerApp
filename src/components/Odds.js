@@ -1,4 +1,4 @@
-import {CardGroup, OddsCalculator} from 'poker-odds-calculator';
+{/*import {CardGroup, OddsCalculator} from 'poker-odds-calculator';
 import React from 'react';
 import {connect} from "react-redux";
 import {
@@ -14,7 +14,7 @@ import {
     Row
 } from "reactstrap";
 import * as _ from 'lodash';
-
+import {showLoading} from "../App";
 
 class Odds extends React.Component {
     constructor(props) {
@@ -29,12 +29,17 @@ class Odds extends React.Component {
             result: '',
             dropdownOpen: false,
             loading: false,
+            error: false,
         };
         this.toggle = this.toggle.bind(this);
         this.toggleDropdown = this.toggleDropdown.bind(this);
         this.calcOdds = this.calcOdds.bind(this);
+        this.getOdds = this.getOdds.bind(this);
+        this.showResult = this.showResult.bind(this);
 
-        /*TODO https://www.npmjs.com/package/poker-odds-calculator*/
+        https://www.npmjs.com/package/poker-odds-calculator
+        npm    "poker-odds-calculator": "^0.3.1",
+
     }
 
     toggle() {
@@ -49,58 +54,107 @@ class Odds extends React.Component {
         });
     }
 
-    calcOdds() {
+    getOdds(){
         this.setState({
             loading: true,
-        }, () => {
+        })
+        
+        this.calcOdds()
+    }
 
-            try {
-                let {p1, p2, p3, p4, b} = this.state;
-                let player1Cards;
-                let player2Cards;
-                let board;
+    async calcOdds() {
+        let error;
+        try {
+            let {p1, p2, p3, p4, b} = this.state;
+            let player1Cards;
+            let player2Cards;
+            let board;
 
-                if (!_.isNil(p1)) {
-                    try {
-                        player1Cards = CardGroup.fromString(p1.toString());
-                    } catch (e) {
-                    }
+            if (!_.isNil(p1)) {
+                try {
+                    player1Cards = CardGroup.fromString(p1.toString());
+                } catch (e) {
                 }
-                if (!_.isNil(p2)) {
-                    try {
-                        player2Cards = CardGroup.fromString(p2.toString());
-                    } catch (e) {
-                    }
-                }
-                if (!_.isNil(b)) {
-                    try {
-                        board = CardGroup.fromString(b.toString());
-                    } catch (e) {
-                    }
-                }
-
-                /*
-                JhJs
-                JdQd
-                7d9dTs
-                */
-
-                const result = OddsCalculator.calculate([player1Cards, player2Cards], board);
-
-                this.setState({result});
-                console.log(`Player #1 - ${player1Cards} - ${result.equities[0].getEquity()}%`);
-                console.log(`Player #2 - ${player2Cards} - ${result.equities[1].getEquity()}%`);
-            } catch (e) {
-                console.log(e)
             }
-        });
+            if (!_.isNil(p2)) {
+                try {
+                    player2Cards = CardGroup.fromString(p2.toString());
+                } catch (e) {
+                }
+            }
+            if (!_.isNil(b)) {
+                try {
+                    board = CardGroup.fromString(b.toString());
+                } catch (e) {
+                }
+            }
+
+            
+            // JhJs
+            // JdQd
+            // 7d9dTs
+            
+
+            const result = OddsCalculator.calculate([player1Cards, player2Cards], board);
+
+            this.setState({result});
+            console.log(`Player #1 - ${player1Cards} - ${result.equities[0].getEquity()}%`);
+            console.log(`Player #2 - ${player2Cards} - ${result.equities[1].getEquity()}%`);
+            error = false
+        } catch (e) {
+            console.log(e)
+            error = true
+        }
+       
         this.setState({
-            loading: false
+            loading: false,
+            error,
         });
     }
 
+    showResult(){
+        let {p1, p2, p3, p4, b, loading, result, error} = this.state;
+
+        console.log('loading', loading)
+
+        if (loading){
+            return showLoading()
+        }
+        if (error){
+            return <div style={{color: "red"}}>check Notation</div>
+        }
+        if (_.isNil(result.equities)){
+            return <div/>
+        }
+        return(
+            <div>
+                <Row>
+                    <Col xs="4">
+                        <div style={{display: 'inline-block'}}>Player 1</div>
+                    </Col>
+                    <Col xs="4">
+                        Win: {result.equities[0].getEquity()}%
+                    </Col>
+                    <Col xs="4">
+                        Tie: {result.equities[0].getTiePercentage()}%
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs="4">
+                        <div style={{display: 'inline-block'}}>Player 2</div>
+                    </Col>
+                    <Col xs="4">
+                        Win: {result.equities[1].getEquity()}%
+                    </Col>
+                    <Col xs="4">
+                        Tie: {result.equities[1].getTiePercentage()}%
+                    </Col>
+                </Row>
+            </div>)
+    }
+
     render() {
-        let {p1, p2, p3, p4, b, loading, result} = this.state;
+        let {p1, p2, p3, p4, b, loading} = this.state;
 
         return (
             <div>
@@ -156,37 +210,10 @@ class Odds extends React.Component {
                             </Col>
                         </Row>
                         <br/>
-                        <div>
-                            {_.isNil(result.equities) ? <div/> :
-                                <div>
-                                    <Row>
-                                        <Col xs="4">
-                                            <div style={{display: 'inline-block'}}>Player 1</div>
-                                        </Col>
-                                        <Col xs="4">
-                                            Win: {result.equities[0].getEquity()}%
-                                        </Col>
-                                        <Col xs="4">
-                                            Tie: {result.equities[0].getTiePercentage()}%
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col xs="4">
-                                            <div style={{display: 'inline-block'}}>Player 2</div>
-                                        </Col>
-                                        <Col xs="4">
-                                            Win: {result.equities[1].getEquity()}%
-                                        </Col>
-                                        <Col xs="4">
-                                            Tie: {result.equities[1].getTiePercentage()}%
-                                        </Col>
-                                    </Row>
-                                </div>
-                            }
-                        </div>
+                        {this.showResult()}
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" disabled={loading} onClick={this.calcOdds}>Calc</Button>
+                        <Button color="primary" disabled={loading} onClick={this.getOdds}>Calc</Button>
                         <Button color="secondary" onClick={this.toggle}>Exit</Button>
                     </ModalFooter>
                 </Modal>
@@ -206,3 +233,5 @@ export default connect(
     mapStateToProps,
     {}
 )(Odds);
+
+*/}
