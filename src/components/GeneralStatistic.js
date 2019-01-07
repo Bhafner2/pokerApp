@@ -71,7 +71,7 @@ class GeneralStatistic extends React.Component {
             filteredUsers: [],
             usersButtons: [],
             avgPlayerPerGame: 0,
-            userPercent: [],
+            userPercent: []
         };
 
         this.toggle = this.toggle.bind(this);
@@ -140,231 +140,229 @@ class GeneralStatistic extends React.Component {
     }
 
     async getData() {
-        return new Promise((resolve, reject) => {
-            this.init();
-            const {users} = this.props.data;
-            const from = new Date(this.state.fromDate);
-            const to = new Date(this.state.toDate);
-            let maxWon = {...empty};
-            let maxBuyIn = {...empty};
-            let maxTotal = {...empty};
-            let maxBounty = {...empty};
-            let sumWon = 0;
-            let sumBuyIn = 0;
-            let sumTotal = 0;
-            let sumBounty = 0;
-            let avgWon = 0;
-            let avgBuyIn = 0;
-            let avgTotal = 0;
-            let avgBounty = 0;
-            let counter = 0;
-            let usersBuyIn = [];
-            let usersPlayed = [];
-            let usersHero = [];
-            let usersWon = [];
-            let usersTop = [];
-            let usersBounty = [];
-            let dates = [];
-            let usersButtons = [];
-            let avgPlayerPerGame = 0;
-            let userPercent = [];
+        this.init();
+        const {users} = this.props.data;
+        const from = new Date(this.state.fromDate);
+        const to = new Date(this.state.toDate);
+        let maxWon = {...empty};
+        let maxBuyIn = {...empty};
+        let maxTotal = {...empty};
+        let maxBounty = {...empty};
+        let sumWon = 0;
+        let sumBuyIn = 0;
+        let sumTotal = 0;
+        let sumBounty = 0;
+        let avgWon = 0;
+        let avgBuyIn = 0;
+        let avgTotal = 0;
+        let avgBounty = 0;
+        let counter = 0;
+        let usersBuyIn = [];
+        let usersPlayed = [];
+        let usersHero = [];
+        let usersWon = [];
+        let usersTop = [];
+        let usersBounty = [];
+        let dates = [];
+        let usersButtons = [];
+        let avgPlayerPerGame = 0;
+        let userPercent = [];
 
-            console.log("users for generalstat", users);
-            if (this.state.fromDate === '2018-01-01' && this.state.toDate === this.props.today && this.state.filteredUsers.length < 1) {
-                this.setState({
-                    filtered: false,
-                })
-            } else {
-                this.setState({
-                    filtered: true,
-                })
-            }
-            if (this.state.dateOk && !_.isNil(users)) {
+        console.log("users for generalstat", users);
+        if (this.state.fromDate === '2018-01-01' && this.state.toDate === this.props.today && this.state.filteredUsers.length < 1) {
+            this.setState({
+                filtered: false,
+            })
+        } else {
+            this.setState({
+                filtered: true,
+            })
+        }
+        if (this.state.dateOk && !_.isNil(users)) {
 
-                for (let user in users) {
-                    for (let game in users[user].games) {
-                        if (users[user].games[game].buyIn > 0 && from <= new Date(users[user].games[game].date) && to >= new Date(users[user].games[game].date)) {
-                            dates.push(users[user].games[game].date);
-                        }
+            for (let user in users) {
+                for (let game in users[user].games) {
+                    if (users[user].games[game].buyIn > 0 && from <= new Date(users[user].games[game].date) && to >= new Date(users[user].games[game].date)) {
+                        dates.push(users[user].games[game].date);
                     }
                 }
-                dates = _.uniqBy(dates);
+            }
+            dates = _.uniqBy(dates);
 
-                for (let i in users) {
-                    let user = {...users[i]};
-                    console.log("user for generalstat", user);
+            for (let i in users) {
+                let user = {...users[i]};
+                console.log("user for generalstat", user);
 
-                    usersButtons.push(user.name);
-                    if (_.indexOf(this.state.filteredUsers, user.name) >= 0) {
-                        console.log("user will be filtered", user);
-                        user.games = _.filter(user.games, function (g) {
-                            if (_.isNil(g) || _.isNil(g.date)) {
-                                return false;
-                            }
-                            return (from <= new Date(g.date) && to >= new Date(g.date)) && g.buyIn > 0;
-                        });
-                        if (user.games.length > 0) {
-                            userPercent.push({
-                                name: user.name,
-                                percent: Math.round((user.games.length / dates.length) * 100)
-                            });
-                        }
-                        continue;
-                    }
+                usersButtons.push(user.name);
+                if (_.indexOf(this.state.filteredUsers, user.name) >= 0) {
+                    console.log("user will be filtered", user);
                     user.games = _.filter(user.games, function (g) {
                         if (_.isNil(g) || _.isNil(g.date)) {
                             return false;
                         }
                         return (from <= new Date(g.date) && to >= new Date(g.date)) && g.buyIn > 0;
                     });
-
-                    user.games = _.sortBy(user.games, function (g) {
-                        return g.date;
-                    });
                     if (user.games.length > 0) {
-
-                        counter = counter + user.games.length;
-                        let maxW = _.maxBy(user.games, function (o) {
-                            return o.won
-                        });
-
-                        if (maxWon.won < maxW.won) {
-                            maxWon = maxW;
-                            maxWon.name = user.name;
-                            console.log('won', maxTotal.won)
-                        }
-
-                        let maxB = _.maxBy(user.games, function (o) {
-                            return o.buyIn
-                        });
-
-                        if (maxBuyIn.buyIn < maxB.buyIn) {
-                            maxBuyIn = maxB;
-                            maxBuyIn.name = user.name;
-                            console.log('buyIn', maxTotal.buyIn)
-                        }
-
-                        let maxBo = _.maxBy(user.games, function (o) {
-                            return o.bounty
-                        });
-
-                        if (maxBounty.bounty < maxBo.bounty) {
-                            maxBounty = maxBo;
-                            maxBounty.name = user.name;
-                            console.log('Bounty', maxBounty.bounty);
-                        }
-
-                        let maxT = _.maxBy(user.games, function (o) {
-                            return o.won - o.buyIn
-                        });
-
-                        if (maxTotal.won + maxTotal.bounty - maxTotal.buyIn < maxT.won + maxT.bounty - maxT.buyIn) {
-                            maxTotal = maxT;
-                            maxTotal.name = user.name;
-                            console.log('total', maxTotal.won + maxTotal.bounty - maxTotal.buyIn)
-                        }
-
-
-                        user.won = _.sumBy(user.games, function (o) {
-                            return o.won
-                        });
-
-                        user.bounty = _.sumBy(user.games, function (o) {
-                            return o.bounty
-                        });
-
-                        user.buyIn = _.sumBy(user.games, function (o) {
-                            return o.buyIn
-                        });
-
-                        user.played = user.games.length;
-
-                        avgPlayerPerGame = avgPlayerPerGame + (user.played / dates.length);
-
-                        sumWon = sumWon + user.won;
-
-                        sumBuyIn = sumBuyIn + user.buyIn;
-
-                        sumBounty = sumBounty + user.bounty;
-
-                        user.total = _.sumBy(user.games, function (o) {
-                            return o.won + o.bounty - o.buyIn
-                        });
-
-                        sumTotal = sumTotal + user.total;
-
-                        user.hero = (user.played * 10) + (user.won * user.played) - user.total + (user.buyIn * 3) + (user.bounty * 5);
-
                         userPercent.push({
                             name: user.name,
                             percent: Math.round((user.games.length / dates.length) * 100)
                         });
-
-                        if (this.state.getAvg) {
-                            user.won = Math.round(user.won / user.games.length);
-                            user.bounty = Math.round(user.bounty / user.games.length);
-                            user.total = Math.round(user.total / user.games.length);
-                            user.buyIn = Math.round(user.buyIn / user.games.length);
-                            user.played = Math.round((user.played / dates.length) * 100);
-                            user.hero = Math.round(user.hero / (user.games.length));
-                        }
-
-                        filteredUsers.push(user);
-                        console.log("users", filteredUsers);
                     }
+                    continue;
                 }
-
-                usersTop = _.sortBy(filteredUsers, function (o) {
-                    return -o.total
-                });
-                usersWon = _.sortBy(filteredUsers, function (o) {
-                    return -o.won
-                });
-                usersBounty = _.sortBy(filteredUsers, function (o) {
-                    return -o.bounty
-                });
-                usersBuyIn = _.sortBy(filteredUsers, function (o) {
-                    return -o.buyIn
-                });
-                usersPlayed = _.sortBy(filteredUsers, function (o) {
-                    return -o.played
-                });
-                usersHero = _.sortBy(filteredUsers, function (o) {
-                    return -o.hero
+                user.games = _.filter(user.games, function (g) {
+                    if (_.isNil(g) || _.isNil(g.date)) {
+                        return false;
+                    }
+                    return (from <= new Date(g.date) && to >= new Date(g.date)) && g.buyIn > 0;
                 });
 
-                avgWon = Math.round(sumWon / counter);
-                avgBuyIn = Math.round(sumBuyIn / counter);
-                avgBounty = Math.round(sumBounty / counter);
-                avgTotal = Math.round(sumTotal / counter);
-
-                this.setState({
-                    maxWon,
-                    maxBuyIn,
-                    maxTotal,
-                    maxBounty,
-                    sumBuyIn,
-                    sumTotal,
-                    sumWon,
-                    sumBounty,
-                    avgBuyIn,
-                    avgWon,
-                    avgTotal,
-                    avgBounty,
-                    usersTop,
-                    usersWon,
-                    usersBounty,
-                    usersBuyIn,
-                    usersPlayed,
-                    usersHero,
-                    dates,
-                    usersButtons,
-                    avgPlayerPerGame,
-                    userPercent,
+                user.games = _.sortBy(user.games, function (g) {
+                    return g.date;
                 });
+                if (user.games.length > 0) {
+
+                    counter = counter + user.games.length;
+                    let maxW = _.maxBy(user.games, function (o) {
+                        return o.won
+                    });
+
+                    if (maxWon.won < maxW.won) {
+                        maxWon = maxW;
+                        maxWon.name = user.name;
+                        console.log('won', maxTotal.won)
+                    }
+
+                    let maxB = _.maxBy(user.games, function (o) {
+                        return o.buyIn
+                    });
+
+                    if (maxBuyIn.buyIn < maxB.buyIn) {
+                        maxBuyIn = maxB;
+                        maxBuyIn.name = user.name;
+                        console.log('buyIn', maxTotal.buyIn)
+                    }
+
+                    let maxBo = _.maxBy(user.games, function (o) {
+                        return o.bounty
+                    });
+
+                    if (maxBounty.bounty < maxBo.bounty) {
+                        maxBounty = maxBo;
+                        maxBounty.name = user.name;
+                        console.log('Bounty', maxBounty.bounty);
+                    }
+
+                    let maxT = _.maxBy(user.games, function (o) {
+                        return o.won - o.buyIn
+                    });
+
+                    if (maxTotal.won + maxTotal.bounty - maxTotal.buyIn < maxT.won + maxT.bounty - maxT.buyIn) {
+                        maxTotal = maxT;
+                        maxTotal.name = user.name;
+                        console.log('total', maxTotal.won + maxTotal.bounty - maxTotal.buyIn)
+                    }
+
+
+                    user.won = _.sumBy(user.games, function (o) {
+                        return o.won
+                    });
+
+                    user.bounty = _.sumBy(user.games, function (o) {
+                        return o.bounty
+                    });
+
+                    user.buyIn = _.sumBy(user.games, function (o) {
+                        return o.buyIn
+                    });
+
+                    user.played = user.games.length;
+
+                    avgPlayerPerGame = avgPlayerPerGame + (user.played / dates.length);
+
+                    sumWon = sumWon + user.won;
+
+                    sumBuyIn = sumBuyIn + user.buyIn;
+
+                    sumBounty = sumBounty + user.bounty;
+
+                    user.total = _.sumBy(user.games, function (o) {
+                        return o.won + o.bounty - o.buyIn
+                    });
+
+                    sumTotal = sumTotal + user.total;
+
+                    user.hero = (user.played * 10) + (user.won * user.played) - user.total + (user.buyIn * 3) + (user.bounty * 5);
+
+                    userPercent.push({
+                        name: user.name,
+                        percent: Math.round((user.games.length / dates.length) * 100)
+                    });
+
+                    if (this.state.getAvg) {
+                        user.won = Math.round(user.won / user.games.length);
+                        user.bounty = Math.round(user.bounty / user.games.length);
+                        user.total = Math.round(user.total / user.games.length);
+                        user.buyIn = Math.round(user.buyIn / user.games.length);
+                        user.played = Math.round((user.played / dates.length) * 100);
+                        user.hero = Math.round(user.hero / (user.games.length));
+                    }
+
+                    filteredUsers.push(user);
+                    console.log("users", filteredUsers);
+                }
             }
-            this.chart(filteredUsers);
-        })
+
+            usersTop = _.sortBy(filteredUsers, function (o) {
+                return -o.total
+            });
+            usersWon = _.sortBy(filteredUsers, function (o) {
+                return -o.won
+            });
+            usersBounty = _.sortBy(filteredUsers, function (o) {
+                return -o.bounty
+            });
+            usersBuyIn = _.sortBy(filteredUsers, function (o) {
+                return -o.buyIn
+            });
+            usersPlayed = _.sortBy(filteredUsers, function (o) {
+                return -o.played
+            });
+            usersHero = _.sortBy(filteredUsers, function (o) {
+                return -o.hero
+            });
+
+            avgWon = Math.round(sumWon / counter);
+            avgBuyIn = Math.round(sumBuyIn / counter);
+            avgBounty = Math.round(sumBounty / counter);
+            avgTotal = Math.round(sumTotal / counter);
+
+            this.setState({
+                maxWon,
+                maxBuyIn,
+                maxTotal,
+                maxBounty,
+                sumBuyIn,
+                sumTotal,
+                sumWon,
+                sumBounty,
+                avgBuyIn,
+                avgWon,
+                avgTotal,
+                avgBounty,
+                usersTop,
+                usersWon,
+                usersBounty,
+                usersBuyIn,
+                usersPlayed,
+                usersHero,
+                dates,
+                usersButtons,
+                avgPlayerPerGame,
+                userPercent,
+            });
+        }
+        this.chart(filteredUsers);
     }
 
 
