@@ -18,6 +18,8 @@ import * as _ from 'lodash';
 import classnames from 'classnames';
 import moment from "moment";
 import {showNumber} from '../App';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChartBar, faFilter } from '@fortawesome/free-solid-svg-icons'
 
 let buyIns = [];
 let wons = [];
@@ -567,8 +569,7 @@ class Statistic extends React.Component {
         let {wons} = this.state;
 
         return (<div>
-            <i className="fa fa-line-chart" onClick={this.toggle}
-               style={{fontSize: "20px"}}/>
+               <FontAwesomeIcon icon={faChartBar} onClick={this.toggle}/>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                    onKeyPress={this.handleKeyPress}
@@ -582,7 +583,7 @@ class Statistic extends React.Component {
                                     <Button color={"link"} onClick={this.showFilter}
                                             style={{color: this.state.filtered ? "#007BFF" : "black"}}
                                     >
-                                        <i className="fa fa-filter"/> Filter
+                                        <FontAwesomeIcon icon={faFilter}/> Filter
                                     </Button>
                                     <Button color={"link"} style={{
                                         visibility: this.state.filtered ? "visible" : "hidden",

@@ -30,6 +30,8 @@ import moment from "moment/moment";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import {showNumber} from '../App';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrophy, faFilter } from '@fortawesome/free-solid-svg-icons'
 
 let filteredUsers = [];
 let empty = {name: '', won: 0, buyIn: 0, bounty: 0, date: ''};
@@ -96,7 +98,7 @@ class GeneralStatistic extends React.Component {
     }
 
     componentDidMount() {
-        this.getData().then(() => this.usersPercentFilter({target: {value: 25}}));
+        this.getData().then(() => this.usersPercentFilter());
     }
 
     toggleTab(tab) {
@@ -119,7 +121,7 @@ class GeneralStatistic extends React.Component {
                 getAvg: false,
                 reload: false,
             }, () => {
-                this.usersPercentFilter({target: {value: 25}})
+                this.usersPercentFilter()
             });
         }
         this.setState({
@@ -506,7 +508,10 @@ class GeneralStatistic extends React.Component {
 
 
     usersPercentFilter(evt) {
-        const value = evt.target.value;
+        let value = 25;
+        if (!_.isNil(evt) && !_.isNil(evt.target)){
+            value = evt.target.value;
+        }
 
         console.log('filter players with less than ', value, '%');
 
@@ -780,11 +785,9 @@ class GeneralStatistic extends React.Component {
         const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, usersTop, usersBounty, usersWon, usersBuyIn, usersPlayed, usersHero, getAvg, dates, avgPlayerPerGame} = this.state;
 
         return (<div>
-            <i className="fa fa-trophy" onClick={this.toggle}
-               style={{fontSize: "30px"}}/>
+            <FontAwesomeIcon icon={faTrophy} onClick={this.toggle} size="lg"/>
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
-                   onKeyPress={this.handleKeyPress}
-
+                   onKeyPress={this.handleKeyPress} onOpened={this.usersPercentFilter} 
             >
                 <ModalHeader toggle={this.toggle}>Top List</ModalHeader>
                 <ModalBody>
@@ -795,7 +798,7 @@ class GeneralStatistic extends React.Component {
                                     <Button color={"link"} onClick={this.showFilter} id={'filter'} key={'filter'}
                                             style={{color: this.state.filtered ? "#007BFF" : "black"}}
                                     >
-                                        <i className="fa fa-filter"/> Filter
+                                        <FontAwesomeIcon icon={faFilter}/> Filter
                                     </Button>
                                     <Button color={"link"} style={{
                                         visibility: this.state.filtered ? "visible" : "hidden",

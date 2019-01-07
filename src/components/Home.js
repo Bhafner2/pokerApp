@@ -23,6 +23,8 @@ import GeneralStatistic from "./GeneralStatistic";
 import Calc from "./Calc";
 import ThisGame from "./ThisGame";
 import {showLoading} from "../App";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCalendar, faSearch, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 // import Odds from "./Odds";
 
 class Home extends Component {
@@ -222,19 +224,17 @@ class Home extends Component {
                     <NavbarBrand>
                         <ThisGame today={this.state.date}/>
                     </NavbarBrand>
-                    <NavbarBrand>
-                        <i className="fa fa-calendar" onClick={this.toggleDate}
-                           style={{fontSize: "30px", color: this.isToday()}}/>
+                    <NavbarBrand> 
+                    <FontAwesomeIcon icon={faCalendar} onClick={this.toggleDate} size="lg"
+                           style={{color: this.isToday()}}/>
                     </NavbarBrand>
                     <NavbarBrand>
-                        <i className="fa fa-search" onClick={this.toggleSearch}
-                           style={{fontSize: "30px", color: this.state.filtered ? "#007BFF" : "black"}}/>
+                    <FontAwesomeIcon icon={faSearch} onClick={this.toggleSearch} size="lg"
+                           style={{color: this.state.filtered ? "#007BFF" : "black"}}/>
                     </NavbarBrand>
                     <NavbarBrand>
-                        <i className="fa  fa-sign-out" onClick={this.props.logout}
-                           style={{fontSize: "30px",}}/>
+                    <FontAwesomeIcon icon={faSignOutAlt}  onClick={this.props.logout} size="lg"/>
                     </NavbarBrand>
-
                     <Collapse isOpen={this.state.showDate} navbar>
                         <Nav navbar>
                             <InputGroup style={{paddingTop: "12px"}}>

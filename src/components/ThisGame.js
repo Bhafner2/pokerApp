@@ -11,6 +11,8 @@ import * as _ from 'lodash';
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import moment from "moment";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGamepad, faList } from '@fortawesome/free-solid-svg-icons';
 
 let filteredUsers = [];
 
@@ -314,8 +316,8 @@ class ThisGame extends React.Component {
 
     render() {
         return (<div>
-            <i className="fa fa-gamepad" onClick={this.toggle}
-               style={{fontSize: "30px", color: this.state.sumOk ? "" : "#DC3545"}}/>
+            <FontAwesomeIcon icon={faGamepad} onClick={this.toggle} size="lg"
+               style={{color: this.state.sumOk ? "" : "#DC3545"}}/>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                    onKeyPress={this.handleKeyPress}
@@ -329,7 +331,7 @@ class ThisGame extends React.Component {
                                 <div onClick={this.showFilter}
                                      style={{color: this.state.filtered ? "black" : "#007BFF"}}
                                 >
-                                    <i className="fa fa-list"/> Last Games
+                                   <FontAwesomeIcon icon={faList}/> Last Games
                                 </div>
                             </Col>
                         </Row>

@@ -7,7 +7,8 @@ import {connect} from "react-redux";
 import * as _ from 'lodash';
 import Statistic from "./Statistic";
 import firebase from "../config/firebase";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
 
 class UserList extends React.Component {
     constructor(props) {
@@ -242,8 +243,7 @@ class UserList extends React.Component {
                             </div>
                         </Col>
                         <Col xs="4">
-                            <i className="fa fa-usd" onClick={this.toggle}
-                               style={{fontSize: "20px"}}/>
+                        <FontAwesomeIcon icon={faDollarSign} onClick={this.toggle}/>
                         </Col>
                     </Row>
                 </ListGroupItem>
