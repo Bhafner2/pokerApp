@@ -42,14 +42,18 @@ class ThisGame extends React.Component {
     }
 
     toggle() {
+        if (!this.state.modal) {
+            this.setState({
+                date: this.props.today,
+                dateOk: true,
+                activeTab: '1',
+                onOpen: true,
+            }, () => {
+                this.getData()
+            });
+        }
         this.setState({
             modal: !this.state.modal,
-            date: this.props.today,
-            dateOk: true,
-            activeTab: '1',
-            onOpen: true,
-        }, () => {
-            this.getData()
         });
     }
 
@@ -65,7 +69,7 @@ class ThisGame extends React.Component {
         }
     }
 
-    getData() {
+    async getData() {
         filteredUsers = [];
         const {users} = this.props.data;
         const date = new Date(this.state.date);
@@ -150,7 +154,7 @@ class ThisGame extends React.Component {
         this.setState({
             options: {
                 chart: {
-                    height: 300,
+                    height: 330,
                     type: 'spline',
                 },
                 title: {
@@ -328,36 +332,37 @@ class ThisGame extends React.Component {
                                     <i className="fa fa-list"/> Last Games
                                 </div>
                             </Col>
-                            <Col xs="7">
-                                <div style={{
-                                    visibility: this.state.filtered ? "hidden" : "visible",
-                                    color: "#007BFF"
-                                }}
-                                     onClick={this.resetFilter}>
-                                    Today
-                                </div>
-                            </Col>
                         </Row>
                         {this.filter()}
                         {this.state.sumOk ? '' :
-                            <Row style={{
+                            <div style={{
                                 color: "#DC3545",
                                 paddingTop: "12px",
                             }}>
-                                <Col xs="5">
-                                    <b>Checksum</b>
-                                </Col>
-                                <Col xs="2">
-                                    {this.state.sum}
-                                </Col>
-                                <Col xs="5" style={{
-                                    fontSize: "0.8em",
-                                }}>
-                                    the result of (won + bounty - buyIn), should be 0
-                                </Col>
-                            </Row>}
+                                <Row>
+                                    <Col xs="5">
+                                        <b>Checksum</b>
+                                    </Col>
+                                    <Col xs="2">
+                                        {this.state.sum}
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col xs="12" style={{fontSize: "0.8em"}}>
+                                        the result of won + bounty - buyIn, should be 0
+                                    </Col>
+                                </Row>
+                            </div>}
                         <Row style={{paddingTop: "12px"}}>
-                            <Col xs="5">
+                            <Col xs="4">
+                                <b>Date</b>
+                            </Col>
+                            <Col xs="7">
+                                <div>{moment(this.state.date).format('dddd DD.MM.YYYY')}</div>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs="4">
                                 <b>Pot size</b>
                             </Col>
                             <Col xs="7">
@@ -365,7 +370,7 @@ class ThisGame extends React.Component {
                             </Col>
                         </Row>
                         <Row>
-                            <Col xs="5">
+                            <Col xs="4">
                                 <b>Bounty's</b>
                             </Col>
                             <Col xs="7">
@@ -373,7 +378,7 @@ class ThisGame extends React.Component {
                             </Col>
                         </Row>
                         <Row>
-                            <Col xs="5">
+                            <Col xs="4">
                                 <b>Avg BuyIn</b>
                             </Col>
                             <Col xs="7">

@@ -32,8 +32,8 @@ class Home extends Component {
             showAlert: false,
             alertText: '',
             alertSuccess: false,
-            today: moment().subtract(4, 'hours').format('YYYY-MM-DD'),
-            date: moment().subtract(4, 'hours').format('YYYY-MM-DD'),
+            today: '',
+            date: '',
             search: '',
             showDate: false,
             showSearch: false,
@@ -64,16 +64,14 @@ class Home extends Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         store.dispatch(getUsers());
         this.setState({
-            today: moment(new Date()).format('YYYY-MM-DD'),
-            date: moment(new Date()).format('YYYY-MM-DD'),
+            today: moment().format('YYYY-MM-DD'),
+            date: moment().subtract(4, 'hours').format('YYYY-MM-DD'),
             showDate: false,
             showSearch: false,
             usersToRender: this.props.data.users,
-        }, () => {
-            this.filterUser();
         });
     }
 
@@ -215,7 +213,7 @@ class Home extends Component {
                         <Odds/>
                     </NavbarBrand>
                 */}
-                    <NavbarBrand>
+                 <NavbarBrand>
                         <Calc/>
                     </NavbarBrand>
                     <NavbarBrand>

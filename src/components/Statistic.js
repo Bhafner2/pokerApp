@@ -93,14 +93,20 @@ class Statistic extends React.Component {
             });
         }
 
+        if (!this.state.modal) {
+            this.setState({
+                modal: !this.state.modal,
+                dateOk: true,
+                activeTab: '1',
+                showFilter: false,
+                toDate: this.props.today,
+            }, () => {
+                this.getData().then(() => this.last3m())
+            });
+        }
+
         this.setState({
             modal: !this.state.modal,
-            dateOk: true,
-            activeTab: '1',
-            showFilter: false,
-            toDate: this.props.today,
-        }, () => {
-            this.getData()
         });
     }
 
@@ -116,7 +122,7 @@ class Statistic extends React.Component {
         }
     }
 
-    getData() {
+    async getData() {
         this.init();
         const {user} = this.props;
         const {users} = this.props.data;
@@ -280,7 +286,7 @@ class Statistic extends React.Component {
         this.setState({
             options: {
                 chart: {
-                    height: 280,
+                    height: 330,
                     type: 'spline',
                 },
                 title: {

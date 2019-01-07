@@ -52,7 +52,7 @@ class App extends Component {
         this.showError = this.showError.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         /*
                 App.logout();
         */
