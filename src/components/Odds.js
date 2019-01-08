@@ -1,11 +1,9 @@
-{/*import {CardGroup, OddsCalculator} from 'poker-odds-calculator';
+import {CardGroup, OddsCalculator} from 'poker-odds-calculator';
 import React from 'react';
 import {connect} from "react-redux";
 import {
     Button,
-    ButtonDropdown,
-    Col, DropdownItem, DropdownMenu,
-    DropdownToggle,
+    Col,
     Input,
     Modal,
     ModalBody,
@@ -15,6 +13,8 @@ import {
 } from "reactstrap";
 import * as _ from 'lodash';
 import {showLoading} from "../App";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faBalanceScale} from "@fortawesome/free-solid-svg-icons/index";
 
 class Odds extends React.Component {
     constructor(props) {
@@ -27,7 +27,7 @@ class Odds extends React.Component {
             p4: '',
             b: '',
             result: '',
-            dropdownOpen: false,
+            dropDownOpen: false,
             loading: false,
             error: false,
         };
@@ -37,9 +37,9 @@ class Odds extends React.Component {
         this.getOdds = this.getOdds.bind(this);
         this.showResult = this.showResult.bind(this);
 
-        https://www.npmjs.com/package/poker-odds-calculator
-        npm    "poker-odds-calculator": "^0.3.1",
-
+        /*
+                https://www.npmjs.com/package/poker-odds-calculator
+        */
     }
 
     toggle() {
@@ -50,16 +50,16 @@ class Odds extends React.Component {
 
     toggleDropdown() {
         this.setState({
-            dropdownOpen: !this.state.dropdownOpen
+            dropDownOpen: !this.state.dropDownOpen
         });
     }
 
-    getOdds(){
+    getOdds() {
         this.setState({
             loading: true,
-        })
-        
-        this.calcOdds()
+        }, () => {
+            this.calcOdds();
+        });
     }
 
     async calcOdds() {
@@ -89,44 +89,44 @@ class Odds extends React.Component {
                 }
             }
 
-            
+
             // JhJs
             // JdQd
             // 7d9dTs
-            
 
-            const result = OddsCalculator.calculate([player1Cards, player2Cards], board);
+
+            const result = await OddsCalculator.calculate([player1Cards, player2Cards], board);
 
             this.setState({result});
             console.log(`Player #1 - ${player1Cards} - ${result.equities[0].getEquity()}%`);
             console.log(`Player #2 - ${player2Cards} - ${result.equities[1].getEquity()}%`);
             error = false
         } catch (e) {
-            console.log(e)
+            console.log(e);
             error = true
         }
-       
+
         this.setState({
             loading: false,
             error,
         });
     }
 
-    showResult(){
+    showResult() {
         let {p1, p2, p3, p4, b, loading, result, error} = this.state;
 
-        console.log('loading', loading)
+        console.log('loading', loading);
 
-        if (loading){
+        if (loading) {
             return showLoading()
         }
-        if (error){
+        if (error) {
             return <div style={{color: "red"}}>check Notation</div>
         }
-        if (_.isNil(result.equities)){
+        if (_.isNil(result.equities)) {
             return <div/>
         }
-        return(
+        return (
             <div>
                 <Row>
                     <Col xs="4">
@@ -158,8 +158,7 @@ class Odds extends React.Component {
 
         return (
             <div>
-                <i className="fa fa-balance-scale" onClick={this.toggle}
-                   style={{fontSize: "30px"}}/>
+                <FontAwesomeIcon icon={faBalanceScale} onClick={this.toggle} size="lg"/>
 
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Odds Calculator</ModalHeader>
@@ -210,6 +209,7 @@ class Odds extends React.Component {
                             </Col>
                         </Row>
                         <br/>
+                        {loading ? showLoading() : <div/>}
                         {this.showResult()}
                     </ModalBody>
                     <ModalFooter>
@@ -233,5 +233,3 @@ export default connect(
     mapStateToProps,
     {}
 )(Odds);
-
-*/}

@@ -7,7 +7,7 @@ import {store} from './redux/store'
 import firebase from "./config/firebase";
 import Home from "./components/Home";
 import Login from "./components/Login";
-import {Alert, Col, Fade, Row} from "reactstrap";
+import {Alert, Col, Row} from "reactstrap";
 import logo from './img/Poker.png';
 import * as _ from 'lodash';
 import ReactLoading from 'react-loading';
@@ -36,9 +36,13 @@ export function showNumber(number) {
     if (_.isNil(number) || _.isNaN(number)) {
         return 0;
     }
+    if (number >= 1000000) {
+        return (Math.round(number / 100000) / 10) + 'M';
+    }
     if (number >= 1000) {
         return (Math.round(number / 100) / 10) + 'K';
     }
+
     return Math.round(number);
 }
 
@@ -155,7 +159,6 @@ class App extends Component {
                 )}
                 <Alert className="center"
                        color="danger"
-                       animation={Fade}
                        style={{
                            visibility: this.state.showError ? 'visible' : 'hidden',
                            position: "fixed",

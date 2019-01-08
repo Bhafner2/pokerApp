@@ -243,7 +243,7 @@ class UserList extends React.Component {
                             </div>
                         </Col>
                         <Col xs="4">
-                        <FontAwesomeIcon icon={faDollarSign} onClick={this.toggle} size={"md"}/>
+                        <FontAwesomeIcon icon={faDollarSign} onClick={this.toggle} size={"1x"}/>
                         </Col>
                     </Row>
                 </ListGroupItem>
@@ -298,7 +298,7 @@ class UserList extends React.Component {
                                         <div>Buy In</div>
                                     </Col>
                                     <Col xs="8">
-                                        <Input autoFocus="true"
+                                        <Input autoFocus
                                                type="number" name="buyIn" id="buyIn"
                                                onChange={this.updateBuyIn}
                                                value={this.state.buyIn}

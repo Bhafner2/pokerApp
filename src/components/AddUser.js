@@ -150,7 +150,7 @@ class AddUser extends React.Component {
                 <ModalHeader toggle={this.toggle}>New User</ModalHeader>
                 <ModalBody>
                     <FormGroup>
-                        <Input autoFocus={true}
+                        <Input autoFocus
                                valid={this.state.usernameOk}
                                invalid={!this.state.usernameOk && !this.state.onOpen}
                                type="text" name="user" id="user"

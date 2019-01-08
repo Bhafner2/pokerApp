@@ -98,11 +98,6 @@ class GeneralStatistic extends React.Component {
         this.getData = this.getData.bind(this);
     }
 
-    /*
-        componentDidMount() {
-            this.getData().then(() => this.usersPercentFilter());
-        }*/
-
     toggleTab(tab) {
         if (this.state.activeTab !== tab) {
             this.setState({
@@ -124,9 +119,9 @@ class GeneralStatistic extends React.Component {
                 reload: false,
                 modal: true,
             }, () => {
-/*
-                this.usersPercentFilter()
-*/
+                /*
+                                this.usersPercentFilter()
+                */
             });
         } else {
             this.setState({
@@ -300,7 +295,7 @@ class GeneralStatistic extends React.Component {
 
                     sumTotal = sumTotal + user.total;
 
-                    user.hero = (user.played * 10) + (user.won * user.played) - user.total + (user.buyIn * 3) + (user.bounty * 5);
+                    user.hero = (user.played * 5) + (user.won * 3) - (user.total * 2) + (user.buyIn * 5) + (user.bounty * 5);
 
                     userPercent.push({
                         name: user.name,
@@ -612,8 +607,8 @@ class GeneralStatistic extends React.Component {
                         </Row>
                         <Row style={{paddingTop: "6px"}}>
                             {!this.state.reload ?
-                                this.state.usersButtons.map((name) =>
-                                    <Col xs={4} style={{paddingTop: "6px"}}>
+                                this.state.usersButtons.map((name, i) =>
+                                    <Col xs={4} style={{paddingTop: "6px"}} key={i}>
                                         <Button size={"sm"} outline color={"primary"} value={name}
                                                 active={!this.isFiltered(name)}
                                                 onClick={this.userFilter}
@@ -646,7 +641,6 @@ class GeneralStatistic extends React.Component {
         } else {
             this.state.filteredUsers.push(evt.target.value);
         }
-        console.log("filtered Users list", this.state.filteredUsers);
         this.getData();
 
         this.setState({
@@ -793,7 +787,7 @@ class GeneralStatistic extends React.Component {
         return (<div>
             <FontAwesomeIcon icon={faTrophy} onClick={this.toggle} size="lg"/>
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
-                   onKeyPress={this.handleKeyPress} onOpened={this.getData}
+                   onKeyPress={this.handleKeyPress} onOpened={this.usersPercentFilter}
             >
                 <ModalHeader toggle={this.toggle}>Top List</ModalHeader>
                 <ModalBody>
@@ -919,7 +913,7 @@ class GeneralStatistic extends React.Component {
                             <br/>
                             {usersHero.map((user, i) => (
                                 <TopList name={'index'} user={user} value={user.hero}
-                                         from={this.state.fromDate} to={this.state.toDate} i={i}/>
+                                         from={this.state.fromDate} to={this.state.toDate} key={i}/>
                             ))}
                         </TabPane>
                     </TabContent>
@@ -928,7 +922,7 @@ class GeneralStatistic extends React.Component {
                             <br/>
                             {usersTop.map((user, i) => (
                                 <TopList name={'total'} user={user} value={user.total}
-                                         from={this.state.fromDate} to={this.state.toDate} i={i}/>
+                                         from={this.state.fromDate} to={this.state.toDate} key={i}/>
                             ))}
                         </TabPane>
                     </TabContent>
@@ -938,7 +932,7 @@ class GeneralStatistic extends React.Component {
 
                             {usersWon.map((user, i) => (
                                 <TopList name={'won'} user={user} value={user.won}
-                                         from={this.state.fromDate} to={this.state.toDate} i={i}/>
+                                         from={this.state.fromDate} to={this.state.toDate} key={i}/>
                             ))}
                         </TabPane>
                     </TabContent>
@@ -948,7 +942,7 @@ class GeneralStatistic extends React.Component {
 
                             {usersBounty.map((user, i) => (
                                 <TopList name={'bounty'} user={user} value={user.bounty}
-                                         from={this.state.fromDate} to={this.state.toDate} i={i}/>
+                                         from={this.state.fromDate} to={this.state.toDate} key={i}/>
                             ))}
                         </TabPane>
                     </TabContent>
@@ -957,7 +951,7 @@ class GeneralStatistic extends React.Component {
                             <br/>
                             {usersBuyIn.map((user, i) => (
                                 <TopList name={'buyIn'} user={user} value={user.buyIn}
-                                         from={this.state.fromDate} to={this.state.toDate} i={i}/>
+                                         from={this.state.fromDate} to={this.state.toDate} key={i}/>
                             ))}
                         </TabPane>
                     </TabContent>
@@ -967,7 +961,7 @@ class GeneralStatistic extends React.Component {
                             {usersPlayed.map((user, i) => (
                                 <TopList name={'played'} user={user} value={user.played}
                                          extension={getAvg ? "%" : ""}
-                                         from={this.state.fromDate} to={this.state.toDate} i={i}/>
+                                         from={this.state.fromDate} to={this.state.toDate} key={i}/>
                             ))}
                         </TabPane>
                     </TabContent>

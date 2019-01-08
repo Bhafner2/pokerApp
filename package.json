@@ -34,7 +34,8 @@
     "redux-devtools-extension": "^2.13.5",
     "redux-promise-middleware": "^5.1.1",
     "redux-saga": "^0.16.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "poker-odds-calculator": "^0.3.1"
   },
   "scripts": {
     "start": "react-scripts start",

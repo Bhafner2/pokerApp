@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {
     Alert,
-    Collapse, Fade,
+    Collapse,
     Input,
     InputGroup,
     InputGroupAddon,
@@ -23,8 +23,10 @@ import GeneralStatistic from "./GeneralStatistic";
 import Calc from "./Calc";
 import ThisGame from "./ThisGame";
 import {showLoading} from "../App";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCalendar, faSearch, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faCalendar, faSearch, faSignOutAlt} from '@fortawesome/free-solid-svg-icons'
+import Odds from "./Odds";
+
 // import Odds from "./Odds";
 
 class Home extends Component {
@@ -199,41 +201,37 @@ class Home extends Component {
     render() {
         return (
             <div className="center" onKeyPress={this.handleKeyPress}>
-
-                {/*
-                {this.dbInit()}
-*/}
+                {/* {this.dbInit()} */}
                 <Navbar sticky="top"
                         style={{
                             backgroundColor: "whitesmoke",
                             borderTop: "0.5px solid",
                             borderColor: "#DFDFDF",
-                        }}>
-
-                            {/*
-                    <NavbarBrand>
-                        <Odds/>
-                    </NavbarBrand>
-                */}
-                 <NavbarBrand>
-                        <Calc/>
-                    </NavbarBrand>
+                            justifyContent: 'space-between'
+                        }}
+                >
                     <NavbarBrand>
                         <GeneralStatistic today={this.state.date}/>
                     </NavbarBrand>
                     <NavbarBrand>
                         <ThisGame today={this.state.date}/>
                     </NavbarBrand>
-                    <NavbarBrand> 
-                    <FontAwesomeIcon icon={faCalendar} onClick={this.toggleDate} size="lg"
-                           style={{color: this.isToday()}}/>
+                    <NavbarBrand>
+                        <Calc/>
                     </NavbarBrand>
                     <NavbarBrand>
-                    <FontAwesomeIcon icon={faSearch} onClick={this.toggleSearch} size="lg"
-                           style={{color: this.state.filtered ? "#007BFF" : "black"}}/>
+                        <Odds/>
                     </NavbarBrand>
                     <NavbarBrand>
-                    <FontAwesomeIcon icon={faSignOutAlt}  onClick={this.props.logout} size="lg"/>
+                        <FontAwesomeIcon icon={faCalendar} onClick={this.toggleDate} size="lg"
+                                         style={{color: this.isToday()}}/>
+                    </NavbarBrand>
+                    <NavbarBrand>
+                        <FontAwesomeIcon icon={faSearch} onClick={this.toggleSearch} size="lg"
+                                         style={{color: this.state.filtered ? "#007BFF" : "black"}}/>
+                    </NavbarBrand>
+                    <NavbarBrand>
+                        <FontAwesomeIcon icon={faSignOutAlt} onClick={this.props.logout} size="lg"/>
                     </NavbarBrand>
                     <Collapse isOpen={this.state.showDate} navbar>
                         <Nav navbar>
@@ -277,7 +275,7 @@ class Home extends Component {
                     </div>
                 </div>
                 <Row>
-                    <Alert animation={Fade} color={this.state.alertSuccess ? "success" : "danger"}
+                    <Alert color={this.state.alertSuccess ? "success" : "danger"}
                            style={{
                                visibility: this.state.showAlert ? 'visible' : 'hidden',
                                position: "fixed",

@@ -11,8 +11,8 @@ import * as _ from 'lodash';
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import moment from "moment";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGamepad, faList } from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faGamepad, faList} from '@fortawesome/free-solid-svg-icons';
 
 let filteredUsers = [];
 
@@ -52,9 +52,9 @@ class ThisGame extends React.Component {
                 activeTab: '1',
                 onOpen: true,
             }, () => {
-/*
-                this.getData()
-*/
+                /*
+                                this.getData()
+                */
             });
         }
         this.setState({
@@ -306,9 +306,9 @@ class ThisGame extends React.Component {
                     <CardBody>
                         <Row>
                             {this.state.dates.map((date, i) =>
-                                <Col xs={6}>
+                                <Col xs={6} key={i}>
                                     <Button color={"link"} value={date} onClick={this.updateDate}
-                                            key={i}>{moment(date).format('dd D.M.YY')}</Button>
+                                    >{moment(date).format('dd D.M.YY')}</Button>
                                 </Col>
                             )}
                         </Row>
@@ -320,7 +320,7 @@ class ThisGame extends React.Component {
     render() {
         return (<div>
             <FontAwesomeIcon icon={faGamepad} onClick={this.toggle} size="lg"
-               style={{color: this.state.sumOk ? "" : "#DC3545"}}/>
+                             style={{color: this.state.sumOk ? "" : "#DC3545"}}/>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                    onKeyPress={this.handleKeyPress}
@@ -334,7 +334,7 @@ class ThisGame extends React.Component {
                                 <div onClick={this.showFilter}
                                      style={{color: this.state.filtered ? "black" : "#007BFF"}}
                                 >
-                                   <FontAwesomeIcon icon={faList}/> Last Games
+                                    <FontAwesomeIcon icon={faList}/> Last Games
                                 </div>
                             </Col>
                         </Row>

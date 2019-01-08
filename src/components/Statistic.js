@@ -573,7 +573,7 @@ class Statistic extends React.Component {
         let {wons} = this.state;
 
         return (<div>
-            <FontAwesomeIcon icon={faChartBar} onClick={this.toggle} size={"md"}/>
+            <FontAwesomeIcon icon={faChartBar} onClick={this.toggle} size={"1x"}/>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                    onKeyPress={this.handleKeyPress}

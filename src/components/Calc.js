@@ -214,7 +214,6 @@ class Calc extends React.Component {
 
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                        onKeyPress={this.handleKeyPress}
-                       onBackButtonPress={() => this.setState({modal: false})}
                 >
                     <ModalHeader toggle={this.toggle}>Calculator</ModalHeader>
                     <ModalBody>
@@ -223,7 +222,7 @@ class Calc extends React.Component {
                                 <div>Amount</div>
                             </Col>
                             <Col xs="8">
-                                <Input autoFocus="true"
+                                <Input autoFocus
                                        type="number" name="amount" id="amount"
                                        onChange={this.updateAmount}
                                        value={this.state.amount}
