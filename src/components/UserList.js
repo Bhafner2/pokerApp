@@ -243,7 +243,7 @@ class UserList extends React.Component {
                             </div>
                         </Col>
                         <Col xs="4">
-                        <FontAwesomeIcon icon={faDollarSign} onClick={this.toggle}/>
+                        <FontAwesomeIcon icon={faDollarSign} onClick={this.toggle} size={"md"}/>
                         </Col>
                     </Row>
                 </ListGroupItem>

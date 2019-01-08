@@ -30,8 +30,8 @@ import moment from "moment/moment";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import {showNumber} from '../App';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrophy, faFilter } from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faTrophy, faFilter} from '@fortawesome/free-solid-svg-icons'
 
 let filteredUsers = [];
 let empty = {name: '', won: 0, buyIn: 0, bounty: 0, date: ''};
@@ -95,11 +95,13 @@ class GeneralStatistic extends React.Component {
         this.chart = this.chart.bind(this);
         this.usersAll = this.usersAll.bind(this);
         this.usersPercentFilter = this.usersPercentFilter.bind(this);
+        this.getData = this.getData.bind(this);
     }
 
-    componentDidMount() {
-        this.getData().then(() => this.usersPercentFilter());
-    }
+    /*
+        componentDidMount() {
+            this.getData().then(() => this.usersPercentFilter());
+        }*/
 
     toggleTab(tab) {
         if (this.state.activeTab !== tab) {
@@ -120,13 +122,17 @@ class GeneralStatistic extends React.Component {
                 showFilter: false,
                 getAvg: false,
                 reload: false,
+                modal: true,
             }, () => {
+/*
                 this.usersPercentFilter()
+*/
+            });
+        } else {
+            this.setState({
+                modal: false,
             });
         }
-        this.setState({
-            modal: !this.state.modal,
-        });
     }
 
 
@@ -509,7 +515,7 @@ class GeneralStatistic extends React.Component {
 
     usersPercentFilter(evt) {
         let value = 25;
-        if (!_.isNil(evt) && !_.isNil(evt.target)){
+        if (!_.isNil(evt) && !_.isNil(evt.target)) {
             value = evt.target.value;
         }
 
@@ -787,7 +793,7 @@ class GeneralStatistic extends React.Component {
         return (<div>
             <FontAwesomeIcon icon={faTrophy} onClick={this.toggle} size="lg"/>
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
-                   onKeyPress={this.handleKeyPress} onOpened={this.usersPercentFilter} 
+                   onKeyPress={this.handleKeyPress} onOpened={this.getData}
             >
                 <ModalHeader toggle={this.toggle}>Top List</ModalHeader>
                 <ModalBody>
