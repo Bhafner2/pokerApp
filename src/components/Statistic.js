@@ -18,8 +18,8 @@ import * as _ from 'lodash';
 import classnames from 'classnames';
 import moment from "moment";
 import {showNumber} from '../App';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChartBar, faFilter } from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faChartBar, faFilter} from '@fortawesome/free-solid-svg-icons'
 
 let buyIns = [];
 let wons = [];
@@ -72,6 +72,7 @@ class Statistic extends React.Component {
         this.this12m = this.this12m.bind(this);
         this.showFilter = this.showFilter.bind(this);
         this.resetFilter = this.resetFilter.bind(this);
+        this.getData = this.getData.bind(this);
     }
 
 
@@ -96,20 +97,23 @@ class Statistic extends React.Component {
         }
 
         if (!this.state.modal) {
+            const months = 3;
+            let d = new Date(this.props.today);
+            d.setMonth(d.getMonth() - months);
+
             this.setState({
-                modal: !this.state.modal,
+                modal: true,
                 dateOk: true,
                 activeTab: '1',
                 showFilter: false,
                 toDate: this.props.today,
-            }, () => {
-                this.getData().then(() => this.last3m())
+                fromDate: moment(d).format('YYYY-MM-DD'),
+            });
+        } else {
+            this.setState({
+                modal: false,
             });
         }
-
-        this.setState({
-            modal: !this.state.modal,
-        });
     }
 
 
@@ -569,10 +573,11 @@ class Statistic extends React.Component {
         let {wons} = this.state;
 
         return (<div>
-               <FontAwesomeIcon icon={faChartBar} onClick={this.toggle} size={"md"}/>
+            <FontAwesomeIcon icon={faChartBar} onClick={this.toggle} size={"md"}/>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                    onKeyPress={this.handleKeyPress}
+                   onOpened={this.getData}
             >
                 <ModalHeader toggle={this.toggle}>Statistic for {user.name}</ModalHeader>
                 <ModalBody>

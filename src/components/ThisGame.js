@@ -41,6 +41,7 @@ class ThisGame extends React.Component {
         this.chart = this.chart.bind(this);
         this.showFilter = this.showFilter.bind(this);
         this.resetFilter = this.resetFilter.bind(this);
+        this.getData = this.getData.bind(this);
     }
 
     toggle() {
@@ -51,7 +52,9 @@ class ThisGame extends React.Component {
                 activeTab: '1',
                 onOpen: true,
             }, () => {
+/*
                 this.getData()
+*/
             });
         }
         this.setState({
@@ -321,7 +324,7 @@ class ThisGame extends React.Component {
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                    onKeyPress={this.handleKeyPress}
-                   onBackButtonPress={() => this.setState({modal: false})}
+                   onOpened={this.getData}
             >
                 <ModalHeader toggle={this.toggle}>Game {moment(this.state.date).format('D.M.YY')}</ModalHeader>
                 <ModalBody>
