@@ -139,6 +139,7 @@ class App extends Component {
     }
 
     render() {
+        const version = 'v1.1.1';
         const {connErr, login} = this.props.data;
         return (
             <div>
@@ -168,6 +169,7 @@ class App extends Component {
                        }}>
                     No connection to Server!
                 </Alert>
+                <div style={{position: "fixed", bottom: "5px", right: "5px", fontSize: "0.5em"}}>{version}</div>
             </div>
         );
     }
