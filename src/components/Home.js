@@ -26,6 +26,7 @@ import {showLoading} from "../App";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faCalendar, faSearch, faSignOutAlt} from '@fortawesome/free-solid-svg-icons'
 import Odds from "./Odds";
+// import firebase from "../config/firebase";
 
 // import Odds from "./Odds";
 
@@ -152,21 +153,23 @@ class Home extends Component {
         );
     };
 
-    /*     dbInit() {
-             const db = firebase.database().ref('users/');
-             db.set([
-                 {
-                     name: 'init',
-                     games: [
-                         {
-                             date: '2000-01-01',
-                             buyIn: 0,
-                             won: 0
-                         }]
-                 }
+    /*
+        dbInit() {
+            const db = firebase.database().ref('users/');
+            db.set([
+                {
+                    name: 'init',
+                    games: [
+                        {
+                            date: '2000-01-01',
+                            buyIn: 0,
+                            won: 0
+                        }]
+                }
 
-             ])
-         }*/
+            ])
+        }*/
+
     handleKeyPress(target) {
         console.log("key pressed");
         if (target.charCode === 13) {
@@ -201,7 +204,7 @@ class Home extends Component {
     render() {
         return (
             <div className="center" onKeyPress={this.handleKeyPress}>
-                {/* {this.dbInit()} */}
+                {/*{this.dbInit()}*/}
                 <Navbar sticky="top"
                         style={{
                             backgroundColor: "whitesmoke",

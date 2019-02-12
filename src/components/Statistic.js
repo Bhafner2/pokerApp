@@ -97,7 +97,7 @@ class Statistic extends React.Component {
         }
 
         if (!this.state.modal) {
-            const months = 3;
+            const months = 6;
             let d = new Date(this.props.today);
             d.setMonth(d.getMonth() - months);
 
