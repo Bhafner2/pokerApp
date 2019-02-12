@@ -3,6 +3,7 @@ import {takeLatest, call, put} from 'redux-saga/effects';
 import {getUsersRejected, getUsersFulfilled, saveUsersRejected} from "./actions";
 import {GET_USERS, SAVE_USERS} from "./constants";
 import {store} from '../redux/store'
+import * as _ from 'lodash';
 
 
 export function* getUsersSaga() {
@@ -31,10 +32,25 @@ function fetchUsers() {
         let users = [];
         let data = snapshot.val();
         for (let user in data) {
-            users.push({
-                name: data[user].name,
-                games: data[user].games
-            });
+            if (_.isNil(data[user].sumBuyIn)) {
+                users.push({
+                    name: data[user].name,
+                    games: data[user].games,
+                    sumBuyIn: 0,
+                    sumWon: 0,
+                    sumBounty: 0,
+                    gamesPlayed: 0,
+                });
+            } else {
+                users.push({
+                    name: data[user].name,
+                    games: data[user].games,
+                    sumBuyIn: data[user].sumBuyIn,
+                    sumWon: data[user].sumWon,
+                    sumBounty: data[user].sumBounty,
+                    gamesPlayed: data[user].gamesPlayed,
+                });
+            }
         }
         console.log("saga get Users fulfilled");
         store.getState();

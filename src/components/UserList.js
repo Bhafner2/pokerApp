@@ -7,8 +7,8 @@ import {connect} from "react-redux";
 import * as _ from 'lodash';
 import Statistic from "./Statistic";
 import firebase from "../config/firebase";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faDollarSign} from '@fortawesome/free-solid-svg-icons';
 
 class UserList extends React.Component {
     constructor(props) {
@@ -173,16 +173,27 @@ class UserList extends React.Component {
         if (bounty === '' || isNaN(bounty)) {
             bounty = 0;
         }
+
+        let sumBuyIn = 0;
+        let sumWon = 0;
+        let sumBounty = 0;
+        let gamesPlayed = 0;
+
+
         for (let i = 0; i < user.games.length; i++) {
             if (this.state.date === user.games[i].date) {
-                if (user.games[i].buyIn !== buyIn || user.games[i].won !== won || user.games[i].bounty !== bounty) {
-                    user.games[i].buyIn = buyIn;
-                    user.games[i].won = won;
-                    user.games[i].bounty = bounty;
-                    store.dispatch(saveUsers(users));
-                }
+                user.games[i].buyIn = buyIn;
+                user.games[i].won = won;
+                user.games[i].bounty = bounty;
+
                 found = true;
                 console.log("game successfully updated " + user.name + ", date: " + date + " buyIn " + user.games[i].buyIn + " won " + user.games[i].won, " bounty ", user.games[i].bounty);
+            }
+            sumBuyIn += user.games[i].buyIn;
+            sumWon += user.games[i].won;
+            sumBounty += user.games[i].bounty;
+            if (user.games[i].buyIn > 0) {
+                gamesPlayed++;
             }
         }
         if (!found) {
@@ -198,8 +209,13 @@ class UserList extends React.Component {
             game.bounty = bounty;
             user.games.push(game);
             console.log("game successfully created " + user.name + ", date: " + this.state.date + " buyIn " + game.buyIn + " won " + game.won, " bounty ", game.bounty);
-            store.dispatch(saveUsers(users));
         }
+
+       user.sumBuyIn = sumBuyIn;
+        user.sumWon = sumWon;
+        user.sumBounty = sumBounty;
+        user.gamesPlayed = gamesPlayed;
+        store.dispatch(saveUsers(users));
         this.props.saved();
     }
 
@@ -243,7 +259,7 @@ class UserList extends React.Component {
                             </div>
                         </Col>
                         <Col xs="4">
-                        <FontAwesomeIcon icon={faDollarSign} onClick={this.toggle} size={"1x"}/>
+                            <FontAwesomeIcon icon={faDollarSign} onClick={this.toggle} size={"1x"}/>
                         </Col>
                     </Row>
                 </ListGroupItem>
