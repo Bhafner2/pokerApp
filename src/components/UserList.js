@@ -182,10 +182,11 @@ class UserList extends React.Component {
 
         for (let i = 0; i < user.games.length; i++) {
             if (this.state.date === user.games[i].date) {
-                user.games[i].buyIn = buyIn;
-                user.games[i].won = won;
-                user.games[i].bounty = bounty;
-
+                if (user.games[i].buyIn !== buyIn || user.games[i].won !== won || user.games[i].bounty !== bounty) {
+                    user.games[i].buyIn = buyIn;
+                    user.games[i].won = won;
+                    user.games[i].bounty = bounty;
+                }
                 found = true;
                 console.log("game successfully updated " + user.name + ", date: " + date + " buyIn " + user.games[i].buyIn + " won " + user.games[i].won, " bounty ", user.games[i].bounty);
             }
@@ -211,7 +212,7 @@ class UserList extends React.Component {
             console.log("game successfully created " + user.name + ", date: " + this.state.date + " buyIn " + game.buyIn + " won " + game.won, " bounty ", game.bounty);
         }
 
-       user.sumBuyIn = sumBuyIn;
+        user.sumBuyIn = sumBuyIn;
         user.sumWon = sumWon;
         user.sumBounty = sumBounty;
         user.gamesPlayed = gamesPlayed;
