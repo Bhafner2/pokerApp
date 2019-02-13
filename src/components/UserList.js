@@ -174,12 +174,6 @@ class UserList extends React.Component {
             bounty = 0;
         }
 
-        let sumBuyIn = 0;
-        let sumWon = 0;
-        let sumBounty = 0;
-        let gamesPlayed = 0;
-
-
         for (let i = 0; i < user.games.length; i++) {
             if (this.state.date === user.games[i].date) {
                 if (user.games[i].buyIn !== buyIn || user.games[i].won !== won || user.games[i].bounty !== bounty) {
@@ -190,33 +184,38 @@ class UserList extends React.Component {
                 found = true;
                 console.log("game successfully updated " + user.name + ", date: " + date + " buyIn " + user.games[i].buyIn + " won " + user.games[i].won, " bounty ", user.games[i].bounty);
             }
-            sumBuyIn += user.games[i].buyIn;
-            sumWon += user.games[i].won;
-            sumBounty += user.games[i].bounty;
+            user.sumBuyIn += user.games[i].buyIn;
+            user.sumWon += user.games[i].won;
+            user.sumBounty += user.games[i].bounty;
             if (user.games[i].buyIn > 0) {
-                gamesPlayed++;
+                user.gamesPlayed++;
             }
         }
         if (!found) {
-            let game = {
-                date: '',
-                buyIn: 0,
-                won: 0,
-                bounty: 0,
-            };
-            game.date = date;
-            game.buyIn = buyIn;
-            game.won = won;
-            game.bounty = bounty;
-            user.games.push(game);
-            console.log("game successfully created " + user.name + ", date: " + this.state.date + " buyIn " + game.buyIn + " won " + game.won, " bounty ", game.bounty);
-        }
+            if (buyIn < 0) {
+                let game = {
+                    date: '',
+                    buyIn: 0,
+                    won: 0,
+                    bounty: 0,
+                };
+                game.date = date;
+                game.buyIn = buyIn;
+                game.won = won;
+                game.bounty = bounty;
+                user.games.push(game);
 
-        user.sumBuyIn = sumBuyIn;
-        user.sumWon = sumWon;
-        user.sumBounty = sumBounty;
-        user.gamesPlayed = gamesPlayed;
-        store.dispatch(saveUsers(users));
+                user.sumBuyIn += buyIn;
+                user.sumWon += won;
+                user.sumBounty += bounty;
+                user.gamesPlayed += 1;
+
+                console.log("game successfully created " + user.name + ", date: " + this.state.date + " buyIn " + game.buyIn + " won " + game.won, " bounty ", game.bounty);
+                store.dispatch(saveUsers(users));
+            }
+        } else {
+            store.dispatch(saveUsers(users));
+        }
         this.props.saved();
     }
 
