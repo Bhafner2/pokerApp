@@ -211,7 +211,9 @@ class UserList extends React.Component {
             user.sumBuyIn += buyIn;
             user.sumWon += won;
             user.sumBounty += bounty;
-            user.gamesPlayed += 1;
+            if (buyIn > 0) {
+                user.gamesPlayed++;
+            }
 
             console.log("game successfully created " + user.name + ", date: " + this.state.date + " buyIn " + game.buyIn + " won " + game.won, " bounty ", game.bounty);
             store.dispatch(saveUsers(users));
