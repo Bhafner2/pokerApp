@@ -51,10 +51,6 @@ class ThisGame extends React.Component {
                 dateOk: true,
                 activeTab: '1',
                 onOpen: true,
-            }, () => {
-                /*
-                                this.getData()
-                */
             });
         }
         this.setState({
@@ -74,78 +70,81 @@ class ThisGame extends React.Component {
     }
 
     async getData() {
-        console.log("ThisGame getData");
+        if (this.state.modal) {
 
-        filteredUsers = [];
-        const {users} = this.props.data;
-        const date = new Date(this.state.date);
-        let sum = 0;
-        let sumOk;
-        let avgBuyIn = 0;
-        let sumBuyIn = 0;
-        let sumBounty = 0;
-        let dates = [];
+            console.log("ThisGame getData", this.state.date);
 
-        for (let user in users) {
-            for (let game in users[user].games) {
-                if (users[user].games[game].buyIn > 0) {
-                    dates.push(users[user].games[game].date);
-                }
-            }
-        }
-        dates = _.uniqBy(dates);
-        dates = _.sortBy(dates, (d) => {
-            return -new Date(d)
-        });
+            filteredUsers = [];
+            const {users} = this.props.data;
+            const date = new Date(this.state.date);
+            let sum = 0;
+            let sumOk;
+            let avgBuyIn = 0;
+            let sumBuyIn = 0;
+            let sumBounty = 0;
+            let dates = [];
 
-        if (this.state.dateOk && !_.isNil(users)) {
-
-            for (let i in users) {
-                let user = {...users[i]};
-
-                user.games = _.filter(user.games, function (g) {
-                    if (_.isNil(g) || _.isNil(g.date)) {
-                        return false;
+            for (let user in users) {
+                for (let game in users[user].games) {
+                    if (users[user].games[game].buyIn > 0) {
+                        dates.push(users[user].games[game].date);
                     }
-                    return date.getTime() === new Date(g.date).getTime() && g.buyIn > 0;
-                });
-
-                if (user.games.length > 0) {
-                    let plainUser = {
-                        name: user.name,
-                        buyIn: -user.games[0].buyIn,
-                        won: user.games[0].won,
-                        bounty: user.games[0].bounty,
-                        total: user.games[0].won + user.games[0].bounty - user.games[0].buyIn
-                    };
-                    sum = sum + plainUser.total;
-                    sumBuyIn = sumBuyIn + (plainUser.buyIn * -1) - plainUser.bounty;
-                    sumBounty = sumBounty + plainUser.bounty;
-                    filteredUsers.push(plainUser);
                 }
             }
-            avgBuyIn = Math.round(sumBuyIn / filteredUsers.length);
-        }
-        sumOk = sum === 0;
-        if (_.isNil(avgBuyIn) || _.isNaN(avgBuyIn)) {
-            avgBuyIn = 0;
-        }
+            dates = _.uniqBy(dates);
+            dates = _.sortBy(dates, (d) => {
+                return -new Date(d)
+            });
 
-        if (this.state.onOpen && sumBuyIn < 1) {
-            console.log("no games played today, goto game ", dates[0]);
-            this.updateDate(null, dates[0]);
+            if (this.state.dateOk && !_.isNil(users)) {
+
+                for (let i in users) {
+                    let user = {...users[i]};
+
+                    user.games = _.filter(user.games, function (g) {
+                        if (_.isNil(g) || _.isNil(g.date)) {
+                            return false;
+                        }
+                        return date.getTime() === new Date(g.date).getTime() && g.buyIn > 0;
+                    });
+
+                    if (user.games.length > 0) {
+                        let plainUser = {
+                            name: user.name,
+                            buyIn: -user.games[0].buyIn,
+                            won: user.games[0].won,
+                            bounty: user.games[0].bounty,
+                            total: user.games[0].won + user.games[0].bounty - user.games[0].buyIn
+                        };
+                        sum = sum + plainUser.total;
+                        sumBuyIn = sumBuyIn + (plainUser.buyIn * -1) - plainUser.bounty;
+                        sumBounty = sumBounty + plainUser.bounty;
+                        filteredUsers.push(plainUser);
+                    }
+                }
+                avgBuyIn = Math.round(sumBuyIn / filteredUsers.length);
+            }
+            sumOk = sum === 0;
+            if (_.isNil(avgBuyIn) || _.isNaN(avgBuyIn)) {
+                avgBuyIn = 0;
+            }
+
+            if (this.state.onOpen && sumBuyIn < 1) {
+                console.log("no games played today, goto game ", dates[0]);
+                this.updateDate(null, dates[0]);
+            }
+            this.setState({
+                sum,
+                sumOk,
+                avgBuyIn,
+                sumBuyIn,
+                sumBounty,
+                dates,
+                filtered: this.state.date === this.props.today,
+                onOpen: false,
+            });
+            this.chart(filteredUsers);
         }
-        this.setState({
-            sum,
-            sumOk,
-            avgBuyIn,
-            sumBuyIn,
-            sumBounty,
-            dates,
-            filtered: this.state.date === this.props.today,
-            onOpen: false,
-        });
-        this.chart(filteredUsers);
     }
 
     chart(users) {

@@ -118,97 +118,100 @@ class Statistic extends React.Component {
     }
 
     async getData() {
-        console.log("Statistic getData");
-        this.init();
-        const {user} = this.props;
-        const {users} = this.props.data;
-        const from = new Date(this.state.fromDate);
-        const to = new Date(this.state.toDate);
-        let filtered;
-        const actualUser = _.filter(users, (u) => {
-            return user.name === u.name
-        })[0];
-        filtered = !(this.state.fromDate === "2018-01-01" && this.state.toDate === this.props.today);
-        if (this.state.dateOk) {
-            let filteredGames = _.filter(actualUser.games, function (g) {
-                if (_.isNil(g) || _.isNil(g.date)) {
-                    return false;
-                }
-                return (from <= new Date(g.date) && to >= new Date(g.date)) && g.buyIn > 0;
-            });
-
-            filteredGames = _.sortBy(filteredGames, function (g) {
-                return g.date;
-            });
-
-            buyIns = _.map(filteredGames, (game) => {
-                return -game.buyIn;
-            });
-
-            wons = _.map(filteredGames, (game) => {
-                return game.won;
-            });
-
-            bountys = _.map(filteredGames, (game) => {
-                return game.bounty;
-            });
-
-            dates = _.map(filteredGames, (game) => {
-                return moment(game.date).format('D.M.YY');
-            });
-
-            totals = _.map(filteredGames, (game) => {
-                return game.won + game.bounty - game.buyIn;
-            });
-
-            trends = Statistic.lms(totals);
-
-            const sumWon = _.sum(wons);
-            const sumBounty = _.sum(bountys);
-            const sumBuyIn = _.sum(buyIns) * -1;
-            const sumTotal = sumWon + sumBounty - sumBuyIn;
-            const maxBuyIn = _.min(buyIns) * -1;
-            const maxWon = _.max(wons);
-            const maxBounty = _.max(bountys);
-            const maxTotal = _.max(totals);
-            const avgTotal = Math.round((sumWon + sumBounty - sumBuyIn) / filteredGames.length);
-            const avgBuyIn = Math.round(sumBuyIn / filteredGames.length);
-            const avgBounty = Math.round(sumBounty / filteredGames.length);
-            const avgWon = Math.round(sumWon / filteredGames.length);
-
-            this.setState({
-                sumWon,
-                sumBounty,
-                sumBuyIn,
-                maxBuyIn,
-                maxWon,
-                maxBounty,
-                maxTotal,
-                sumTotal,
-
-                wons,
-                buyIns,
-                bountys,
-                dates,
-                totals,
-
-                avgTotal,
-                avgBuyIn,
-                avgBounty,
-                avgWon,
-                filtered,
-            });
-
-            console.log("games for stat ", filteredGames);
-
-            if (buyIns.length > 1) {
-                this.chart(dates, buyIns, wons, bountys, totals, trends, false);
-            } else {
-                this.chart(dates, buyIns, wons, bountys, totals, trends, true);
-            }
-        } else {
+        if (this.state.modal) {
+            console.log("Statistic getData");
             this.init();
-            this.chart(dates, buyIns, wons, totals, bountys, trends, true);
+            const {user} = this.props;
+            const {users} = this.props.data;
+            const from = new Date(this.state.fromDate);
+            const to = new Date(this.state.toDate);
+            let filtered;
+            const actualUser = _.filter(users, (u) => {
+                return user.name === u.name
+            })[0];
+            console.log("actual user ", actualUser);
+            filtered = !(this.state.fromDate === "2018-01-01" && this.state.toDate === this.props.today);
+            if (this.state.dateOk) {
+                let filteredGames = _.filter(actualUser.games, function (g) {
+                    if (_.isNil(g) || _.isNil(g.date)) {
+                        return false;
+                    }
+                    return (from <= new Date(g.date) && to >= new Date(g.date)) && g.buyIn > 0;
+                });
+
+                filteredGames = _.sortBy(filteredGames, function (g) {
+                    return g.date;
+                });
+
+                buyIns = _.map(filteredGames, (game) => {
+                    return -game.buyIn;
+                });
+
+                wons = _.map(filteredGames, (game) => {
+                    return game.won;
+                });
+
+                bountys = _.map(filteredGames, (game) => {
+                    return game.bounty;
+                });
+
+                dates = _.map(filteredGames, (game) => {
+                    return moment(game.date).format('D.M.YY');
+                });
+
+                totals = _.map(filteredGames, (game) => {
+                    return game.won + game.bounty - game.buyIn;
+                });
+
+                trends = Statistic.lms(totals);
+
+                const sumWon = _.sum(wons);
+                const sumBounty = _.sum(bountys);
+                const sumBuyIn = _.sum(buyIns) * -1;
+                const sumTotal = sumWon + sumBounty - sumBuyIn;
+                const maxBuyIn = _.min(buyIns) * -1;
+                const maxWon = _.max(wons);
+                const maxBounty = _.max(bountys);
+                const maxTotal = _.max(totals);
+                const avgTotal = Math.round((sumWon + sumBounty - sumBuyIn) / filteredGames.length);
+                const avgBuyIn = Math.round(sumBuyIn / filteredGames.length);
+                const avgBounty = Math.round(sumBounty / filteredGames.length);
+                const avgWon = Math.round(sumWon / filteredGames.length);
+
+                this.setState({
+                    sumWon,
+                    sumBounty,
+                    sumBuyIn,
+                    maxBuyIn,
+                    maxWon,
+                    maxBounty,
+                    maxTotal,
+                    sumTotal,
+
+                    wons,
+                    buyIns,
+                    bountys,
+                    dates,
+                    totals,
+
+                    avgTotal,
+                    avgBuyIn,
+                    avgBounty,
+                    avgWon,
+                    filtered,
+                });
+
+                console.log("games for stat ", filteredGames);
+
+                if (buyIns.length > 1) {
+                    this.chart(dates, buyIns, wons, bountys, totals, trends, false);
+                } else {
+                    this.chart(dates, buyIns, wons, bountys, totals, trends, true);
+                }
+            } else {
+                this.init();
+                this.chart(dates, buyIns, wons, totals, bountys, trends, true);
+            }
         }
     }
 

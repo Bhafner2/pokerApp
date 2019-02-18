@@ -89,32 +89,36 @@ class UserList extends React.Component {
     }
 
     getActualGame() {
-        const {user} = this.props;
-        const {connErr} = this.props.data;
+        if (this.state.modal) {
+            console.log("UserList getData", this.props.user);
 
-        if (connErr) {
-            this.setState({
-                dataOk: false,
-            });
-        } else {
-            console.log("search game for user " + user.name + " on date " + this.state.date);
-            for (let i in user.games) {
-                if (!_.isNil(user.games[i]) && !_.isNil(user.games[i].date)) {
-                    if (this.state.date === user.games[i].date) {
-                        this.setState({
-                            buyIn: user.games[i].buyIn,
-                            won: user.games[i].won,
-                            bounty: user.games[i].bounty,
-                        }, () => {
-                            console.log("game found " + this.state.buyIn + " / " + this.state.won, " / ", this.state.bounty);
-                        });
-                        break;
-                    } else {
-                        this.setState({
-                            buyIn: '',
-                            won: '',
-                            bounty: '',
-                        });
+            const {user} = this.props;
+            const {connErr} = this.props.data;
+
+            if (connErr) {
+                this.setState({
+                    dataOk: false,
+                });
+            } else {
+                console.log("search game for user " + user.name + " on date " + this.state.date);
+                for (let i in user.games) {
+                    if (!_.isNil(user.games[i]) && !_.isNil(user.games[i].date)) {
+                        if (this.state.date === user.games[i].date) {
+                            this.setState({
+                                buyIn: user.games[i].buyIn,
+                                won: user.games[i].won,
+                                bounty: user.games[i].bounty,
+                            }, () => {
+                                console.log("game found " + this.state.buyIn + " / " + this.state.won, " / ", this.state.bounty);
+                            });
+                            break;
+                        } else {
+                            this.setState({
+                                buyIn: '',
+                                won: '',
+                                bounty: '',
+                            });
+                        }
                     }
                 }
             }
