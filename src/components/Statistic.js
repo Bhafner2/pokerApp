@@ -163,31 +163,40 @@ class Statistic extends React.Component {
 
             trends = Statistic.lms(totals);
 
-            this.setState({
-                sumWon: _.sum(wons),
-                sumBounty: _.sum(bountys),
-                sumBuyIn: _.sum(buyIns) * -1,
+            const sumWon = _.sum(wons);
+            const sumBounty = _.sum(bountys);
+            const sumBuyIn = _.sum(buyIns) * -1;
+            const sumTotal = sumWon + sumBounty - sumBuyIn;
+            const maxBuyIn = _.min(buyIns) * -1;
+            const maxWon = _.max(wons);
+            const maxBounty = _.max(bountys);
+            const maxTotal = _.max(totals);
+            const avgTotal = Math.round((sumWon + sumBounty - sumBuyIn) / filteredGames.length);
+            const avgBuyIn = Math.round(sumBuyIn / filteredGames.length);
+            const avgBounty = Math.round(sumBounty / filteredGames.length);
+            const avgWon = Math.round(sumWon / filteredGames.length);
 
-                maxBuyIn: _.min(buyIns) * -1,
-                maxWon: _.max(wons),
-                maxBounty: _.max(bountys),
-                maxTotal: _.max(totals),
+            this.setState({
+                sumWon,
+                sumBounty,
+                sumBuyIn,
+                maxBuyIn,
+                maxWon,
+                maxBounty,
+                maxTotal,
+                sumTotal,
+
                 wons,
                 buyIns,
                 bountys,
                 dates,
                 totals,
-            }, () => {
-                const {sumWon, sumBuyIn, sumBounty} = this.state;
-                this.setState({
-                    sumTotal: sumWon + sumBounty - sumBuyIn,
 
-                    avgTotal: Math.round((sumWon + sumBounty - sumBuyIn) / filteredGames.length),
-                    avgBuyIn: Math.round(sumBuyIn / filteredGames.length),
-                    avgBounty: Math.round(sumBounty / filteredGames.length),
-                    avgWon: Math.round(sumWon / filteredGames.length),
-                    filtered,
-                });
+                avgTotal,
+                avgBuyIn,
+                avgBounty,
+                avgWon,
+                filtered,
             });
 
             console.log("games for stat ", filteredGames);
