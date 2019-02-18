@@ -46,26 +46,19 @@ class UserList extends React.Component {
     }
 
     toggle() {
-        this.setState({
-            modal: !this.state.modal
-        }, () => {
-            if (this.state.modal) {
-                this.setState({
-                    date: this.props.date
-                }, () => {
-                    if (this.state.date === '') {
-                        this.setState({
-                            dateOk: false,
-                        })
-                    } else {
-                        this.setState({
-                            dateOk: true,
-                        });
-                        this.getActualGame();
-                    }
-                });
-            }
-        });
+        if (!this.state.modal) {
+            this.setState({
+                date: this.props.date,
+                dateOk: true,
+                modal: true,
+            }, () => {
+                this.getActualGame();
+            });
+        } else {
+            this.setState({
+                modal: false,
+            });
+        }
     }
 
 
@@ -81,8 +74,9 @@ class UserList extends React.Component {
                 } else {
                     this.setState({
                         dateOk: true,
+                    }, () => {
+                        this.getActualGame();
                     });
-                    this.getActualGame();
                 }
             }
         );
@@ -95,11 +89,7 @@ class UserList extends React.Component {
             const {user} = this.props;
             const {connErr} = this.props.data;
 
-            if (connErr) {
-                this.setState({
-                    dataOk: false,
-                });
-            } else {
+            if (!connErr) {
                 console.log("search game for user " + user.name + " on date " + this.state.date);
                 for (let i in user.games) {
                     if (!_.isNil(user.games[i]) && !_.isNil(user.games[i].date)) {
