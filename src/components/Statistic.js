@@ -544,19 +544,41 @@ class Statistic extends React.Component {
                             </Col>
                         </Row>
                         <Row>
-                            <Col xs={3}>
-                                <Button size="sm" color="link" onClick={this.last3m}>3 Month</Button>
+                            <Col xs={3} style={{paddingRight: "0.2em", paddingLeft: "1em"}}>
+                                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
+                                        size="sm" color="link"
+                                        onClick={this.last3m}
+                                >
+                                    3 Month
+                                </Button>
                             </Col>
-                            <Col xs={3}>
-                                <Button size="sm" color="link" onClick={this.last6m}>6 Month</Button>
+                            <Col xs={3} style={{paddingRight: "0.2em", paddingLeft: "0.2em"}}>
+                                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
+                                        size="sm"
+                                        color="link"
+                                        onClick={this.last6m}
+                                >
+                                    6 Month
+                                </Button>
                             </Col>
-                            <Col xs={2}>
-                                <Button size="sm" color="link" onClick={this.last12m}>Year</Button>
+                            <Col xs={3} style={{paddingRight: "0.2em", paddingLeft: "0.2em"}}>
+                                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
+                                        size="sm"
+                                        color="link"
+                                        onClick={this.last12m}
+                                >
+                                    12 Month
+                                </Button>
                             </Col>
-                            <Col xs={3}>
-                                <Button size="sm" color="link" onClick={this.this12m}>This Year</Button>
+                            <Col xs={3} style={{paddingRight: "1em", paddingLeft: "0.2em"}}>
+                                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
+                                        size="sm"
+                                        color="link"
+                                        onClick={this.this12m}
+                                >
+                                    This Year
+                                </Button>
                             </Col>
-                            <Col xs={1}/>
                         </Row>
                     </CardBody>
                     <CardFooter>

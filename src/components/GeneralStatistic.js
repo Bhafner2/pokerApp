@@ -570,40 +570,62 @@ class GeneralStatistic extends React.Component {
                             </Col>
                         </Row>
                         <Row>
-                            <Col xs={3}>
-                                <Button size="sm" color="link" onClick={this.last3m}>3 Month</Button>
+                            <Col xs={3} style={{paddingRight: "0.2em", paddingLeft: "1em"}}>
+                                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
+                                        size="sm" color="link"
+                                        onClick={this.last3m}
+                                >
+                                    3 Month
+                                </Button>
                             </Col>
-                            <Col xs={3}>
-                                <Button size="sm" color="link" onClick={this.last6m}>6 Month</Button>
+                            <Col xs={3} style={{paddingRight: "0.2em", paddingLeft: "0.2em"}}>
+                                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
+                                        size="sm"
+                                        color="link"
+                                        onClick={this.last6m}
+                                >
+                                    6 Month
+                                </Button>
                             </Col>
-                            <Col xs={2}>
-                                <Button size="sm" color="link" onClick={this.last12m}>Year</Button>
+                            <Col xs={3} style={{paddingRight: "0.2em", paddingLeft: "0.2em"}}>
+                                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
+                                        size="sm"
+                                        color="link"
+                                        onClick={this.last12m}
+                                >
+                                    12 Month
+                                </Button>
                             </Col>
-                            <Col xs={3}>
-                                <Button size="sm" color="link" onClick={this.this12m}>This Year</Button>
+                            <Col xs={3} style={{paddingRight: "1em", paddingLeft: "0.2em"}}>
+                                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
+                                        size="sm"
+                                        color="link"
+                                        onClick={this.this12m}
+                                >
+                                    This Year
+                                </Button>
                             </Col>
-                            <Col xs={1}/>
                         </Row>
                         <Row style={{paddingTop: "12px"}}>
                             <Col>User filter</Col>
                         </Row>
                         <Row>
-                            <Col xs={2}>
-                                <Button size="sm" color="link" onClick={this.usersAll}>All</Button>
+                            <Col xs={3}>
+                                <Button style={{fontSize: "0.8em"}} size="sm" color="link"
+                                        onClick={this.usersAll}>All</Button>
                             </Col>
                             <Col xs={3}>
-                                <Button size="sm" color="link" value={25}
+                                <Button style={{fontSize: "0.8em"}} size="sm" color="link" value={25}
                                         onClick={this.usersPercentFilter}>>25%</Button>
                             </Col>
                             <Col xs={3}>
-                                <Button size="sm" color="link" value={50}
+                                <Button style={{fontSize: "0.8em"}} size="sm" color="link" value={50}
                                         onClick={this.usersPercentFilter}>>50%</Button>
                             </Col>
                             <Col xs={3}>
-                                <Button size="sm" color="link" value={75}
+                                <Button style={{fontSize: "0.8em"}} size="sm" color="link" value={75}
                                         onClick={this.usersPercentFilter}>>75%</Button>
                             </Col>
-                            <Col xs={1}/>
                         </Row>
                         <Row style={{paddingTop: "6px"}}>
                             {!this.state.reload ?
@@ -613,6 +635,7 @@ class GeneralStatistic extends React.Component {
                                                 active={!this.isFiltered(name)}
                                                 onClick={this.userFilter}
                                                 key={"filter" + name}
+                                                style={{fontSize: "0.8em"}}
                                         >
                                             {name}
                                         </Button>
