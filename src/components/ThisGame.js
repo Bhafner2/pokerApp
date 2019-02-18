@@ -64,7 +64,6 @@ class ThisGame extends React.Component {
 
 
     handleKeyPress(target) {
-        console.log("key pressed");
         if (target.charCode === 13) {
             console.log("enter pressed");
             this.toggle()
@@ -75,6 +74,8 @@ class ThisGame extends React.Component {
     }
 
     async getData() {
+        console.log("ThisGame getData");
+
         filteredUsers = [];
         const {users} = this.props.data;
         const date = new Date(this.state.date);
@@ -96,7 +97,6 @@ class ThisGame extends React.Component {
         dates = _.sortBy(dates, (d) => {
             return -new Date(d)
         });
-        console.log("dates found", dates);
 
         if (this.state.dateOk && !_.isNil(users)) {
 
@@ -122,7 +122,6 @@ class ThisGame extends React.Component {
                     sumBuyIn = sumBuyIn + (plainUser.buyIn * -1) - plainUser.bounty;
                     sumBounty = sumBounty + plainUser.bounty;
                     filteredUsers.push(plainUser);
-                    console.log("filtered users", filteredUsers);
                 }
             }
             avgBuyIn = Math.round(sumBuyIn / filteredUsers.length);
@@ -150,7 +149,6 @@ class ThisGame extends React.Component {
     }
 
     chart(users) {
-        console.log("list", users);
 
         users = _.sortBy(users, function (g) {
             return -g.total;

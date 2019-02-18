@@ -21,6 +21,7 @@ class Login extends Component {
     }
 
     login() {
+        console.log("login");
         store.dispatch(setLoad(true));
         firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).catch(function (error) {
             store.dispatch(loginError(error.message));
@@ -44,7 +45,6 @@ class Login extends Component {
     }
 
     handleKeyPress(target) {
-        console.log("key pressed");
         if (target.charCode === 13) {
             this.login()
         }

@@ -94,7 +94,6 @@ class AddUser extends React.Component {
     }
 
     handleKeyPress(target) {
-        console.log("key pressed");
         if (target.charCode === 13) {
             console.log("enter pressed");
             this.addUser()
@@ -119,7 +118,6 @@ class AddUser extends React.Component {
         };
         user.name = this.state.username;
         users.push(user);
-        console.log("users after adding ", users);
         console.log("save User :" + user.name);
         this.toggle();
         this.props.saved();

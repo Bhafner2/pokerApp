@@ -132,7 +132,6 @@ class GeneralStatistic extends React.Component {
 
 
     handleKeyPress(target) {
-        console.log("key pressed");
         if (target.charCode === 13) {
             console.log("enter pressed");
             this.toggle()
@@ -143,6 +142,8 @@ class GeneralStatistic extends React.Component {
     }
 
     async getData() {
+        console.log("GeneralStatistic getData");
+
         this.init();
         const {users} = this.props.data;
         const from = new Date(this.state.fromDate);
@@ -171,7 +172,6 @@ class GeneralStatistic extends React.Component {
         let avgPlayerPerGame = 0;
         let userPercent = [];
 
-        console.log("users for generalstat", users);
         if (this.state.fromDate === '2018-01-01' && this.state.toDate === this.props.today && this.state.filteredUsers.length < 1) {
             this.setState({
                 filtered: false,
@@ -194,11 +194,9 @@ class GeneralStatistic extends React.Component {
 
             for (let i in users) {
                 let user = {...users[i]};
-                console.log("user for generalstat", user);
 
                 usersButtons.push(user.name);
                 if (_.indexOf(this.state.filteredUsers, user.name) >= 0) {
-                    console.log("user will be filtered", user);
                     user.games = _.filter(user.games, function (g) {
                         if (_.isNil(g) || _.isNil(g.date)) {
                             return false;
@@ -213,6 +211,7 @@ class GeneralStatistic extends React.Component {
                     }
                     continue;
                 }
+                console.log("user will be filtered", usersButtons);
                 user.games = _.filter(user.games, function (g) {
                     if (_.isNil(g) || _.isNil(g.date)) {
                         return false;
@@ -230,40 +229,36 @@ class GeneralStatistic extends React.Component {
                         return o.won
                     });
 
-                    if (maxWon.won < maxW.won) {
+                    if (maxWon.won < maxW) {
                         maxWon = maxW;
                         maxWon.name = user.name;
-                        console.log('won', maxTotal.won)
                     }
 
                     let maxB = _.maxBy(user.games, function (o) {
                         return o.buyIn
                     });
 
-                    if (maxBuyIn.buyIn < maxB.buyIn) {
+                    if (maxBuyIn.buyIn < maxB) {
                         maxBuyIn = maxB;
                         maxBuyIn.name = user.name;
-                        console.log('buyIn', maxTotal.buyIn)
                     }
 
                     let maxBo = _.maxBy(user.games, function (o) {
                         return o.bounty
                     });
 
-                    if (maxBounty.bounty < maxBo.bounty) {
+                    if (maxBounty.bounty < maxBo) {
                         maxBounty = maxBo;
                         maxBounty.name = user.name;
-                        console.log('Bounty', maxBounty.bounty);
                     }
 
                     let maxT = _.maxBy(user.games, function (o) {
                         return o.won - o.buyIn
                     });
 
-                    if (maxTotal.won + maxTotal.bounty - maxTotal.buyIn < maxT.won + maxT.bounty - maxT.buyIn) {
+                    if (maxTotal.won + maxTotal.bounty - maxTotal.buyIn < maxT + maxT - maxT) {
                         maxTotal = maxT;
                         maxTotal.name = user.name;
-                        console.log('total', maxTotal.won + maxTotal.bounty - maxTotal.buyIn)
                     }
 
 

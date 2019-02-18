@@ -119,7 +119,6 @@ class Home extends Component {
     filterUser(users) {
         if (!_.isNil(this.state.search) || this.state.search === '') {
             return _.filter(users, (user) => {
-                console.log("filter", user.name, this.state.search, _.includes(user.name.toLowerCase(), this.state.search.toLowerCase()));
                 return _.includes(user.name.toLowerCase(), this.state.search.toLowerCase());
             });
         } else {
@@ -128,6 +127,7 @@ class Home extends Component {
     }
 
     renderUsers() {
+        console.log("Home Userslist getData");
         const {users} = this.props.data;
         const {date, today, filtered} = this.state;
 
@@ -171,7 +171,6 @@ class Home extends Component {
         }*/
 
     handleKeyPress(target) {
-        console.log("key pressed");
         if (target.charCode === 13) {
             this.setState({
                 showDate: false,

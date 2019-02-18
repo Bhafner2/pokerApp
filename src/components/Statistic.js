@@ -118,7 +118,6 @@ class Statistic extends React.Component {
 
 
     handleKeyPress(target) {
-        console.log("key pressed");
         if (target.charCode === 13) {
             console.log("enter pressed");
             this.toggle()
@@ -129,6 +128,7 @@ class Statistic extends React.Component {
     }
 
     async getData() {
+        console.log("Statistic getData");
         this.init();
         const {user} = this.props;
         const {users} = this.props.data;
@@ -158,8 +158,6 @@ class Statistic extends React.Component {
             filteredGames = _.sortBy(filteredGames, function (g) {
                 return g.date;
             });
-
-            console.log("filtered games ", filteredGames);
 
             buyIns = _.map(filteredGames, (game) => {
                 return -game.buyIn;
