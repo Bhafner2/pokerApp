@@ -195,7 +195,7 @@ class GeneralStatistic extends React.Component {
             for (let i in users) {
                 let user = {...users[i]};
 
-                usersButtons.push(user.name);
+                usersButtons.push(user);
                 if (_.indexOf(this.state.filteredUsers, user.name) >= 0) {
                     user.games = _.filter(user.games, function (g) {
                         if (_.isNil(g) || _.isNil(g.date)) {
@@ -622,15 +622,15 @@ class GeneralStatistic extends React.Component {
                         </Row>
                         <Row style={{paddingTop: "6px"}}>
                             {!this.state.reload ?
-                                this.state.usersButtons.map((name, i) =>
+                                this.state.usersButtons.map((user, i) =>
                                     <Col xs={4} style={{paddingTop: "6px"}} key={i}>
-                                        <Button size={"sm"} outline color={"primary"} value={name}
-                                                active={!this.isFiltered(name)}
+                                        <Button size={"sm"} outline color={"primary"} value={user.name}
+                                                active={!this.isFiltered(user)}
                                                 onClick={this.userFilter}
-                                                key={"filter" + name}
+                                                key={"filter" + user.name}
                                                 style={{fontSize: "0.8em"}}
                                         >
-                                            {name}
+                                            {user.name}
                                         </Button>
                                     </Col>
                                 ) : <div/>}
@@ -645,8 +645,8 @@ class GeneralStatistic extends React.Component {
     }
 
 
-    isFiltered(name) {
-        return _.indexOf(this.state.filteredUsers, name) >= 0;
+    isFiltered(user) {
+        return _.indexOf(this.state.filteredUsers, user.name) >= 0 || _.isNil(user.buyIn);
     }
 
     userFilter(evt) {

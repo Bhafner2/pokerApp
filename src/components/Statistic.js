@@ -86,16 +86,6 @@ class Statistic extends React.Component {
     }
 
     toggle() {
-        if (this.props.fromDate !== undefined) {
-            this.setState({
-                fromDate: this.props.fromDate,
-            })
-        } else {
-            this.setState({
-                fromDate: '2018-01-01',
-            });
-        }
-
         if (!this.state.modal) {
             const months = 6;
             let d = new Date(this.props.today);
@@ -106,8 +96,8 @@ class Statistic extends React.Component {
                 dateOk: true,
                 activeTab: '1',
                 showFilter: false,
+                fromDate: this.props.fromDate || moment(d).format('YYYY-MM-DD') || '2018-01-01',
                 toDate: this.props.today,
-                fromDate: moment(d).format('YYYY-MM-DD'),
             });
         } else {
             this.setState({
@@ -134,19 +124,11 @@ class Statistic extends React.Component {
         const {users} = this.props.data;
         const from = new Date(this.state.fromDate);
         const to = new Date(this.state.toDate);
-
+        let filtered;
         const actualUser = _.filter(users, (u) => {
             return user.name === u.name
         })[0];
-        if (this.state.fromDate === "2018-01-01" && this.state.toDate === this.props.today) {
-            this.setState({
-                filtered: false,
-            })
-        } else {
-            this.setState({
-                filtered: true,
-            })
-        }
+        filtered = !(this.state.fromDate === "2018-01-01" && this.state.toDate === this.props.today);
         if (this.state.dateOk) {
             let filteredGames = _.filter(actualUser.games, function (g) {
                 if (_.isNil(g) || _.isNil(g.date)) {
@@ -204,6 +186,7 @@ class Statistic extends React.Component {
                     avgBuyIn: Math.round(sumBuyIn / filteredGames.length),
                     avgBounty: Math.round(sumBounty / filteredGames.length),
                     avgWon: Math.round(sumWon / filteredGames.length),
+                    filtered,
                 });
             });
 
