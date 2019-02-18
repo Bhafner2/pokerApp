@@ -71,7 +71,7 @@ class Odds extends React.Component {
 
         setTimeout(() => {
             this.calcOdds();
-        }, 100)
+        }, 500)
     }
 
     async calcOdds() {
