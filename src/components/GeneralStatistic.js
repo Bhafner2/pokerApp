@@ -211,7 +211,6 @@ class GeneralStatistic extends React.Component {
                     }
                     continue;
                 }
-                console.log("user will be filtered", usersButtons);
                 user.games = _.filter(user.games, function (g) {
                     if (_.isNil(g) || _.isNil(g.date)) {
                         return false;
@@ -307,9 +306,9 @@ class GeneralStatistic extends React.Component {
                     }
 
                     filteredUsers.push(user);
-                    console.log("users", filteredUsers);
                 }
             }
+            console.log("users", filteredUsers);
 
             usersTop = _.sortBy(filteredUsers, function (o) {
                 return -o.total
