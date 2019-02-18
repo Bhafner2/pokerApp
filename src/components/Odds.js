@@ -127,15 +127,10 @@ class Odds extends React.Component {
     }
 
     showResult() {
-        let {p1, p2, p3, p4, b, loading, result, error} = this.state;
+        let {result, error} = this.state;
 
-        console.log('loading', loading);
-
-        if (loading) {
-            return showLoading()
-        }
         if (error) {
-            return <div style={{color: "red"}}>check Notation</div>
+            return <div style={{color: "#DC3545"}}>check Notation</div>
         }
         if (_.isNil(result.equities)) {
             return <div/>
