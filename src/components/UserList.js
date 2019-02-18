@@ -221,7 +221,6 @@ class UserList extends React.Component {
     }
 
     handleKeyPress(target) {
-        console.log("key pressed");
         if (target.charCode === 13) {
             console.log("enter pressed");
             this.saveGame()

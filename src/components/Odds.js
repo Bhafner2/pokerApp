@@ -27,12 +27,10 @@ class Odds extends React.Component {
             p4: '',
             b: '',
             result: '',
-            dropDownOpen: false,
             loading: false,
             error: false,
         };
         this.toggle = this.toggle.bind(this);
-        this.toggleDropdown = this.toggleDropdown.bind(this);
         this.calcOdds = this.calcOdds.bind(this);
         this.getOdds = this.getOdds.bind(this);
         this.showResult = this.showResult.bind(this);
@@ -44,72 +42,88 @@ class Odds extends React.Component {
 
     toggle() {
         this.setState({
-            modal: !this.state.modal
+            modal: !this.state.modal,
+            loading: false,
+            error: false,
+            p1: '',
+            p2: '',
+            p3: '',
+            p4: '',
+            b: '',
+            result: '',
         });
     }
 
-    toggleDropdown() {
-        this.setState({
-            dropDownOpen: !this.state.dropDownOpen
-        });
+    handleKeyPress(target) {
+        if (target.charCode === 13 && !this.state.loading) {
+            console.log("enter pressed");
+            this.getOdds()
+        } else if (target.charCode === 27) {
+            console.log("esc pressed");
+            this.toggle()
+        }
     }
 
     getOdds() {
         this.setState({
             loading: true,
-        }, () => {
-            this.calcOdds();
         });
+
+        setTimeout(() => {
+            this.calcOdds();
+        }, 100)
     }
 
     async calcOdds() {
-        let error;
-        try {
-            let {p1, p2, p3, p4, b} = this.state;
-            let player1Cards;
-            let player2Cards;
-            let board;
+        if (this.state.loading) {
+            let error;
+            try {
+                let {p1, p2, p3, p4, b} = this.state;
+                let player1Cards;
+                let player2Cards;
+                let board;
 
-            if (!_.isNil(p1)) {
-                try {
-                    player1Cards = CardGroup.fromString(p1.toString());
-                } catch (e) {
+                if (!_.isNil(p1)) {
+                    try {
+                        player1Cards = CardGroup.fromString(p1.toString());
+                    } catch (e) {
+                    }
                 }
-            }
-            if (!_.isNil(p2)) {
-                try {
-                    player2Cards = CardGroup.fromString(p2.toString());
-                } catch (e) {
+                if (!_.isNil(p2)) {
+                    try {
+                        player2Cards = CardGroup.fromString(p2.toString());
+                    } catch (e) {
+                    }
                 }
-            }
-            if (!_.isNil(b)) {
-                try {
-                    board = CardGroup.fromString(b.toString());
-                } catch (e) {
+                if (!_.isNil(b)) {
+                    try {
+                        board = CardGroup.fromString(b.toString());
+                    } catch (e) {
+                    }
                 }
+
+
+                // JhJs
+                // JdQd
+                // 7d9dTs
+
+
+                const result = await OddsCalculator.calculate([player1Cards, player2Cards], board);
+
+                this.setState({result});
+                console.log(`Player #1 - ${player1Cards} - ${result.equities[0].getEquity()}%`);
+                console.log(`Player #2 - ${player2Cards} - ${result.equities[1].getEquity()}%`);
+                error = false
+            } catch (e) {
+                console.log(e);
+                error = true
             }
 
-
-            // JhJs
-            // JdQd
-            // 7d9dTs
-
-
-            const result = await OddsCalculator.calculate([player1Cards, player2Cards], board);
-
-            this.setState({result});
-            console.log(`Player #1 - ${player1Cards} - ${result.equities[0].getEquity()}%`);
-            console.log(`Player #2 - ${player2Cards} - ${result.equities[1].getEquity()}%`);
-            error = false
-        } catch (e) {
-            console.log(e);
-            error = true
+            this.setState({
+                loading: false,
+                error,
+            });
         }
-
-        this.setState({
-            loading: false,
-            error,
-        });
     }
 
     showResult() {
@@ -160,15 +174,16 @@ class Odds extends React.Component {
             <div>
                 <FontAwesomeIcon icon={faBalanceScale} onClick={this.toggle} size="lg"/>
 
-                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
+                       onKeyPress={() => this.handleKeyPress}>
                     <ModalHeader toggle={this.toggle}>Odds Calculator</ModalHeader>
                     <ModalBody>
                         <Row>
                             <Col>
                                 <b>Notation: <br/></b>
-                                h = ♥ heart<br/>
+                                h = <span style={{color: "#DC3545"}}>♥</span> heart<br/>
                                 s = ♠ spades<br/>
-                                d = ♦ diamonds<br/>
+                                d = <span style={{color: "#DC3545"}}>♦</span> diamonds<br/>
                                 c = ♣ clubs<br/>
                                 2-9, T, J, Q, K, A<br/>
                                 Write without spaces, e.g. AhTd <br/>
@@ -209,8 +224,7 @@ class Odds extends React.Component {
                             </Col>
                         </Row>
                         <br/>
-                        {loading ? showLoading() : <div/>}
-                        {this.showResult()}
+                        {loading ? showLoading() : this.showResult()}
                     </ModalBody>
                     <ModalFooter>
                         <Button color="primary" disabled={loading} onClick={this.getOdds}>Calc</Button>
