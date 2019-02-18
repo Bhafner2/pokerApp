@@ -228,7 +228,7 @@ class GeneralStatistic extends React.Component {
                         return o.won
                     });
 
-                    if (maxWon.won < maxW) {
+                    if (maxWon.won < maxW.won) {
                         maxWon = maxW;
                         maxWon.name = user.name;
                     }
@@ -237,7 +237,7 @@ class GeneralStatistic extends React.Component {
                         return o.buyIn
                     });
 
-                    if (maxBuyIn.buyIn < maxB) {
+                    if (maxBuyIn.buyIn < maxB.buyIn) {
                         maxBuyIn = maxB;
                         maxBuyIn.name = user.name;
                     }
@@ -246,7 +246,7 @@ class GeneralStatistic extends React.Component {
                         return o.bounty
                     });
 
-                    if (maxBounty.bounty < maxBo) {
+                    if (maxBounty.bounty < maxBo.bounty) {
                         maxBounty = maxBo;
                         maxBounty.name = user.name;
                     }
@@ -255,11 +255,10 @@ class GeneralStatistic extends React.Component {
                         return o.won - o.buyIn
                     });
 
-                    if (maxTotal.won + maxTotal.bounty - maxTotal.buyIn < maxT + maxT - maxT) {
+                    if (maxTotal.won + maxTotal.bounty - maxTotal.buyIn < maxT.won + maxT.bounty - maxT.buyIn) {
                         maxTotal = maxT;
                         maxTotal.name = user.name;
                     }
-
 
                     user.won = _.sumBy(user.games, function (o) {
                         return o.won
