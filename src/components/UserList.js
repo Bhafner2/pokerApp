@@ -154,6 +154,7 @@ class UserList extends React.Component {
 
     saveGame() {
         let found = false;
+        let save = true;
         const data = this.props.data;
         const users = data.users;
         const {user} = this.props;
@@ -179,6 +180,8 @@ class UserList extends React.Component {
                     user.games[i].buyIn = buyIn;
                     user.games[i].won = won;
                     user.games[i].bounty = bounty;
+                } else {
+                    save = false;
                 }
                 found = true;
                 console.log("game successfully updated " + user.name + ", date: " + date + " buyIn " + user.games[i].buyIn + " won " + user.games[i].won, " bounty ", user.games[i].bounty);
@@ -225,8 +228,9 @@ class UserList extends React.Component {
         data.games = _.sortBy(listOfGamesPlayed, (d) => {
             return -new Date(d)
         });
-
-        store.dispatch(saveUsers(data));
+        if (save) {
+            store.dispatch(saveUsers(data));
+        }
         this.props.saved();
     }
 
