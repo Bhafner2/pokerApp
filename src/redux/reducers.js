@@ -21,11 +21,12 @@ export default (state, action) => {
             console.log("reducer get user", state);
             return state;
         case GET_USERS_FULFILLED:
-            console.log("reducer get users fulfilled", action.users);
+            console.log("reducer get users fulfilled", action.data);
             let newState = {users: [], actualUser: {}, connErr: false, login: true, loginError: '', load: false,};
             return ({
                 ...newState,
-                users: action.users
+                users: action.data.users,
+                games: action.data.games
             });
         case CONNECTION_ERROR:
             console.log("reducer connection error", action.connErr);

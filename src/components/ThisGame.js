@@ -29,7 +29,6 @@ class ThisGame extends React.Component {
             avgBuyIn: 0,
             sumBuyIn: 0,
             sumBounty: 0,
-            dates: [],
             showFilter: false,
             filtered: false,
             onOpen: true,
@@ -40,14 +39,13 @@ class ThisGame extends React.Component {
         this.updateDate = this.updateDate.bind(this);
         this.chart = this.chart.bind(this);
         this.showFilter = this.showFilter.bind(this);
-        this.resetFilter = this.resetFilter.bind(this);
         this.getData = this.getData.bind(this);
     }
 
     toggle() {
         if (!this.state.modal) {
             this.setState({
-                date: this.props.today,
+                date: this.props.data.games[0],
                 dateOk: true,
                 activeTab: '1',
                 onOpen: true,
@@ -82,19 +80,6 @@ class ThisGame extends React.Component {
             let avgBuyIn = 0;
             let sumBuyIn = 0;
             let sumBounty = 0;
-            let dates = [];
-
-            for (let user in users) {
-                for (let game in users[user].games) {
-                    if (users[user].games[game].buyIn > 0) {
-                        dates.push(users[user].games[game].date);
-                    }
-                }
-            }
-            dates = _.uniqBy(dates);
-            dates = _.sortBy(dates, (d) => {
-                return -new Date(d)
-            });
 
             if (this.state.dateOk && !_.isNil(users)) {
 
@@ -129,17 +114,12 @@ class ThisGame extends React.Component {
                 avgBuyIn = 0;
             }
 
-            if (this.state.onOpen && sumBuyIn < 1) {
-                console.log("no games played today, goto game ", dates[0]);
-                this.updateDate(null, dates[0]);
-            }
             this.setState({
                 sum,
                 sumOk,
                 avgBuyIn,
                 sumBuyIn,
                 sumBounty,
-                dates,
                 filtered: this.state.date === this.props.today,
                 onOpen: false,
             });
@@ -287,27 +267,20 @@ class ThisGame extends React.Component {
         })
     }
 
-    resetFilter() {
-        this.setState({
-            showFilter: false,
-            date: this.props.today,
-        }, () => {
-            this.getData();
-        })
-    }
-
     filter() {
+        const {games} = this.props.data;
         return (
             <Collapse isOpen={this.state.showFilter}>
                 <Card outline>
                     <CardBody>
                         <Row>
-                            {this.state.dates.map((date, i) =>
-                                <Col xs={6} key={i}>
-                                    <Button color={"link"} value={date} onClick={this.updateDate}
-                                    >{moment(date).format('dd D.M.YY')}</Button>
-                                </Col>
-                            )}
+                            {_.isArray(games) ?
+                                this.props.data.games.map((date, i) =>
+                                    <Col xs={6} key={i}>
+                                        <Button color={"link"} value={date} onClick={this.updateDate}
+                                        >{moment(date).format('dd D.M.YY')}</Button>
+                                    </Col>
+                                ) : <div>No Games played </div>}
                         </Row>
                     </CardBody>
                 </Card>

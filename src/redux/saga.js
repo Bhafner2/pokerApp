@@ -30,14 +30,15 @@ export function* saveUsersSaga(action) {
 const users = firebase.database().ref('users/');
 
 function fetchUsers() {
-    users.on('value', (snapshot) => {
+    db.on('value', (snapshot) => {
+
         let users = [];
-        let data = snapshot.val();
-        for (let user in data) {
-            if (_.isNil(data[user].sumBuyIn)) {
+        let dbUsers = snapshot.val().users;
+        for (let user in dbUsers) {
+            if (_.isNil(dbUsers[user].sumBuyIn)) {
                 users.push({
-                    name: data[user].name,
-                    games: data[user].games,
+                    name: dbUsers[user].name,
+                    games: dbUsers[user].games,
                     sumBuyIn: 0,
                     sumWon: 0,
                     sumBounty: 0,
@@ -45,12 +46,12 @@ function fetchUsers() {
                 });
             } else {
                 users.push({
-                    name: data[user].name,
-                    games: data[user].games,
-                    sumBuyIn: data[user].sumBuyIn,
-                    sumWon: data[user].sumWon,
-                    sumBounty: data[user].sumBounty,
-                    gamesPlayed: data[user].gamesPlayed,
+                    name: dbUsers[user].name,
+                    games: dbUsers[user].games,
+                    sumBuyIn: dbUsers[user].sumBuyIn,
+                    sumWon: dbUsers[user].sumWon,
+                    sumBounty: dbUsers[user].sumBounty,
+                    gamesPlayed: dbUsers[user].gamesPlayed,
                 });
             }
         }
@@ -58,7 +59,20 @@ function fetchUsers() {
         store.getState();
 
         console.log("store state", store.getState());
-        store.dispatch(getUsersFulfilled(users));
+
+        let dbGames = snapshot.val().games;
+        let games = [];
+
+        for (let i in dbGames) {
+            games.push(dbGames[i]);
+        }
+        let data={
+            users,
+            games
+        };
+
+        store.dispatch(getUsersFulfilled(data));
+
     });
 }
 

@@ -1,5 +1,5 @@
 import {
-    CONNECTION_ERROR,
+    CONNECTION_ERROR, GET_GAMES_FULFILLED,
     GET_USERS,
     GET_USERS_FULFILLED,
     GET_USERS_REJECTED, LOAD, LOGIN, LOGIN_ERROR,
@@ -16,10 +16,10 @@ export function getUsers() {
     };
 }
 
-export function getUsersFulfilled(users) {
+export function getUsersFulfilled(data) {
     return {
         type: GET_USERS_FULFILLED,
-        users
+        data
     };
 }
 
