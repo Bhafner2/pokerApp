@@ -24,10 +24,10 @@ export function getUsersFulfilled(users) {
 }
 
 
-export function saveUsers(users) {
+export function saveUsers(data) {
     return {
         type: SAVE_USERS,
-        users
+        data
     };
 }
 

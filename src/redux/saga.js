@@ -16,19 +16,21 @@ export function* getUsersSaga() {
     }
 }
 
+const db = firebase.database().ref('/');
+
 export function* saveUsersSaga(action) {
     try {
-        yield call(db.set(action.users));
+        yield call(db.set(action.data));
     } catch (err) {
         console.log("saga save users err ", err);
         yield put(saveUsersRejected(err));
     }
 }
 
-const db = firebase.database().ref('users/');
+const users = firebase.database().ref('users/');
 
 function fetchUsers() {
-    db.on('value', (snapshot) => {
+    users.on('value', (snapshot) => {
         let users = [];
         let data = snapshot.val();
         for (let user in data) {

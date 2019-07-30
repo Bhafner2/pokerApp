@@ -154,8 +154,8 @@ class UserList extends React.Component {
 
     saveGame() {
         let found = false;
-        let save = true;
-        const {users} = this.props.data;
+        const data = this.props.data;
+        const users = data.users;
         const {user} = this.props;
         this.toggle();
         let {buyIn, won, bounty, date} = this.state;
@@ -179,8 +179,6 @@ class UserList extends React.Component {
                     user.games[i].buyIn = buyIn;
                     user.games[i].won = won;
                     user.games[i].bounty = bounty;
-                } else {
-                    save = false;
                 }
                 found = true;
                 console.log("game successfully updated " + user.name + ", date: " + date + " buyIn " + user.games[i].buyIn + " won " + user.games[i].won, " bounty ", user.games[i].bounty);
@@ -213,10 +211,22 @@ class UserList extends React.Component {
             }
 
             console.log("game successfully created " + user.name + ", date: " + this.state.date + " buyIn " + game.buyIn + " won " + game.won, " bounty ", game.bounty);
-            store.dispatch(saveUsers(users));
-        } else if (save) {
-            store.dispatch(saveUsers(users));
         }
+
+        let listOfGamesPlayed = [];
+        for (let i in users) {
+            for (let game in users[i].games) {
+                if (users[i].games[game].buyIn > 0) {
+                    listOfGamesPlayed.push(users[i].games[game].date);
+                }
+            }
+        }
+        listOfGamesPlayed = _.uniqBy(listOfGamesPlayed);
+        data.games = _.sortBy(listOfGamesPlayed, (d) => {
+            return -new Date(d)
+        });
+
+        store.dispatch(saveUsers(data));
         this.props.saved();
     }
 

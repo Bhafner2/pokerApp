@@ -105,7 +105,7 @@ class AddUser extends React.Component {
 
     addUser() {
         console.log("users befor adding ", this.props.data.users);
-        let users = Object.assign(this.props.data.users);
+        let data = Object.assign(this.props.data);
         let user = {
             name: '',
             games: [
@@ -117,11 +117,11 @@ class AddUser extends React.Component {
                 }]
         };
         user.name = this.state.username;
-        users.push(user);
+        data.users.push(user);
         console.log("save User :" + user.name);
         this.toggle();
         this.props.saved();
-        store.dispatch(saveUsers(users));
+        store.dispatch(saveUsers(data));
         this.setState({
             usernameOk: false,
             errorText: 'Enter a Username',
