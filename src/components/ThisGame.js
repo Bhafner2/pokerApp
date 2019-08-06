@@ -4,7 +4,7 @@ import {
     Modal,
     ModalBody,
     ModalFooter,
-    ModalHeader, Row,
+    ModalHeader, Row, TabPane,
 } from "reactstrap";
 import {connect} from "react-redux";
 import * as _ from 'lodash';
@@ -13,6 +13,8 @@ import HighchartsReact from 'highcharts-react-official'
 import moment from "moment";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faGamepad, faList} from '@fortawesome/free-solid-svg-icons';
+import GameDetail from "./GameDetail";
+import Hint from "./Hint";
 
 let filteredUsers = [];
 
@@ -29,6 +31,7 @@ class ThisGame extends React.Component {
             avgBuyIn: 0,
             sumBuyIn: 0,
             sumBounty: 0,
+            sumWon: 0,
             showFilter: false,
             filtered: false,
             onOpen: true,
@@ -80,6 +83,7 @@ class ThisGame extends React.Component {
             let avgBuyIn = 0;
             let sumBuyIn = 0;
             let sumBounty = 0;
+            let sumWon = 0;
 
             if (this.state.dateOk && !_.isNil(users)) {
 
@@ -104,6 +108,7 @@ class ThisGame extends React.Component {
                         sum = sum + plainUser.total;
                         sumBuyIn = sumBuyIn + (plainUser.buyIn * -1) - plainUser.bounty;
                         sumBounty = sumBounty + plainUser.bounty;
+                        sumWon = sumWon + plainUser.won;
                         filteredUsers.push(plainUser);
                     }
                 }
@@ -120,6 +125,7 @@ class ThisGame extends React.Component {
                 avgBuyIn,
                 sumBuyIn,
                 sumBounty,
+                sumWon,
                 filtered: this.state.date === this.props.today,
                 onOpen: false,
             });
@@ -314,19 +320,8 @@ class ThisGame extends React.Component {
                                 color: "#DC3545",
                                 paddingTop: "12px",
                             }}>
-                                <Row>
-                                    <Col xs="5">
-                                        <b>Checksum</b>
-                                    </Col>
-                                    <Col xs="2">
-                                        {this.state.sum}
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col xs="12" style={{fontSize: "0.8em"}}>
-                                        the result of won + bounty - buyIn, should be 0
-                                    </Col>
-                                </Row>
+                                <Hint sum={this.state.sum} won={this.state.sumWon} buyIn={this.state.sumBuyIn}
+                                      bounty={this.state.sumBounty}/>
                             </div>}
                         <Row style={{paddingTop: "12px"}}>
                             <Col xs="4">
