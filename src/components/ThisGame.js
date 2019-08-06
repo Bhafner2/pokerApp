@@ -4,7 +4,7 @@ import {
     Modal,
     ModalBody,
     ModalFooter,
-    ModalHeader, Row, TabPane,
+    ModalHeader, Row,
 } from "reactstrap";
 import {connect} from "react-redux";
 import * as _ from 'lodash';
@@ -13,7 +13,6 @@ import HighchartsReact from 'highcharts-react-official'
 import moment from "moment";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faGamepad, faList} from '@fortawesome/free-solid-svg-icons';
-import GameDetail from "./GameDetail";
 import Hint from "./Hint";
 
 let filteredUsers = [];
@@ -48,7 +47,7 @@ class ThisGame extends React.Component {
     toggle() {
         if (!this.state.modal) {
             this.setState({
-                date: this.props.data.games[0].date,
+                date: this.props.today,
                 dateOk: true,
                 activeTab: '1',
                 onOpen: true,
@@ -117,6 +116,11 @@ class ThisGame extends React.Component {
             sumOk = sum === 0;
             if (_.isNil(avgBuyIn) || _.isNaN(avgBuyIn)) {
                 avgBuyIn = 0;
+            }
+
+            if (this.state.onOpen && sumBuyIn < 1) {
+                console.log("no games played today, goto game ", this.props.data.games[0].date);
+                this.updateDate(null, this.props.data.games[0].date);
             }
 
             this.setState({

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Popover, PopoverHeader, PopoverBody, Row, Col} from 'reactstrap';
+import {Popover, PopoverHeader, PopoverBody, Row, Col, Button} from 'reactstrap';
 import moment from "moment/moment";
 import ThisGame from "./ThisGame";
 
@@ -8,6 +8,7 @@ class GameDetail extends React.Component {
         super(props);
 
         this.toggle = this.toggle.bind(this);
+        this.close = this.close.bind(this);
         this.state = {
             popoverOpen: false
         };
@@ -16,6 +17,12 @@ class GameDetail extends React.Component {
     toggle() {
         this.setState({
             popoverOpen: !this.state.popoverOpen
+        });
+    }
+
+    close() {
+        this.setState({
+            popoverOpen: false
         });
     }
 
@@ -33,15 +40,16 @@ class GameDetail extends React.Component {
                     <Col xs={3} onClick={this.toggle}>
                         {game.name}
                     </Col>
-                    <Col xs={1}>
+                    <Col xs={1} onClick={this.close}>
                         <ThisGame today={game.date} style={{height: "1em", backgroundColor: "white"}}/>
                     </Col>
-                    <Col xs={2}/>
+                    <Col xs={2} onClick={this.close}/>
                 </Row>
                 <Popover placement="top" isOpen={this.state.popoverOpen}
                          target={'list' + name}
                          toggle={this.toggle}>
-                    <PopoverHeader>The Game with the highest {name}</PopoverHeader>
+                    <PopoverHeader> <Button close onClick={this.close}/> The Game with the highest {name}
+                    </PopoverHeader>
                     <PopoverBody>
                         <Row>
                             <Col xs={4}>
