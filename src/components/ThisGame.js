@@ -45,7 +45,7 @@ class ThisGame extends React.Component {
     toggle() {
         if (!this.state.modal) {
             this.setState({
-                date: this.props.data.games[0],
+                date: this.props.data.games[0].date,
                 dateOk: true,
                 activeTab: '1',
                 onOpen: true,
@@ -275,10 +275,10 @@ class ThisGame extends React.Component {
                     <CardBody>
                         <Row>
                             {_.isArray(games) ?
-                                this.props.data.games.map((date, i) =>
+                                this.props.data.games.map((game, i) =>
                                     <Col xs={6} key={i}>
-                                        <Button color={"link"} value={date} onClick={this.updateDate}
-                                        >{moment(date).format('dd D.M.YY')}</Button>
+                                        <Button color={"link"} value={game.date} onClick={this.updateDate}
+                                        >{moment(game.date).format('dd D.M.YY')}</Button>
                                     </Col>
                                 ) : <div>No Games played </div>}
                         </Row>

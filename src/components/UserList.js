@@ -216,22 +216,50 @@ class UserList extends React.Component {
             console.log("game successfully created " + user.name + ", date: " + this.state.date + " buyIn " + game.buyIn + " won " + game.won, " bounty ", game.bounty);
         }
 
-        let listOfGamesPlayed = [];
-        for (let i in users) {
-            for (let game in users[i].games) {
-                if (users[i].games[game].buyIn > 0) {
-                    listOfGamesPlayed.push(users[i].games[game].date);
-                }
-            }
-        }
-        listOfGamesPlayed = _.uniqBy(listOfGamesPlayed);
-        data.games = _.sortBy(listOfGamesPlayed, (d) => {
-            return -new Date(d)
-        });
+        data.games = this.calcGames(users);
         if (save) {
             store.dispatch(saveUsers(data));
         }
         this.props.saved();
+    }
+
+    calcGames(users) {
+        let list = [];
+        for (let i in users) {
+            for (let j in users[i].games) {
+                if (users[i].games[j].buyIn > 0) {
+                    const game = users[i].games[j];
+                    const index = _.findIndex(list, o => {
+                        console.log("index o", o);
+                        return o.date === game.date
+                    });
+
+                    console.log("index", index, game.date, list);
+                    if (index !== -1) {
+                        const data = {
+                            date: game.date,
+                            buyIn: game.buyIn + list[index].buyIn,
+                            won: game.won + list[index].won,
+                            bounty: game.bounty + list[index].bounty,
+                            players: 1 + list[index].players,
+                        };
+                        list[index] = data;
+                    } else {
+                        list.push({
+                            date: game.date,
+                            buyIn: game.buyIn,
+                            won: game.won,
+                            bounty: game.bounty,
+                            players: 1,
+                        });
+                    }
+                }
+            }
+        }
+
+        return _.sortBy(list, (d) => {
+            return -new Date(d.date)
+        });
     }
 
     handleKeyPress(target) {
@@ -361,8 +389,8 @@ class UserList extends React.Component {
                         }
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this.saveGame} disabled={!this.state.dateOk}>Save</Button>
                         <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                        <Button color="primary" onClick={this.saveGame} disabled={!this.state.dateOk}>Save</Button>
                     </ModalFooter>
                 </Modal>
             </div>
