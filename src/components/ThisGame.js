@@ -4,7 +4,7 @@ import {
     Modal,
     ModalBody,
     ModalFooter,
-    ModalHeader, Row,
+    ModalHeader, Nav, NavItem, NavLink, Row, TabContent, TabPane,
 } from "reactstrap";
 import {connect} from "react-redux";
 import * as _ from 'lodash';
@@ -14,6 +14,8 @@ import moment from "moment";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faGamepad, faList} from '@fortawesome/free-solid-svg-icons';
 import Hint from "./Hint";
+import Games from "./Games";
+import classnames from "classnames";
 
 let filteredUsers = [];
 
@@ -34,6 +36,7 @@ class ThisGame extends React.Component {
             showFilter: false,
             filtered: false,
             onOpen: true,
+            activeTab: 1,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -42,6 +45,15 @@ class ThisGame extends React.Component {
         this.chart = this.chart.bind(this);
         this.showFilter = this.showFilter.bind(this);
         this.getData = this.getData.bind(this);
+        this.toggleTab = this.toggleTab.bind(this);
+    }
+
+    toggleTab(tab) {
+        if (this.state.activeTab !== tab) {
+            this.setState({
+                activeTab: tab,
+            });
+        }
     }
 
     toggle() {
@@ -308,68 +320,104 @@ class ThisGame extends React.Component {
             >
                 <ModalHeader toggle={this.toggle}>Game {moment(this.state.date).format('D.M.YY')}</ModalHeader>
                 <ModalBody>
-                    <FormGroup>
-                        <Row style={{align: "left"}}>
-                            <Col xs="5">
-                                <div onClick={this.showFilter}
-                                     style={{color: this.state.filtered ? "black" : "#007BFF"}}
-                                >
-                                    <FontAwesomeIcon icon={faList}/> Last Games
-                                </div>
-                            </Col>
-                        </Row>
-                        {this.filter()}
-                        {this.state.sumOk ? '' :
-                            <div style={{
-                                color: "#DC3545",
-                                paddingTop: "12px",
-                            }}>
-                                <Hint sum={this.state.sum} won={this.state.sumWon} buyIn={this.state.sumBuyIn}
-                                      bounty={this.state.sumBounty}/>
-                            </div>}
-                        <Row style={{paddingTop: "12px"}}>
-                            <Col xs="4">
-                                <b>Date</b>
-                            </Col>
-                            <Col xs="7">
-                                <div>{moment(this.state.date).format('dddd DD.MM.YYYY')}</div>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs="4">
-                                <b>Pot size</b>
-                            </Col>
-                            <Col xs="7">
-                                <div>{this.state.sumBuyIn}</div>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs="4">
-                                <b>Bounty's</b>
-                            </Col>
-                            <Col xs="7">
-                                <div>{this.state.sumBounty}</div>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs="4">
-                                <b>Avg BuyIn</b>
-                            </Col>
-                            <Col xs="7">
-                                <div>{this.state.avgBuyIn}</div>
-                            </Col>
-                        </Row>
-                    </FormGroup>
-                    <Row>
-                        <Col>
-                            <HighchartsReact
-                                style={{visibility: this.state.dateOk ? 'visible' : 'hidden'}}
-                                highcharts={Highcharts}
-                                options={this.state.options}
-                            />
-                        </Col>
-                    </Row>
-
+                    <Nav tabs>
+                        <NavItem>
+                            <NavLink
+                                id={'game'} key={'game'}
+                                className={classnames({active: this.state.activeTab === '1'})}
+                                onClick={() => {
+                                    this.toggleTab('1');
+                                }}
+                            >
+                                Single Game
+                            </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink
+                                className={classnames({active: this.state.activeTab === '2'})}
+                                onClick={() => {
+                                    this.toggleTab('2');
+                                }}
+                            >
+                                All Games
+                            </NavLink>
+                        </NavItem>
+                    </Nav>
+                    <TabContent activeTab={this.state.activeTab}>
+                        <TabPane tabId="1">
+                            <div>
+                                <br/>
+                                <FormGroup>
+                                    <Row style={{align: "left"}}>
+                                        <Col xs="5">
+                                            <div onClick={this.showFilter}
+                                                 style={{color: this.state.filtered ? "black" : "#007BFF"}}
+                                            >
+                                                <FontAwesomeIcon icon={faList}/> Last Games
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                    {this.filter()}
+                                    {this.state.sumOk ? '' :
+                                        <div style={{
+                                            color: "#DC3545",
+                                            paddingTop: "12px",
+                                        }}>
+                                            <Hint sum={this.state.sum} won={this.state.sumWon}
+                                                  buyIn={this.state.sumBuyIn}
+                                                  bounty={this.state.sumBounty}/>
+                                        </div>}
+                                    <Row style={{paddingTop: "12px"}}>
+                                        <Col xs="4">
+                                            <b>Date</b>
+                                        </Col>
+                                        <Col xs="7">
+                                            <div>{moment(this.state.date).format('dddd DD.MM.YYYY')}</div>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col xs="4">
+                                            <b>Pot size</b>
+                                        </Col>
+                                        <Col xs="7">
+                                            <div>{this.state.sumBuyIn}</div>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col xs="4">
+                                            <b>Bounty's</b>
+                                        </Col>
+                                        <Col xs="7">
+                                            <div>{this.state.sumBounty}</div>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col xs="4">
+                                            <b>Avg BuyIn</b>
+                                        </Col>
+                                        <Col xs="7">
+                                            <div>{this.state.avgBuyIn}</div>
+                                        </Col>
+                                    </Row>
+                                </FormGroup>
+                                <Row>
+                                    <Col>
+                                        <HighchartsReact
+                                            style={{visibility: this.state.dateOk ? 'visible' : 'hidden'}}
+                                            highcharts={Highcharts}
+                                            options={this.state.options}
+                                        />
+                                    </Col>
+                                </Row>
+                            </div>
+                        </TabPane>
+                    </TabContent>
+                    <TabContent activeTab={this.state.activeTab}>
+                        <TabPane tabId="2">
+                            <br/>
+                            <Games games={this.props.data.games}/>
+                        </TabPane>
+                    </TabContent>
                 </ModalBody>
                 <ModalFooter>
                     <Button color="secondary" onClick={this.toggle}>Exit</Button>
