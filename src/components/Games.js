@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Button, ButtonGroup, Card, CardBody, Col, Collapse, Row,
+    Button, ButtonGroup, Card, CardBody, Col, Collapse, FormGroup, Row,
 } from "reactstrap";
 import {connect} from "react-redux";
 import * as _ from 'lodash';
@@ -18,25 +18,38 @@ class Games extends React.Component {
             filtered: false,
             showFilter: false,
             filterAmount: 0,
+            filteredGames: [],
         };
         this.chart = this.chart.bind(this);
         this.showFilter = this.showFilter.bind(this);
         this.resetFilter = this.resetFilter.bind(this);
         this.filterGame = this.filterGame.bind(this);
+        this.applyFilter = this.applyFilter.bind(this);
 
     }
 
     componentDidMount() {
-        this.chart()
+        this.applyFilter()
     }
 
-    chart() {
+    applyFilter() {
+
         const {games} = this.props;
+
         const {filterAmount} = this.state;
         let filteredGames = games;
         if (filterAmount !== 0) {
             filteredGames = _.take(games, filterAmount);
         }
+        this.setState({
+            filteredGames
+        }, () => {
+            this.chart();
+        })
+    }
+
+    chart() {
+        const {filteredGames} = this.state;
 
         this.setState({
             options: {
@@ -136,7 +149,7 @@ class Games extends React.Component {
             filterAmount: evt.target.value,
             filtered: evt.target.value !== 0,
         }, () => {
-            this.chart();
+            this.applyFilter();
         })
     }
 
@@ -146,7 +159,7 @@ class Games extends React.Component {
             filterAmount: 0,
             filtered: false,
         }, () => {
-            this.chart();
+            this.applyFilter();
         })
     }
 
@@ -163,17 +176,21 @@ class Games extends React.Component {
                 <Card outline>
                     <CardBody>
                         <Row>
-                            <Col xs={3}>
-                                <Button color={"link"} value={5} onClick={this.filterGame}>last 5</Button>
+                            <Col xs={3} style={{paddingRight: "0.2em", paddingLeft: "1em"}}>
+                                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
+                                        color={"link"} value={5} onClick={this.filterGame}>last 5</Button>
                             </Col>
-                            <Col xs={3}>
-                                <Button color={"link"} value={10} onClick={this.filterGame}>last 10</Button>
+                            <Col xs={3} style={{paddingRight: "0.2em", paddingLeft: "0.2em"}}>
+                                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
+                                        color={"link"} value={10} onClick={this.filterGame}>last 10</Button>
                             </Col>
-                            <Col xs={3}>
-                                <Button color={"link"} value={20} onClick={this.filterGame}>last 20</Button>
+                            <Col xs={3} style={{paddingRight: "0.2em", paddingLeft: "0.2em"}}>
+                                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
+                                        color={"link"} value={20} onClick={this.filterGame}>last 20</Button>
                             </Col>
-                            <Col xs={3}>
-                                <Button color={"link"} value={30} onClick={this.filterGame}>last 30</Button>
+                            <Col xs={3} style={{paddingRight: "1em", paddingLeft: "0.2em"}}>
+                                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
+                                        color={"link"} value={30} onClick={this.filterGame}>last 30</Button>
                             </Col>
                         </Row>
                     </CardBody>
@@ -183,6 +200,7 @@ class Games extends React.Component {
 
 
     render() {
+        const {filteredGames} = this.state;
         return (
             <div>
                 <Row style={{align: "left"}}>
@@ -207,10 +225,6 @@ class Games extends React.Component {
                 <Row>
                     <Col>
                         <HighchartsReact
-                            style={{
-                                position: "relative",
-                                width: "100%"
-                            }}
                             highcharts={Highcharts}
                             options={this.state.options}
                         />
