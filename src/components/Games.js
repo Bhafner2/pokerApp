@@ -103,7 +103,7 @@ class Games extends React.Component {
                         enabled: false,
                     },
                 }, {
-                    name: 'BuyIn',
+                    name: 'Buy In',
                     stack: 'data',
                     type: 'column',
                     data: _.map(filteredGames, (u) => {
@@ -115,7 +115,7 @@ class Games extends React.Component {
                         enabled: false,
                     },
                 }, {
-                    name: 'Avg BuyIn',
+                    name: 'Avg Buy In',
                     type: 'spline',
                     data: _.map(filteredGames, (u) => {
                         return (Math.round((u.buyIn / u.players) * 10) / 10)
