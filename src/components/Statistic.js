@@ -658,7 +658,7 @@ class Statistic extends React.Component {
                                                 <b>balance</b>
                                             </Col>
                                             <Col xs={4}>
-                                                {showNumber(sumTotal)}
+                                                <b>{sumTotal > 0 ? `+ ${showNumber(sumTotal)}` : showNumber(sumTotal)}</b>
                                             </Col>
                                         </Row>
                                         <Row style={{paddingTop: "12px"}}>
