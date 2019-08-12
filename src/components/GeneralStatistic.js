@@ -1046,7 +1046,10 @@ class TopList extends React.Component {
                 <Col xs={1}>
                     <Statistic user={user}
                                fromDate={from}
-                               today={to}/></Col>
+                               today={to}
+                               toggle={false}
+                               resetToggle={(v) => (v)}
+                    /></Col>
                 <Col xs={2}/>
             </Row>
         );

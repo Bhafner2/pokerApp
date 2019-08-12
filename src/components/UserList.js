@@ -20,6 +20,7 @@ class UserList extends React.Component {
             bounty: 0,
             date: props.date,
             dateOk: true,
+            stat: false,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -32,6 +33,7 @@ class UserList extends React.Component {
         this.updateDate = this.updateDate.bind(this);
         this.isToday = this.isToday.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
+        this.toggleStat = this.toggleStat.bind(this);
     }
 
     isToday() {
@@ -59,6 +61,12 @@ class UserList extends React.Component {
                 modal: false,
             });
         }
+    }
+
+    toggleStat() {
+        this.setState({
+            stat: !this.state.stat
+        })
     }
 
 
@@ -292,11 +300,14 @@ class UserList extends React.Component {
                                style={{color: this.props.blue ? "#007BFF" : "black"}}>
                     <Row>
                         <Col xs="4">
-                            <Statistic user={user} today={this.props.date}/>
+                            <Statistic user={user} today={this.props.date} toggle={this.state.stat}
+                                       resetToggle={() => {
+                                           this.setState({stat: false})
+                                       }}/>
                         </Col>
 
                         <Col xs="4">
-                            <div onClick={this.toggle}>
+                            <div onClick={this.toggleStat}>
                                 <b>{user.name}</b>
                             </div>
                         </Col>

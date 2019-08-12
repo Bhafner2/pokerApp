@@ -86,6 +86,7 @@ class Statistic extends React.Component {
     }
 
     toggle() {
+        this.props.resetToggle();
         if (!this.state.modal) {
             this.setState({
                 modal: true,
@@ -439,6 +440,9 @@ class Statistic extends React.Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps !== this.props) {
             this.getData();
+        }
+        if (this.props.toggle === true) {
+            this.toggle()
         }
     }
 
