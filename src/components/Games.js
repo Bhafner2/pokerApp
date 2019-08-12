@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Button, ButtonGroup, Card, CardBody, Col, Collapse, Row,
+    Button, ButtonGroup, Card, CardBody, Col, Collapse, Row, Table,
 } from "reactstrap";
 import {connect} from "react-redux";
 import * as _ from 'lodash';
@@ -228,61 +228,37 @@ class Games extends React.Component {
                     </Col>
                 </Row>
                 {this.filter()}
-                <Row style={{paddingTop: "12px"}}>
-                    <Col>
-                    </Col>
-                    <Col>
-                        <b>Sum</b>
-                    </Col>
-                    <Col>
-                        <b>Max</b>
-                    </Col>
-                    <Col>
-                        <b>Avg</b>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <b>Buy In's</b>
-                    </Col>
-                    <Col>
-                        {showNumber(_.sumBy(filteredGames, 'won'))}
-                    </Col>
-                    <Col>
-                        {showNumber(_.maxValue(filteredGames, 'won'))}
-                    </Col>
-                    <Col>
-                        {showNumber(_.meanBy(filteredGames, 'won'))}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <b>Bounties</b>
-                    </Col>
-                    <Col>
-                        {showNumber(_.sumBy(filteredGames, 'bounty'))}
-                    </Col>
-                    <Col>
-                        {showNumber(_.maxValue(filteredGames, 'bounty'))}
-                    </Col>
-                    <Col>
-                        {showNumber(_.meanBy(filteredGames, 'bounty'))}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <b>Players</b>
-                    </Col>
-                    <Col>
-                        {showNumber(_.sumBy(filteredGames, 'players'))}
-                    </Col>
-                    <Col>
-                        {showNumber(_.maxValue(filteredGames, 'players'))}
-                    </Col>
-                    <Col>
-                        {showNumber(_.meanBy(filteredGames, 'players'))}
-                    </Col>
-                </Row>
+                <br/>
+                <Table borderless size="sm" style={{paddingTop: "12px"}}>
+                    <thead>
+                    <tr>
+                        <th/>
+                        <th>Sum</th>
+                        <th>Max</th>
+                        <th>Avg</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th>Buy In's</th>
+                        <td>{showNumber(_.sumBy(filteredGames, 'won'))}</td>
+                        <td>{showNumber(_.maxValue(filteredGames, 'won'))}</td>
+                        <td>{showNumber(_.meanBy(filteredGames, 'won'))}</td>
+                    </tr>
+                    <tr>
+                        <th>Bounty</th>
+                        <td>{showNumber(_.sumBy(filteredGames, 'bounty'))}</td>
+                        <td>{showNumber(_.maxValue(filteredGames, 'bounty'))}</td>
+                        <td>{showNumber(_.meanBy(filteredGames, 'bounty'))}</td>
+                    </tr>
+                    <tr>
+                        <th>Players</th>
+                        <td>{showNumber(_.sumBy(filteredGames, 'players'))}</td>
+                        <td>{showNumber(_.maxValue(filteredGames, 'players'))}</td>
+                        <td>{showNumber(_.meanBy(filteredGames, 'players'))}</td>
+                    </tr>
+                    </tbody>
+                </Table>
                 <Row style={{paddingTop: "12px"}}>
                     <Col>
                         <HighchartsReact
