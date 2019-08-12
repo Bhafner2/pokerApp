@@ -688,7 +688,6 @@ class GeneralStatistic extends React.Component {
         this.setState({
             options: {
                 chart: {
-                    height: 300,
                     type: 'spline',
                 },
                 title: {

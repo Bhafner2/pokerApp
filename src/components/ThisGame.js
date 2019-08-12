@@ -158,7 +158,6 @@ class ThisGame extends React.Component {
         this.setState({
             options: {
                 chart: {
-                    height: 330,
                     type: 'spline',
                 },
                 title: {
