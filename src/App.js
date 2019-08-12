@@ -33,7 +33,7 @@ let timeoutError;
 let timeoutConn;
 
 export function showNumber(number) {
-    if (_.isNil(number) || _.isNaN(number)) {
+    if (_.isNil(number) || _.isNaN(number) || isNaN(number)) {
         return 0;
     }
     if (number >= 1000000) {

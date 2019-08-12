@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Button, ButtonGroup, Card, CardBody, Col, Collapse, FormGroup, Row,
+    Button, ButtonGroup, Card, CardBody, Col, Collapse, Row,
 } from "reactstrap";
 import {connect} from "react-redux";
 import * as _ from 'lodash';
@@ -9,6 +9,7 @@ import HighchartsReact from 'highcharts-react-official'
 import moment from "moment";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFilter} from "@fortawesome/free-solid-svg-icons";
+import {showNumber} from "../App";
 
 class Games extends React.Component {
     constructor(props) {
@@ -54,7 +55,6 @@ class Games extends React.Component {
         this.setState({
             options: {
                 chart: {
-                    height: 330,
                     type: 'spline',
                 },
                 title: {
@@ -200,7 +200,13 @@ class Games extends React.Component {
 
 
     render() {
-        const {filteredGames} = this.state;
+        const {filteredGames} = this.state || [];
+        _.mixin({
+            maxValue: (xs, it) => {
+                const fn = _.isFunction(it) ? it : _.property(it);
+                return fn(_.maxBy(xs, fn))
+            }
+        });
         return (
             <div>
                 <Row style={{align: "left"}}>
@@ -222,18 +228,73 @@ class Games extends React.Component {
                     </Col>
                 </Row>
                 {this.filter()}
+                <Row style={{paddingTop: "12px"}}>
+                    <Col>
+                    </Col>
+                    <Col>
+                        <b>Sum</b>
+                    </Col>
+                    <Col>
+                        <b>Max</b>
+                    </Col>
+                    <Col>
+                        <b>Avg</b>
+                    </Col>
+                </Row>
                 <Row>
+                    <Col>
+                        <b>Buy In's</b>
+                    </Col>
+                    <Col>
+                        {showNumber(_.sumBy(filteredGames, 'won'))}
+                    </Col>
+                    <Col>
+                        {showNumber(_.maxValue(filteredGames, 'won'))}
+                    </Col>
+                    <Col>
+                        {showNumber(_.meanBy(filteredGames, 'won'))}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <b>Bounties</b>
+                    </Col>
+                    <Col>
+                        {showNumber(_.sumBy(filteredGames, 'bounty'))}
+                    </Col>
+                    <Col>
+                        {showNumber(_.maxValue(filteredGames, 'bounty'))}
+                    </Col>
+                    <Col>
+                        {showNumber(_.meanBy(filteredGames, 'bounty'))}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <b>Players</b>
+                    </Col>
+                    <Col>
+                        {showNumber(_.sumBy(filteredGames, 'players'))}
+                    </Col>
+                    <Col>
+                        {showNumber(_.maxValue(filteredGames, 'players'))}
+                    </Col>
+                    <Col>
+                        {showNumber(_.meanBy(filteredGames, 'players'))}
+                    </Col>
+                </Row>
+                <Row style={{paddingTop: "12px"}}>
                     <Col>
                         <HighchartsReact
                             highcharts={Highcharts}
                             options={this.state.options}
+                            containerProps={{style: {width: "100%"}}}
                         />
                     </Col>
                 </Row>
             </div>);
     }
 }
-
 
 const mapStateToProps = state => {
     return {}
