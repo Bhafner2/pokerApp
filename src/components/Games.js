@@ -240,13 +240,13 @@ class Games extends React.Component {
                     </thead>
                     <tbody>
                     <tr>
-                        <th>Buy In's</th>
+                        <th>Pot size</th>
                         <td>{showNumber(_.sumBy(filteredGames, 'won'))}</td>
                         <td>{showNumber(_.maxValue(filteredGames, 'won'))}</td>
                         <td>{showNumber(_.meanBy(filteredGames, 'won'))}</td>
                     </tr>
                     <tr>
-                        <th>Bounty</th>
+                        <th>Bounty's</th>
                         <td>{showNumber(_.sumBy(filteredGames, 'bounty'))}</td>
                         <td>{showNumber(_.maxValue(filteredGames, 'bounty'))}</td>
                         <td>{showNumber(_.meanBy(filteredGames, 'bounty'))}</td>
