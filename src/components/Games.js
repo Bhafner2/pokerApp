@@ -72,8 +72,7 @@ class Games extends React.Component {
                         color: 'lightGrey',
                         dashStyle: 'shortdash',
                         width: 0.5,
-                    }],
-                    opposite: true
+                    }]
                 }, { // Secondary yAxis
                     title: {
                         text: ''
@@ -84,6 +83,8 @@ class Games extends React.Component {
                         dashStyle: 'shortdash',
                         width: 0.5,
                     }],
+                    opposite: true,
+
                 }],
                 plotOptions: {
                     column: {
@@ -243,6 +244,16 @@ class Games extends React.Component {
                     </Col>
                 </Row>
                 {this.filter()}
+
+                <Row style={{paddingTop: "12px"}}>
+                    <Col>
+                        <HighchartsReact
+                            highcharts={Highcharts}
+                            options={this.state.options}
+                            containerProps={{style: {width: "100%"}}}
+                        />
+                    </Col>
+                </Row>
                 <br/>
                 <Table borderless size="sm" style={{paddingTop: "12px"}}>
                     <thead>
@@ -280,15 +291,6 @@ class Games extends React.Component {
                     </tr>
                     </tbody>
                 </Table>
-                <Row style={{paddingTop: "12px"}}>
-                    <Col>
-                        <HighchartsReact
-                            highcharts={Highcharts}
-                            options={this.state.options}
-                            containerProps={{style: {width: "100%"}}}
-                        />
-                    </Col>
-                </Row>
             </div>);
     }
 }
