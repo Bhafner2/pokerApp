@@ -63,7 +63,7 @@ class Games extends React.Component {
                         fontWeight: 'bold'
                     },
                 },
-                yAxis: {
+                yAxis: [{ // Primary yAxis
                     title: {
                         text: ''
                     },
@@ -73,7 +73,18 @@ class Games extends React.Component {
                         dashStyle: 'shortdash',
                         width: 0.5,
                     }],
-                },
+                    opposite: true
+                }, { // Secondary yAxis
+                    title: {
+                        text: ''
+                    },
+                    plotLines: [{
+                        value: 0,
+                        color: 'lightGrey',
+                        dashStyle: 'shortdash',
+                        width: 0.5,
+                    }],
+                }],
                 plotOptions: {
                     column: {
                         stacking: 'normal'
@@ -94,6 +105,7 @@ class Games extends React.Component {
                     name: 'Bounty',
                     stack: 'data',
                     type: 'column',
+                    yAxis: 0,
                     data: _.map(filteredGames, (u) => {
                         return u.bounty
                     }),
@@ -103,9 +115,10 @@ class Games extends React.Component {
                         enabled: false,
                     },
                 }, {
-                    name: 'Buy In',
+                    name: 'Pot size',
                     stack: 'data',
                     type: 'column',
+                    yAxis: 0,
                     data: _.map(filteredGames, (u) => {
                         return u.won
                     }),
@@ -117,6 +130,7 @@ class Games extends React.Component {
                 }, {
                     name: 'Avg Buy In',
                     type: 'spline',
+                    yAxis: 1,
                     data: _.map(filteredGames, (u) => {
                         return (Math.round((u.buyIn / u.players) * 10) / 10)
                     }),
@@ -128,6 +142,7 @@ class Games extends React.Component {
                     name: 'Players',
                     stack: 'none',
                     type: 'column',
+                    yAxis: 1,
                     data: _.map(filteredGames, (u) => {
                         return u.players
                     }),
@@ -239,6 +254,12 @@ class Games extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
+                    <tr>
+                        <th>Buy In's</th>
+                        <td>{showNumber(_.sumBy(filteredGames, 'buyIn'))}</td>
+                        <td>{showNumber(_.maxValue(filteredGames, 'buyIn'))}</td>
+                        <td>{showNumber(_.meanBy(filteredGames, 'buyIn'))}</td>
+                    </tr>
                     <tr>
                         <th>Pot size</th>
                         <td>{showNumber(_.sumBy(filteredGames, 'won'))}</td>

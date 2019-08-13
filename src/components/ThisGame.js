@@ -117,7 +117,7 @@ class ThisGame extends React.Component {
                             total: user.games[0].won + user.games[0].bounty - user.games[0].buyIn
                         };
                         sum = sum + plainUser.total;
-                        sumBuyIn = sumBuyIn + (plainUser.buyIn * -1) - plainUser.bounty;
+                        sumBuyIn = sumBuyIn + (plainUser.buyIn * -1);
                         sumBounty = sumBounty + plainUser.bounty;
                         sumWon = sumWon + plainUser.won;
                         filteredUsers.push(plainUser);
@@ -379,7 +379,7 @@ class ThisGame extends React.Component {
                                             <b>Pot size</b>
                                         </Col>
                                         <Col xs="7">
-                                            <div>{this.state.sumBuyIn}</div>
+                                            <div>{this.state.sumBuyIn - this.state.sumBounty}</div>
                                         </Col>
                                     </Row>
                                     <Row>

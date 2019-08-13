@@ -400,8 +400,15 @@ class UserList extends React.Component {
                         }
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="secondary" onClick={this.toggle}>Cancel</Button>
-                        <Button color="primary" onClick={this.saveGame} disabled={!this.state.dateOk}>Save</Button>
+                        {UserList.isAdmin() ?
+                            <span>
+                                <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                                <Button color="primary" onClick={this.saveGame}
+                                        disabled={!this.state.dateOk}>Save</Button>
+                            </span>
+                            :
+                            <Button color="secondary" onClick={this.toggle}>Exit</Button>
+                        }
                     </ModalFooter>
                 </Modal>
             </div>

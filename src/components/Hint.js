@@ -1,7 +1,5 @@
 import React from 'react';
-import {Popover, PopoverHeader, PopoverBody, Row, Col, Input, FormGroup} from 'reactstrap';
-import moment from "moment/moment";
-import ThisGame from "./ThisGame";
+import {Popover, PopoverHeader, PopoverBody, Row, Col, Input, Button} from 'reactstrap';
 
 class Hint extends React.Component {
     constructor(props) {
@@ -19,6 +17,7 @@ class Hint extends React.Component {
     toggle() {
         this.setState({
             popoverOpen: !this.state.popoverOpen
+
         });
     }
 
@@ -54,7 +53,8 @@ class Hint extends React.Component {
                 <Popover placement="top" isOpen={this.state.popoverOpen}
                          target={'error'}
                          toggle={this.toggle}>
-                    <PopoverHeader>Checksum error in Game: actual checksum is {sum}</PopoverHeader>
+                    <PopoverHeader> <Button close onClick={this.toggle}/> Checksum error in Game: actual checksum
+                        is {sum}</PopoverHeader>
                     <PopoverBody>
                         <Row>
                             <Col xs={5}>
