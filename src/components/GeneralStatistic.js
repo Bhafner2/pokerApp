@@ -496,20 +496,29 @@ class GeneralStatistic extends React.Component {
 
 
     usersPercentFilter(evt) {
+        let filteredUsers;
         let value = 25;
-        if (!_.isNil(evt) && !_.isNil(evt.target)) {
-            value = evt.target.value;
+
+        if (!_.isNil(this.state.userPercent) && this.state.userPercent.length > 0) {
+            if (!_.isNil(evt) && !_.isNil(evt.target)) {
+                value = evt.target.value;
+            }
+
+            let playedLess = _.filter(this.state.userPercent, function (u) {
+                return u.percent < value;
+            });
+
+            filteredUsers = _.map(playedLess, 'name');
+
+            console.log('filter players', filteredUsers);
+        } else {
+            const games = this.props.data.games.length;
+            filteredUsers = _.map(_.filter(this.props.data.users, (u) => {
+                return u.gamesPlayed < (games * value / 100)
+            }), 'name');
         }
 
-        console.log('filter players with less than ', value, '%');
-
-        let playedLess = _.filter(this.state.userPercent, function (u) {
-            return u.percent < value;
-        });
-
-        let filteredUsers = _.map(playedLess, 'name');
-
-        console.log('filter players', filteredUsers);
+        console.log('filter players with less than ', value, '%', filteredUsers);
 
         this.setState({
             filteredUsers,
