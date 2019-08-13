@@ -1,5 +1,7 @@
 import React from 'react';
 import {Popover, PopoverHeader, PopoverBody, Row, Col, Input, Button} from 'reactstrap';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faQuestionCircle} from "@fortawesome/free-solid-svg-icons";
 
 class Hint extends React.Component {
     constructor(props) {
@@ -44,6 +46,9 @@ class Hint extends React.Component {
                     <Col xs="2" onClick={this.toggle}>
                         {sum}
                     </Col>
+                    <Col xs="2">
+                        <FontAwesomeIcon icon={faQuestionCircle} onClick={this.toggle} size="lg"/>
+                    </Col>
                 </Row>
                 <Row>
                     <Col xs="12" style={{fontSize: "0.8em"}} onClick={this.toggle}>
@@ -53,8 +58,9 @@ class Hint extends React.Component {
                 <Popover placement="top" isOpen={this.state.popoverOpen}
                          target={'error'}
                          toggle={this.toggle}>
-                    <PopoverHeader> <Button close onClick={this.toggle}/> Checksum error in Game: actual checksum
-                        is {sum}</PopoverHeader>
+                    <PopoverHeader> <Button close onClick={this.toggle}/> Checksum error in Game:
+                        actual checksum is {sum}
+                    </PopoverHeader>
                     <PopoverBody>
                         <Row>
                             <Col xs={5}>
@@ -62,7 +68,7 @@ class Hint extends React.Component {
                             </Col>
                             <Col xs={4}>
                                 <Input type="text" name="per" id="per"
-                                       placeholder="bounty in percent"
+                                       placeholder="%"
                                        onChange={this.update}
                                        value={this.state.percent}
                                 />
