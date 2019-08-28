@@ -6,6 +6,7 @@ import {Button, Col, FormGroup, Input, Label, ListGroupItem, Row} from "reactstr
 import {loginError, setLoad} from "../redux/actions";
 import {store} from "../redux/store";
 import {showLoading} from "../App";
+import ButtonGroup from "reactstrap/es/ButtonGroup";
 
 class Login extends Component {
     constructor(props) {
@@ -68,6 +69,7 @@ class Login extends Component {
                                     />
                                 </FormGroup>
                             </Col>
+                            <Col xs={1}/>
                         </Row>
                         <Row>
                             <Col xs={1}/>
@@ -80,14 +82,15 @@ class Login extends Component {
                                     />
                                 </FormGroup>
                             </Col>
+                            <Col xs={1}/>
                         </Row>
                         <Row>
                             <Col xs={1}/>
                             <Col xs={10}>
-                                <FormGroup>
-                                    <Button type="primary" name="login" onClick={this.login}>Login</Button>
-                                </FormGroup>
+                                <Button style={{align: "right"}} color="primary" name="login"
+                                        onClick={this.login}>Login</Button>
                             </Col>
+                            <Col xs={1}/>
                         </Row>
                         <Row>
                             <Col xs={1}/>
@@ -96,6 +99,7 @@ class Login extends Component {
                                     <div style={{color: "red", fontSize: "0.8em"}}>{this.props.data.loginError}</div>
                                 </FormGroup>
                             </Col>
+                            <Col xs={1}/>
                         </Row>
                     </ListGroupItem>)}
             </div>

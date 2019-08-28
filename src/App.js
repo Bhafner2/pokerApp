@@ -76,6 +76,7 @@ class App extends Component {
                 App.logout();
             }
         });
+        // window.addEventListener("scroll", App.resizeHeaderOnScroll);
     }
 
     connectionCheck() {
@@ -138,15 +139,26 @@ class App extends Component {
         });
     }
 
+    static resizeHeaderOnScroll() {
+        const distanceY = window.pageYOffset || document.documentElement.scrollTop,
+            shrinkOn = 1,
+            headerEl = document.getElementById("js-header");
+        if (distanceY > shrinkOn) {
+            headerEl.classList.add("smaller");
+        } else {
+            headerEl.classList.remove("smaller");
+        }
+    }
+
     render() {
-        const AppVersion = 'v1.2.4';
+        const AppVersion = 'v1.2.5';
         const {connErr, login} = this.props.data;
         return (
             <div>
-                <header className="header">
+                <header className="header" id={"js-header"}>
                     <Row>
                         <Col xs="4">
-                            <img className="logo" src={logo} alt={"logo"}/>
+                            <img id={"logo"} src={logo} alt={"logo"}/>
                         </Col>
                         <Col xs="8">
                             <h1 id={"title"}>Poker Statistic</h1>
