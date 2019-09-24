@@ -57,6 +57,7 @@ class Statistic extends React.Component {
             bountys: [],
             dates: [],
             totals: [],
+            pie: {},
         };
 
         this.toggle = this.toggle.bind(this);
@@ -73,6 +74,7 @@ class Statistic extends React.Component {
         this.showFilter = this.showFilter.bind(this);
         this.resetFilter = this.resetFilter.bind(this);
         this.getData = this.getData.bind(this);
+        this.getPieChart = this.getPieChart.bind(this);
     }
 
 
@@ -125,13 +127,14 @@ class Statistic extends React.Component {
             const from = new Date(this.state.fromDate);
             const to = new Date(this.state.toDate);
             let filtered;
+            let filteredGames;
             const actualUser = _.filter(users, (u) => {
                 return user.name === u.name
             })[0];
             console.log("actual user ", actualUser);
             filtered = !(this.state.fromDate === "2018-01-01" && this.state.toDate === this.props.today);
             if (this.state.dateOk) {
-                let filteredGames = _.filter(actualUser.games, function (g) {
+                filteredGames = _.filter(actualUser.games, function (g) {
                     if (_.isNil(g) || _.isNil(g.date)) {
                         return false;
                     }
@@ -211,6 +214,13 @@ class Statistic extends React.Component {
                 this.init();
                 this.chart(dates, buyIns, wons, totals, bountys, trends, true);
             }
+            let games = _.filter(this.props.data.games, function (g) {
+                if (_.isNil(g) || _.isNil(g.date)) {
+                    return false;
+                }
+                return (from <= new Date(g.date) && to >= new Date(g.date)) && g.buyIn > 0;
+            });
+            this.getPieChart(games)
         }
     }
 
@@ -583,6 +593,79 @@ class Statistic extends React.Component {
             </Collapse>)
     }
 
+    getPieChart(games) {
+        let ranking = [];
+
+        for (let i in games) {
+            for (let j in games[i].rank) {
+                const r = games[i].rank[j];
+                if (r.name === this.props.user.name) {
+                    ranking.push({place: parseInt(j) + 1, won: r.won});
+                } else {
+                    ranking.push({place: 0, won: 0});
+                }
+            }
+        }
+        console.log("pie, ", ranking, _.filter(ranking, r => r.place === 0));
+        this.setState({
+            pie: {
+                chart: {
+                    type: 'pie'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                title: {
+                    text: 'Ranking',
+                    style: {
+                        fontWeight: 'bold'
+                    },
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: false
+                        },
+                        showInLegend: true
+                    }
+                },
+                legend: {
+                    itemMarginBottom: 12,
+                    itemStyle: {
+                        fontSize: '1.2em',
+                    },
+                },
+                series: [{
+                    name: "Ranking",
+                    colorByPoint: true,
+                    data: [{
+                        name: '1st',
+                        y: _.filter(ranking, r => r.place === 1).length,
+                        color: '#28A745',
+                    }, {
+                        name: '2nd',
+                        y: _.filter(ranking, r => r.place === 2).length,
+                        color: '#155724',
+                    }, {
+                        name: '3rd',
+                        y: _.filter(ranking, r => r.place === 3).length,
+                        color: '#CCE5FF',
+                    }, {
+                        name: '4th',
+                        y: _.filter(ranking, r => r.place === 4).length,
+                        color: '#D6D8D9',
+                    }, {
+                        name: 'None',
+                        y: _.filter(ranking, r => r.place === 0).length,
+                        color: '#DC3545',
+                    }]
+                }]
+            },
+        })
+    }
+
     render() {
         const {user} = this.props;
         const {sumWon, sumBuyIn, sumTotal, sumBounty, avgWon, avgBuyIn, avgTotal, avgBounty, maxWon, maxBuyIn, maxTotal, maxBounty, dates,} = this.state;
@@ -636,6 +719,16 @@ class Statistic extends React.Component {
                                         this.toggleTab('2');
                                     }}
                                 >
+                                    Ranking
+                                </NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink
+                                    className={classnames({active: this.state.activeTab === '3'})}
+                                    onClick={() => {
+                                        this.toggleTab('3');
+                                    }}
+                                >
                                     Table
                                 </NavLink>
                             </NavItem>
@@ -656,6 +749,19 @@ class Statistic extends React.Component {
                         </TabContent>
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="2">
+                                <br/>
+                                <Row>
+                                    <Col>
+                                        <HighchartsReact
+                                            highcharts={Highcharts}
+                                            options={this.state.pie}
+                                        />
+                                    </Col>
+                                </Row>
+                            </TabPane>
+                        </TabContent>
+                        <TabContent activeTab={this.state.activeTab}>
+                            <TabPane tabId="3">
                                 <br/>
                                 <Row>
                                     <Col>
