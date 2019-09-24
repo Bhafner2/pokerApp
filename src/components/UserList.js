@@ -231,36 +231,47 @@ class UserList extends React.Component {
         this.props.saved();
     }
 
-    calcGames(users) {
+    calcGames(users,) {
         let list = [];
         for (let i in users) {
             for (let j in users[i].games) {
                 if (users[i].games[j].buyIn > 0) {
                     const game = users[i].games[j];
-                    const index = _.findIndex(list, o => {
+                    let index = _.findIndex(list, o => {
                         console.log("index o", o);
                         return o.date === game.date
                     });
-
                     console.log("index", index, game.date, list);
-                    if (index !== -1) {
-                        const data = {
-                            date: game.date,
-                            buyIn: game.buyIn + list[index].buyIn,
-                            won: game.won + list[index].won,
-                            bounty: game.bounty + list[index].bounty,
-                            players: 1 + list[index].players,
-                        };
-                        list[index] = data;
-                    } else {
-                        list.push({
+
+                    let data = {};
+                    if (index === -1) {
+                        index = list.length;
+                        data = {
                             date: game.date,
                             buyIn: game.buyIn,
                             won: game.won,
                             bounty: game.bounty,
                             players: 1,
-                        });
+                            rank: [],
+                        };
+                    } else {
+                        data = {
+                            date: game.date,
+                            buyIn: game.buyIn + list[index].buyIn,
+                            won: game.won + list[index].won,
+                            bounty: game.bounty + list[index].bounty,
+                            players: 1 + list[index].players,
+                            rank: list[index].rank,
+                        };
                     }
+                    if (game.won > 0) {
+                        data.rank.push({
+                            name: users[i].name,
+                            won: game.won,
+                        });
+                        data.rank = _.sortBy(data.rank, (r) => -r.won);
+                    }
+                    list[index] = data;
                 }
             }
         }
