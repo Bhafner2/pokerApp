@@ -220,7 +220,8 @@ class Statistic extends React.Component {
                 }
                 return (from <= new Date(g.date) && to >= new Date(g.date)) && g.buyIn > 0;
             });
-            this.getPieChart(games)
+
+            this.getPieChart(games, dates.length)
         }
     }
 
@@ -593,20 +594,24 @@ class Statistic extends React.Component {
             </Collapse>)
     }
 
-    getPieChart(games) {
-        let ranking = [];
+    getRankingAmount(ranking, place) {
+        return _.filter(ranking, r => r.place === place).length
+    }
+
+    getPieChart(games, played) {
+        const ranking = [];
 
         for (let i in games) {
             for (let j in games[i].rank) {
                 const r = games[i].rank[j];
                 if (r.name === this.props.user.name) {
                     ranking.push({place: parseInt(j) + 1, won: r.won});
-                } else {
-                    ranking.push({place: 0, won: 0});
                 }
             }
         }
-        console.log("pie, ", ranking, _.filter(ranking, r => r.place === 0));
+
+        const notWon = played - _.sum([this.getRankingAmount(ranking, 1), this.getRankingAmount(ranking, 2), this.getRankingAmount(ranking, 3), this.getRankingAmount(ranking, 4)]);
+
         this.setState({
             pie: {
                 chart: {
@@ -642,23 +647,23 @@ class Statistic extends React.Component {
                     colorByPoint: true,
                     data: [{
                         name: '1st',
-                        y: _.filter(ranking, r => r.place === 1).length,
+                        y: this.getRankingAmount(ranking, 1),
                         color: '#28A745',
                     }, {
                         name: '2nd',
-                        y: _.filter(ranking, r => r.place === 2).length,
+                        y: this.getRankingAmount(ranking, 2),
                         color: '#155724',
                     }, {
                         name: '3rd',
-                        y: _.filter(ranking, r => r.place === 3).length,
+                        y: this.getRankingAmount(ranking, 3),
                         color: '#CCE5FF',
                     }, {
                         name: '4th',
-                        y: _.filter(ranking, r => r.place === 4).length,
+                        y: this.getRankingAmount(ranking, 4),
                         color: '#D6D8D9',
                     }, {
                         name: 'None',
-                        y: _.filter(ranking, r => r.place === 0).length,
+                        y: notWon,
                         color: '#DC3545',
                     }]
                 }]
