@@ -598,6 +598,11 @@ class Statistic extends React.Component {
         return _.filter(ranking, r => r.place === place).length
     }
 
+
+    getRankingSum(ranking, place) {
+        return _.sumBy(_.filter(ranking, r => r.place === place), 'won');
+    }
+
     getPieChart(games, played) {
         const ranking = [];
 
@@ -618,7 +623,9 @@ class Statistic extends React.Component {
                     type: 'pie'
                 },
                 tooltip: {
-                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    pointFormat: '<div>Percent: <b>{point.percentage:.1f}%</b> </div> <br/>' +
+                        '<div>Amount: <b>{point.y}</b> </div> <br/>' +
+                        '<div>Won: <b>{point.x}</b> </div>'
                 },
                 title: {
                     text: 'Ranking',
@@ -648,22 +655,27 @@ class Statistic extends React.Component {
                     data: [{
                         name: '1st',
                         y: this.getRankingAmount(ranking, 1),
+                        x: this.getRankingSum(ranking, 1),
                         color: '#28A745',
                     }, {
                         name: '2nd',
                         y: this.getRankingAmount(ranking, 2),
+                        x: this.getRankingSum(ranking, 2),
                         color: '#155724',
                     }, {
                         name: '3rd',
                         y: this.getRankingAmount(ranking, 3),
+                        x: this.getRankingSum(ranking, 3),
                         color: '#CCE5FF',
                     }, {
                         name: '4th',
                         y: this.getRankingAmount(ranking, 4),
+                        x: this.getRankingSum(ranking, 4),
                         color: '#D6D8D9',
                     }, {
                         name: 'None',
                         y: notWon,
+                        x: 0,
                         color: '#DC3545',
                     }]
                 }]
