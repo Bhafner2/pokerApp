@@ -110,15 +110,17 @@ class GeneralStatistic extends React.Component {
     toggle() {
         if (!this.state.modal) {
             this.setState({
-                toDate: this.props.today,
-                fromDate: '2018-01-01',
-                dateOk: true,
-                activeTab: '1',
-                showFilter: false,
-                getAvg: false,
-                reload: false,
-                modal: true,
-            });
+                    toDate: this.props.today,
+                    fromDate: '2018-01-01',
+                    dateOk: true,
+                    activeTab: '1',
+                    showFilter: false,
+                    getAvg: false,
+                    reload: false,
+                    modal: true,
+                }, () =>
+                    this.this12m()
+            );
         } else {
             this.setState({
                 modal: false,
@@ -1012,14 +1014,6 @@ class GeneralStatistic extends React.Component {
                             </Row>
                             <Row style={{paddingTop: "12px"}}>
                                 <Col xs={6}>
-                                    <b>Average</b> Buy In
-                                </Col>
-                                <Col xs={6}>
-                                    {avgBuyIn}
-                                </Col>
-                            </Row>
-                            <Row style={{paddingTop: "12px"}}>
-                                <Col xs={6}>
                                     <b>Played</b> games
                                 </Col>
                                 <Col xs={6}>
@@ -1032,6 +1026,14 @@ class GeneralStatistic extends React.Component {
                                 </Col>
                                 <Col xs={6}>
                                     {Math.round(avgPlayerPerGame)}
+                                </Col>
+                            </Row>
+                            <Row style={{paddingTop: "12px"}}>
+                                <Col xs={6}>
+                                    <b>Average</b> Buy In / Person
+                                </Col>
+                                <Col xs={6}>
+                                    {avgBuyIn}
                                 </Col>
                             </Row>
                         </TabPane>

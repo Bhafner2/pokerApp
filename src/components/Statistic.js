@@ -95,6 +95,8 @@ class Statistic extends React.Component {
                 showFilter: false,
                 fromDate: this.props.fromDate || '2018-01-01',
                 toDate: this.props.today,
+            }, () => {
+                this.this12m()
             });
         } else {
             this.setState({
@@ -272,7 +274,7 @@ class Statistic extends React.Component {
             x = values_x[v];
             y = x * m + b;
             result_values_x.push(x);
-            result_values_y.push(Math.round(y));
+            result_values_y.push(Math.round(y * 10) / 10);
         }
 
         return result_values_y;
