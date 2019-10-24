@@ -46,7 +46,8 @@ class GeneralStatistic extends React.Component {
             dateOk: true,
             activeTab: '1',
             filteredGames: [],
-            options: {},
+            groupChart: {},
+            totalChart: {},
             sumWon: 0,
             sumBuyIn: 0,
             sumTotal: 0,
@@ -695,9 +696,11 @@ class GeneralStatistic extends React.Component {
         users = _.sortBy(users, function (g) {
             return -g.total;
         });
-
         this.setState({
-            options: {
+            groupChart: {
+                global: {
+                    useUTC: false
+                },
                 chart: {
                     type: 'spline',
                 },
@@ -797,8 +800,78 @@ class GeneralStatistic extends React.Component {
                     },
                 },
                 ],
+            },
+            totalChart: {
+                chart: {
+                    type: 'spline',
+                },
+                title: {
+                    text: 'Total',
+                    style: {
+                        fontWeight: 'bold',
+                        display: 'none'
+                    },
+                },
+                yAxis: {
+                    title: {
+                        text: ''
+                    },
+                    plotLines: [{
+                        value: 0,
+                        color: 'lightGrey',
+                        dashStyle: 'shortdash',
+                        width: 0.5,
+                    }],
+                },
+                xAxis: {
+                    type: "datetime",
+                    dateTimeLabelFormats: {
+                        date: '%e.%b.%Y'
+                    }
+
+                },
+                legend: {
+                    itemMarginBottom: 12,
+                    itemStyle: {
+                        fontSize: '1.2em',
+                    },
+                },
+                series: this.mapUsersToSeries(users),
             }
         });
+    }
+
+    summariseData(games) {
+        const summarised = [];
+        if (!_.isNil(games) || games.length > 0) {
+            let lastTotal = 0;
+            for (let i in games) {
+                const total = this.getTotalOfGame(games[i]);
+                summarised.push([moment.utc(games[i].date).valueOf(), total + lastTotal]);
+                lastTotal += total
+            }
+        }
+        return summarised;
+    }
+
+    getTotalOfGame(game) {
+        if (!_.isNil(game)) {
+            return game.won + game.bounty - game.buyIn
+        }
+    }
+
+
+    mapUsersToSeries(users) {
+        const data = [];
+        for (let i in users) {
+            const user = users[i];
+            data.push({
+                name: user.name,
+                data: this.summariseData(user.games),
+                marker: {enabled: false},
+            })
+        }
+        return data;
     }
 
     render() {
@@ -904,7 +977,17 @@ class GeneralStatistic extends React.Component {
                                     this.toggleTab('6');
                                 }}
                             >
-                                Chart
+                                Total Chart
+                            </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink
+                                className={classnames({active: this.state.activeTab === '9'})}
+                                onClick={() => {
+                                    this.toggleTab('9');
+                                }}
+                            >
+                                Trend Chart
                             </NavLink>
                         </NavItem>
                         <NavItem>
@@ -928,15 +1011,6 @@ class GeneralStatistic extends React.Component {
                             </NavLink>
                         </NavItem>
                     </Nav>
-                    <TabContent activeTab={this.state.activeTab}>
-                        <TabPane tabId="8">
-                            <br/>
-                            {usersHero.map((user, i) => (
-                                <TopList name={'index'} user={user} value={user.hero}
-                                         from={this.state.fromDate} to={this.state.toDate} key={i}/>
-                            ))}
-                        </TabPane>
-                    </TabContent>
                     <TabContent activeTab={this.state.activeTab}>
                         <TabPane tabId="1">
                             <br/>
@@ -991,7 +1065,7 @@ class GeneralStatistic extends React.Component {
                             <HighchartsReact
                                 style={{visibility: this.state.dateOk ? 'visible' : 'hidden'}}
                                 highcharts={Highcharts}
-                                options={this.state.options}
+                                options={this.state.groupChart}
                             />
                         </TabPane>
                     </TabContent>
@@ -1036,6 +1110,25 @@ class GeneralStatistic extends React.Component {
                                     {avgBuyIn}
                                 </Col>
                             </Row>
+                        </TabPane>
+                    </TabContent>
+                    <TabContent activeTab={this.state.activeTab}>
+                        <TabPane tabId="8">
+                            <br/>
+                            {usersHero.map((user, i) => (
+                                <TopList name={'index'} user={user} value={user.hero}
+                                         from={this.state.fromDate} to={this.state.toDate} key={i}/>
+                            ))}
+                        </TabPane>
+                    </TabContent>
+                    <TabContent activeTab={this.state.activeTab}>
+                        <TabPane tabId="9">
+                            <br/>
+                            <HighchartsReact
+                                style={{visibility: this.state.dateOk ? 'visible' : 'hidden'}}
+                                highcharts={Highcharts}
+                                options={this.state.totalChart}
+                            />
                         </TabPane>
                     </TabContent>
                 </ModalBody>
