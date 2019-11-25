@@ -844,7 +844,8 @@ class GeneralStatistic extends React.Component {
             let lastTotal = 0;
             for (let i in games) {
                 const total = this.getTotalOfGame(games[i]);
-                summarised.push([moment.utc(games[i].date).valueOf(), total + lastTotal]);
+                const value = this.state.getAvg ? (total + lastTotal) / i : total + lastTotal;
+                summarised.push([moment.utc(games[i].date).valueOf(), showNumber(value)]);
                 lastTotal += total
             }
         }
