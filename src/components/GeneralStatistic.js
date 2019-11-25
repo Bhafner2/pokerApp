@@ -86,7 +86,7 @@ class GeneralStatistic extends React.Component {
         this.init = this.init.bind(this);
         this.last3m = this.last3m.bind(this);
         this.last6m = this.last6m.bind(this);
-        this.last12m = this.last12m.bind(this);
+        this.lastYear = this.lastYear.bind(this);
         this.this12m = this.this12m.bind(this);
         this.showFilter = this.showFilter.bind(this);
         this.resetFilter = this.resetFilter.bind(this);
@@ -174,7 +174,8 @@ class GeneralStatistic extends React.Component {
             let userPercent = [];
             let filtered;
 
-            filtered = !(this.state.fromDate === '2018-01-01' && this.state.toDate === this.props.today && this.state.filteredUsers.length < 1);
+            let d = new Date(this.props.today);
+            filtered = !(this.state.fromDate === d.getFullYear() + '-01-01' && this.state.toDate === d.getFullYear() + '-12-31' && this.state.filteredUsers.length < 1);
 
             if (this.state.dateOk && !_.isNil(users)) {
 
@@ -465,13 +466,11 @@ class GeneralStatistic extends React.Component {
     }
 
 
-    last12m() {
-        const months = 12;
+    lastYear() {
         let d = new Date(this.props.today);
-        d.setMonth(d.getMonth() - months);
         this.setState({
-            fromDate: moment(d).format('YYYY-MM-DD'),
-            toDate: this.props.today,
+            fromDate: (d.getFullYear() - 1) + '-01-01',
+            toDate: (d.getFullYear() - 1) + '-12-31',
             dateOk: true,
         }, () => {
             this.getData();
@@ -539,11 +538,9 @@ class GeneralStatistic extends React.Component {
     resetFilter() {
         this.setState({
             showFilter: false,
-            fromDate: '2018-01-01',
-            toDate: this.props.today,
             filteredUsers: [],
         }, () => {
-            this.getData();
+            this.this12m();
         })
     }
 
@@ -586,22 +583,22 @@ class GeneralStatistic extends React.Component {
                                     6 Month
                                 </Button>
                             </Col>
-                            <Col xs={3} style={{paddingRight: "0.2em", paddingLeft: "0.2em"}}>
-                                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
-                                        size="sm"
-                                        color="link"
-                                        onClick={this.last12m}
-                                >
-                                    12 Month
-                                </Button>
-                            </Col>
                             <Col xs={3} style={{paddingRight: "1em", paddingLeft: "0.2em"}}>
                                 <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
                                         size="sm"
                                         color="link"
                                         onClick={this.this12m}
                                 >
-                                    This Year
+                                    this Year
+                                </Button>
+                            </Col>
+                            <Col xs={3} style={{paddingRight: "0.2em", paddingLeft: "0.2em"}}>
+                                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
+                                        size="sm"
+                                        color="link"
+                                        onClick={this.lastYear}
+                                >
+                                    last Year
                                 </Button>
                             </Col>
                         </Row>
