@@ -71,6 +71,7 @@ class GeneralStatistic extends React.Component {
             userPercent: [],
             dropdownOpen: false,
             attributeToShow: "total",
+            useChart: true,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -654,115 +655,128 @@ class GeneralStatistic extends React.Component {
         })
     }
 
+    getGroupChart(users) {
+        return ({
+            global: {
+                useUTC: false
+            },
+            chart: {
+                type: 'spline',
+            },
+            title: {
+                text: this.state.attributeToShow,
+            },
+            yAxis: {
+                title: {
+                    text: ''
+                },
+                plotLines: [{
+                    value: 0,
+                    color: 'lightGrey',
+                    dashStyle: 'shortdash',
+                    width: 0.5,
+                }],
+            },
+            plotOptions: {
+                column: {
+                    stacking: 'normal'
+                },
+            },
+            xAxis: [{
+                categories: _.map(users, (u) => {
+                    return u.name
+                }),
+            }],
+
+            legend: {
+                itemMarginBottom: 12,
+                itemStyle: {
+                    fontSize: '1.2em',
+                },
+            },
+            series: [{
+                name: 'Buy In',
+                stack: 'data',
+                type: 'column',
+                data: _.map(users, (u) => {
+                    return -u.buyIn
+                }),
+                lineWidth: 1,
+                color: '#DC3545',
+                marker: {
+                    enabled: false,
+                },
+            }, {
+                name: 'Bounty',
+                stack: 'data',
+                type: 'column',
+                data: _.map(users, (u) => {
+                    return u.bounty
+                }),
+                lineWidth: 1,
+                color: '#155724',
+                marker: {
+                    enabled: false,
+                },
+            }, {
+                name: 'Won',
+                stack: 'data',
+                type: 'column',
+                data: _.map(users, (u) => {
+                    return u.won
+                }),
+                lineWidth: 1,
+                color: '#28A745',
+                marker: {
+                    enabled: false,
+                },
+            }, {
+                name: 'Total',
+                type: 'spline',
+                data: _.map(users, (u) => {
+                    return u.total
+                }),
+                color: '#6C757D',
+                marker: {
+                    enabled: false,
+                },
+            }, {
+                name: 'Played',
+                stack: 'none',
+                type: 'column',
+                data: _.map(users, (u) => {
+                    return u.played
+                }),
+                lineWidth: 1,
+                color: '#FFC107',
+                visible: false,
+                marker: {
+                    enabled: false,
+                },
+            }, {
+                name: 'Hero',
+                stack: 'none',
+                type: 'column',
+                data: _.map(users, (u) => {
+                    return u.hero
+                }),
+                lineWidth: 1,
+                color: '#FFC107',
+                visible: false,
+                marker: {
+                    enabled: false,
+                },
+            },
+            ],
+        })
+    }
+
     chart(users) {
         users = _.sortBy(users, function (g) {
             return -g.total;
         });
         this.setState({
-            groupChart: {
-                global: {
-                    useUTC: false
-                },
-                chart: {
-                    type: 'spline',
-                },
-                title: {
-                    text: 'Players',
-                    style: {
-                        fontWeight: 'bold',
-                        display: 'none'
-                    },
-                },
-                yAxis: {
-                    title: {
-                        text: ''
-                    },
-                    plotLines: [{
-                        value: 0,
-                        color: 'lightGrey',
-                        dashStyle: 'shortdash',
-                        width: 0.5,
-                    }],
-                },
-                plotOptions: {
-                    column: {
-                        stacking: 'normal'
-                    },
-                },
-                xAxis: [{
-                    categories: _.map(users, (u) => {
-                        return u.name
-                    }),
-                }],
-
-                legend: {
-                    itemMarginBottom: 12,
-                    itemStyle: {
-                        fontSize: '1.2em',
-                    },
-                },
-                series: [{
-                    name: 'Buy In',
-                    stack: 'data',
-                    type: 'column',
-                    data: _.map(users, (u) => {
-                        return -u.buyIn
-                    }),
-                    lineWidth: 1,
-                    color: '#DC3545',
-                    marker: {
-                        enabled: false,
-                    },
-                }, {
-                    name: 'Bounty',
-                    stack: 'data',
-                    type: 'column',
-                    data: _.map(users, (u) => {
-                        return u.bounty
-                    }),
-                    lineWidth: 1,
-                    color: '#155724',
-                    marker: {
-                        enabled: false,
-                    },
-                }, {
-                    name: 'Won',
-                    stack: 'data',
-                    type: 'column',
-                    data: _.map(users, (u) => {
-                        return u.won
-                    }),
-                    lineWidth: 1,
-                    color: '#28A745',
-                    marker: {
-                        enabled: false,
-                    },
-                }, {
-                    name: 'Total',
-                    type: 'spline',
-                    data: _.map(users, (u) => {
-                        return u.total
-                    }),
-                    color: '#6C757D',
-                    marker: {
-                        enabled: false,
-                    },
-                }, {
-                    name: 'Played',
-                    stack: 'none',
-                    type: 'column',
-                    data: _.map(users, (u) => {
-                        return u.played
-                    }),
-                    lineWidth: 1,
-                    color: '#FFC107',
-                    visible: false,
-                    marker: {
-                        enabled: false,
-                    },
-                },
-                ],
-            },
+            // groupChart: ,
             totalChart: {
                 chart: {
                     type: 'spline',
@@ -844,7 +858,10 @@ class GeneralStatistic extends React.Component {
     }
 
     render() {
-        const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, getAvg, dates, avgPlayerPerGame, attributeToShow} = this.state;
+        const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, getAvg, dates, avgPlayerPerGame, attributeToShow, useChart} = this.state;
+        const sortedUsers = _.sortBy(filteredUsers, user => {
+            return -user[attributeToShow]
+        });
 
         return (<div>
             <FontAwesomeIcon icon={faTrophy} onClick={this.toggle} size="lg"/>
@@ -888,22 +905,12 @@ class GeneralStatistic extends React.Component {
                         </NavItem>
                         <NavItem>
                             <NavLink
-                                className={classnames({active: this.state.activeTab === '6'})}
-                                onClick={() => {
-                                    this.toggleTab('6');
-                                }}
-                            >
-                                Total Chart
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink
                                 className={classnames({active: this.state.activeTab === '9'})}
                                 onClick={() => {
                                     this.toggleTab('9');
                                 }}
                             >
-                                Trend Chart
+                                History
                             </NavLink>
                         </NavItem>
                         <NavItem>
@@ -973,36 +980,34 @@ class GeneralStatistic extends React.Component {
                                 </Col>
                                 <Col xs={4}>
                                     <ButtonGroup style={{paddingTop: "4px"}}>
-                                        <Button size={"sm"} outline color={"primary"} active={!getAvg}
-                                                onClick={this.setSum}>
-                                            List
-                                        </Button>
-                                        <Button size={"sm"} outline color="primary" active={getAvg}
-                                                onClick={this.setAvg}>
+                                        <Button size={"sm"} outline color="primary" active={useChart}
+                                                onClick={() => this.setState({useChart: true})}>
                                             Chart
+                                        </Button>
+                                        <Button size={"sm"} outline color={"primary"} active={!useChart}
+                                                onClick={() => this.setState({useChart: false})}>
+                                            List
                                         </Button>
                                     </ButtonGroup>
                                 </Col>
                             </Row>
-                            <div style={{paddingTop: "10px", paddingLeft: "10px"}}>
-                                {_.sortBy(filteredUsers, user => {
-                                    return -user[attributeToShow]
-                                }).map((user, i) => (
-                                    <TopList name={attributeToShow} user={user}
-                                             value={user[attributeToShow]}
-                                             from={this.state.fromDate} to={this.state.toDate} key={i}/>
-                                ))}
-                            </div>
-                        </TabPane>
-                    </TabContent>
-                    <TabContent activeTab={this.state.activeTab}>
-                        <TabPane tabId="6">
-                            <br/>
-                            <HighchartsReact
-                                style={{visibility: this.state.dateOk ? 'visible' : 'hidden'}}
-                                highcharts={Highcharts}
-                                options={this.state.groupChart}
-                            />
+                            {useChart ?
+                                <div style={{paddingTop: "10px"}}>
+                                    <HighchartsReact
+                                        style={{visibility: this.state.dateOk ? 'visible' : 'hidden'}}
+                                        highcharts={Highcharts}
+                                        options={this.getGroupChart(sortedUsers)}
+                                    />
+                                </div>
+                                :
+                                <div style={{paddingTop: "12px", paddingLeft: "10px"}}>
+                                    {sortedUsers.map((user, i) => (
+                                        <TopList name={attributeToShow} user={user}
+                                                 value={user[attributeToShow]}
+                                                 from={this.state.fromDate} to={this.state.toDate} key={i}/>
+                                    ))}
+                                </div>
+                            }
                         </TabPane>
                     </TabContent>
                     <TabContent activeTab={this.state.activeTab}>
