@@ -19,7 +19,8 @@ import classnames from 'classnames';
 import moment from "moment";
 import {showNumber} from '../App';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faChartBar, faFilter} from '@fortawesome/free-solid-svg-icons'
+import {faChartBar} from '@fortawesome/free-solid-svg-icons'
+import TimeFilter from "./TimeFilter";
 
 let buyIns = [];
 let wons = [];
@@ -63,16 +64,8 @@ class Statistic extends React.Component {
         this.toggle = this.toggle.bind(this);
         this.toggleTab = this.toggleTab.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
-        this.updateFormDate = this.updateFormDate.bind(this);
-        this.updateToDate = this.updateToDate.bind(this);
         this.chart = this.chart.bind(this);
         this.init = this.init.bind(this);
-        this.last3m = this.last3m.bind(this);
-        this.last6m = this.last6m.bind(this);
-        this.last12m = this.last12m.bind(this);
-        this.this12m = this.this12m.bind(this);
-        this.showFilter = this.showFilter.bind(this);
-        this.resetFilter = this.resetFilter.bind(this);
         this.getData = this.getData.bind(this);
         this.getPieChart = this.getPieChart.bind(this);
     }
@@ -92,13 +85,7 @@ class Statistic extends React.Component {
         if (!this.state.modal) {
             this.setState({
                 modal: true,
-                dateOk: true,
                 activeTab: '1',
-                showFilter: false,
-                fromDate: this.props.fromDate || '2018-01-01',
-                toDate: this.props.today,
-            }, () => {
-                this.this12m()
             });
         } else {
             this.setState({
@@ -118,21 +105,20 @@ class Statistic extends React.Component {
         }
     }
 
-    async getData() {
+    async getData(fromDate, toDate) {
         if (this.state.modal) {
-            console.log("Statistic getData");
+            console.log("Statistic getData", fromDate, toDate);
             this.init();
             const {user} = this.props;
             const {users} = this.props.data;
-            const from = new Date(this.state.fromDate);
-            const to = new Date(this.state.toDate);
+            const from = new Date(fromDate);
+            const to = new Date(toDate);
             let filtered;
             let filteredGames;
             const actualUser = _.filter(users, (u) => {
                 return user.name === u.name
             })[0];
             console.log("actual user ", actualUser);
-            filtered = !(this.state.fromDate === "2018-01-01" && this.state.toDate === this.props.today);
             if (this.state.dateOk) {
                 filteredGames = _.filter(actualUser.games, function (g) {
                     if (_.isNil(g) || _.isNil(g.date)) {
@@ -408,190 +394,10 @@ class Statistic extends React.Component {
         bountys = [];
     }
 
-    updateFormDate(evt) {
-        this.setState({
-                fromDate: evt.target.value
-            }, () => {
-                if (this.state.fromDate === '' || new Date(this.state.toDate) < new Date(this.state.fromDate)) {
-                    this.setState({
-                        dateOk: false,
-                    }, () => {
-                        this.getData();
-                    });
-                } else {
-                    this.setState({
-                        dateOk: true,
-                    }, () => {
-                        this.getData();
-                    });
-                }
-            }
-        );
-    }
-
-    updateToDate(evt) {
-        this.setState({
-                toDate: evt.target.value
-            }, () => {
-                if (this.state.toDate === '' || new Date(this.state.toDate) < new Date(this.state.fromDate)) {
-                    this.setState({
-                        dateOk: false,
-                    }, () => {
-                        this.getData();
-                    });
-                } else {
-                    this.setState({
-                        dateOk: true,
-                    }, () => {
-                        this.getData();
-                    });
-                }
-            }
-        );
-    }
-
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps !== this.props) {
-            this.getData();
-        }
         if (this.props.toggle === true) {
             this.toggle()
         }
-    }
-
-    last3m() {
-        const months = 3;
-        let d = new Date(this.props.today);
-        d.setMonth(d.getMonth() - months);
-        this.setState({
-            fromDate: moment(d).format('YYYY-MM-DD'),
-            toDate: this.props.today,
-            dateOk: true,
-        }, () => {
-            this.getData();
-        })
-    }
-
-    last6m() {
-        const months = 6;
-        let d = new Date(this.props.today);
-        d.setMonth(d.getMonth() - months);
-        this.setState({
-            fromDate: moment(d).format('YYYY-MM-DD'),
-            toDate: this.props.today,
-            dateOk: true,
-        }, () => {
-            this.getData();
-        })
-    }
-
-
-    last12m() {
-        const months = 12;
-        let d = new Date(this.props.today);
-        d.setMonth(d.getMonth() - months);
-        this.setState({
-            fromDate: moment(d).format('YYYY-MM-DD'),
-            toDate: this.props.today,
-            dateOk: true,
-        }, () => {
-            this.getData();
-        })
-    }
-
-    this12m() {
-        let d = new Date(this.props.today);
-        this.setState({
-            fromDate: d.getFullYear() + '-01-01',
-            toDate: d.getFullYear() + '-12-31',
-            dateOk: true,
-        }, () => {
-            this.getData();
-        })
-    }
-
-    resetFilter() {
-        this.setState({
-            dateOk: true,
-            fromDate: '2018-01-01',
-            toDate: this.props.today,
-            showFilter: false,
-        }, () => {
-            this.getData();
-        })
-    }
-
-    showFilter() {
-        this.setState({
-            showFilter: !this.state.showFilter,
-        })
-    }
-
-    filter() {
-        return (
-            <Collapse isOpen={this.state.showFilter}>
-                <Card outline>
-                    <CardBody>
-                        <Row>
-                            <Col>
-                                <InputGroup>
-                                    <Input type="date" name="fromDate" id="fromDate"
-                                           onChange={this.updateFormDate}
-                                           value={this.state.fromDate}
-                                           style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
-                                    />
-                                    <Input type="date" name="toDate" id="toDate"
-                                           onChange={this.updateToDate}
-                                           value={this.state.toDate}
-                                           style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
-                                    />
-                                </InputGroup>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs={3} style={{paddingRight: "0.2em", paddingLeft: "1em"}}>
-                                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
-                                        size="sm" color="link"
-                                        onClick={this.last3m}
-                                >
-                                    3 Month
-                                </Button>
-                            </Col>
-                            <Col xs={3} style={{paddingRight: "0.2em", paddingLeft: "0.2em"}}>
-                                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
-                                        size="sm"
-                                        color="link"
-                                        onClick={this.last6m}
-                                >
-                                    6 Month
-                                </Button>
-                            </Col>
-                            <Col xs={3} style={{paddingRight: "0.2em", paddingLeft: "0.2em"}}>
-                                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
-                                        size="sm"
-                                        color="link"
-                                        onClick={this.last12m}
-                                >
-                                    12 Month
-                                </Button>
-                            </Col>
-                            <Col xs={3} style={{paddingRight: "1em", paddingLeft: "0.2em"}}>
-                                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
-                                        size="sm"
-                                        color="link"
-                                        onClick={this.this12m}
-                                >
-                                    This Year
-                                </Button>
-                            </Col>
-                        </Row>
-                    </CardBody>
-                    <CardFooter>
-                        <Button color="link" size="sm" block style={{padding: "0 0 0 0"}}
-                                onClick={this.showFilter}>Apply</Button>
-                    </CardFooter>
-                </Card>
-            </Collapse>)
     }
 
     getRankingAmount(ranking, place) {
@@ -697,27 +503,12 @@ class Statistic extends React.Component {
                 >
                     <ModalHeader toggle={this.toggle}>Statistic for {user.name}</ModalHeader>
                     <ModalBody>
-                        <FormGroup>
-                            <Row>
-                                <Col>
-                                    <ButtonGroup>
-                                        <Button color={"link"} onClick={this.showFilter}
-                                                style={{color: this.state.filtered ? "#007BFF" : "black"}}
-                                        >
-                                            <FontAwesomeIcon icon={faFilter}/> Filter
-                                        </Button>
-                                        <Button color={"link"} style={{
-                                            visibility: this.state.filtered ? "visible" : "hidden",
-                                            color: "#007BFF"
-                                        }}
-                                                onClick={this.resetFilter}>
-                                            X
-                                        </Button>
-                                    </ButtonGroup>
-                                </Col>
-                            </Row>
-                            {this.filter()}
-                        </FormGroup>
+
+                        <TimeFilter today={this.props.today}
+                            // fromDate={(fromDate) => this.setState({fromDate})}
+                            // toDate={(toDate) => this.setState({toDate})}
+                                    getData={(fromDate, toDate) => this.getData(fromDate, toDate)}
+                        />
                         <Nav tabs>
                             <NavItem>
                                 <NavLink
