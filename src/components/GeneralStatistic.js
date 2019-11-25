@@ -6,7 +6,7 @@ import {
     CardBody,
     CardFooter,
     Col,
-    Collapse,
+    Collapse, Dropdown, DropdownItem, DropdownMenu, DropdownToggle,
     FormGroup,
     Input,
     InputGroup,
@@ -60,12 +60,6 @@ class GeneralStatistic extends React.Component {
             maxWon: {...empty},
             maxTotal: {...empty},
             maxBounty: {...empty},
-            usersTop: [],
-            usersBounty: [],
-            usersWon: [],
-            usersBuyIn: [],
-            usersPlayed: [],
-            usersHero: [],
             popoverOpen: false,
             showFilter: false,
             filtered: false,
@@ -74,7 +68,9 @@ class GeneralStatistic extends React.Component {
             filteredUsers: [],
             usersButtons: [],
             avgPlayerPerGame: 0,
-            userPercent: []
+            userPercent: [],
+            dropdownOpen: false,
+            attributeToShow: "total",
         };
 
         this.toggle = this.toggle.bind(this);
@@ -97,6 +93,7 @@ class GeneralStatistic extends React.Component {
         this.usersAll = this.usersAll.bind(this);
         this.usersPercentFilter = this.usersPercentFilter.bind(this);
         this.getData = this.getData.bind(this);
+        this.toggleDropdown = this.toggleDropdown.bind(this);
     }
 
     toggleTab(tab) {
@@ -162,12 +159,6 @@ class GeneralStatistic extends React.Component {
             let avgTotal = 0;
             let avgBounty = 0;
             let counter = 0;
-            let usersBuyIn = [];
-            let usersPlayed = [];
-            let usersHero = [];
-            let usersWon = [];
-            let usersTop = [];
-            let usersBounty = [];
             let dates = [];
             let usersButtons = [];
             let avgPlayerPerGame = 0;
@@ -305,25 +296,6 @@ class GeneralStatistic extends React.Component {
                 }
                 console.log("users", filteredUsers);
 
-                usersTop = _.sortBy(filteredUsers, function (o) {
-                    return -o.total
-                });
-                usersWon = _.sortBy(filteredUsers, function (o) {
-                    return -o.won
-                });
-                usersBounty = _.sortBy(filteredUsers, function (o) {
-                    return -o.bounty
-                });
-                usersBuyIn = _.sortBy(filteredUsers, function (o) {
-                    return -o.buyIn
-                });
-                usersPlayed = _.sortBy(filteredUsers, function (o) {
-                    return -o.played
-                });
-                usersHero = _.sortBy(filteredUsers, function (o) {
-                    return -o.hero
-                });
-
                 avgWon = Math.round(sumWon / counter);
                 avgBuyIn = Math.round(sumBuyIn / counter);
                 avgBounty = Math.round(sumBounty / counter);
@@ -342,12 +314,6 @@ class GeneralStatistic extends React.Component {
                     avgWon,
                     avgTotal,
                     avgBounty,
-                    usersTop,
-                    usersWon,
-                    usersBounty,
-                    usersBuyIn,
-                    usersPlayed,
-                    usersHero,
                     dates,
                     usersButtons,
                     avgPlayerPerGame,
@@ -376,7 +342,6 @@ class GeneralStatistic extends React.Component {
             maxBounty: {...empty},
             maxTotal: 0,
             filteredGames: [],
-            usersTop: [],
             usersBounty: [],
             usersWon: [],
             usersBuyIn: [],
@@ -844,7 +809,7 @@ class GeneralStatistic extends React.Component {
             let lastTotal = 0;
             for (let i in games) {
                 const total = this.getTotalOfGame(games[i]);
-                const value = this.state.getAvg ? (total + lastTotal) / i : total + lastTotal;
+                const value = total + lastTotal;
                 summarised.push([moment.utc(games[i].date).valueOf(), showNumber(value)]);
                 lastTotal += total
             }
@@ -872,8 +837,14 @@ class GeneralStatistic extends React.Component {
         return data;
     }
 
+    toggleDropdown() {
+        this.setState({
+            dropdownOpen: !this.state.dropdownOpen
+        })
+    }
+
     render() {
-        const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, usersTop, usersBounty, usersWon, usersBuyIn, usersPlayed, usersHero, getAvg, dates, avgPlayerPerGame} = this.state;
+        const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, getAvg, dates, avgPlayerPerGame, attributeToShow} = this.state;
 
         return (<div>
             <FontAwesomeIcon icon={faTrophy} onClick={this.toggle} size="lg"/>
@@ -900,19 +871,6 @@ class GeneralStatistic extends React.Component {
                                     </Button>
                                 </ButtonGroup>
                             </Col>
-                            <Col xs={5}>
-                                <ButtonGroup style={{paddingTop: "4px"}}>
-                                    <Button size={"sm"} outline color={"primary"} active={!getAvg}
-                                            onClick={this.setSum}>
-                                        Sum
-                                    </Button>
-                                    <Button size={"sm"} outline color="primary" active={getAvg}
-                                            onClick={this.setAvg}>
-                                        Avg
-                                    </Button>
-                                </ButtonGroup>
-                            </Col>
-                            <Col xs={1}/>
                         </Row>
                         {this.filter()}
                     </FormGroup>
@@ -925,47 +883,7 @@ class GeneralStatistic extends React.Component {
                                     this.toggleTab('1');
                                 }}
                             >
-                                Total
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink
-                                className={classnames({active: this.state.activeTab === '2'})}
-                                onClick={() => {
-                                    this.toggleTab('2');
-                                }}
-                            >
-                                Won
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink
-                                className={classnames({active: this.state.activeTab === '3'})}
-                                onClick={() => {
-                                    this.toggleTab('3');
-                                }}
-                            >
-                                Bounty
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink
-                                className={classnames({active: this.state.activeTab === '4'})}
-                                onClick={() => {
-                                    this.toggleTab('4');
-                                }}
-                            >
-                                BuyIn
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink
-                                className={classnames({active: this.state.activeTab === '5'})}
-                                onClick={() => {
-                                    this.toggleTab('5');
-                                }}
-                            >
-                                Played
+                                List
                             </NavLink>
                         </NavItem>
                         <NavItem>
@@ -998,63 +916,83 @@ class GeneralStatistic extends React.Component {
                                 Peaks
                             </NavLink>
                         </NavItem>
-                        <NavItem>
-                            <NavLink
-                                className={classnames({active: this.state.activeTab === '8'})}
-                                onClick={() => {
-                                    this.toggleTab('8');
-                                }}
-                            >
-                                Hero
-                            </NavLink>
-                        </NavItem>
                     </Nav>
                     <TabContent activeTab={this.state.activeTab}>
                         <TabPane tabId="1">
-                            <br/>
-                            {usersTop.map((user, i) => (
-                                <TopList name={'total'} user={user} value={user.total}
-                                         from={this.state.fromDate} to={this.state.toDate} key={i}/>
-                            ))}
-                        </TabPane>
-                    </TabContent>
-                    <TabContent activeTab={this.state.activeTab}>
-                        <TabPane tabId="2">
-                            <br/>
-
-                            {usersWon.map((user, i) => (
-                                <TopList name={'won'} user={user} value={user.won}
-                                         from={this.state.fromDate} to={this.state.toDate} key={i}/>
-                            ))}
-                        </TabPane>
-                    </TabContent>
-                    <TabContent activeTab={this.state.activeTab}>
-                        <TabPane tabId="3">
-                            <br/>
-
-                            {usersBounty.map((user, i) => (
-                                <TopList name={'bounty'} user={user} value={user.bounty}
-                                         from={this.state.fromDate} to={this.state.toDate} key={i}/>
-                            ))}
-                        </TabPane>
-                    </TabContent>
-                    <TabContent activeTab={this.state.activeTab}>
-                        <TabPane tabId="4">
-                            <br/>
-                            {usersBuyIn.map((user, i) => (
-                                <TopList name={'buyIn'} user={user} value={user.buyIn}
-                                         from={this.state.fromDate} to={this.state.toDate} key={i}/>
-                            ))}
-                        </TabPane>
-                    </TabContent>
-                    <TabContent activeTab={this.state.activeTab}>
-                        <TabPane tabId="5">
-                            <br/>
-                            {usersPlayed.map((user, i) => (
-                                <TopList name={'played'} user={user} value={user.played}
-                                         extension={getAvg ? "%" : ""}
-                                         from={this.state.fromDate} to={this.state.toDate} key={i}/>
-                            ))}
+                            <Row style={{paddingTop: "6px"}}>
+                                <Col xs={4}>
+                                    <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
+                                        <DropdownToggle caret color="link">
+                                            Sort by
+                                        </DropdownToggle>
+                                        <DropdownMenu>
+                                            <DropdownItem
+                                                onClick={() => this.setState({attributeToShow: "total"})}
+                                            >
+                                                Total
+                                            </DropdownItem>
+                                            <DropdownItem
+                                                onClick={() => this.setState({attributeToShow: "won"})}
+                                            >
+                                                Won
+                                            </DropdownItem>
+                                            <DropdownItem
+                                                onClick={() => this.setState({attributeToShow: "bounty"})}
+                                            >
+                                                Bounty
+                                            </DropdownItem>
+                                            <DropdownItem
+                                                onClick={() => this.setState({attributeToShow: "buyIn"})}
+                                            >
+                                                BuyIn
+                                            </DropdownItem>
+                                            <DropdownItem
+                                                onClick={() => this.setState({attributeToShow: "played"})}
+                                            >
+                                                Played
+                                            </DropdownItem>
+                                            <DropdownItem
+                                                onClick={() => this.setState({attributeToShow: "hero"})}
+                                            >
+                                                Hero
+                                            </DropdownItem>
+                                        </DropdownMenu>
+                                    </Dropdown>
+                                </Col>
+                                <Col xs={4}>
+                                    <ButtonGroup style={{paddingTop: "4px"}}>
+                                        <Button size={"sm"} outline color={"primary"} active={!getAvg}
+                                                onClick={this.setSum}>
+                                            Sum
+                                        </Button>
+                                        <Button size={"sm"} outline color="primary" active={getAvg}
+                                                onClick={this.setAvg}>
+                                            Avg
+                                        </Button>
+                                    </ButtonGroup>
+                                </Col>
+                                <Col xs={4}>
+                                    <ButtonGroup style={{paddingTop: "4px"}}>
+                                        <Button size={"sm"} outline color={"primary"} active={!getAvg}
+                                                onClick={this.setSum}>
+                                            List
+                                        </Button>
+                                        <Button size={"sm"} outline color="primary" active={getAvg}
+                                                onClick={this.setAvg}>
+                                            Chart
+                                        </Button>
+                                    </ButtonGroup>
+                                </Col>
+                            </Row>
+                            <div style={{paddingTop: "10px", paddingLeft: "10px"}}>
+                                {_.sortBy(filteredUsers, user => {
+                                    return -user[attributeToShow]
+                                }).map((user, i) => (
+                                    <TopList name={attributeToShow} user={user}
+                                             value={user[attributeToShow]}
+                                             from={this.state.fromDate} to={this.state.toDate} key={i}/>
+                                ))}
+                            </div>
                         </TabPane>
                     </TabContent>
                     <TabContent activeTab={this.state.activeTab}>
@@ -1108,15 +1046,6 @@ class GeneralStatistic extends React.Component {
                                     {avgBuyIn}
                                 </Col>
                             </Row>
-                        </TabPane>
-                    </TabContent>
-                    <TabContent activeTab={this.state.activeTab}>
-                        <TabPane tabId="8">
-                            <br/>
-                            {usersHero.map((user, i) => (
-                                <TopList name={'index'} user={user} value={user.hero}
-                                         from={this.state.fromDate} to={this.state.toDate} key={i}/>
-                            ))}
                         </TabPane>
                     </TabContent>
                     <TabContent activeTab={this.state.activeTab}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Button, ButtonGroup, Card, CardBody, Col, Collapse, ModalBody, Row, Table,
+    Col, Row, Table,
 } from "reactstrap";
 import {connect} from "react-redux";
 import * as _ from 'lodash';
