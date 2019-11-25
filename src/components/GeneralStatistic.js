@@ -857,10 +857,14 @@ class GeneralStatistic extends React.Component {
         })
     }
 
+    equaliseFont(text) {
+        return text.charAt(0).toLowerCase() + text.substring(1);
+    }
+
     render() {
         const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, getAvg, dates, avgPlayerPerGame, attributeToShow, useChart} = this.state;
         const sortedUsers = _.sortBy(filteredUsers, user => {
-            return -user[attributeToShow.toLowerCase()]
+            return -user[this.equaliseFont(attributeToShow)]
         });
 
         return (<div>
@@ -1004,7 +1008,7 @@ class GeneralStatistic extends React.Component {
                                 <div style={{paddingTop: "12px", paddingLeft: "10px"}}>
                                     {sortedUsers.map((user, i) => (
                                         <TopList name={attributeToShow} user={user}
-                                                 value={user[attributeToShow.toLowerCase()]}
+                                                 value={user[this.equaliseFont(attributeToShow)]}
                                                  from={this.state.fromDate} to={this.state.toDate} key={i}/>
                                     ))}
                                 </div>
