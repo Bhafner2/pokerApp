@@ -70,7 +70,7 @@ class GeneralStatistic extends React.Component {
             avgPlayerPerGame: 0,
             userPercent: [],
             dropdownOpen: false,
-            attributeToShow: "total",
+            attributeToShow: "Total",
             useChart: true,
         };
 
@@ -555,7 +555,7 @@ class GeneralStatistic extends React.Component {
                                         color="link"
                                         onClick={this.this12m}
                                 >
-                                    this Year
+                                    This Year
                                 </Button>
                             </Col>
                             <Col xs={3} style={{paddingRight: "0.2em", paddingLeft: "0.2em"}}>
@@ -564,7 +564,7 @@ class GeneralStatistic extends React.Component {
                                         color="link"
                                         onClick={this.lastYear}
                                 >
-                                    last Year
+                                    Last Year
                                 </Button>
                             </Col>
                         </Row>
@@ -860,7 +860,7 @@ class GeneralStatistic extends React.Component {
     render() {
         const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, getAvg, dates, avgPlayerPerGame, attributeToShow, useChart} = this.state;
         const sortedUsers = _.sortBy(filteredUsers, user => {
-            return -user[attributeToShow]
+            return -user[attributeToShow.toLowerCase()]
         });
 
         return (<div>
@@ -934,32 +934,32 @@ class GeneralStatistic extends React.Component {
                                         </DropdownToggle>
                                         <DropdownMenu>
                                             <DropdownItem
-                                                onClick={() => this.setState({attributeToShow: "total"})}
+                                                onClick={() => this.setState({attributeToShow: "Total"})}
                                             >
                                                 Total
                                             </DropdownItem>
                                             <DropdownItem
-                                                onClick={() => this.setState({attributeToShow: "won"})}
+                                                onClick={() => this.setState({attributeToShow: "Won"})}
                                             >
                                                 Won
                                             </DropdownItem>
                                             <DropdownItem
-                                                onClick={() => this.setState({attributeToShow: "bounty"})}
+                                                onClick={() => this.setState({attributeToShow: "Bounty"})}
                                             >
                                                 Bounty
                                             </DropdownItem>
                                             <DropdownItem
-                                                onClick={() => this.setState({attributeToShow: "buyIn"})}
+                                                onClick={() => this.setState({attributeToShow: "BuyIn"})}
                                             >
                                                 BuyIn
                                             </DropdownItem>
                                             <DropdownItem
-                                                onClick={() => this.setState({attributeToShow: "played"})}
+                                                onClick={() => this.setState({attributeToShow: "Played"})}
                                             >
                                                 Played
                                             </DropdownItem>
                                             <DropdownItem
-                                                onClick={() => this.setState({attributeToShow: "hero"})}
+                                                onClick={() => this.setState({attributeToShow: "Hero"})}
                                             >
                                                 Hero
                                             </DropdownItem>
@@ -1004,7 +1004,7 @@ class GeneralStatistic extends React.Component {
                                 <div style={{paddingTop: "12px", paddingLeft: "10px"}}>
                                     {sortedUsers.map((user, i) => (
                                         <TopList name={attributeToShow} user={user}
-                                                 value={user[attributeToShow]}
+                                                 value={user[attributeToShow.toLowerCase()]}
                                                  from={this.state.fromDate} to={this.state.toDate} key={i}/>
                                     ))}
                                 </div>
