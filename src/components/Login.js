@@ -6,7 +6,6 @@ import {Button, Col, FormGroup, Input, Label, ListGroupItem, Row} from "reactstr
 import {loginError, setLoad} from "../redux/actions";
 import {store} from "../redux/store";
 import {showLoading} from "../App";
-import ButtonGroup from "reactstrap/es/ButtonGroup";
 
 class Login extends Component {
     constructor(props) {

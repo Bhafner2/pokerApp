@@ -1,9 +1,7 @@
 import React from 'react';
 import {
-    Button, ButtonGroup, Card, CardBody, CardFooter,
-    Col, Collapse,
-    FormGroup,
-    Input, InputGroup,
+    Button,
+    Col,
     Modal,
     ModalBody,
     ModalFooter,
@@ -34,9 +32,6 @@ class Statistic extends React.Component {
         super(props);
         this.state = {
             modal: false,
-            fromDate: '',
-            toDate: '',
-            dateOk: true,
             activeTab: '1',
             filteredGames: [],
             options: {},
@@ -51,8 +46,6 @@ class Statistic extends React.Component {
             maxBuyIn: 0,
             maxWon: 0,
             maxBounty: 0,
-            showFilter: false,
-            filtered: false,
             wons: [],
             buyIns: [],
             bountys: [],
@@ -113,93 +106,87 @@ class Statistic extends React.Component {
             const {users} = this.props.data;
             const from = new Date(fromDate);
             const to = new Date(toDate);
-            let filtered;
             let filteredGames;
             const actualUser = _.filter(users, (u) => {
                 return user.name === u.name
             })[0];
             console.log("actual user ", actualUser);
-            if (this.state.dateOk) {
-                filteredGames = _.filter(actualUser.games, function (g) {
-                    if (_.isNil(g) || _.isNil(g.date)) {
-                        return false;
-                    }
-                    return (from <= new Date(g.date) && to >= new Date(g.date)) && g.buyIn > 0;
-                });
-
-                filteredGames = _.sortBy(filteredGames, function (g) {
-                    return g.date;
-                });
-
-                buyIns = _.map(filteredGames, (game) => {
-                    return -game.buyIn;
-                });
-
-                wons = _.map(filteredGames, (game) => {
-                    return game.won;
-                });
-
-                bountys = _.map(filteredGames, (game) => {
-                    return game.bounty;
-                });
-
-                dates = _.map(filteredGames, (game) => {
-                    return moment(game.date).format('D.M.YY');
-                });
-
-                totals = _.map(filteredGames, (game) => {
-                    return game.won + game.bounty - game.buyIn;
-                });
-
-                trends = Statistic.lms(totals);
-
-                const sumWon = _.sum(wons);
-                const sumBounty = _.sum(bountys);
-                const sumBuyIn = _.sum(buyIns) * -1;
-                const sumTotal = sumWon + sumBounty - sumBuyIn;
-                const maxBuyIn = _.min(buyIns) * -1;
-                const maxWon = _.max(wons);
-                const maxBounty = _.max(bountys);
-                const maxTotal = _.max(totals);
-                const avgTotal = Math.round((sumWon + sumBounty - sumBuyIn) / filteredGames.length);
-                const avgBuyIn = Math.round(sumBuyIn / filteredGames.length);
-                const avgBounty = Math.round(sumBounty / filteredGames.length);
-                const avgWon = Math.round(sumWon / filteredGames.length);
-
-                this.setState({
-                    sumWon,
-                    sumBounty,
-                    sumBuyIn,
-                    maxBuyIn,
-                    maxWon,
-                    maxBounty,
-                    maxTotal,
-                    sumTotal,
-
-                    wons,
-                    buyIns,
-                    bountys,
-                    dates,
-                    totals,
-
-                    avgTotal,
-                    avgBuyIn,
-                    avgBounty,
-                    avgWon,
-                    filtered,
-                });
-
-                console.log("games for stat ", filteredGames);
-
-                if (buyIns.length > 1) {
-                    this.chart(dates, buyIns, wons, bountys, totals, trends, false);
-                } else {
-                    this.chart(dates, buyIns, wons, bountys, totals, trends, true);
+            filteredGames = _.filter(actualUser.games, function (g) {
+                if (_.isNil(g) || _.isNil(g.date)) {
+                    return false;
                 }
+                return (from <= new Date(g.date) && to >= new Date(g.date)) && g.buyIn > 0;
+            });
+
+            filteredGames = _.sortBy(filteredGames, function (g) {
+                return g.date;
+            });
+
+            buyIns = _.map(filteredGames, (game) => {
+                return -game.buyIn;
+            });
+
+            wons = _.map(filteredGames, (game) => {
+                return game.won;
+            });
+
+            bountys = _.map(filteredGames, (game) => {
+                return game.bounty;
+            });
+
+            dates = _.map(filteredGames, (game) => {
+                return moment(game.date).format('D.M.YY');
+            });
+
+            totals = _.map(filteredGames, (game) => {
+                return game.won + game.bounty - game.buyIn;
+            });
+
+            trends = Statistic.lms(totals);
+
+            const sumWon = _.sum(wons);
+            const sumBounty = _.sum(bountys);
+            const sumBuyIn = _.sum(buyIns) * -1;
+            const sumTotal = sumWon + sumBounty - sumBuyIn;
+            const maxBuyIn = _.min(buyIns) * -1;
+            const maxWon = _.max(wons);
+            const maxBounty = _.max(bountys);
+            const maxTotal = _.max(totals);
+            const avgTotal = Math.round((sumWon + sumBounty - sumBuyIn) / filteredGames.length);
+            const avgBuyIn = Math.round(sumBuyIn / filteredGames.length);
+            const avgBounty = Math.round(sumBounty / filteredGames.length);
+            const avgWon = Math.round(sumWon / filteredGames.length);
+
+            this.setState({
+                sumWon,
+                sumBounty,
+                sumBuyIn,
+                maxBuyIn,
+                maxWon,
+                maxBounty,
+                maxTotal,
+                sumTotal,
+
+                wons,
+                buyIns,
+                bountys,
+                dates,
+                totals,
+
+                avgTotal,
+                avgBuyIn,
+                avgBounty,
+                avgWon,
+            });
+
+            console.log("games for stat ", filteredGames);
+
+            if (buyIns.length > 1) {
+                this.chart(dates, buyIns, wons, bountys, totals, trends, false);
             } else {
-                this.init();
-                this.chart(dates, buyIns, wons, totals, bountys, trends, true);
+                this.chart(dates, buyIns, wons, bountys, totals, trends, true);
             }
+
             let games = _.filter(this.props.data.games, function (g) {
                 if (_.isNil(g) || _.isNil(g.date)) {
                     return false;
@@ -499,14 +486,11 @@ class Statistic extends React.Component {
 
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                        onKeyPress={this.handleKeyPress}
-                       onOpened={this.getData}
                 >
                     <ModalHeader toggle={this.toggle}>Statistic for {user.name}</ModalHeader>
                     <ModalBody>
 
                         <TimeFilter today={this.props.today}
-                            // fromDate={(fromDate) => this.setState({fromDate})}
-                            // toDate={(toDate) => this.setState({toDate})}
                                     getData={(fromDate, toDate) => this.getData(fromDate, toDate)}
                         />
                         <Nav tabs>
@@ -547,7 +531,6 @@ class Statistic extends React.Component {
                                 <Row>
                                     <Col>
                                         <HighchartsReact
-                                            style={{visibility: this.state.dateOk ? 'visible' : 'hidden'}}
                                             highcharts={Highcharts}
                                             options={this.state.options}
                                         />

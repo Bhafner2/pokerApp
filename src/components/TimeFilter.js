@@ -2,10 +2,9 @@ import React from 'react';
 import {
     Button, ButtonGroup, Card, CardBody, CardFooter,
     Col, Collapse, FormGroup,
-    Input, InputGroup, ModalBody,
+    Input, InputGroup,
     Row,
 } from "reactstrap";
-import * as _ from 'lodash';
 import moment from "moment";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFilter} from "@fortawesome/free-solid-svg-icons";
@@ -33,8 +32,8 @@ class TimeFilter extends React.Component {
 
     }
 
-    componentDidMount() {//TODO beim toggle
-
+    componentDidMount() {
+        this.resetFilter();
     }
 
     updateFormDate(evt) {
@@ -45,13 +44,13 @@ class TimeFilter extends React.Component {
                     this.setState({
                         dateOk: false,
                     }, () => {
-                        this.props.getData();
+                        this.calc();
                     });
                 } else {
                     this.setState({
                         dateOk: true,
                     }, () => {
-                        this.props.getData();
+                        this.calc();
                     });
                 }
             }
@@ -129,11 +128,8 @@ class TimeFilter extends React.Component {
     }
 
     resetFilter() {
-        this.props.reset = false;
         this.setState({
             dateOk: true,
-            fromDate: this.props.fromDate || '2018-01-01',
-            toDate: this.props.today,
             showFilter: false,
         }, () => {
             this.this12m()
