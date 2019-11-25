@@ -27,8 +27,6 @@ export function* saveUsersSaga(action) {
     }
 }
 
-const users = firebase.database().ref('users/');
-
 function fetchUsers() {
     db.on('value', (snapshot) => {
 
