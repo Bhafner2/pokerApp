@@ -344,9 +344,6 @@ class Statistic extends React.Component {
                     data: trend,
                     lineWidth: 1,
                     color: '#007BFF',
-                    /*
-                                        visible: false,
-                    */
                     marker: {
                         enabled: showDots,
                     },
@@ -458,12 +455,12 @@ class Statistic extends React.Component {
                         name: '3rd',
                         y: this.getRankingAmount(ranking, 3),
                         x: this.getRankingSum(ranking, 3),
-                        color: '#CCE5FF',
+                        color: '#2f7ed8',
                     }, {
                         name: '4th',
                         y: this.getRankingAmount(ranking, 4),
                         x: this.getRankingSum(ranking, 4),
-                        color: '#D6D8D9',
+                        color: '#1aadce',
                     }, {
                         name: 'None',
                         y: notWon,
