@@ -31,7 +31,7 @@ import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import {showNumber} from '../App';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faTrophy, faFilter} from '@fortawesome/free-solid-svg-icons'
+import {faTrophy, faFilter, faChartBar, faList} from '@fortawesome/free-solid-svg-icons'
 
 let filteredUsers = [];
 let empty = {name: '', won: 0, buyIn: 0, bounty: 0, date: ''};
@@ -966,15 +966,15 @@ class GeneralStatistic extends React.Component {
                                         </DropdownMenu>
                                     </Dropdown>
                                 </Col>
-                                <Col xs={4}>
+                                <Col xs={3}>
                                     <ButtonGroup style={{paddingTop: "4px"}}>
                                         <Button size={"sm"} outline color={"primary"} active={!getAvg}
                                                 onClick={this.setSum}>
-                                            Sum
+                                            Σ
                                         </Button>
                                         <Button size={"sm"} outline color="primary" active={getAvg}
                                                 onClick={this.setAvg}>
-                                            Avg
+                                            Ø
                                         </Button>
                                     </ButtonGroup>
                                 </Col>
@@ -982,15 +982,15 @@ class GeneralStatistic extends React.Component {
                                     <ButtonGroup style={{paddingTop: "4px"}}>
                                         <Button size={"sm"} outline color="primary" active={useChart}
                                                 onClick={() => this.setState({useChart: true})}>
-                                            Chart
+                                            <FontAwesomeIcon icon={faChartBar} size={"1x"}/>
                                         </Button>
                                         <Button size={"sm"} outline color={"primary"} active={!useChart}
                                                 onClick={() => this.setState({useChart: false})}>
-                                            List
+                                            <FontAwesomeIcon icon={faList} size={"1x"}/>
                                         </Button>
                                     </ButtonGroup>
                                 </Col>
-                                <Col xs={1}/>
+                                <Col xs={2}/>
                             </Row>
                             {useChart ?
                                 <div style={{paddingTop: "10px"}}>
