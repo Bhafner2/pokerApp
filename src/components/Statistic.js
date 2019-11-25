@@ -100,12 +100,10 @@ class Statistic extends React.Component {
 
     async getData(fromDate, toDate) {
         if (this.state.modal) {
-            console.log("Statistic getData", fromDate, toDate);
+            console.log("Statistic getData", fromDate.format(), toDate.format());
             this.init();
             const {user} = this.props;
             const {users} = this.props.data;
-            const from = new Date(fromDate);
-            const to = new Date(toDate);
             let filteredGames;
             const actualUser = _.filter(users, (u) => {
                 return user.name === u.name
@@ -115,7 +113,7 @@ class Statistic extends React.Component {
                 if (_.isNil(g) || _.isNil(g.date)) {
                     return false;
                 }
-                return (from <= new Date(g.date) && to >= new Date(g.date)) && g.buyIn > 0;
+                return (fromDate <= moment(g.date) && toDate >= moment(g.date)) && g.buyIn > 0;
             });
 
             filteredGames = _.sortBy(filteredGames, function (g) {
@@ -191,7 +189,8 @@ class Statistic extends React.Component {
                 if (_.isNil(g) || _.isNil(g.date)) {
                     return false;
                 }
-                return (from <= new Date(g.date) && to >= new Date(g.date)) && g.buyIn > 0;
+                return (fromDate <= moment(g.date) && toDate >= moment(g.date)) && g.buyIn > 0;
+
             });
 
             this.getPieChart(games, dates.length)
@@ -491,7 +490,7 @@ class Statistic extends React.Component {
                     <ModalBody>
 
                         <TimeFilter today={this.props.today}
-                                    getData={(fromDate, toDate) => this.getData(fromDate, toDate)}
+                                    calcData={(fromDate, toDate) => this.getData(fromDate, toDate)}
                         />
                         <Nav tabs>
                             <NavItem>

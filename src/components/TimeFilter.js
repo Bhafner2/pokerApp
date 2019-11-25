@@ -8,96 +8,72 @@ import {
 import moment from "moment";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFilter} from "@fortawesome/free-solid-svg-icons";
+import * as _ from 'lodash';
 
+const FORMAT = 'YYYY-MM-DD';
 
 class TimeFilter extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             showFilter: false,
-            fromDate: '',
-            toDate: '',
+            fromDate: moment('2018-01-01'),
+            toDate: moment(),
             dateOk: true,
             filtered: false,
+            today: moment(),
         };
 
-        this.last3m = this.last3m.bind(this);
-        this.last6m = this.last6m.bind(this);
+        this.lastMonths = this.lastMonths.bind(this);
         this.lastYear = this.lastYear.bind(this);
-        this.this12m = this.this12m.bind(this);
+        this.thisYear = this.thisYear.bind(this);
         this.showFilter = this.showFilter.bind(this);
         this.resetFilter = this.resetFilter.bind(this);
         this.updateFormDate = this.updateFormDate.bind(this);
         this.updateToDate = this.updateToDate.bind(this);
-
+        this.componentDidMount = this.componentDidMount.bind(this);
     }
 
     componentDidMount() {
         this.resetFilter();
-    }
-
-    updateFormDate(evt) {
+        const today = _.isNil(this.props.today) ? moment() : moment(this.props.today);
         this.setState({
-                fromDate: evt.target.value
-            }, () => {
-                if (this.state.fromDate === '' || new Date(this.state.toDate) < new Date(this.state.fromDate)) {
-                    this.setState({
-                        dateOk: false,
-                    }, () => {
-                        this.calc();
-                    });
-                } else {
-                    this.setState({
-                        dateOk: true,
-                    }, () => {
-                        this.calc();
-                    });
-                }
-            }
-        );
-    }
-
-    updateToDate(evt) {
-        this.setState({
-                toDate: evt.target.value
-            }, () => {
-                if (this.state.toDate === '' || new Date(this.state.toDate) < new Date(this.state.fromDate)) {
-                    this.setState({
-                        dateOk: false,
-                    }, () => {
-                        this.calc()
-                    });
-                } else {
-                    this.setState({
-                        dateOk: true,
-                    }, () => {
-                        this.calc()
-                    });
-                }
-            }
-        );
-    }
-
-    last3m() {
-        const months = 3;
-        let d = new Date(this.props.today);
-        d.setMonth(d.getMonth() - months);
-        this.setState({
-            fromDate: moment(d).format('YYYY-MM-DD'),
-            toDate: this.props.today,
-            dateOk: true,
-        }, () => {
-            this.calc()
+            today
         })
     }
 
-    last6m() {
-        const months = 6;
-        let d = new Date(this.props.today);
-        d.setMonth(d.getMonth() - months);
+    updateFormDate(evt) {
+        const fromDate = moment(evt.target.value);
+        const dateOk = fromDate.isValid() && fromDate < this.state.toDate;
+
         this.setState({
-            fromDate: moment(d).format('YYYY-MM-DD'),
-            toDate: this.props.today,
+            dateOk,
+            fromDate
+        }, () => {
+            this.calc()
+        });
+    }
+
+    updateToDate(evt) {
+        const toDate = moment(evt.target.value);
+        const dateOk = toDate.isValid() && toDate > this.state.fromDate;
+
+        this.setState({
+            dateOk,
+            toDate
+        }, () => {
+            this.calc()
+        });
+    }
+
+    lastMonths(evt) {
+        const months = evt.target.value;
+        const date = moment(this.state.today);
+        console.log("date", date, this.state.today)
+
+        this.setState({
+            fromDate: date.subtract(months, 'months'),
+            toDate: this.state.today,
             dateOk: true,
         }, () => {
             this.calc()
@@ -106,21 +82,26 @@ class TimeFilter extends React.Component {
 
 
     lastYear() {
-        let d = new Date(this.props.today);
+        const years = 1;
+        const start = moment(this.state.today);
+        const end = moment(this.state.today);
+
         this.setState({
-            fromDate: (d.getFullYear() - 1) + '-01-01',
-            toDate: (d.getFullYear() - 1) + '-12-31',
+            fromDate: start.startOf('year').subtract(years, 'years'),
+            toDate: end.endOf('year').subtract(years, 'years'),
             dateOk: true,
         }, () => {
             this.calc()
         })
     }
 
-    this12m() {
-        let d = new Date(this.props.today);
+    thisYear() {
+        const start = moment(this.state.today);
+        const end = moment(this.state.today);
+
         this.setState({
-            fromDate: d.getFullYear() + '-01-01',
-            toDate: d.getFullYear() + '-12-31',
+            fromDate: start.startOf('year'),
+            toDate: end.endOf('year'),
             dateOk: true,
         }, () => {
             this.calc()
@@ -132,7 +113,7 @@ class TimeFilter extends React.Component {
             dateOk: true,
             showFilter: false,
         }, () => {
-            this.this12m()
+            this.thisYear()
         });
     }
 
@@ -143,9 +124,12 @@ class TimeFilter extends React.Component {
     }
 
     calc() {
-        let d = new Date(this.props.today);
-        const filtered = !(this.state.fromDate === d.getFullYear() + '-01-01' && this.state.toDate === d.getFullYear() + '-12-31');
-        this.props.getData(this.state.fromDate, this.state.toDate);
+
+        const start = moment(this.state.today);
+        const end = moment(this.state.today);
+
+        const filtered = !(this.state.fromDate.format() === start.startOf('year').format() && this.state.toDate.format() === end.endOf('year').format());
+        this.props.calcData(this.state.fromDate, this.state.toDate);
         this.setState({filtered})
     }
 
@@ -180,12 +164,12 @@ class TimeFilter extends React.Component {
                                     <InputGroup>
                                         <Input type="date" name="fromDate" id="fromDate"
                                                onChange={this.updateFormDate}
-                                               value={this.state.fromDate}
+                                               value={this.state.fromDate.format(FORMAT)}
                                                style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
                                         />
                                         <Input type="date" name="toDate" id="toDate"
                                                onChange={this.updateToDate}
-                                               value={this.state.toDate}
+                                               value={this.state.toDate.format(FORMAT)}
                                                style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
                                         />
                                     </InputGroup>
@@ -195,7 +179,8 @@ class TimeFilter extends React.Component {
                                 <Col xs={3} style={{paddingRight: "0.2em", paddingLeft: "1em"}}>
                                     <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
                                             size="sm" color="link"
-                                            onClick={this.last3m}
+                                            onClick={this.lastMonths}
+                                            value={3}
                                     >
                                         3 Month
                                     </Button>
@@ -204,7 +189,8 @@ class TimeFilter extends React.Component {
                                     <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
                                             size="sm"
                                             color="link"
-                                            onClick={this.last6m}
+                                            onClick={this.lastMonths}
+                                            value={6}
                                     >
                                         6 Month
                                     </Button>
@@ -213,7 +199,7 @@ class TimeFilter extends React.Component {
                                     <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
                                             size="sm"
                                             color="link"
-                                            onClick={this.this12m}
+                                            onClick={this.thisYear}
                                     >
                                         This Year
                                     </Button>
