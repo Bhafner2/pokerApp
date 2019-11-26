@@ -31,7 +31,7 @@ import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import {showNumber} from '../App';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faTrophy, faFilter, faChartBar, faList} from '@fortawesome/free-solid-svg-icons'
+import {faTrophy, faFilter, faChartBar, faList, faChartPie} from '@fortawesome/free-solid-svg-icons'
 
 let filteredUsers = [];
 let empty = {name: '', won: 0, buyIn: 0, bounty: 0, date: ''};
@@ -72,6 +72,7 @@ class GeneralStatistic extends React.Component {
             dropdownOpen: false,
             attributeToShow: "Total",
             useChart: true,
+            usePie: false,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -95,6 +96,8 @@ class GeneralStatistic extends React.Component {
         this.usersPercentFilter = this.usersPercentFilter.bind(this);
         this.getData = this.getData.bind(this);
         this.toggleDropdown = this.toggleDropdown.bind(this);
+        this.getGroupChart = this.getGroupChart.bind(this);
+        this.getPieChart = this.getPieChart.bind(this);
     }
 
     toggleTab(tab) {
@@ -786,6 +789,51 @@ class GeneralStatistic extends React.Component {
         })
     }
 
+    getPieChart(users) {
+        return ({
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: this.state.attributeToShow,
+                style: {
+                    display: 'none'
+                },
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+            legend: {
+                itemMarginBottom: 12,
+                itemStyle: {
+                    fontSize: '1.2em',
+                },
+            },
+            series: [{
+                name: this.state.attributeToShow,
+                colorByPoint: true,
+                data: this.pieData(users),
+            }]
+        })
+    }
+
+    pieData(users) {
+        const data = [];
+        for (let i in users) {
+            const u = users[i];
+            data.push({name: u.name, y: u[this.equaliseFont(this.state.attributeToShow)]});
+        }
+
+        return data;
+    }
+
     chart(users) {
         users = _.sortBy(users, function (g) {
             return -g.total;
@@ -877,218 +925,244 @@ class GeneralStatistic extends React.Component {
     }
 
     render() {
-        const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, getAvg, dates, avgPlayerPerGame, attributeToShow, useChart} = this.state;
+        const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, getAvg, dates, avgPlayerPerGame, attributeToShow, useChart, usePie} = this.state;
         const sortedUsers = _.sortBy(filteredUsers, user => {
             return -user[this.equaliseFont(attributeToShow)]
         });
 
-        return (<div>
-            <FontAwesomeIcon icon={faTrophy} onClick={this.toggle} size="lg"/>
-            <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
-                   onKeyPress={this.handleKeyPress} onOpened={this.usersPercentFilter}
-            >
-                <ModalHeader toggle={this.toggle}>Top List</ModalHeader>
-                <ModalBody>
-                    <FormGroup>
-                        <Row>
-                            <Col xs={6}>
-                                <ButtonGroup>
-                                    <Button color={"link"} onClick={this.showFilter} id={'filter'} key={'filter'}
-                                            style={{color: this.state.filtered ? "#007BFF" : "black"}}
-                                    >
-                                        <FontAwesomeIcon icon={faFilter}/> Filter
-                                    </Button>
-                                    <Button color={"link"} style={{
-                                        visibility: this.state.filtered ? "visible" : "hidden",
-                                        color: "#007BFF"
+        const pie = (
+            <div style={{paddingTop: "10px"}}>
+                <HighchartsReact
+                    highcharts={Highcharts}
+                    options={this.getPieChart(sortedUsers)}
+                />
+            </div>
+        );
+        const column = (
+            <div style={{paddingTop: "10px"}}>
+                <HighchartsReact
+                    highcharts={Highcharts}
+                    options={this.getGroupChart(sortedUsers)}
+                />
+            </div>
+        );
+        const list = (
+            <div style={{paddingTop: "12px", paddingLeft: "10px"}}>
+                {sortedUsers.map((user, i) => (
+                    <TopList name={attributeToShow} user={user}
+                             value={user[this.equaliseFont(attributeToShow)]}
+                             from={this.state.fromDate} to={this.state.toDate} key={i}/>
+                ))}
+            </div>
+        );
+        let ranking;
+        if (useChart) {
+            if (usePie) {
+                ranking = pie
+            } else {
+                ranking = column
+            }
+        } else {
+            ranking = list
+        }
+        console.log(useChart, usePie)
+        return (
+
+            <div>
+                <FontAwesomeIcon icon={faTrophy} onClick={this.toggle} size="lg"/>
+                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
+                       onKeyPress={this.handleKeyPress} onOpened={this.usersPercentFilter}
+                >
+                    <ModalHeader toggle={this.toggle}>Top List</ModalHeader>
+                    <ModalBody>
+                        <FormGroup>
+                            <Row>
+                                <Col xs={6}>
+                                    <ButtonGroup>
+                                        <Button color={"link"} onClick={this.showFilter} id={'filter'} key={'filter'}
+                                                style={{color: this.state.filtered ? "#007BFF" : "black"}}
+                                        >
+                                            <FontAwesomeIcon icon={faFilter}/> Filter
+                                        </Button>
+                                        <Button color={"link"} style={{
+                                            visibility: this.state.filtered ? "visible" : "hidden",
+                                            color: "#007BFF"
+                                        }}
+                                                onClick={this.resetFilter}>
+                                            X
+                                        </Button>
+                                    </ButtonGroup>
+                                </Col>
+                            </Row>
+                            {this.filter()}
+                        </FormGroup>
+                        <Nav tabs>
+                            <NavItem>
+                                <NavLink
+                                    id={'total'} key={'total'}
+                                    className={classnames({active: this.state.activeTab === '1'})}
+                                    onClick={() => {
+                                        this.toggleTab('1');
                                     }}
-                                            onClick={this.resetFilter}>
-                                        X
-                                    </Button>
-                                </ButtonGroup>
-                            </Col>
-                        </Row>
-                        {this.filter()}
-                    </FormGroup>
-                    <Nav tabs>
-                        <NavItem>
-                            <NavLink
-                                id={'total'} key={'total'}
-                                className={classnames({active: this.state.activeTab === '1'})}
-                                onClick={() => {
-                                    this.toggleTab('1');
-                                }}
-                            >
-                                Ranking
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink
-                                className={classnames({active: this.state.activeTab === '9'})}
-                                onClick={() => {
-                                    this.toggleTab('9');
-                                }}
-                            >
-                                History
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink
-                                className={classnames({active: this.state.activeTab === '7'})}
-                                onClick={() => {
-                                    this.toggleTab('7');
-                                }}
-                            >
-                                Peaks
-                            </NavLink>
-                        </NavItem>
-                    </Nav>
-                    <TabContent activeTab={this.state.activeTab}>
-                        <TabPane tabId="1">
-                            <Row style={{paddingTop: "6px"}}>
-                                <Col xs={4}>
-                                    <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
-                                        <DropdownToggle caret color="link">
-                                            {this.state.attributeToShow}
-                                        </DropdownToggle>
-                                        <DropdownMenu>
-                                            <DropdownItem
-                                                onClick={() => this.setState({attributeToShow: "Total"})}
-                                            >
-                                                Total
-                                            </DropdownItem>
-                                            <DropdownItem
-                                                onClick={() => this.setState({attributeToShow: "Won"})}
-                                            >
-                                                Won
-                                            </DropdownItem>
-                                            <DropdownItem
-                                                onClick={() => this.setState({attributeToShow: "Bounty"})}
-                                            >
-                                                Bounty
-                                            </DropdownItem>
-                                            <DropdownItem
-                                                onClick={() => this.setState({attributeToShow: "BuyIn"})}
-                                            >
-                                                BuyIn
-                                            </DropdownItem>
-                                            <DropdownItem
-                                                onClick={() => this.setState({attributeToShow: "Played"})}
-                                            >
-                                                Played
-                                            </DropdownItem>
-                                            <DropdownItem
-                                                onClick={() => this.setState({attributeToShow: "Hero"})}
-                                            >
-                                                Hero
-                                            </DropdownItem>
-                                        </DropdownMenu>
-                                    </Dropdown>
-                                </Col>
-                                <Col xs={3}>
-                                    <ButtonGroup style={{paddingTop: "4px"}}>
-                                        <Button size={"sm"} outline color={"primary"} active={!getAvg}
-                                                onClick={this.setSum}>
-                                            Σ
-                                        </Button>
-                                        <Button size={"sm"} outline color="primary" active={getAvg}
-                                                onClick={this.setAvg}>
-                                            Ø
-                                        </Button>
-                                    </ButtonGroup>
-                                </Col>
-                                <Col xs={3}>
-                                    <ButtonGroup style={{paddingTop: "4px"}}>
-                                        <Button size={"sm"} outline color="primary" active={useChart}
-                                                onClick={() => this.setState({useChart: true})}>
-                                            <FontAwesomeIcon icon={faChartBar} size={"1x"}/>
-                                        </Button>
-                                        <Button size={"sm"} outline color={"primary"} active={!useChart}
-                                                onClick={() => this.setState({useChart: false})}>
-                                            <FontAwesomeIcon icon={faList} size={"1x"}/>
-                                        </Button>
-                                    </ButtonGroup>
-                                </Col>
-                                <Col xs={2}/>
-                            </Row>
-                            {useChart ?
-                                <div style={{paddingTop: "10px"}}>
-                                    <HighchartsReact
-                                        style={{visibility: this.state.dateOk ? 'visible' : 'hidden'}}
-                                        highcharts={Highcharts}
-                                        options={this.getGroupChart(sortedUsers)}
-                                    />
-                                </div>
-                                :
-                                <div style={{paddingTop: "12px", paddingLeft: "10px"}}>
-                                    {sortedUsers.map((user, i) => (
-                                        <TopList name={attributeToShow} user={user}
-                                                 value={user[this.equaliseFont(attributeToShow)]}
-                                                 from={this.state.fromDate} to={this.state.toDate} key={i}/>
-                                    ))}
-                                </div>
-                            }
-                        </TabPane>
-                    </TabContent>
-                    <TabContent activeTab={this.state.activeTab}>
-                        <TabPane tabId="7">
-                            <br/>
-                            <GameDetail game={maxBuyIn} name={'BuyIn'} value={maxBuyIn.buyIn}/>
-                            <GameDetail game={maxWon} name={'Won'} value={maxWon.won}/>
-                            <GameDetail game={maxBounty} name={'Bounty'} value={maxBounty.bounty}/>
-                            <GameDetail game={maxTotal} name={'Total'}
-                                        value={maxTotal.won + maxTotal.bounty - maxTotal.buyIn}/>
-                            <br/>
-                            <Row style={{paddingTop: "12px"}}>
-                                <Col xs={6}>
-                                    <b>Sum</b> of all Buy In's
-                                </Col>
-                                <Col xs={6}>
-                                    {showNumber(sumBuyIn)}
-                                </Col>
-                            </Row>
-                            <Row style={{paddingTop: "12px"}}>
-                                <Col xs={6}>
-                                    <b>Played</b> games
-                                </Col>
-                                <Col xs={6}>
-                                    {dates.length}
-                                </Col>
-                            </Row>
-                            <Row style={{paddingTop: "12px"}}>
-                                <Col xs={6}>
-                                    <b>Players / Game</b>
-                                </Col>
-                                <Col xs={6}>
-                                    {Math.round(avgPlayerPerGame)}
-                                </Col>
-                            </Row>
-                            <Row style={{paddingTop: "12px"}}>
-                                <Col xs={6}>
-                                    <b>Average</b> Buy In / Person
-                                </Col>
-                                <Col xs={6}>
-                                    {avgBuyIn}
-                                </Col>
-                            </Row>
-                        </TabPane>
-                    </TabContent>
-                    <TabContent activeTab={this.state.activeTab}>
-                        <TabPane tabId="9">
-                            <br/>
-                            <HighchartsReact
-                                style={{visibility: this.state.dateOk ? 'visible' : 'hidden'}}
-                                highcharts={Highcharts}
-                                options={this.state.totalChart}
-                            />
-                        </TabPane>
-                    </TabContent>
-                </ModalBody>
-                <ModalFooter>
-                    <Button color="secondary" onClick={this.toggle}>Exit</Button>
-                </ModalFooter>
-            </Modal>
-        </div>);
+                                >
+                                    Ranking
+                                </NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink
+                                    className={classnames({active: this.state.activeTab === '9'})}
+                                    onClick={() => {
+                                        this.toggleTab('9');
+                                    }}
+                                >
+                                    History
+                                </NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink
+                                    className={classnames({active: this.state.activeTab === '7'})}
+                                    onClick={() => {
+                                        this.toggleTab('7');
+                                    }}
+                                >
+                                    Peaks
+                                </NavLink>
+                            </NavItem>
+                        </Nav>
+                        <TabContent activeTab={this.state.activeTab}>
+                            <TabPane tabId="1">
+                                <Row style={{paddingTop: "6px"}}>
+                                    <Col xs={4}>
+                                        <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
+                                            <DropdownToggle caret color="link">
+                                                {this.state.attributeToShow}
+                                            </DropdownToggle>
+                                            <DropdownMenu>
+                                                <DropdownItem
+                                                    onClick={() => this.setState({attributeToShow: "Total"})}
+                                                >
+                                                    Total
+                                                </DropdownItem>
+                                                <DropdownItem
+                                                    onClick={() => this.setState({attributeToShow: "Won"})}
+                                                >
+                                                    Won
+                                                </DropdownItem>
+                                                <DropdownItem
+                                                    onClick={() => this.setState({attributeToShow: "Bounty"})}
+                                                >
+                                                    Bounty
+                                                </DropdownItem>
+                                                <DropdownItem
+                                                    onClick={() => this.setState({attributeToShow: "BuyIn"})}
+                                                >
+                                                    BuyIn
+                                                </DropdownItem>
+                                                <DropdownItem
+                                                    onClick={() => this.setState({attributeToShow: "Played"})}
+                                                >
+                                                    Played
+                                                </DropdownItem>
+                                                <DropdownItem
+                                                    onClick={() => this.setState({attributeToShow: "Hero"})}
+                                                >
+                                                    Hero
+                                                </DropdownItem>
+                                            </DropdownMenu>
+                                        </Dropdown>
+                                    </Col>
+                                    <Col xs={3}>
+                                        <ButtonGroup style={{paddingTop: "4px"}}>
+                                            <Button size={"sm"} outline color={"primary"} active={!getAvg}
+                                                    onClick={this.setSum}>
+                                                Σ
+                                            </Button>
+                                            <Button size={"sm"} outline color="primary" active={getAvg}
+                                                    onClick={this.setAvg}>
+                                                Ø
+                                            </Button>
+                                        </ButtonGroup>
+                                    </Col>
+                                    <Col xs={3}>
+                                        <ButtonGroup style={{paddingTop: "4px"}}>
+                                            <Button size={"sm"} outline color="primary" active={useChart && !usePie}
+                                                    onClick={() => this.setState({useChart: true, usePie: false})}>
+                                                <FontAwesomeIcon icon={faChartBar} size={"1x"}/>
+                                            </Button>
+                                            <Button size={"sm"} outline color={"primary"} active={!useChart}
+                                                    onClick={() => this.setState({useChart: false, usePie: false})}>
+                                                <FontAwesomeIcon icon={faList} size={"1x"}/>
+                                            </Button>
+                                            <Button size={"sm"} outline color={"primary"} active={usePie}
+                                                    onClick={() => this.setState({useChart: true, usePie: true})}>
+                                                <FontAwesomeIcon icon={faChartPie} size={"1x"}/>
+                                            </Button>
+                                        </ButtonGroup>
+                                    </Col>
+                                    <Col xs={2}/>
+                                </Row>
+                                {ranking}
+                            </TabPane>
+                        </TabContent>
+                        <TabContent activeTab={this.state.activeTab}>
+                            <TabPane tabId="7">
+                                <br/>
+                                <GameDetail game={maxBuyIn} name={'BuyIn'} value={maxBuyIn.buyIn}/>
+                                <GameDetail game={maxWon} name={'Won'} value={maxWon.won}/>
+                                <GameDetail game={maxBounty} name={'Bounty'} value={maxBounty.bounty}/>
+                                <GameDetail game={maxTotal} name={'Total'}
+                                            value={maxTotal.won + maxTotal.bounty - maxTotal.buyIn}/>
+                                <br/>
+                                <Row style={{paddingTop: "12px"}}>
+                                    <Col xs={6}>
+                                        <b>Sum</b> of all Buy In's
+                                    </Col>
+                                    <Col xs={6}>
+                                        {showNumber(sumBuyIn)}
+                                    </Col>
+                                </Row>
+                                <Row style={{paddingTop: "12px"}}>
+                                    <Col xs={6}>
+                                        <b>Played</b> games
+                                    </Col>
+                                    <Col xs={6}>
+                                        {dates.length}
+                                    </Col>
+                                </Row>
+                                <Row style={{paddingTop: "12px"}}>
+                                    <Col xs={6}>
+                                        <b>Players / Game</b>
+                                    </Col>
+                                    <Col xs={6}>
+                                        {Math.round(avgPlayerPerGame)}
+                                    </Col>
+                                </Row>
+                                <Row style={{paddingTop: "12px"}}>
+                                    <Col xs={6}>
+                                        <b>Average</b> Buy In / Person
+                                    </Col>
+                                    <Col xs={6}>
+                                        {avgBuyIn}
+                                    </Col>
+                                </Row>
+                            </TabPane>
+                        </TabContent>
+                        <TabContent activeTab={this.state.activeTab}>
+                            <TabPane tabId="9">
+                                <br/>
+                                <HighchartsReact
+                                    style={{visibility: this.state.dateOk ? 'visible' : 'hidden'}}
+                                    highcharts={Highcharts}
+                                    options={this.state.totalChart}
+                                />
+                            </TabPane>
+                        </TabContent>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="secondary" onClick={this.toggle}>Exit</Button>
+                    </ModalFooter>
+                </Modal>
+            </div>);
     }
 }
 
