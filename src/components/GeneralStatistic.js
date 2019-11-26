@@ -665,18 +665,31 @@ class GeneralStatistic extends React.Component {
             },
             title: {
                 text: this.state.attributeToShow,
-            },
-            yAxis: {
-                title: {
-                    text: ''
+                style: {
+                    display: 'none'
                 },
-                plotLines: [{
-                    value: 0,
-                    color: 'lightGrey',
-                    dashStyle: 'shortdash',
-                    width: 0.5,
-                }],
             },
+            yAxis: [{ // Primary yAxis
+                title: {
+                    style: {
+                        display: 'none'
+                    },
+                }
+            }, { // Secondary yAxis
+                title: {
+                    style: {
+                        display: 'none'
+                    },
+                },
+                opposite: true
+            }, { // 3 yAxis
+                title: {
+                    style: {
+                        display: 'none'
+                    },
+                },
+                opposite: true
+            }],
             plotOptions: {
                 column: {
                     stacking: 'normal'
@@ -742,8 +755,9 @@ class GeneralStatistic extends React.Component {
                 },
             }, {
                 name: 'Played',
-                stack: 'none',
+                stack: '2',
                 type: 'column',
+                yAxis: 1,
                 data: _.map(users, (u) => {
                     return u.played
                 }),
@@ -755,13 +769,14 @@ class GeneralStatistic extends React.Component {
                 },
             }, {
                 name: 'Hero',
-                stack: 'none',
+                stack: '3',
+                yAxis: 2,
                 type: 'column',
                 data: _.map(users, (u) => {
                     return u.hero
                 }),
                 lineWidth: 1,
-                color: '#FFC107',
+                color: '#2f7ed8',
                 visible: false,
                 marker: {
                     enabled: false,
@@ -904,7 +919,7 @@ class GeneralStatistic extends React.Component {
                                     this.toggleTab('1');
                                 }}
                             >
-                                List
+                                Ranking
                             </NavLink>
                         </NavItem>
                         <NavItem>
@@ -934,7 +949,7 @@ class GeneralStatistic extends React.Component {
                                 <Col xs={4}>
                                     <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
                                         <DropdownToggle caret color="link">
-                                            Sort by
+                                            {this.state.attributeToShow}
                                         </DropdownToggle>
                                         <DropdownMenu>
                                             <DropdownItem
