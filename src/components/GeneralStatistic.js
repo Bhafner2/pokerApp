@@ -91,13 +91,14 @@ class GeneralStatistic extends React.Component {
         this.setSum = this.setSum.bind(this);
         this.setAvg = this.setAvg.bind(this);
         this.userFilter = this.userFilter.bind(this);
-        this.chart = this.chart.bind(this);
+        this.historyChart = this.historyChart.bind(this);
         this.usersAll = this.usersAll.bind(this);
         this.usersPercentFilter = this.usersPercentFilter.bind(this);
         this.getData = this.getData.bind(this);
         this.toggleDropdown = this.toggleDropdown.bind(this);
         this.getGroupChart = this.getGroupChart.bind(this);
         this.getPieChart = this.getPieChart.bind(this);
+        this.togglePieChart = this.togglePieChart.bind(this);
     }
 
     toggleTab(tab) {
@@ -325,7 +326,7 @@ class GeneralStatistic extends React.Component {
                     filtered,
                 });
             }
-            this.chart(filteredUsers);
+            this.historyChart(filteredUsers);
         }
     }
 
@@ -800,10 +801,12 @@ class GeneralStatistic extends React.Component {
                     display: 'none'
                 },
             },
+            tooltip: {
+                pointFormat: `<div>Percent: <b>{point.percentage:.1f}%</b> </div> <br/>` +
+                    `<div>${this.state.attributeToShow}: <b>{point.y}</b> </div> <br/>`
+            },
             plotOptions: {
                 pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
                     dataLabels: {
                         enabled: false
                     },
@@ -818,9 +821,8 @@ class GeneralStatistic extends React.Component {
             },
             series: [{
                 name: this.state.attributeToShow,
-                colorByPoint: true,
                 data: this.pieData(users),
-            }]
+            }],
         })
     }
 
@@ -828,18 +830,19 @@ class GeneralStatistic extends React.Component {
         const data = [];
         for (let i in users) {
             const u = users[i];
-            data.push({name: u.name, y: u[this.equaliseFont(this.state.attributeToShow)]});
+            const y = u[this.equaliseFont(this.state.attributeToShow)];
+            if(!_.isNil(y)){
+                data.push({name: u.name, y});                
+            }
         }
-
         return data;
     }
 
-    chart(users) {
+    historyChart(users) {
         users = _.sortBy(users, function (g) {
             return -g.total;
         });
         this.setState({
-            // groupChart: ,
             totalChart: {
                 chart: {
                     type: 'spline',
@@ -924,25 +927,22 @@ class GeneralStatistic extends React.Component {
         return text.charAt(0).toLowerCase() + text.substring(1);
     }
 
+    togglePieChart(usePie) {
+        this.forceUpdate()
+        this.setState({useChart: true, usePie})
+    }
+
     render() {
         const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, getAvg, dates, avgPlayerPerGame, attributeToShow, useChart, usePie} = this.state;
         const sortedUsers = _.sortBy(filteredUsers, user => {
             return -user[this.equaliseFont(attributeToShow)]
         });
 
-        const pie = (
+        const chart = (
             <div style={{paddingTop: "10px"}}>
                 <HighchartsReact
                     highcharts={Highcharts}
-                    options={this.getPieChart(sortedUsers)}
-                />
-            </div>
-        );
-        const column = (
-            <div style={{paddingTop: "10px"}}>
-                <HighchartsReact
-                    highcharts={Highcharts}
-                    options={this.getGroupChart(sortedUsers)}
+                    options={usePie ? this.getPieChart(sortedUsers) : this.getGroupChart(sortedUsers)}
                 />
             </div>
         );
@@ -955,17 +955,7 @@ class GeneralStatistic extends React.Component {
                 ))}
             </div>
         );
-        let ranking;
-        if (useChart) {
-            if (usePie) {
-                ranking = pie
-            } else {
-                ranking = column
-            }
-        } else {
-            ranking = list
-        }
-        console.log(useChart, usePie)
+        
         return (
 
             <div>
@@ -1086,22 +1076,22 @@ class GeneralStatistic extends React.Component {
                                     <Col xs={4}>
                                         <ButtonGroup style={{paddingTop: "4px"}}>
                                             <Button size={"sm"} outline color="primary" active={useChart && !usePie}
-                                                    onClick={() => this.setState({useChart: true, usePie: false})}>
-                                                <FontAwesomeIcon icon={faChartBar} size={"1x"}/>
+                                                    onClick={() => this.togglePieChart(false)}>
+                                                    <FontAwesomeIcon icon={faChartBar} size={"1x"}/>
                                             </Button>
                                             <Button size={"sm"} outline color={"primary"} active={!useChart}
                                                     onClick={() => this.setState({useChart: false, usePie: false})}>
                                                 <FontAwesomeIcon icon={faList} size={"1x"}/>
                                             </Button>
                                             <Button size={"sm"} outline color={"primary"} active={usePie}
-                                                    onClick={() => this.setState({useChart: true, usePie: true})}>
-                                                <FontAwesomeIcon icon={faChartPie} size={"1x"}/>
+                                                    onClick={() => this.togglePieChart(true)}>
+                                                    <FontAwesomeIcon icon={faChartPie} size={"1x"}/>
                                             </Button>
                                         </ButtonGroup>
                                     </Col>
                                     <Col xs={1}/>
                                 </Row>
-                                {ranking}
+                                {useChart ? chart : list}
                             </TabPane>
                         </TabContent>
                         <TabContent activeTab={this.state.activeTab}>

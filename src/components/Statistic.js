@@ -412,9 +412,9 @@ class Statistic extends React.Component {
                     type: 'pie'
                 },
                 tooltip: {
-                    pointFormat: '<div>Percent: <b>{point.percentage:.1f}%</b> </div> <br/>' +
-                        '<div>Amount: <b>{point.y}</b> </div> <br/>' +
-                        '<div>Won: <b>{point.x}</b> </div>'
+                    pointFormat: `<div>Percent: <b>{point.percentage:.1f}%</b> </div> <br/>` +
+                                `<div>Amount: <b>{point.y}</b> </div> <br/>` +
+                                `<div>Won: <b>{point.sum}</b> </div>`
                 },
                 title: {
                     text: 'Ranking',
@@ -424,8 +424,6 @@ class Statistic extends React.Component {
                 },
                 plotOptions: {
                     pie: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
                         dataLabels: {
                             enabled: false
                         },
@@ -444,27 +442,27 @@ class Statistic extends React.Component {
                     data: [{
                         name: '1st',
                         y: this.getRankingAmount(ranking, 1),
-                        x: this.getRankingSum(ranking, 1),
+                        sum: this.getRankingSum(ranking, 1),
                         color: '#28A745',
                     }, {
                         name: '2nd',
                         y: this.getRankingAmount(ranking, 2),
-                        x: this.getRankingSum(ranking, 2),
+                        sum: this.getRankingSum(ranking, 2),
                         color: '#155724',
                     }, {
                         name: '3rd',
                         y: this.getRankingAmount(ranking, 3),
-                        x: this.getRankingSum(ranking, 3),
+                        sum: this.getRankingSum(ranking, 3),
                         color: '#2f7ed8',
                     }, {
                         name: '4th',
                         y: this.getRankingAmount(ranking, 4),
-                        x: this.getRankingSum(ranking, 4),
+                        sum: this.getRankingSum(ranking, 4),
                         color: '#1aadce',
                     }, {
                         name: 'None',
                         y: notWon,
-                        x: 0,
+                        sum: 0,
                         color: '#DC3545',
                     }]
                 }]
