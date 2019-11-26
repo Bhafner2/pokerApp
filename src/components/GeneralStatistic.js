@@ -1083,7 +1083,7 @@ class GeneralStatistic extends React.Component {
                                             </Button>
                                         </ButtonGroup>
                                     </Col>
-                                    <Col xs={3}>
+                                    <Col xs={4}>
                                         <ButtonGroup style={{paddingTop: "4px"}}>
                                             <Button size={"sm"} outline color="primary" active={useChart && !usePie}
                                                     onClick={() => this.setState({useChart: true, usePie: false})}>
@@ -1099,7 +1099,7 @@ class GeneralStatistic extends React.Component {
                                             </Button>
                                         </ButtonGroup>
                                     </Col>
-                                    <Col xs={2}/>
+                                    <Col xs={1}/>
                                 </Row>
                                 {ranking}
                             </TabPane>
