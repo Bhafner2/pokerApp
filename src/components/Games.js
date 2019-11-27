@@ -1,5 +1,7 @@
 import React from 'react';
 import {
+    Button,
+    ButtonGroup,
     Col, Row, Table,
 } from "reactstrap";
 import {connect} from "react-redux";
@@ -9,6 +11,8 @@ import HighchartsReact from 'highcharts-react-official'
 import moment from "moment";
 import {showNumber} from "../App";
 import TimeFilter from "./TimeFilter";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faChartArea, faChartBar, faChartPie, faList} from "@fortawesome/free-solid-svg-icons";
 
 class Games extends React.Component {
     constructor(props) {
@@ -19,6 +23,8 @@ class Games extends React.Component {
             filteredUsers: [],
             from: '',
             to: '',
+            useChart: true,
+            useScatter: false,
         };
         this.chart = this.chart.bind(this);
         this.applyFilter = this.applyFilter.bind(this);
@@ -213,7 +219,7 @@ class Games extends React.Component {
     }
 
     render() {
-        const {filteredGames, filteredUsers} = this.state;
+        const {filteredGames, filteredUsers, useChart, useScatter} = this.state;
         _.mixin({
             maxValue: (xs, it) => {
                 const fn = _.isFunction(it) ? it : _.property(it);
@@ -222,68 +228,96 @@ class Games extends React.Component {
         });
         return (
             <div>
-                <TimeFilter calcData={(fromDate, toDate) => this.applyFilter(fromDate, toDate)}
-                />
-                <Row style={{paddingTop: "12px"}}>
-                    <Col>
-                        <HighchartsReact
-                            highcharts={Highcharts}
-                            options={this.state.options}
-                            containerProps={{style: {width: "100%"}}}
+                <Row>
+                    <Col xs={6}>
+                        <TimeFilter calcData={(fromDate, toDate) => this.applyFilter(fromDate, toDate)}
                         />
                     </Col>
+                    <Col xs={4}>
+                        <ButtonGroup style={{paddingTop: "4px"}}>
+                            <Button size={"sm"} outline color="primary" active={useChart && !useScatter}
+                                    onClick={() => this.setState({useChart: true, useScatter: false})}>
+                                <FontAwesomeIcon icon={faChartBar} size={"1x"}/>
+                            </Button>
+                            <Button size={"sm"} outline color={"primary"} active={!useChart}
+                                    onClick={() => this.setState({useChart: false, useScatter: false})}>
+                                <FontAwesomeIcon icon={faList} size={"1x"}/>
+                            </Button>
+                            <Button size={"sm"} outline color={"primary"} active={useScatter}
+                                    onClick={() => this.setState({useChart: true, useScatter: true})}>
+                                <FontAwesomeIcon icon={faChartArea} size={"1x"}/>
+                            </Button>
+                        </ButtonGroup>
+                    </Col>
+                    <Col xs={2}/>
                 </Row>
                 <br/>
-                <Row>
-                    <Col>
-                        <HighchartsReact
-                            style={{visibility: this.state.dateOk ? 'visible' : 'hidden'}}
-                            highcharts={Highcharts}
-                            options={this.getDotChart(filteredUsers, filteredGames)}
-                        />
-                    </Col>
-                </Row>
-                <br/>
-                <Row>
-                    <Col>
-                        <Table borderless size="sm" style={{paddingTop: "12px"}}>
-                            <thead>
-                            <tr>
-                                <th/>
-                                <th>Sum</th>
-                                <th>Max</th>
-                                <th>Avg</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th>Buy In's</th>
-                                <td>{showNumber(_.sumBy(filteredGames, 'buyIn'))}</td>
-                                <td>{showNumber(_.maxValue(filteredGames, 'buyIn'))}</td>
-                                <td>{showNumber(_.meanBy(filteredGames, 'buyIn'))}</td>
-                            </tr>
-                            <tr>
-                                <th>Pot size</th>
-                                <td>{showNumber(_.sumBy(filteredGames, 'won'))}</td>
-                                <td>{showNumber(_.maxValue(filteredGames, 'won'))}</td>
-                                <td>{showNumber(_.meanBy(filteredGames, 'won'))}</td>
-                            </tr>
-                            <tr>
-                                <th>Bounty's</th>
-                                <td>{showNumber(_.sumBy(filteredGames, 'bounty'))}</td>
-                                <td>{showNumber(_.maxValue(filteredGames, 'bounty'))}</td>
-                                <td>{showNumber(_.meanBy(filteredGames, 'bounty'))}</td>
-                            </tr>
-                            <tr>
-                                <th>Players</th>
-                                <td>{showNumber(_.sumBy(filteredGames, 'players'))}</td>
-                                <td>{showNumber(_.maxValue(filteredGames, 'players'))}</td>
-                                <td>{showNumber(_.meanBy(filteredGames, 'players'))}</td>
-                            </tr>
-                            </tbody>
-                        </Table>
-                    </Col>
-                </Row>
+                {useChart ? (
+                    <span>
+                        {useScatter ? (
+                            <Row>
+                                <Col>
+                                    <HighchartsReact
+                                        style={{visibility: this.state.dateOk ? 'visible' : 'hidden'}}
+                                        highcharts={Highcharts}
+                                        options={this.getDotChart(filteredUsers, filteredGames)}
+                                    />
+                                </Col>
+                            </Row>
+                        ) : (
+                            <Row style={{paddingTop: "12px"}}>
+                                <Col>
+                                    <HighchartsReact
+                                        highcharts={Highcharts}
+                                        options={this.state.options}
+                                        containerProps={{style: {width: "100%"}}}
+                                    />
+                                </Col>
+                            </Row>
+                        )}
+                    </span>
+                ) : (
+                    <Row>
+                        <Col>
+                            <Table borderless size="sm" style={{paddingTop: "12px"}}>
+                                <thead>
+                                <tr>
+                                    <th/>
+                                    <th>Sum</th>
+                                    <th>Max</th>
+                                    <th>Avg</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th>Buy In's</th>
+                                    <td>{showNumber(_.sumBy(filteredGames, 'buyIn'))}</td>
+                                    <td>{showNumber(_.maxValue(filteredGames, 'buyIn'))}</td>
+                                    <td>{showNumber(_.meanBy(filteredGames, 'buyIn'))}</td>
+                                </tr>
+                                <tr>
+                                    <th>Pot size</th>
+                                    <td>{showNumber(_.sumBy(filteredGames, 'won'))}</td>
+                                    <td>{showNumber(_.maxValue(filteredGames, 'won'))}</td>
+                                    <td>{showNumber(_.meanBy(filteredGames, 'won'))}</td>
+                                </tr>
+                                <tr>
+                                    <th>Bounty's</th>
+                                    <td>{showNumber(_.sumBy(filteredGames, 'bounty'))}</td>
+                                    <td>{showNumber(_.maxValue(filteredGames, 'bounty'))}</td>
+                                    <td>{showNumber(_.meanBy(filteredGames, 'bounty'))}</td>
+                                </tr>
+                                <tr>
+                                    <th>Players</th>
+                                    <td>{showNumber(_.sumBy(filteredGames, 'players'))}</td>
+                                    <td>{showNumber(_.maxValue(filteredGames, 'players'))}</td>
+                                    <td>{showNumber(_.meanBy(filteredGames, 'players'))}</td>
+                                </tr>
+                                </tbody>
+                            </Table>
+                        </Col>
+                    </Row>
+                )}
             </div>);
     }
 }
