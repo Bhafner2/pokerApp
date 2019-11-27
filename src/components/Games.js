@@ -16,9 +16,13 @@ class Games extends React.Component {
         this.state = {
             options: {},
             filteredGames: [],
+            filteredUsers: [],
+            from: '',
+            to: '',
         };
         this.chart = this.chart.bind(this);
         this.applyFilter = this.applyFilter.bind(this);
+        this.mapBuyIns = this.mapBuyIns.bind(this);
     }
 
     componentDidMount() {
@@ -31,8 +35,19 @@ class Games extends React.Component {
         let filteredGames = _.filter(games, g => {
             return moment(g.date) < to && moment(g.date) > from
         });
+        const {users} = this.props.data || [];
+
+        let filteredUsers = _.filter(users, u => {
+            return _.filter(u.games, g => {
+                return moment(g.date) < to && moment(g.date) > from && g.buyIn > 0
+            });
+        });
+
         this.setState({
-            filteredGames
+            filteredGames,
+            filteredUsers,
+            from,
+            to
         }, () => {
             this.chart();
         })
@@ -56,24 +71,11 @@ class Games extends React.Component {
                     title: {
                         text: ''
                     },
-                    plotLines: [{
-                        value: 0,
-                        color: 'lightGrey',
-                        dashStyle: 'shortdash',
-                        width: 0.5,
-                    }]
                 }, { // Secondary yAxis
                     title: {
                         text: ''
                     },
-                    plotLines: [{
-                        value: 0,
-                        color: 'lightGrey',
-                        dashStyle: 'shortdash',
-                        width: 0.5,
-                    }],
                     opposite: true,
-
                 }],
                 plotOptions: {
                     column: {
@@ -148,8 +150,70 @@ class Games extends React.Component {
         });
     }
 
+    getDotChart(users, filteredGames) {
+        console.log(users)
+        return ({
+                chart: {
+                    type: 'scatter',
+                },
+                xAxis: {
+                    type: 'datetime',
+                },
+                title: {
+                    text: `Buy In's`,
+                    style: {
+                        fontWeight: 'bold'
+                    },
+                },
+                yAxis: {
+                    title: {
+                        text: ''
+                    },
+                },
+                // tooltip: {
+                //     pointFormat: '{series.name}: <b>{point.y}</b>' +
+                //         'Date: {moment(point.x).format(\'D.M.YY\')}',
+                // },
+                series: [{
+                    name: 'Buy In',
+                    data: this.mapBuyIns(users),
+                    color: 'rgba(255, 0, 0, .1)',
+                    marker: {
+                        radius: 24,
+                    },
+                }, {
+                    name: 'Avg Buy In',
+                    type: 'spline',
+                    color: '#6C757D',
+                    marker: {
+                        enabled: false,
+                    },
+                    data: _.map(filteredGames, (u) => {
+                        return ([moment(u.date).valueOf(), Math.round((u.buyIn / u.players) * 10) / 10])
+                    }),
+                },
+                ],
+            }
+        )
+    }
+
+    mapBuyIns(users) {
+        const data = [];
+        const {from, to} = this.state;
+
+        for (let i in users) {
+            for (let j in users[i].games) {
+                const game = users[i].games[j];
+                if (game.buyIn > 0 && moment(game.date) < to && moment(game.date) > from) {
+                    data.push([moment(game.date).valueOf(), game.buyIn, i])
+                }
+            }
+        }
+        return data;
+    }
+
     render() {
-        const {filteredGames} = this.state || [];
+        const {filteredGames, filteredUsers} = this.state;
         _.mixin({
             maxValue: (xs, it) => {
                 const fn = _.isFunction(it) ? it : _.property(it);
@@ -170,48 +234,64 @@ class Games extends React.Component {
                     </Col>
                 </Row>
                 <br/>
-                <Table borderless size="sm" style={{paddingTop: "12px"}}>
-                    <thead>
-                    <tr>
-                        <th/>
-                        <th>Sum</th>
-                        <th>Max</th>
-                        <th>Avg</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th>Buy In's</th>
-                        <td>{showNumber(_.sumBy(filteredGames, 'buyIn'))}</td>
-                        <td>{showNumber(_.maxValue(filteredGames, 'buyIn'))}</td>
-                        <td>{showNumber(_.meanBy(filteredGames, 'buyIn'))}</td>
-                    </tr>
-                    <tr>
-                        <th>Pot size</th>
-                        <td>{showNumber(_.sumBy(filteredGames, 'won'))}</td>
-                        <td>{showNumber(_.maxValue(filteredGames, 'won'))}</td>
-                        <td>{showNumber(_.meanBy(filteredGames, 'won'))}</td>
-                    </tr>
-                    <tr>
-                        <th>Bounty's</th>
-                        <td>{showNumber(_.sumBy(filteredGames, 'bounty'))}</td>
-                        <td>{showNumber(_.maxValue(filteredGames, 'bounty'))}</td>
-                        <td>{showNumber(_.meanBy(filteredGames, 'bounty'))}</td>
-                    </tr>
-                    <tr>
-                        <th>Players</th>
-                        <td>{showNumber(_.sumBy(filteredGames, 'players'))}</td>
-                        <td>{showNumber(_.maxValue(filteredGames, 'players'))}</td>
-                        <td>{showNumber(_.meanBy(filteredGames, 'players'))}</td>
-                    </tr>
-                    </tbody>
-                </Table>
+                <Row>
+                    <Col>
+                        <HighchartsReact
+                            style={{visibility: this.state.dateOk ? 'visible' : 'hidden'}}
+                            highcharts={Highcharts}
+                            options={this.getDotChart(filteredUsers, filteredGames)}
+                        />
+                    </Col>
+                </Row>
+                <br/>
+                <Row>
+                    <Col>
+                        <Table borderless size="sm" style={{paddingTop: "12px"}}>
+                            <thead>
+                            <tr>
+                                <th/>
+                                <th>Sum</th>
+                                <th>Max</th>
+                                <th>Avg</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>Buy In's</th>
+                                <td>{showNumber(_.sumBy(filteredGames, 'buyIn'))}</td>
+                                <td>{showNumber(_.maxValue(filteredGames, 'buyIn'))}</td>
+                                <td>{showNumber(_.meanBy(filteredGames, 'buyIn'))}</td>
+                            </tr>
+                            <tr>
+                                <th>Pot size</th>
+                                <td>{showNumber(_.sumBy(filteredGames, 'won'))}</td>
+                                <td>{showNumber(_.maxValue(filteredGames, 'won'))}</td>
+                                <td>{showNumber(_.meanBy(filteredGames, 'won'))}</td>
+                            </tr>
+                            <tr>
+                                <th>Bounty's</th>
+                                <td>{showNumber(_.sumBy(filteredGames, 'bounty'))}</td>
+                                <td>{showNumber(_.maxValue(filteredGames, 'bounty'))}</td>
+                                <td>{showNumber(_.meanBy(filteredGames, 'bounty'))}</td>
+                            </tr>
+                            <tr>
+                                <th>Players</th>
+                                <td>{showNumber(_.sumBy(filteredGames, 'players'))}</td>
+                                <td>{showNumber(_.maxValue(filteredGames, 'players'))}</td>
+                                <td>{showNumber(_.meanBy(filteredGames, 'players'))}</td>
+                            </tr>
+                            </tbody>
+                        </Table>
+                    </Col>
+                </Row>
             </div>);
     }
 }
 
 const mapStateToProps = state => {
-    return {}
+    return {
+        data: state
+    }
 };
 
 export default connect(
