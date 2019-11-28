@@ -29,12 +29,25 @@ import GameDetail from "./GameDetail";
 import moment from "moment/moment";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
+import HC_more from 'highcharts/highcharts-more' //module
+
 import {showNumber} from '../App';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faTrophy, faFilter, faChartBar, faList, faChartPie} from '@fortawesome/free-solid-svg-icons'
+import {faTrophy, faFilter, faChartBar, faList, faChartPie, faChartLine} from '@fortawesome/free-solid-svg-icons'
 
 let filteredUsers = [];
 let empty = {name: '', won: 0, buyIn: 0, bounty: 0, date: ''};
+
+const SPIDER = "SPIDER";
+const PIE = "PIE";
+const COLUMN = "COLUMN";
+
+const TOTAL = "Total";
+const WON = "Won";
+const BUYIN = "BuyIn";
+const BOUNTY = "Bounty";
+const PLAYED = "Played";
+const HERO = "Hero";
 
 class GeneralStatistic extends React.Component {
     constructor(props) {
@@ -70,9 +83,10 @@ class GeneralStatistic extends React.Component {
             avgPlayerPerGame: 0,
             userPercent: [],
             dropdownOpen: false,
-            attributeToShow: "Total",
+            attributeToShow: TOTAL,
             useChart: true,
-            usePie: false,
+            chartType: COLUMN,
+            useSpider: false,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -98,6 +112,7 @@ class GeneralStatistic extends React.Component {
         this.toggleDropdown = this.toggleDropdown.bind(this);
         this.getGroupChart = this.getGroupChart.bind(this);
         this.getPieChart = this.getPieChart.bind(this);
+        this.getSpiderChart = this.getSpiderChart.bind(this);
         this.togglePieChart = this.togglePieChart.bind(this);
     }
 
@@ -122,8 +137,8 @@ class GeneralStatistic extends React.Component {
                     reload: false,
                     modal: true,
                     useChart: true,
-                    usePie: false,
-                    attributeToShow: "Total",
+                    chartType: COLUMN,
+                    attributeToShow: TOTAL,
                 }, () =>
                     this.this12m()
             );
@@ -404,6 +419,10 @@ class GeneralStatistic extends React.Component {
         if (prevProps !== this.props) {
             this.getData();
         }
+    }
+
+    componentDidMount() {
+        HC_more(Highcharts); //init module
     }
 
     toggleDetail() {
@@ -724,12 +743,12 @@ class GeneralStatistic extends React.Component {
                 }),
                 lineWidth: 1,
                 color: '#DC3545',
-                visible: attributeToShow === "BuyIn" || attributeToShow === "Total",
+                visible: attributeToShow === BUYIN || attributeToShow === TOTAL,
                 marker: {
                     enabled: false,
                 },
             }, {
-                name: 'Bounty',
+                name: BOUNTY,
                 stack: 'data',
                 type: 'column',
                 data: _.map(users, (u) => {
@@ -737,12 +756,12 @@ class GeneralStatistic extends React.Component {
                 }),
                 lineWidth: 1,
                 color: '#155724',
-                visible: attributeToShow === "Bounty" || attributeToShow === "Total",
+                visible: attributeToShow === BOUNTY || attributeToShow === TOTAL,
                 marker: {
                     enabled: false,
                 },
             }, {
-                name: 'Won',
+                name: WON,
                 stack: 'data',
                 type: 'column',
                 data: _.map(users, (u) => {
@@ -750,23 +769,23 @@ class GeneralStatistic extends React.Component {
                 }),
                 lineWidth: 1,
                 color: '#28A745',
-                visible: attributeToShow === "Won" || attributeToShow === "Total",
+                visible: attributeToShow === WON || attributeToShow === TOTAL,
                 marker: {
                     enabled: false,
                 },
             }, {
-                name: 'Total',
+                name: TOTAL,
                 type: 'spline',
                 data: _.map(users, (u) => {
                     return u.total
                 }),
                 color: '#6C757D',
-                visible: attributeToShow === "Total",
+                visible: attributeToShow === TOTAL,
                 marker: {
                     enabled: false,
                 },
             }, {
-                name: 'Played',
+                name: PLAYED,
                 stack: '2',
                 type: 'column',
                 yAxis: 1,
@@ -775,12 +794,12 @@ class GeneralStatistic extends React.Component {
                 }),
                 lineWidth: 1,
                 color: '#FFC107',
-                visible: attributeToShow === "Played",
+                visible: attributeToShow === PLAYED,
                 marker: {
                     enabled: false,
                 },
             }, {
-                name: 'Hero',
+                name: HERO,
                 stack: '3',
                 yAxis: 2,
                 type: 'column',
@@ -789,12 +808,72 @@ class GeneralStatistic extends React.Component {
                 }),
                 lineWidth: 1,
                 color: '#2f7ed8',
-                visible: attributeToShow === "Hero",
+                visible: attributeToShow === HERO,
                 marker: {
                     enabled: false,
                 },
             },
             ],
+        })
+    }
+
+    getSpiderChart(users) {
+        const {attributeToShow} = this.state;
+        return ({
+            chart: {
+                polar: true
+            },
+            title: {
+                text: 'Highcharts Polar Chart'
+            },
+
+            subtitle: {
+                text: 'Also known as Radar Chart'
+            },
+
+            pane: {
+                startAngle: 0,
+                endAngle: 360
+            },
+
+            xAxis: {
+                tickInterval: 45,
+                min: 0,
+                max: 360,
+                labels: {
+                    format: '{value}°'
+                }
+            },
+
+            yAxis: {
+                min: 0
+            },
+
+            plotOptions: {
+                series: {
+                    pointStart: 0,
+                    pointInterval: 45
+                },
+                column: {
+                    pointPadding: 0,
+                    groupPadding: 0
+                }
+            },
+
+            series: [{
+                type: 'column',
+                name: 'Column',
+                data: [8, 7, 6, 5, 4, 3, 2, 1],
+                pointPlacement: 'between'
+            }, {
+                type: 'line',
+                name: 'Line',
+                data: [1, 2, 3, 4, 5, 6, 7, 8]
+            }, {
+                type: 'area',
+                name: 'Area',
+                data: [1, 8, 2, 7, 3, 6, 4, 5]
+            }]
         })
     }
 
@@ -856,7 +935,7 @@ class GeneralStatistic extends React.Component {
                     type: 'spline',
                 },
                 title: {
-                    text: 'Total',
+                    text: TOTAL,
                     style: {
                         fontWeight: 'bold',
                         display: 'none'
@@ -935,30 +1014,45 @@ class GeneralStatistic extends React.Component {
         return text.charAt(0).toLowerCase() + text.substring(1);
     }
 
-    togglePieChart(usePie) {
+    togglePieChart(chartType) {
         this.setState({
             useChart: false,
-            usePie: false
+            chartType: COLUMN
         }, () => {
             this.forceUpdate();
             this.setState({
                 useChart: true,
-                usePie
+                chartType
             })
         })
     }
 
     render() {
-        const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, getAvg, dates, avgPlayerPerGame, attributeToShow, useChart, usePie} = this.state;
+        const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, getAvg, dates, avgPlayerPerGame, attributeToShow, useChart, chartType} = this.state;
         const sortedUsers = _.sortBy(filteredUsers, user => {
             return -user[this.equaliseFont(attributeToShow)]
         });
 
+        let chartOptions;
+        switch (chartType) {
+            case PIE:
+                chartOptions = this.getPieChart(sortedUsers);
+                break;
+            case SPIDER:
+                chartOptions = this.getSpiderChart(sortedUsers);
+                break;
+            case COLUMN:
+                chartOptions = this.getGroupChart(sortedUsers);
+                break;
+            default:
+                chartOptions = this.getGroupChart(sortedUsers);
+                break;
+        }
         const chart = (
             <div style={{paddingTop: "10px"}}>
                 <HighchartsReact
                     highcharts={Highcharts}
-                    options={usePie ? this.getPieChart(sortedUsers) : this.getGroupChart(sortedUsers)}
+                    options={chartOptions}
                 />
             </div>
         );
@@ -1038,7 +1132,7 @@ class GeneralStatistic extends React.Component {
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="1">
                                 <Row style={{paddingTop: "6px"}}>
-                                    <Col xs={4}>
+                                    <Col xs={3}>
                                         <ButtonGroup style={{paddingTop: "4px"}}>
                                             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
                                                 <DropdownToggle caret color="primary" size={"sm"}>
@@ -1046,32 +1140,32 @@ class GeneralStatistic extends React.Component {
                                                 </DropdownToggle>
                                                 <DropdownMenu>
                                                     <DropdownItem
-                                                        onClick={() => this.setState({attributeToShow: "Total"})}
+                                                        onClick={() => this.setState({attributeToShow: TOTAL})}
                                                     >
                                                         Total
                                                     </DropdownItem>
                                                     <DropdownItem
-                                                        onClick={() => this.setState({attributeToShow: "Won"})}
+                                                        onClick={() => this.setState({attributeToShow: WON})}
                                                     >
                                                         Won
                                                     </DropdownItem>
                                                     <DropdownItem
-                                                        onClick={() => this.setState({attributeToShow: "Bounty"})}
+                                                        onClick={() => this.setState({attributeToShow: BOUNTY})}
                                                     >
                                                         Bounty
                                                     </DropdownItem>
                                                     <DropdownItem
-                                                        onClick={() => this.setState({attributeToShow: "BuyIn"})}
+                                                        onClick={() => this.setState({attributeToShow: BUYIN})}
                                                     >
                                                         BuyIn
                                                     </DropdownItem>
                                                     <DropdownItem
-                                                        onClick={() => this.setState({attributeToShow: "Played"})}
+                                                        onClick={() => this.setState({attributeToShow: PLAYED})}
                                                     >
                                                         Played
                                                     </DropdownItem>
                                                     <DropdownItem
-                                                        onClick={() => this.setState({attributeToShow: "Hero"})}
+                                                        onClick={() => this.setState({attributeToShow: HERO})}
                                                     >
                                                         Hero
                                                     </DropdownItem>
@@ -1091,19 +1185,27 @@ class GeneralStatistic extends React.Component {
                                             </Button>
                                         </ButtonGroup>
                                     </Col>
-                                    <Col xs={4}>
+                                    <Col xs={5} style={{paddingLeft: "4px"}}>
                                         <ButtonGroup style={{paddingTop: "4px"}}>
-                                            <Button size={"sm"} outline color="primary" active={useChart && !usePie}
-                                                    onClick={() => this.togglePieChart(false)}>
+                                            <Button size={"sm"} outline color="primary"
+                                                    active={useChart && chartType === COLUMN}
+                                                    onClick={() => this.togglePieChart(COLUMN)}>
                                                 <FontAwesomeIcon icon={faChartBar} size={"1x"}/>
                                             </Button>
-                                            <Button size={"sm"} outline color={"primary"} active={!useChart}
-                                                    onClick={() => this.setState({useChart: false, usePie: false})}>
-                                                <FontAwesomeIcon icon={faList} size={"1x"}/>
-                                            </Button>
-                                            <Button size={"sm"} outline color={"primary"} active={usePie}
-                                                    onClick={() => this.togglePieChart(true)}>
+                                            <Button size={"sm"} outline color={"primary"}
+                                                    active={useChart && chartType === PIE}
+                                                    onClick={() => this.togglePieChart(PIE)}>
                                                 <FontAwesomeIcon icon={faChartPie} size={"1x"}/>
+                                            </Button>
+                                            <Button size={"sm"} outline color={"primary"}
+                                                    active={useChart && chartType === SPIDER}
+                                                    onClick={() => this.togglePieChart(SPIDER)}>
+                                                <FontAwesomeIcon icon={faChartLine} size={"1x"}/>
+                                            </Button>
+                                            <Button size={"sm"} outline color={"primary"}
+                                                    active={!useChart}
+                                                    onClick={() => this.setState({useChart: false, chartType: COLUMN})}>
+                                                <FontAwesomeIcon icon={faList} size={"1x"}/>
                                             </Button>
                                         </ButtonGroup>
                                     </Col>
@@ -1115,10 +1217,10 @@ class GeneralStatistic extends React.Component {
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="7">
                                 <br/>
-                                <GameDetail game={maxBuyIn} name={'BuyIn'} value={maxBuyIn.buyIn}/>
-                                <GameDetail game={maxWon} name={'Won'} value={maxWon.won}/>
-                                <GameDetail game={maxBounty} name={'Bounty'} value={maxBounty.bounty}/>
-                                <GameDetail game={maxTotal} name={'Total'}
+                                <GameDetail game={maxBuyIn} name={BUYIN} value={maxBuyIn.buyIn}/>
+                                <GameDetail game={maxWon} name={WON} value={maxWon.won}/>
+                                <GameDetail game={maxBounty} name={BOUNTY} value={maxBounty.bounty}/>
+                                <GameDetail game={maxTotal} name={TOTAL}
                                             value={maxTotal.won + maxTotal.bounty - maxTotal.buyIn}/>
                                 <br/>
                                 <Row style={{paddingTop: "12px"}}>
