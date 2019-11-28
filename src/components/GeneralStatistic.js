@@ -660,6 +660,7 @@ class GeneralStatistic extends React.Component {
     }
 
     getGroupChart(users) {
+        const {attributeToShow} = this.state;
         return ({
             global: {
                 useUTC: false
@@ -668,7 +669,7 @@ class GeneralStatistic extends React.Component {
                 type: 'spline',
             },
             title: {
-                text: this.state.attributeToShow,
+                text: attributeToShow,
                 style: {
                     display: 'none'
                 },
@@ -720,6 +721,7 @@ class GeneralStatistic extends React.Component {
                 }),
                 lineWidth: 1,
                 color: '#DC3545',
+                visible: attributeToShow === "BuyIn" || attributeToShow === "Total",
                 marker: {
                     enabled: false,
                 },
@@ -732,6 +734,7 @@ class GeneralStatistic extends React.Component {
                 }),
                 lineWidth: 1,
                 color: '#155724',
+                visible: attributeToShow === "Bounty" || attributeToShow === "Total",
                 marker: {
                     enabled: false,
                 },
@@ -744,6 +747,7 @@ class GeneralStatistic extends React.Component {
                 }),
                 lineWidth: 1,
                 color: '#28A745',
+                visible: attributeToShow === "Won" || attributeToShow === "Total",
                 marker: {
                     enabled: false,
                 },
@@ -754,6 +758,7 @@ class GeneralStatistic extends React.Component {
                     return u.total
                 }),
                 color: '#6C757D',
+                visible: attributeToShow === "Total",
                 marker: {
                     enabled: false,
                 },
@@ -767,7 +772,7 @@ class GeneralStatistic extends React.Component {
                 }),
                 lineWidth: 1,
                 color: '#FFC107',
-                visible: false,
+                visible: attributeToShow === "Played",
                 marker: {
                     enabled: false,
                 },
@@ -781,7 +786,7 @@ class GeneralStatistic extends React.Component {
                 }),
                 lineWidth: 1,
                 color: '#2f7ed8',
-                visible: false,
+                visible: attributeToShow === "Hero",
                 marker: {
                     enabled: false,
                 },
