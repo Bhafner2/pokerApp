@@ -99,7 +99,6 @@ class GeneralStatistic extends React.Component {
         this.last3m = this.last3m.bind(this);
         this.last6m = this.last6m.bind(this);
         this.lastYear = this.lastYear.bind(this);
-        this.this12m = this.this12m.bind(this);
         this.showFilter = this.showFilter.bind(this);
         this.resetFilter = this.resetFilter.bind(this);
         this.setSum = this.setSum.bind(this);
@@ -140,7 +139,7 @@ class GeneralStatistic extends React.Component {
                     chartType: COLUMN,
                     attributeToShow: TOTAL,
                 }, () =>
-                    this.this12m()
+                    this.lastYear(moment(this.props.today).year())
             );
         } else {
             this.setState({
@@ -189,7 +188,7 @@ class GeneralStatistic extends React.Component {
             let filtered;
 
             let d = new Date(this.props.today);
-            filtered = !(this.state.fromDate === d.getFullYear() + '-01-01' && this.state.toDate === d.getFullYear() + '-12-31' && this.state.filteredUsers.length < 1);
+            filtered = !(this.state.fromDate === d.getFullYear() + '-01-01' && this.state.toDate === d.getFullYear() + '-12-31' /*&& this.state.filteredUsers.length < 1*/);
 
             if (this.state.dateOk && !_.isNil(users)) {
 
@@ -458,22 +457,10 @@ class GeneralStatistic extends React.Component {
     }
 
 
-    lastYear() {
-        let d = new Date(this.props.today);
+    lastYear(year) {
         this.setState({
-            fromDate: (d.getFullYear() - 1) + '-01-01',
-            toDate: (d.getFullYear() - 1) + '-12-31',
-            dateOk: true,
-        }, () => {
-            this.getData();
-        })
-    }
-
-    this12m() {
-        let d = new Date(this.props.today);
-        this.setState({
-            fromDate: d.getFullYear() + '-01-01',
-            toDate: d.getFullYear() + '-12-31',
+            fromDate: year + '-01-01',
+            toDate: year + '-12-31',
             dateOk: true,
         }, () => {
             this.getData();
@@ -532,11 +519,24 @@ class GeneralStatistic extends React.Component {
             showFilter: false,
             filteredUsers: [],
         }, () => {
-            this.this12m();
+            this.lastYear(moment(this.props.today).year());
         })
     }
 
     filter() {
+        let years = [];
+        for (let year = moment(this.props.today).year(); year >= 2018; year--) {
+            years.push(<Col key={year} xs={2} style={{paddingRight: "0.2em", paddingLeft: "0.2em"}}>
+                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
+                        size="sm"
+                        color="link"
+                        onClick={() => this.lastYear(year)}
+                >
+                    {year}
+                </Button>
+            </Col>)
+        }
+
         return (
             <Collapse isOpen={this.state.showFilter}>
                 <Card outline>
@@ -575,24 +575,7 @@ class GeneralStatistic extends React.Component {
                                     6 Month
                                 </Button>
                             </Col>
-                            <Col xs={3} style={{paddingRight: "1em", paddingLeft: "0.2em"}}>
-                                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
-                                        size="sm"
-                                        color="link"
-                                        onClick={this.this12m}
-                                >
-                                    This Year
-                                </Button>
-                            </Col>
-                            <Col xs={3} style={{paddingRight: "0.2em", paddingLeft: "0.2em"}}>
-                                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
-                                        size="sm"
-                                        color="link"
-                                        onClick={this.lastYear}
-                                >
-                                    Last Year
-                                </Button>
-                            </Col>
+                            {years}
                         </Row>
                         <Row style={{paddingTop: "12px"}}>
                             <Col>User filter</Col>
