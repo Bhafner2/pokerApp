@@ -29,6 +29,7 @@ class Games extends React.Component {
         this.chart = this.chart.bind(this);
         this.applyFilter = this.applyFilter.bind(this);
         this.mapBuyIns = this.mapBuyIns.bind(this);
+        this.toggleScatterChart = this.toggleScatterChart.bind(this);
     }
 
     componentDidMount() {
@@ -218,6 +219,20 @@ class Games extends React.Component {
         return data;
     }
 
+    toggleScatterChart(useScatter) {
+        this.setState({
+            useChart: false,
+            useScatter: false
+        }, () => {
+            this.forceUpdate();
+            this.setState({
+                useChart: true,
+                useScatter
+            })
+        })
+    }
+
+
     render() {
         const {filteredGames, filteredUsers, useChart, useScatter} = this.state;
         _.mixin({
@@ -236,7 +251,7 @@ class Games extends React.Component {
                     <Col xs={4}>
                         <ButtonGroup style={{paddingTop: "4px"}}>
                             <Button size={"sm"} outline color="primary" active={useChart && !useScatter}
-                                    onClick={() => this.setState({useChart: true, useScatter: false})}>
+                                    onClick={() => this.toggleScatterChart(false)}>
                                 <FontAwesomeIcon icon={faChartBar} size={"1x"}/>
                             </Button>
                             <Button size={"sm"} outline color={"primary"} active={!useChart}
@@ -244,7 +259,7 @@ class Games extends React.Component {
                                 <FontAwesomeIcon icon={faList} size={"1x"}/>
                             </Button>
                             <Button size={"sm"} outline color={"primary"} active={useScatter}
-                                    onClick={() => this.setState({useChart: true, useScatter: true})}>
+                                    onClick={() => this.toggleScatterChart(true)}>
                                 <FontAwesomeIcon icon={faChartArea} size={"1x"}/>
                             </Button>
                         </ButtonGroup>

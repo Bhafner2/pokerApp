@@ -831,8 +831,8 @@ class GeneralStatistic extends React.Component {
         for (let i in users) {
             const u = users[i];
             const y = u[this.equaliseFont(this.state.attributeToShow)];
-            if(!_.isNil(y)){
-                data.push({name: u.name, y});                
+            if (!_.isNil(y)) {
+                data.push({name: u.name, y});
             }
         }
         return data;
@@ -928,8 +928,16 @@ class GeneralStatistic extends React.Component {
     }
 
     togglePieChart(usePie) {
-        this.forceUpdate()
-        this.setState({useChart: true, usePie})
+        this.setState({
+            useChart: false,
+            usePie: false
+        }, () => {
+            this.forceUpdate();
+            this.setState({
+                useChart: true,
+                usePie
+            })
+        })
     }
 
     render() {
@@ -955,7 +963,7 @@ class GeneralStatistic extends React.Component {
                 ))}
             </div>
         );
-        
+
         return (
 
             <div>
@@ -1077,7 +1085,7 @@ class GeneralStatistic extends React.Component {
                                         <ButtonGroup style={{paddingTop: "4px"}}>
                                             <Button size={"sm"} outline color="primary" active={useChart && !usePie}
                                                     onClick={() => this.togglePieChart(false)}>
-                                                    <FontAwesomeIcon icon={faChartBar} size={"1x"}/>
+                                                <FontAwesomeIcon icon={faChartBar} size={"1x"}/>
                                             </Button>
                                             <Button size={"sm"} outline color={"primary"} active={!useChart}
                                                     onClick={() => this.setState({useChart: false, usePie: false})}>
@@ -1085,7 +1093,7 @@ class GeneralStatistic extends React.Component {
                                             </Button>
                                             <Button size={"sm"} outline color={"primary"} active={usePie}
                                                     onClick={() => this.togglePieChart(true)}>
-                                                    <FontAwesomeIcon icon={faChartPie} size={"1x"}/>
+                                                <FontAwesomeIcon icon={faChartPie} size={"1x"}/>
                                             </Button>
                                         </ButtonGroup>
                                     </Col>
