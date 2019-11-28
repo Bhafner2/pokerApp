@@ -684,9 +684,6 @@ class GeneralStatistic extends React.Component {
     getGroupChart(users) {
         const {attributeToShow} = this.state;
         return ({
-            global: {
-                useUTC: false
-            },
             chart: {
                 type: 'spline',
             },
@@ -821,60 +818,42 @@ class GeneralStatistic extends React.Component {
         const {attributeToShow} = this.state;
         return ({
             chart: {
+                type: 'line',
                 polar: true
             },
             title: {
-                text: 'Highcharts Polar Chart'
-            },
-
-            subtitle: {
-                text: 'Also known as Radar Chart'
-            },
-
-            pane: {
-                startAngle: 0,
-                endAngle: 360
-            },
-
-            xAxis: {
-                tickInterval: 45,
-                min: 0,
-                max: 360,
-                labels: {
-                    format: '{value}°'
-                }
-            },
-
-            yAxis: {
-                min: 0
-            },
-
-            plotOptions: {
-                series: {
-                    pointStart: 0,
-                    pointInterval: 45
+                text: attributeToShow,
+                style: {
+                    display: 'none'
                 },
-                column: {
-                    pointPadding: 0,
-                    groupPadding: 0
-                }
             },
-
-            series: [{
-                type: 'column',
-                name: 'Column',
-                data: [8, 7, 6, 5, 4, 3, 2, 1],
-                pointPlacement: 'between'
-            }, {
-                type: 'line',
-                name: 'Line',
-                data: [1, 2, 3, 4, 5, 6, 7, 8]
-            }, {
-                type: 'area',
-                name: 'Area',
-                data: [1, 8, 2, 7, 3, 6, 4, 5]
-            }]
+            xAxis: [{
+                categories: [TOTAL, WON, BUYIN, BOUNTY, PLAYED, HERO]
+            },
+            ],
+            legend: {
+                itemMarginBottom: 12,
+                itemStyle: {
+                    fontSize: '1.2em',
+                },
+            },
+            series: this.spiderData(users, attributeToShow),
         })
+    }
+
+    spiderData(users, attributeToShow) {
+        const data = [];
+        for (let i in users) {
+            const u = users[i];
+            if (attributeToShow === HERO) {
+                data.push({name: u.name, data: [u.total, u.won, u.buyIn, u.bounty, u.played, u.hero]});
+            } else if (attributeToShow === PLAYED) {
+                data.push({name: u.name, data: [u.total, u.won, u.buyIn, u.bounty, u.played]});
+            } else {
+                data.push({name: u.name, data: [u.total, u.won, u.buyIn, u.bounty]});
+            }
+        }
+        return data;
     }
 
     getPieChart(users) {
