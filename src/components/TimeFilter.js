@@ -137,7 +137,7 @@ class TimeFilter extends React.Component {
         return (
             <FormGroup>
                 <Row>
-                    <Col>
+                    <Col xs={8}>
                         <ButtonGroup>
                             <Button color={"link"} onClick={this.showFilter}
                                     style={{color: this.state.filtered ? "#007BFF" : "black"}}
@@ -155,6 +155,7 @@ class TimeFilter extends React.Component {
                             </Button>
                         </ButtonGroup>
                     </Col>
+                    {this.props.addition}
                 </Row>
                 <Collapse isOpen={this.state.showFilter}>
                     <Card outline>
@@ -222,7 +223,6 @@ class TimeFilter extends React.Component {
                     </Card>
                 </Collapse>
             </FormGroup>
-
         )
     }
 }

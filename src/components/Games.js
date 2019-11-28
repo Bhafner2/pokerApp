@@ -241,31 +241,31 @@ class Games extends React.Component {
                 return fn(_.maxBy(xs, fn))
             }
         });
+        const switchChart = (
+            <Col xs={4}>
+                <ButtonGroup style={{paddingTop: "4px"}}>
+                    <Button size={"sm"} outline color="primary" active={useChart && !useScatter}
+                            onClick={() => this.toggleScatterChart(false)}>
+                        <FontAwesomeIcon icon={faChartBar} size={"1x"}/>
+                    </Button>
+                    <Button size={"sm"} outline color={"primary"} active={!useChart}
+                            onClick={() => this.setState({useChart: false, useScatter: false})}>
+                        <FontAwesomeIcon icon={faList} size={"1x"}/>
+                    </Button>
+                    <Button size={"sm"} outline color={"primary"} active={useScatter}
+                            onClick={() => this.toggleScatterChart(true)}>
+                        <FontAwesomeIcon icon={faChartArea} size={"1x"}/>
+                    </Button>
+                </ButtonGroup>
+            </Col>
+        );
         return (
             <div>
                 <Row>
-                    <Col xs={6}>
-                        <TimeFilter
-                            calcData={(fromDate, toDate) => this.applyFilter(fromDate, toDate)}
-                        />
-                    </Col>
-                    <Col xs={4}>
-                        <ButtonGroup style={{paddingTop: "4px"}}>
-                            <Button size={"sm"} outline color="primary" active={useChart && !useScatter}
-                                    onClick={() => this.toggleScatterChart(false)}>
-                                <FontAwesomeIcon icon={faChartBar} size={"1x"}/>
-                            </Button>
-                            <Button size={"sm"} outline color={"primary"} active={!useChart}
-                                    onClick={() => this.setState({useChart: false, useScatter: false})}>
-                                <FontAwesomeIcon icon={faList} size={"1x"}/>
-                            </Button>
-                            <Button size={"sm"} outline color={"primary"} active={useScatter}
-                                    onClick={() => this.toggleScatterChart(true)}>
-                                <FontAwesomeIcon icon={faChartArea} size={"1x"}/>
-                            </Button>
-                        </ButtonGroup>
-                    </Col>
-                    <Col xs={2}/>
+                    <TimeFilter
+                        calcData={(fromDate, toDate) => this.applyFilter(fromDate, toDate)}
+                        addition={switchChart}
+                    />
                 </Row>
                 <br/>
                 {useChart ? (
