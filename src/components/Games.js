@@ -246,7 +246,7 @@ class Games extends React.Component {
                 <Row>
                     <Col xs={6}>
                         <TimeFilter
-                            calcData={(fromDate, toDate) => this.applyFilter(fromDate, toDate)} {/* //TODO das context menu wird verqutscht*/}
+                            calcData={(fromDate, toDate) => this.applyFilter(fromDate, toDate)}
                         />
                     </Col>
                     <Col xs={4}>

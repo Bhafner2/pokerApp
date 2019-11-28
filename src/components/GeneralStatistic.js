@@ -1038,8 +1038,7 @@ class GeneralStatistic extends React.Component {
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="1">
                                 <Row style={{paddingTop: "6px"}}>
-                                    <Col xs={1}/>
-                                    <Col xs={3}>
+                                    <Col xs={4}>
                                         <ButtonGroup style={{paddingTop: "4px"}}>
                                             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
                                                 <DropdownToggle caret color="primary" size={"sm"}>
