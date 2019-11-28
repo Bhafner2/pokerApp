@@ -26,7 +26,6 @@ class TimeFilter extends React.Component {
 
         this.lastMonths = this.lastMonths.bind(this);
         this.lastYear = this.lastYear.bind(this);
-        this.thisYear = this.thisYear.bind(this);
         this.showFilter = this.showFilter.bind(this);
         this.resetFilter = this.resetFilter.bind(this);
         this.updateFormDate = this.updateFormDate.bind(this);
@@ -81,27 +80,10 @@ class TimeFilter extends React.Component {
     }
 
 
-    lastYear() {
-        const years = 1;
-        const start = moment(this.state.today);
-        const end = moment(this.state.today);
-
+    lastYear(year) {
         this.setState({
-            fromDate: start.startOf('year').subtract(years, 'years'),
-            toDate: end.endOf('year').subtract(years, 'years'),
-            dateOk: true,
-        }, () => {
-            this.calc()
-        })
-    }
-
-    thisYear() {
-        const start = moment(this.state.today);
-        const end = moment(this.state.today);
-
-        this.setState({
-            fromDate: start.startOf('year'),
-            toDate: end.endOf('year'),
+            fromDate: moment(year + '-01-01'),
+            toDate: moment(year + '-12-31'),
             dateOk: true,
         }, () => {
             this.calc()
@@ -113,7 +95,7 @@ class TimeFilter extends React.Component {
             dateOk: true,
             showFilter: false,
         }, () => {
-            this.thisYear()
+            this.lastYear(moment(this.props.today).year())
         });
     }
 
@@ -125,15 +107,26 @@ class TimeFilter extends React.Component {
 
     calc() {
 
-        const start = moment(this.state.today);
-        const end = moment(this.state.today);
-
-        const filtered = !(this.state.fromDate.format() === start.startOf('year').format() && this.state.toDate.format() === end.endOf('year').format());
+        const year = moment(this.state.today).year();
+        const filtered = !(this.state.fromDate.format() === moment(year + '-01-01').format() && this.state.toDate.format() === moment(year + '-12-31').format());
         this.props.calcData(this.state.fromDate, this.state.toDate);
         this.setState({filtered})
     }
 
     render() {
+        let years = [];
+        for (let year = this.state.today.year(); year >= 2018; year--) {
+            years.push(<Col key={year} xs={2} style={{paddingRight: "0.2em", paddingLeft: "0.2em"}}>
+                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
+                        size="sm"
+                        color="link"
+                        onClick={() => this.lastYear(year)}
+                >
+                    {year}
+                </Button>
+            </Col>)
+        }
+
         return (
             <FormGroup>
                 <Row>
@@ -196,24 +189,7 @@ class TimeFilter extends React.Component {
                                         6 Month
                                     </Button>
                                 </Col>
-                                <Col xs={3} style={{paddingRight: "1em", paddingLeft: "0.2em"}}>
-                                    <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
-                                            size="sm"
-                                            color="link"
-                                            onClick={this.thisYear}
-                                    >
-                                        This Year
-                                    </Button>
-                                </Col>
-                                <Col xs={3} style={{paddingRight: "0.2em", paddingLeft: "0.2em"}}>
-                                    <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
-                                            size="sm"
-                                            color="link"
-                                            onClick={this.lastYear}
-                                    >
-                                        Last Year
-                                    </Button>
-                                </Col>
+                                {years}
                             </Row>
                         </CardBody>
                         <CardFooter>

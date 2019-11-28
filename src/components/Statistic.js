@@ -571,7 +571,7 @@ class Statistic extends React.Component {
                                                 Chances of <b>winning</b>
                                             </Col>
                                             <Col xs={4}>
-                                                {Math.round(_.filter(wons, (won) => {
+                                                {showNumber(_.filter(wons, (won) => {
                                                     return won > 0;
                                                 }).length / dates.length * 100)}%
                                             </Col>
@@ -581,7 +581,7 @@ class Statistic extends React.Component {
                                                 Chances of making <b>plus</b>
                                             </Col>
                                             <Col xs={4}>
-                                                {Math.round(_.filter(totals, (total) => {
+                                                {showNumber(_.filter(totals, (total) => {
                                                     return total > 0;
                                                 }).length / dates.length * 100)}%
                                             </Col>

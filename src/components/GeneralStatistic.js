@@ -298,7 +298,7 @@ class GeneralStatistic extends React.Component {
 
                         sumTotal = sumTotal + user.total;
 
-                        user.hero = (user.played * 5) + (user.won * 3) - (user.total * 2) + (user.buyIn * 5) + (user.bounty * 5);
+                        user.hero = ((user.played * 5) + (user.won * 3) - (user.total * 3) + (user.buyIn * 5) + (user.bounty * 6)) / 10;
 
                         userPercent.push({
                             name: user.name,
@@ -841,17 +841,11 @@ class GeneralStatistic extends React.Component {
         })
     }
 
-    spiderData(users, attributeToShow) {
+    spiderData(users) {
         const data = [];
         for (let i in users) {
             const u = users[i];
-            if (attributeToShow === HERO) {
-                data.push({name: u.name, data: [u.total, u.won, u.buyIn, u.bounty, u.played, u.hero]});
-            } else if (attributeToShow === PLAYED) {
-                data.push({name: u.name, data: [u.total, u.won, u.buyIn, u.bounty, u.played]});
-            } else {
-                data.push({name: u.name, data: [u.total, u.won, u.buyIn, u.bounty]});
-            }
+            data.push({name: u.name, data: [u.total, u.won, u.buyIn, u.bounty, u.played, u.hero]});
         }
         return data;
     }
@@ -1111,7 +1105,7 @@ class GeneralStatistic extends React.Component {
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="1">
                                 <Row style={{paddingTop: "6px"}}>
-                                    <Col xs={3}>
+                                    <Col xs={3} style={{marginLeft: "4px"}}>
                                         <ButtonGroup style={{paddingTop: "4px"}}>
                                             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
                                                 <DropdownToggle caret color="primary" size={"sm"}>
