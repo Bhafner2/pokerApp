@@ -121,6 +121,9 @@ class GeneralStatistic extends React.Component {
                     getAvg: false,
                     reload: false,
                     modal: true,
+                    useChart: true,
+                    usePie: false,
+                    attributeToShow: "Total",
                 }, () =>
                     this.this12m()
             );
@@ -1035,44 +1038,47 @@ class GeneralStatistic extends React.Component {
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="1">
                                 <Row style={{paddingTop: "6px"}}>
-                                    <Col xs={4}>
-                                        <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
-                                            <DropdownToggle caret color="link">
-                                                {this.state.attributeToShow}
-                                            </DropdownToggle>
-                                            <DropdownMenu>
-                                                <DropdownItem
-                                                    onClick={() => this.setState({attributeToShow: "Total"})}
-                                                >
-                                                    Total
-                                                </DropdownItem>
-                                                <DropdownItem
-                                                    onClick={() => this.setState({attributeToShow: "Won"})}
-                                                >
-                                                    Won
-                                                </DropdownItem>
-                                                <DropdownItem
-                                                    onClick={() => this.setState({attributeToShow: "Bounty"})}
-                                                >
-                                                    Bounty
-                                                </DropdownItem>
-                                                <DropdownItem
-                                                    onClick={() => this.setState({attributeToShow: "BuyIn"})}
-                                                >
-                                                    BuyIn
-                                                </DropdownItem>
-                                                <DropdownItem
-                                                    onClick={() => this.setState({attributeToShow: "Played"})}
-                                                >
-                                                    Played
-                                                </DropdownItem>
-                                                <DropdownItem
-                                                    onClick={() => this.setState({attributeToShow: "Hero"})}
-                                                >
-                                                    Hero
-                                                </DropdownItem>
-                                            </DropdownMenu>
-                                        </Dropdown>
+                                    <Col xs={1}/>
+                                    <Col xs={3}>
+                                        <ButtonGroup style={{paddingTop: "4px"}}>
+                                            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
+                                                <DropdownToggle caret color="primary" size={"sm"}>
+                                                    {this.state.attributeToShow}
+                                                </DropdownToggle>
+                                                <DropdownMenu>
+                                                    <DropdownItem
+                                                        onClick={() => this.setState({attributeToShow: "Total"})}
+                                                    >
+                                                        Total
+                                                    </DropdownItem>
+                                                    <DropdownItem
+                                                        onClick={() => this.setState({attributeToShow: "Won"})}
+                                                    >
+                                                        Won
+                                                    </DropdownItem>
+                                                    <DropdownItem
+                                                        onClick={() => this.setState({attributeToShow: "Bounty"})}
+                                                    >
+                                                        Bounty
+                                                    </DropdownItem>
+                                                    <DropdownItem
+                                                        onClick={() => this.setState({attributeToShow: "BuyIn"})}
+                                                    >
+                                                        BuyIn
+                                                    </DropdownItem>
+                                                    <DropdownItem
+                                                        onClick={() => this.setState({attributeToShow: "Played"})}
+                                                    >
+                                                        Played
+                                                    </DropdownItem>
+                                                    <DropdownItem
+                                                        onClick={() => this.setState({attributeToShow: "Hero"})}
+                                                    >
+                                                        Hero
+                                                    </DropdownItem>
+                                                </DropdownMenu>
+                                            </Dropdown>
+                                        </ButtonGroup>
                                     </Col>
                                     <Col xs={3}>
                                         <ButtonGroup style={{paddingTop: "4px"}}>
