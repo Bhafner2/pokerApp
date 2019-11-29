@@ -61,8 +61,7 @@ class Games extends React.Component {
     }
 
     chart() {
-        const {filteredGames} = this.state;
-
+        const {filteredGames, filteredUsers} = this.state;
         this.setState({
             options: {
                 chart: {
@@ -73,6 +72,9 @@ class Games extends React.Component {
                     style: {
                         fontWeight: 'bold'
                     },
+                },
+                xAxis: {
+                    type: 'datetime',
                 },
                 yAxis: [{ // Primary yAxis
                     title: {
@@ -88,12 +90,10 @@ class Games extends React.Component {
                     column: {
                         stacking: 'normal'
                     },
+                    series: {
+                        pointWidth: 10
+                    }
                 },
-                xAxis: [{
-                    categories: _.map(filteredGames, (g) => {
-                        return moment(g.date).format('D.M.YY');
-                    }),
-                }],
                 legend: {
                     itemMarginBottom: 12,
                     itemStyle: {
@@ -105,51 +105,65 @@ class Games extends React.Component {
                     stack: 'data',
                     type: 'column',
                     yAxis: 0,
-                    data: _.map(filteredGames, (u) => {
-                        return u.bounty
+                    data: _.map(filteredGames, (g) => {
+                        return [moment(g.date).valueOf(), g.bounty]
                     }),
                     lineWidth: 1,
                     color: '#155724',
                     marker: {
                         enabled: false,
+                        radius: 2,
                     },
                 }, {
                     name: 'Pot size',
                     stack: 'data',
                     type: 'column',
                     yAxis: 0,
-                    data: _.map(filteredGames, (u) => {
-                        return u.won
+                    data: _.map(filteredGames, (g) => {
+                        return [moment(g.date).valueOf(), g.buyIn]
                     }),
-                    lineWidth: 1,
                     color: '#28A745',
                     marker: {
                         enabled: false,
+                        radius: 2,
                     },
                 }, {
                     name: 'Avg Buy In',
                     type: 'spline',
                     yAxis: 1,
-                    data: _.map(filteredGames, (u) => {
-                        return (Math.round((u.buyIn / u.players) * 10) / 10)
+                    data: _.map(filteredGames, (g) => {
+                        return [moment(g.date).valueOf(), (Math.round((g.buyIn / g.players) * 10) / 10)]
                     }),
                     color: '#6C757D',
+                    lineWidth: 1,
                     marker: {
                         enabled: false,
+                        radius: 2,
                     },
                 }, {
                     name: 'Players',
                     stack: 'none',
                     type: 'column',
                     yAxis: 1,
-                    data: _.map(filteredGames, (u) => {
-                        return u.players
+                    data: _.map(filteredGames, (g) => {
+                        return [moment(g.date).valueOf(), g.players]
                     }),
                     lineWidth: 1,
                     color: '#FFC107',
                     visible: false,
                     marker: {
                         enabled: false,
+                        radius: 2,
+                    },
+                },{
+                    name: 'Buy In',
+                    type: 'scatter',
+                    yAxis: 1,
+                    data: this.mapBuyIns(filteredUsers),
+                    color: 'rgba(255, 0, 0, .1)',
+                    visible: false,
+                    marker: {
+                        radius: 24,
                     },
                 }
                 ],
@@ -185,6 +199,7 @@ class Games extends React.Component {
                     name: 'Buy In',
                     data: this.mapBuyIns(users),
                     color: 'rgba(255, 0, 0, .1)',
+                    type: 'scatter',
                     marker: {
                         radius: 24,
                     },
@@ -195,8 +210,8 @@ class Games extends React.Component {
                     marker: {
                         enabled: false,
                     },
-                    data: _.map(filteredGames, (u) => {
-                        return ([moment(u.date).valueOf(), Math.round((u.buyIn / u.players) * 10) / 10])
+                    data: _.map(filteredGames, (g) => {
+                        return ([moment(g.date).valueOf(), Math.round((g.buyIn / g.players) * 10) / 10])
                     }),
                 },
                 ],
@@ -212,7 +227,7 @@ class Games extends React.Component {
             for (let j in users[i].games) {
                 const game = users[i].games[j];
                 if (game.buyIn > 0 && moment(game.date) < to && moment(game.date) > from) {
-                    data.push([moment(game.date).valueOf(), game.buyIn, i])
+                    data.push([moment(game.date).valueOf(), game.buyIn])
                 }
             }
         }
@@ -252,10 +267,11 @@ class Games extends React.Component {
                             onClick={() => this.setState({useChart: false, useScatter: false})}>
                         <FontAwesomeIcon icon={faList} size={"1x"}/>
                     </Button>
-                    <Button size={"sm"} outline color={"primary"} active={useScatter}
+                   {/*  <Button size={"sm"} outline color={"primary"} active={useScatter}
                             onClick={() => this.toggleScatterChart(true)}>
                         <FontAwesomeIcon icon={faChartArea} size={"1x"}/>
                     </Button>
+        **/}                    
                 </ButtonGroup>
             </Col>
         );
