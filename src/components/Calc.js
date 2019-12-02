@@ -13,8 +13,8 @@ import {
 import 'react-infinite-calendar/styles.css';
 import {connect} from "react-redux";
 import * as _ from 'lodash';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCalculator } from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faCalculator} from '@fortawesome/free-solid-svg-icons';
 
 class Calc extends React.Component {
     constructor(props) {
@@ -42,16 +42,16 @@ class Calc extends React.Component {
     toggle() {
         this.setState({
             modal: !this.state.modal,
-            onOpen: true,
-            amountOk: false,
         });
-        this.setState({
-            amount: 0,
-            p1: 0,
-            p2: 0,
-            p3: 0,
-            p4: 0,
-        });
+        // this.setState({
+        //     onOpen: true,
+        //     amount: 0,
+        //     amountOk: false,
+        //     p1: 0,
+        //     p2: 0,
+        //     p3: 0,
+        //     p4: 0,
+        // });
     }
 
     calculate() {
@@ -210,7 +210,7 @@ class Calc extends React.Component {
 
     render() {
         return (<div>
-            <FontAwesomeIcon icon={faCalculator} onClick={this.toggle} size="lg"/>
+                <FontAwesomeIcon icon={faCalculator} onClick={this.toggle} size="lg"/>
 
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                        onKeyPress={this.handleKeyPress}
