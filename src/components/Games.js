@@ -12,7 +12,7 @@ import moment from "moment";
 import {showNumber} from "../App";
 import TimeFilter from "./TimeFilter";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faChartArea, faChartBar, faChartPie, faList} from "@fortawesome/free-solid-svg-icons";
+import {faChartBar, faList} from "@fortawesome/free-solid-svg-icons";
 
 class Games extends React.Component {
     constructor(props) {
@@ -24,12 +24,10 @@ class Games extends React.Component {
             from: '',
             to: '',
             useChart: true,
-            useScatter: false,
         };
         this.chart = this.chart.bind(this);
         this.applyFilter = this.applyFilter.bind(this);
         this.mapBuyIns = this.mapBuyIns.bind(this);
-        this.toggleScatterChart = this.toggleScatterChart.bind(this);
     }
 
     componentDidMount() {
@@ -155,7 +153,7 @@ class Games extends React.Component {
                         enabled: false,
                         radius: 2,
                     },
-                },{
+                }, {
                     name: 'Buy In',
                     type: 'scatter',
                     yAxis: 1,
@@ -169,54 +167,6 @@ class Games extends React.Component {
                 ],
             }
         });
-    }
-
-    getDotChart(users, filteredGames) {
-        console.log(users)
-        return ({
-                chart: {
-                    type: 'scatter',
-                },
-                xAxis: {
-                    type: 'datetime',
-                },
-                title: {
-                    text: `Buy In's`,
-                    style: {
-                        fontWeight: 'bold'
-                    },
-                },
-                yAxis: {
-                    title: {
-                        text: ''
-                    },
-                },
-                // tooltip: {
-                //     pointFormat: '{series.name}: <b>{point.y}</b>' +
-                //         'Date: {moment(point.x).format(\'D.M.YY\')}',
-                // },
-                series: [{
-                    name: 'Buy In',
-                    data: this.mapBuyIns(users),
-                    color: 'rgba(255, 0, 0, .1)',
-                    type: 'scatter',
-                    marker: {
-                        radius: 24,
-                    },
-                }, {
-                    name: 'Avg Buy In',
-                    type: 'spline',
-                    color: '#6C757D',
-                    marker: {
-                        enabled: false,
-                    },
-                    data: _.map(filteredGames, (g) => {
-                        return ([moment(g.date).valueOf(), Math.round((g.buyIn / g.players) * 10) / 10])
-                    }),
-                },
-                ],
-            }
-        )
     }
 
     mapBuyIns(users) {
@@ -234,22 +184,8 @@ class Games extends React.Component {
         return data;
     }
 
-    toggleScatterChart(useScatter) {
-        this.setState({
-            useChart: false,
-            useScatter: false
-        }, () => {
-            this.forceUpdate();
-            this.setState({
-                useChart: true,
-                useScatter
-            })
-        })
-    }
-
-
     render() {
-        const {filteredGames, filteredUsers, useChart, useScatter} = this.state;
+        const {filteredGames, useChart} = this.state;
         _.mixin({
             maxValue: (xs, it) => {
                 const fn = _.isFunction(it) ? it : _.property(it);
@@ -259,19 +195,14 @@ class Games extends React.Component {
         const switchChart = (
             <Col xs={4}>
                 <ButtonGroup style={{paddingTop: "4px"}}>
-                    <Button size={"sm"} outline color="primary" active={useChart && !useScatter}
-                            onClick={() => this.toggleScatterChart(false)}>
+                    <Button size={"sm"} outline color="primary" active={useChart}
+                            onClick={() => this.setState({useChart: true})}>
                         <FontAwesomeIcon icon={faChartBar} size={"1x"}/>
                     </Button>
                     <Button size={"sm"} outline color={"primary"} active={!useChart}
-                            onClick={() => this.setState({useChart: false, useScatter: false})}>
+                            onClick={() => this.setState({useChart: false})}>
                         <FontAwesomeIcon icon={faList} size={"1x"}/>
                     </Button>
-                   {/*  <Button size={"sm"} outline color={"primary"} active={useScatter}
-                            onClick={() => this.toggleScatterChart(true)}>
-                        <FontAwesomeIcon icon={faChartArea} size={"1x"}/>
-                    </Button>
-        **/}                    
                 </ButtonGroup>
             </Col>
         );
@@ -286,17 +217,7 @@ class Games extends React.Component {
                 <br/>
                 {useChart ? (
                     <span>
-                        {useScatter ? (
-                            <Row>
-                                <Col>
-                                    <HighchartsReact
-                                        style={{visibility: this.state.dateOk ? 'visible' : 'hidden'}}
-                                        highcharts={Highcharts}
-                                        options={this.getDotChart(filteredUsers, filteredGames)}
-                                    />
-                                </Col>
-                            </Row>
-                        ) : (
+                        {
                             <Row style={{paddingTop: "12px"}}>
                                 <Col>
                                     <HighchartsReact
@@ -306,7 +227,7 @@ class Games extends React.Component {
                                     />
                                 </Col>
                             </Row>
-                        )}
+                        }
                     </span>
                 ) : (
                     <Row>

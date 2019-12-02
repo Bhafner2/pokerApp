@@ -39,11 +39,16 @@ export function showNumber(number) {
     if (number >= 1000000) {
         return (Math.round(number / 100000) / 10) + 'M';
     }
-    if (number >= 1000) {
+    if (number >= 9999) {
         return (Math.round(number / 100) / 10) + 'K';
     }
-
-    return Math.round(number);
+    if (number >= 1000) {
+        return (Math.round(number / 10) / 100) + 'K';
+    }
+    if (number >= 10) {
+        return (Math.round(number));
+    }
+    return (Math.round(number * 10) / 10);
 }
 
 class App extends Component {
