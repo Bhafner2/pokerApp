@@ -290,6 +290,11 @@ class Home extends Component {
                                             >
                                                 Name
                                             </DropdownItem>
+                                            <DropdownItem
+                                                onClick={() => this.setState({attributeToSort: ""})}
+                                            >
+                                                Create Date
+                                            </DropdownItem>
                                         </DropdownMenu>
                                     </Dropdown>
                                 </Col>
