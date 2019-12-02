@@ -127,7 +127,6 @@ class Home extends Component {
     }
 
     renderUsers() {
-        console.log("Home Userslist getData");
         const {users} = this.props.data;
         const {date, today, filtered} = this.state;
 
@@ -136,7 +135,7 @@ class Home extends Component {
                 showLoading()
             )
         }
-        let filteredUsers = this.filterUser(users);
+        let filteredUsers = _.sortBy(this.filterUser(users), (user) => -user.gamesPlayed);
 
         if (_.isNil(filteredUsers[0])) {
             return (
