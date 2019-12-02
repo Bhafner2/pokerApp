@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {
-    Alert,
-    Collapse,
+    Alert, Button, ButtonGroup, Col,
+    Collapse, Dropdown, DropdownItem, DropdownMenu, DropdownToggle,
     Input,
     InputGroup,
     InputGroupAddon,
@@ -24,11 +24,18 @@ import Calc from "./Calc";
 import ThisGame from "./ThisGame";
 import {showLoading} from "../App";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faCalendar, faSearch, faSignOutAlt} from '@fortawesome/free-solid-svg-icons'
+import {
+    faCalendar,
+    faSearch,
+    faSignOutAlt,
+    faSortAmountDown,
+
+} from '@fortawesome/free-solid-svg-icons'
 import Odds from "./Odds";
 // import firebase from "../config/firebase";
 
-// import Odds from "./Odds";
+
+const GAMES_PLAYED = "gamesPlayed";
 
 class Home extends Component {
     constructor(props) {
@@ -44,6 +51,8 @@ class Home extends Component {
             showSearch: false,
             usersToRender: {},
             filtered: false,
+            dropdownOpen: false,
+            attributeToSort: GAMES_PLAYED,
         };
 
         this.updateDate = this.updateDate.bind(this);
@@ -56,6 +65,7 @@ class Home extends Component {
         this.filterUser = this.filterUser.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.resetSearch = this.resetSearch.bind(this);
+        this.toggleDropdown = this.toggleDropdown.bind(this);
     }
 
     isToday() {
@@ -135,7 +145,15 @@ class Home extends Component {
                 showLoading()
             )
         }
-        let filteredUsers = _.sortBy(this.filterUser(users), (user) => -user.gamesPlayed);
+        let filteredUsers = this.filterUser(users);
+
+        filteredUsers = _.sortBy(filteredUsers, (user) => {
+            if (this.state.attributeToSort === GAMES_PLAYED) {
+                return -user[this.state.attributeToSort]
+            } else {
+                return user[this.state.attributeToSort]
+            }
+        });
 
         if (_.isNil(filteredUsers[0])) {
             return (
@@ -199,6 +217,12 @@ class Home extends Component {
         });
     }
 
+    toggleDropdown() {
+        this.setState({
+            dropdownOpen: !this.state.dropdownOpen
+        })
+    }
+
     render() {
         return (
             <div className="center" onKeyPress={this.handleKeyPress}>
@@ -248,18 +272,42 @@ class Home extends Component {
                     </Collapse>
                     <Collapse isOpen={this.state.showSearch} navbar>
                         <Nav navbar>
-                            <InputGroup style={{paddingTop: "12px"}}>
-                                <Input type="text" name="search" id="search"
-                                       value={this.state.search}
-                                       onChange={this.updateSearch}
-                                       style={{color: "#007BFF"}}
-                                       placeholder="Search.."
-                                />
-                                <InputGroupAddon addonType="prepend"
-                                                 onClick={this.resetSearch}>
-                                    X
-                                </InputGroupAddon>
-                            </InputGroup>
+                            <Row>
+                                <Col xs={2}>
+                                    <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}
+                                              style={{paddingTop: "12px"}}>
+                                        <DropdownToggle caret size={"sm"}>
+                                            <FontAwesomeIcon icon={faSortAmountDown}/>
+                                        </DropdownToggle>
+                                        <DropdownMenu>
+                                            <DropdownItem
+                                                onClick={() => this.setState({attributeToSort: GAMES_PLAYED})}
+                                            >
+                                                Played
+                                            </DropdownItem>
+                                            <DropdownItem
+                                                onClick={() => this.setState({attributeToSort: "name"})}
+                                            >
+                                                Name
+                                            </DropdownItem>
+                                        </DropdownMenu>
+                                    </Dropdown>
+                                </Col>
+                                <Col xs={10}>
+                                    <InputGroup style={{paddingTop: "12px"}}>
+                                        <Input type="text" name="search" id="search"
+                                               value={this.state.search}
+                                               onChange={this.updateSearch}
+                                               style={{color: "#007BFF"}}
+                                               placeholder="Search.."
+                                        />
+                                        <InputGroupAddon addonType="prepend"
+                                                         onClick={this.resetSearch}>
+                                            X
+                                        </InputGroupAddon>
+                                    </InputGroup>
+                                </Col>
+                            </Row>
                         </Nav>
                     </Collapse>
                 </Navbar>
