@@ -150,10 +150,10 @@ class Statistic extends React.Component {
             const maxWon = _.max(wons);
             const maxBounty = _.max(bountys);
             const maxTotal = _.max(totals);
-            const avgTotal = Math.round((sumWon + sumBounty - sumBuyIn) / filteredGames.length);
-            const avgBuyIn = Math.round(sumBuyIn / filteredGames.length);
-            const avgBounty = Math.round(sumBounty / filteredGames.length);
-            const avgWon = Math.round(sumWon / filteredGames.length);
+            const avgTotal = ((sumWon + sumBounty - sumBuyIn) / filteredGames.length);
+            const avgBuyIn = (sumBuyIn / filteredGames.length);
+            const avgBounty = (sumBounty / filteredGames.length);
+            const avgWon = (sumWon / filteredGames.length);
 
             this.setState({
                 sumWon,
@@ -413,8 +413,8 @@ class Statistic extends React.Component {
                 },
                 tooltip: {
                     pointFormat: `<div>Percent: <b>{point.percentage:.1f}%</b> </div> <br/>` +
-                                `<div>Amount: <b>{point.y}</b> </div> <br/>` +
-                                `<div>Won: <b>{point.sum}</b> </div>`
+                        `<div>Amount: <b>{point.y}</b> </div> <br/>` +
+                        `<div>Won: <b>{point.sum}</b> </div>`
                 },
                 title: {
                     text: 'Ranking',

@@ -1192,7 +1192,7 @@ class GeneralStatistic extends React.Component {
                                         <b>Played</b> games
                                     </Col>
                                     <Col xs={6}>
-                                        {dates.length}
+                                        {showNumber(dates.length)}
                                     </Col>
                                 </Row>
                                 <Row style={{paddingTop: "12px"}}>
@@ -1200,7 +1200,7 @@ class GeneralStatistic extends React.Component {
                                         <b>Players / Game</b>
                                     </Col>
                                     <Col xs={6}>
-                                        {Math.round(avgPlayerPerGame)}
+                                        {showNumber(avgPlayerPerGame)}
                                     </Col>
                                 </Row>
                                 <Row style={{paddingTop: "12px"}}>
@@ -1208,7 +1208,7 @@ class GeneralStatistic extends React.Component {
                                         <b>Average</b> Buy In / Person
                                     </Col>
                                     <Col xs={6}>
-                                        {avgBuyIn}
+                                        {showNumber(avgBuyIn)}
                                     </Col>
                                 </Row>
                             </TabPane>

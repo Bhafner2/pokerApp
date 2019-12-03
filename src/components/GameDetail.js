@@ -15,9 +15,9 @@ class GameDetail extends React.Component {
     }
 
     toggle() {
-        this.setState({
-            popoverOpen: !this.state.popoverOpen
-        });
+        // this.setState({
+        //     popoverOpen: !this.state.popoverOpen
+        // });
     }
 
     close() {

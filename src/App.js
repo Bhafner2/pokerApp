@@ -43,7 +43,7 @@ export function showNumber(number) {
         return (Math.round(number / 100) / 10) + 'K';
     }
     if (number >= 1000) {
-        return (Math.round(number / 10) / 100) + 'K';
+        return (Math.round(number)).toLocaleString("de-CH");
     }
     if (number >= 10) {
         return (Math.round(number));
@@ -156,7 +156,7 @@ class App extends Component {
     }
 
     render() {
-        const AppVersion = 'v1.4.3';
+        const AppVersion = 'v1.4.4';
         const {connErr, login} = this.props.data;
         return (
             <div>
