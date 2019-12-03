@@ -343,7 +343,6 @@ class GeneralStatistic extends React.Component {
                     filtered,
                 });
             }
-            this.historyChart(filteredUsers);
         }
     }
 
@@ -885,44 +884,42 @@ class GeneralStatistic extends React.Component {
         users = _.sortBy(users, function (g) {
             return -g.total;
         });
-        this.setState({
-            totalChart: {
-                chart: {
-                    type: 'spline',
+        return ({
+            chart: {
+                type: 'spline',
+            },
+            title: {
+                text: TOTAL,
+                style: {
+                    fontWeight: 'bold',
+                    display: 'none'
                 },
+            },
+            yAxis: {
                 title: {
-                    text: TOTAL,
-                    style: {
-                        fontWeight: 'bold',
-                        display: 'none'
-                    },
+                    text: ''
                 },
-                yAxis: {
-                    title: {
-                        text: ''
-                    },
-                    plotLines: [{
-                        value: 0,
-                        color: 'lightGrey',
-                        dashStyle: 'shortdash',
-                        width: 0.5,
-                    }],
-                },
-                xAxis: {
-                    type: "datetime",
-                    dateTimeLabelFormats: {
-                        date: '%e.%b.%Y'
-                    }
+                plotLines: [{
+                    value: 0,
+                    color: 'lightGrey',
+                    dashStyle: 'shortdash',
+                    width: 0.5,
+                }],
+            },
+            xAxis: {
+                type: "datetime",
+                dateTimeLabelFormats: {
+                    date: '%e.%b.%Y'
+                }
 
+            },
+            legend: {
+                itemMarginBottom: 12,
+                itemStyle: {
+                    fontSize: '1.2em',
                 },
-                legend: {
-                    itemMarginBottom: 12,
-                    itemStyle: {
-                        fontSize: '1.2em',
-                    },
-                },
-                series: this.mapUsersToSeries(users),
-            }
+            },
+            series: this.mapUsersToSeries(users),
         });
     }
 
@@ -930,12 +927,15 @@ class GeneralStatistic extends React.Component {
         const summarised = [];
         if (!_.isNil(games) || games.length > 0) {
             let lastTotal = 0;
+            summarised.push([moment.utc(this.state.fromDate).valueOf(), 0]);
             for (let i in games) {
                 const total = this.getTotalOfGame(games[i]);
                 const value = total + lastTotal;
                 summarised.push([moment.utc(games[i].date).valueOf(), showNumber(value)]);
                 lastTotal += total
             }
+            const toDate = moment(this.state.toDate) > moment() ? moment() : moment(this.state.toDate);
+            summarised.push([moment.utc(toDate).valueOf(), lastTotal]);
         }
         return summarised;
     }
@@ -948,16 +948,16 @@ class GeneralStatistic extends React.Component {
 
 
     mapUsersToSeries(users) {
-        const data = [];
+        const result = [];
         for (let i in users) {
             const user = users[i];
-            data.push({
+            result.push({
                 name: user.name,
                 data: this.summariseData(user.games),
                 marker: {enabled: false},
             })
         }
-        return data;
+        return result;
     }
 
     toggleDropdown() {
@@ -1219,7 +1219,7 @@ class GeneralStatistic extends React.Component {
                                 <HighchartsReact
                                     style={{visibility: this.state.dateOk ? 'visible' : 'hidden'}}
                                     highcharts={Highcharts}
-                                    options={this.state.totalChart}
+                                    options={this.historyChart(sortedUsers)}
                                 />
                             </TabPane>
                         </TabContent>
