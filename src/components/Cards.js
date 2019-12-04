@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {Button, Col, Input, Modal, ModalBody, ModalFooter, ModalHeader, Row, Table} from "reactstrap";
 import * as _ from "lodash";
 
-const NO_CARD = {display: "??", color: "#888888", value: 0};
+const NO_CARD = {display: "??", color: "#888888", value: ''};
 
 class Cards extends React.Component {
     constructor(props) {
@@ -27,24 +27,19 @@ class Cards extends React.Component {
                 modal: true,
                 myCard: NO_CARD,
             });
+            this.props.selected(NO_CARD.value);
         }
     }
 
     setCard(card) {
-        console.log("card", card.value);
+        console.log("card selected", card.value);
 
-        if (this.state.myCard.value === card.value) {
-            this.setState({
-                myCard: NO_CARD
-            });
-            this.props.selected(NO_CARD.value);
-        } else {
-            this.setState({
-                myCard: card,
-                modal: false,
-            });
-            this.props.selected(card.value);
-        }
+        this.setState({
+            myCard: card,
+            modal: false,
+        });
+        this.props.selected(card.value);
+
     }
 
     render() {
@@ -69,7 +64,7 @@ class Cards extends React.Component {
             <span>
                 {selectedCards}
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                    <ModalHeader toggle={this.toggle}>Select Cards for {this.props.owner}</ModalHeader>
+                    <ModalHeader toggle={this.toggle}>Select card for {this.props.owner}</ModalHeader>
                     <ModalBody>
                         <Table borderless size="sm" style={{paddingTop: "12px"}}>
                             <tbody>
@@ -80,13 +75,22 @@ class Cards extends React.Component {
                                             const card = {
                                                 display: number + form.shape,
                                                 color: form.color,
-                                                value: number + form.value
+                                                value: number + form.value,
                                             };
+
+                                            let used = false;
+                                            for (let i in this.props.usedCarts) {
+                                                if (this.props.usedCarts[i] === card.value) {
+                                                    used = true;
+                                                    break;
+                                                }
+                                            }
+
                                             return (
                                                 <td key={"td" + number + form.shape}>
                                                     <Button
-                                                        outline color={"primary"}
-                                                        active={myCard.value === card.value}
+                                                        outline={!used} color={used ? "secondary" : "primary"}
+                                                        disabled={used}
                                                         size={"sm"}
                                                         value={card}
                                                         style={{color: form.color}}

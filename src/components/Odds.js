@@ -24,13 +24,17 @@ class Odds extends React.Component {
             modal: false,
             p11: '',
             p12: '',
-            p2: '',
-            p3: '',
-            p4: '',
+            p21: '',
+            p22: '',
+            b1: '',
+            b2: '',
+            b3: '',
+            b4: '',
+            b5: '',
             result: '',
             loading: false,
             error: false,
-            used: [],
+            usedCarts: [],
         };
         this.toggle = this.toggle.bind(this);
         this.calcOdds = this.calcOdds.bind(this);
@@ -49,9 +53,8 @@ class Odds extends React.Component {
             error: false,
             p11: '',
             p12: '',
-            p2: '',
-            p3: '',
-            p4: '',
+            p21: '',
+            p22: '',
             b1: '',
             b2: '',
             b3: '',
@@ -174,8 +177,8 @@ class Odds extends React.Component {
     }
 
     render() {
-        const {loading, p11, p12, p21, p22} = this.state;
-        const used = [p11, p12, p21, p22];
+        const {loading, p11, p12, p21, p22, b1, b2, b3, b4, b5} = this.state;
+        const usedCarts = [p11, p12, p21, p22, b1, b2, b3, b4, b5];
         return (
             <div>
                 <FontAwesomeIcon icon={faBalanceScale} onClick={this.toggle} size="lg"/>
@@ -202,10 +205,10 @@ class Odds extends React.Component {
                             </Col>
                             <Col xs="8">
                                 <Cards selected={(c) => this.setState({p11: c})}
-                                       used={used} owner={"Player 1"}
+                                       usedCarts={usedCarts} owner={"Player 1"}
                                 />
                                 <Cards selected={(c) => this.setState({p12: c})}
-                                       used={used} owner={"Player 1"}
+                                       usedCarts={usedCarts} owner={"Player 1"}
                                 />
                             </Col>
                         </Row>
@@ -215,10 +218,10 @@ class Odds extends React.Component {
                             </Col>
                             <Col xs="8">
                                 <Cards selected={(c) => this.setState({p21: c})}
-                                       used={used} owner={"Player 2"}
+                                       usedCarts={usedCarts} owner={"Player 2"}
                                 />
                                 <Cards selected={(c) => this.setState({p22: c})}
-                                       used={used} owner={"Player 2"}
+                                       usedCarts={usedCarts} owner={"Player 2"}
                                 />
                             </Col>
                         </Row>
@@ -228,20 +231,20 @@ class Odds extends React.Component {
                             </Col>
                             <Col xs="8">
                                 <Cards selected={(c) => this.setState({b1: c})}
-                                       used={used} owner={"Board flop 1"}
+                                       usedCarts={usedCarts} owner={"board flop 1"}
                                 />
                                 <Cards selected={(c) => this.setState({b2: c})}
-                                       used={used} owner={"Board flop 2"}
+                                       usedCarts={usedCarts} owner={"board flop 2"}
                                 />
                                 <Cards selected={(c) => this.setState({b3: c})}
-                                       used={used} owner={"Board flop 3"}
+                                       usedCarts={usedCarts} owner={"board flop 3"}
                                 />
 
                                 <Cards selected={(c) => this.setState({b4: c})}
-                                       used={used} owner={"Board turn"}
+                                       usedCarts={usedCarts} owner={"board turn"}
                                 />
                                 <Cards selected={(c) => this.setState({b5: c})}
-                                       used={used} owner={"Board river"}
+                                       usedCarts={usedCarts} owner={"board river"}
                                 />
                             </Col>
                         </Row>
