@@ -15,6 +15,7 @@ import * as _ from 'lodash';
 import {showLoading} from "../App";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faBalanceScale} from "@fortawesome/free-solid-svg-icons/index";
+import Cards from "./Cards";
 
 class Odds extends React.Component {
     constructor(props) {
@@ -29,6 +30,7 @@ class Odds extends React.Component {
             result: '',
             loading: false,
             error: false,
+            used: [],
         };
         this.toggle = this.toggle.bind(this);
         this.calcOdds = this.calcOdds.bind(this);
@@ -163,7 +165,7 @@ class Odds extends React.Component {
     }
 
     render() {
-        let {p1, p2, p3, p4, b, loading} = this.state;
+        let {p1, p2, p3, p4, b, loading, used} = this.state;
 
         return (
             <div>
@@ -194,6 +196,12 @@ class Odds extends React.Component {
                                        onChange={p => this.setState({p1: p.target.value})}
                                        value={p1}
                                 />
+                                <Cards selected={(used) => this.setState({used})}
+                                       used={used} owner={"Player 1"}
+                                       madatory={true}/>
+                                <Cards selected={(used) => this.setState({used})}
+                                       used={used} owner={"Player 1"}
+                                       madatory={true}/>
                             </Col>
                         </Row>
                         <Row>
