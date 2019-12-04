@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 import {
     Button,
     Col,
-    Input,
     Modal,
     ModalBody,
     ModalFooter,
@@ -179,6 +178,13 @@ class Odds extends React.Component {
     render() {
         const {loading, p11, p12, p21, p22, b1, b2, b3, b4, b5} = this.state;
         const usedCarts = [p11, p12, p21, p22, b1, b2, b3, b4, b5];
+        const valid = (p11 !== "" && p12 !== "" && p21 !== "" && p22 !== "")
+            && (
+                (b1 === "" && b2 === "" && b3 === "" && b4 === "" && b5 === "")
+                || (b1 !== "" && b2 !== "" && b3 !== "" && b4 === "" && b5 === "")
+                || (b1 !== "" && b2 !== "" && b3 !== "" && b4 !== "" && b5 === "")
+                || (b1 !== "" && b2 !== "" && b3 !== "" && b4 !== "" && b5 !== "")
+            );
         return (
             <div>
                 <FontAwesomeIcon icon={faBalanceScale} onClick={this.toggle} size="lg"/>
@@ -231,13 +237,13 @@ class Odds extends React.Component {
                             </Col>
                             <Col xs="8">
                                 <Cards selected={(c) => this.setState({b1: c})}
-                                       usedCarts={usedCarts} owner={"board flop 1"}
+                                       usedCarts={usedCarts} owner={"board flop"}
                                 />
                                 <Cards selected={(c) => this.setState({b2: c})}
-                                       usedCarts={usedCarts} owner={"board flop 2"}
+                                       usedCarts={usedCarts} owner={"board flop"}
                                 />
                                 <Cards selected={(c) => this.setState({b3: c})}
-                                       usedCarts={usedCarts} owner={"board flop 3"}
+                                       usedCarts={usedCarts} owner={"board flop"}
                                 />
 
                                 <Cards selected={(c) => this.setState({b4: c})}
@@ -252,7 +258,7 @@ class Odds extends React.Component {
                         {loading ? showLoading() : this.showResult()}
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" disabled={loading} onClick={this.getOdds}>Calc</Button>
+                        <Button color="primary" disabled={loading || !valid} onClick={this.getOdds}>Calc</Button>
                         <Button color="secondary" onClick={this.toggle}>Exit</Button>
                     </ModalFooter>
                 </Modal>
