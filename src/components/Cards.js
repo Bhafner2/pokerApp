@@ -1,10 +1,8 @@
-import {CardGroup, OddsCalculator} from 'poker-odds-calculator';
 import React from 'react';
 import {connect} from "react-redux";
 import {Button, Col, Input, Modal, ModalBody, ModalFooter, ModalHeader, Row, Table} from "reactstrap";
-import * as _ from "lodash";
 
-const NO_CARD = {display: "??", color: "#888888", value: ''};
+const NO_CARD = {display: "??", color: "#007BFF", value: ''};
 
 class Cards extends React.Component {
     constructor(props) {
@@ -54,14 +52,17 @@ class Cards extends React.Component {
 
         const selectedCards = (
             <Button onClick={this.toggle}
-                    color={"primary"} style={{color: myCard.color}} outline
+                    color={"primary"} style={{color: myCard.color, width: "2.5em"}} outline
                     size={"sm"}
+
             >
                 {myCard.display}
             </Button>
         );
         return (
-            <span>
+            <span
+                style={{padding: "1px"}}
+            >
                 {selectedCards}
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Select card for {this.props.owner}</ModalHeader>
@@ -89,7 +90,8 @@ class Cards extends React.Component {
                                             return (
                                                 <td key={"td" + number + form.shape}>
                                                     <Button
-                                                        outline={!used} color={used ? "secondary" : "primary"}
+                                                        outline={!used}
+                                                        color={used ? "secondary" : "primary"}
                                                         disabled={used}
                                                         size={"sm"}
                                                         value={card}

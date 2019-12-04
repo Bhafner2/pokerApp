@@ -193,23 +193,17 @@ class Odds extends React.Component {
                        onKeyPress={() => this.handleKeyPress}>
                     <ModalHeader toggle={this.toggle}>Odds Calculator</ModalHeader>
                     <ModalBody>
-                        {/*<Row>*/}
-                        {/*    <Col>*/}
-                        {/*        <b>Notation: <br/></b>*/}
-                        {/*        h = <span style={{color: "#DC3545"}}>♥</span> heart<br/>*/}
-                        {/*        s = ♠ spades<br/>*/}
-                        {/*        d = <span style={{color: "#DC3545"}}>♦</span> diamonds<br/>*/}
-                        {/*        c = ♣ clubs<br/>*/}
-                        {/*        2-9, T, J, Q, K, A<br/>*/}
-                        {/*        Write without spaces, e.g. AhTd <br/>*/}
-                        {/*    </Col>*/}
-                        {/*</Row>*/}
-                        <br/>
                         <Row>
-                            <Col xs="4">
+                            <Col>
+                                Pleas select the cards...
+                            </Col>
+                        </Row>
+                        <br/>
+                        <Row style={{paddingTop: "6px"}}>
+                            <Col xs="3" style={{paddingRight: "0.2em"}}>
                                 <div style={{display: 'inline-block'}}>Player 1</div>
                             </Col>
-                            <Col xs="8">
+                            <Col xs="9">
                                 <Cards selected={(c) => this.setState({p11: c})}
                                        usedCarts={usedCarts} owner={"Player 1"}
                                 />
@@ -218,11 +212,11 @@ class Odds extends React.Component {
                                 />
                             </Col>
                         </Row>
-                        <Row>
-                            <Col xs="4">
+                        <Row style={{paddingTop: "6px"}}>
+                            <Col xs="3" style={{paddingRight: "0.2em"}}>
                                 <div style={{display: 'inline-block'}}>Player 2</div>
                             </Col>
-                            <Col xs="8">
+                            <Col xs="9">
                                 <Cards selected={(c) => this.setState({p21: c})}
                                        usedCarts={usedCarts} owner={"Player 2"}
                                 />
@@ -231,11 +225,11 @@ class Odds extends React.Component {
                                 />
                             </Col>
                         </Row>
-                        <Row>
-                            <Col xs="4">
+                        <Row style={{paddingTop: "6px"}}>
+                            <Col xs="3" style={{paddingRight: "0.2em"}}>
                                 <div style={{display: 'inline-block'}}>Board</div>
                             </Col>
-                            <Col xs="8">
+                            <Col xs="9">
                                 <Cards selected={(c) => this.setState({b1: c})}
                                        usedCarts={usedCarts} owner={"board flop"}
                                 />
@@ -245,10 +239,11 @@ class Odds extends React.Component {
                                 <Cards selected={(c) => this.setState({b3: c})}
                                        usedCarts={usedCarts} owner={"board flop"}
                                 />
-
+                                <span style={{paddingLeft: "6px"}}/>
                                 <Cards selected={(c) => this.setState({b4: c})}
                                        usedCarts={usedCarts} owner={"board turn"}
                                 />
+                                <span style={{paddingLeft: "6px"}}/>
                                 <Cards selected={(c) => this.setState({b5: c})}
                                        usedCarts={usedCarts} owner={"board river"}
                                 />
