@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {Button, Col, Input, Modal, ModalBody, ModalFooter, ModalHeader, Row, Table} from "reactstrap";
 import * as _ from "lodash";
 
-const NO_CARD = {display: "? ?", color: "#888888", value: 0};
+const NO_CARD = {display: "??", color: "#888888", value: 0};
 
 class Cards extends React.Component {
     constructor(props) {
@@ -32,17 +32,18 @@ class Cards extends React.Component {
 
     setCard(card) {
         console.log("card", card.value);
-        // this.props.selected({card: value, owner: this.props.owner});
 
         if (this.state.myCard.value === card.value) {
             this.setState({
                 myCard: NO_CARD
-            })
+            });
+            this.props.selected(NO_CARD.value);
         } else {
             this.setState({
                 myCard: card,
                 modal: false,
-            })
+            });
+            this.props.selected(card.value);
         }
     }
 
@@ -59,6 +60,7 @@ class Cards extends React.Component {
         const selectedCards = (
             <Button onClick={this.toggle}
                     color={"primary"} style={{color: myCard.color}} outline
+                    size={"sm"}
             >
                 {myCard.display}
             </Button>
@@ -76,7 +78,7 @@ class Cards extends React.Component {
                                     <tr key={"cards" + number}>
                                         {forms.map((form) => {
                                             const card = {
-                                                display: number + " "+ form.shape,
+                                                display: number + form.shape,
                                                 color: form.color,
                                                 value: number + form.value
                                             };

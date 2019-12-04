@@ -22,11 +22,11 @@ class Odds extends React.Component {
         super(props);
         this.state = {
             modal: false,
-            p1: '',
+            p11: '',
+            p12: '',
             p2: '',
             p3: '',
             p4: '',
-            b: '',
             result: '',
             loading: false,
             error: false,
@@ -47,11 +47,16 @@ class Odds extends React.Component {
             modal: !this.state.modal,
             loading: false,
             error: false,
-            p1: '',
+            p11: '',
+            p12: '',
             p2: '',
             p3: '',
             p4: '',
-            b: '',
+            b1: '',
+            b2: '',
+            b3: '',
+            b4: '',
+            b5: '',
             result: '',
         });
     }
@@ -80,10 +85,14 @@ class Odds extends React.Component {
         if (this.state.loading) {
             let error;
             try {
-                let {p1, p2, p3, p4, b} = this.state;
+                let {p11, p12, p21, p22, b1, b2, b3, b4, b5} = this.state;
                 let player1Cards;
                 let player2Cards;
                 let board;
+
+                const p1 = p11 + p12;
+                const p2 = p21 + p22;
+                const b = b1 + b2 + b3 + b4 + b5;
 
                 if (!_.isNil(p1)) {
                     try {
@@ -165,8 +174,8 @@ class Odds extends React.Component {
     }
 
     render() {
-        let {p1, p2, p3, p4, b, loading, used} = this.state;
-
+        const {loading, p11, p12, p21, p22} = this.state;
+        const used = [p11, p12, p21, p22];
         return (
             <div>
                 <FontAwesomeIcon icon={faBalanceScale} onClick={this.toggle} size="lg"/>
@@ -175,33 +184,29 @@ class Odds extends React.Component {
                        onKeyPress={() => this.handleKeyPress}>
                     <ModalHeader toggle={this.toggle}>Odds Calculator</ModalHeader>
                     <ModalBody>
-                        <Row>
-                            <Col>
-                                <b>Notation: <br/></b>
-                                h = <span style={{color: "#DC3545"}}>♥</span> heart<br/>
-                                s = ♠ spades<br/>
-                                d = <span style={{color: "#DC3545"}}>♦</span> diamonds<br/>
-                                c = ♣ clubs<br/>
-                                2-9, T, J, Q, K, A<br/>
-                                Write without spaces, e.g. AhTd <br/>
-                            </Col>
-                        </Row>
+                        {/*<Row>*/}
+                        {/*    <Col>*/}
+                        {/*        <b>Notation: <br/></b>*/}
+                        {/*        h = <span style={{color: "#DC3545"}}>♥</span> heart<br/>*/}
+                        {/*        s = ♠ spades<br/>*/}
+                        {/*        d = <span style={{color: "#DC3545"}}>♦</span> diamonds<br/>*/}
+                        {/*        c = ♣ clubs<br/>*/}
+                        {/*        2-9, T, J, Q, K, A<br/>*/}
+                        {/*        Write without spaces, e.g. AhTd <br/>*/}
+                        {/*    </Col>*/}
+                        {/*</Row>*/}
                         <br/>
                         <Row>
                             <Col xs="4">
                                 <div style={{display: 'inline-block'}}>Player 1</div>
                             </Col>
                             <Col xs="8">
-                                <Input type="text" name="p1" id="p1"
-                                       onChange={p => this.setState({p1: p.target.value})}
-                                       value={p1}
+                                <Cards selected={(c) => this.setState({p11: c})}
+                                       used={used} owner={"Player 1"}
                                 />
-                                <Cards selected={(used) => this.setState({used})}
+                                <Cards selected={(c) => this.setState({p12: c})}
                                        used={used} owner={"Player 1"}
-                                       madatory={true}/>
-                                <Cards selected={(used) => this.setState({used})}
-                                       used={used} owner={"Player 1"}
-                                       madatory={true}/>
+                                />
                             </Col>
                         </Row>
                         <Row>
@@ -209,9 +214,11 @@ class Odds extends React.Component {
                                 <div style={{display: 'inline-block'}}>Player 2</div>
                             </Col>
                             <Col xs="8">
-                                <Input type="text" name="p1" id="p1"
-                                       onChange={p => this.setState({p2: p.target.value})}
-                                       value={p2}
+                                <Cards selected={(c) => this.setState({p21: c})}
+                                       used={used} owner={"Player 2"}
+                                />
+                                <Cards selected={(c) => this.setState({p22: c})}
+                                       used={used} owner={"Player 2"}
                                 />
                             </Col>
                         </Row>
@@ -220,9 +227,21 @@ class Odds extends React.Component {
                                 <div style={{display: 'inline-block'}}>Board</div>
                             </Col>
                             <Col xs="8">
-                                <Input type="text" name="p1" id="p1"
-                                       onChange={p => this.setState({b: p.target.value})}
-                                       value={b}
+                                <Cards selected={(c) => this.setState({b1: c})}
+                                       used={used} owner={"Board flop 1"}
+                                />
+                                <Cards selected={(c) => this.setState({b2: c})}
+                                       used={used} owner={"Board flop 2"}
+                                />
+                                <Cards selected={(c) => this.setState({b3: c})}
+                                       used={used} owner={"Board flop 3"}
+                                />
+
+                                <Cards selected={(c) => this.setState({b4: c})}
+                                       used={used} owner={"Board turn"}
+                                />
+                                <Cards selected={(c) => this.setState({b5: c})}
+                                       used={used} owner={"Board river"}
                                 />
                             </Col>
                         </Row>
