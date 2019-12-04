@@ -52,9 +52,8 @@ class Cards extends React.Component {
 
         const selectedCards = (
             <Button onClick={this.toggle}
-                    color={"primary"} style={{color: myCard.color, width: "2.5em"}} outline
+                    color={"primary"} style={{color: myCard.color, width: "2.8em"}} outline
                     size={"sm"}
-
             >
                 {myCard.display}
             </Button>

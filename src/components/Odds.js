@@ -225,7 +225,7 @@ class Odds extends React.Component {
                                 />
                             </Col>
                         </Row>
-                        <Row style={{paddingTop: "6px"}}>
+                        <Row style={{paddingTop: "12px"}}>
                             <Col xs="3" style={{paddingRight: "0.2em"}}>
                                 <div style={{display: 'inline-block'}}>Board</div>
                             </Col>
