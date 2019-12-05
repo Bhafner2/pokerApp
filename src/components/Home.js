@@ -242,10 +242,10 @@ class Home extends Component {
                         <ThisGame today={this.state.date}/>
                     </NavbarBrand>
                     <NavbarBrand>
-                        <Calc/>
+                        <Odds/>
                     </NavbarBrand>
                     <NavbarBrand>
-                        <Odds/>
+                        <Calc/>
                     </NavbarBrand>
                     <NavbarBrand>
                         <FontAwesomeIcon icon={faCalendar} onClick={this.toggleDate} size="lg"

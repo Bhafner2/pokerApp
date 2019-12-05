@@ -43,12 +43,12 @@ class Cards extends React.Component {
     render() {
         const {myCard} = this.state;
 
-        const numbers = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"];
+        const numbers = ["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"];
         const HEART = {shape: "♥", value: "h", color: "#DC3545"};
         const SPADE = {shape: "♠", value: "s", color: "#000000"};
         const DIAMOND = {shape: "♦", value: "d", color: "#DC3545"};
         const CLUB = {shape: "♣", value: "c", color: "#000000"};
-        const forms = [HEART, SPADE, DIAMOND, CLUB];
+        const forms = [SPADE, HEART, CLUB, DIAMOND];
 
         const selectedCards = (
             <Button onClick={this.toggle}
@@ -90,7 +90,7 @@ class Cards extends React.Component {
                                                 <td key={"td" + number + form.shape}>
                                                     <Button
                                                         outline={!used}
-                                                        color={used ? "secondary" : "primary"}
+                                                        color={"secondary"}
                                                         disabled={used}
                                                         size={"sm"}
                                                         value={card}
