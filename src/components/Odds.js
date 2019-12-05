@@ -2,8 +2,8 @@ import {CardGroup, OddsCalculator} from 'poker-odds-calculator';
 import React from 'react';
 import {connect} from "react-redux";
 import {
-    Button,
-    Col,
+    Button, Card, CardBody,
+    Col, Collapse,
     Modal,
     ModalBody,
     ModalFooter,
@@ -82,66 +82,66 @@ class Odds extends React.Component {
 
         setTimeout(() => {
             this.calcOdds();
-        }, 500)
+        }, 100)
     }
 
     async calcOdds() {
-        if (this.state.loading) {
-            let error;
-            try {
-                let {p11, p12, p21, p22, b1, b2, b3, b4, b5} = this.state;
-                let player1Cards;
-                let player2Cards;
-                let board;
+        let error;
+        try {
+            let {p11, p12, p21, p22, b1, b2, b3, b4, b5} = this.state;
+            let player1Cards;
+            let player2Cards;
+            let board;
 
-                const p1 = p11 + p12;
-                const p2 = p21 + p22;
-                const b = b1 + b2 + b3 + b4 + b5;
+            const p1 = p11 + p12;
+            const p2 = p21 + p22;
+            const b = b1 + b2 + b3 + b4 + b5;
 
-                if (!_.isNil(p1)) {
-                    try {
-                        player1Cards = CardGroup.fromString(p1.toString());
-                    } catch (e) {
-                    }
+            if (!_.isNil(p1)) {
+                try {
+                    player1Cards = CardGroup.fromString(p1.toString());
+                } catch (e) {
                 }
-                if (!_.isNil(p2)) {
-                    try {
-                        player2Cards = CardGroup.fromString(p2.toString());
-                    } catch (e) {
-                    }
+            }
+            if (!_.isNil(p2)) {
+                try {
+                    player2Cards = CardGroup.fromString(p2.toString());
+                } catch (e) {
                 }
-                if (!_.isNil(b)) {
-                    try {
-                        board = CardGroup.fromString(b.toString());
-                    } catch (e) {
-                    }
+            }
+            if (!_.isNil(b)) {
+                try {
+                    board = CardGroup.fromString(b.toString());
+                } catch (e) {
                 }
-
-
-                // JhJs
-                // JdQd
-                // 7d9dTs
-
-
-                const result = await OddsCalculator.calculate([player1Cards, player2Cards], board);
-
-                this.setState({result});
-                console.log(`Player #1 - ${player1Cards} - ${result.equities[0].getEquity()}%`);
-                console.log(`Player #2 - ${player2Cards} - ${result.equities[1].getEquity()}%`);
-                error = false
-            } catch (e) {
-                console.log(e);
-                error = true
             }
 
+
+            // JhJs
+            // JdQd
+            // 7d9dTs
+
+            const result = OddsCalculator.calculate([player1Cards, player2Cards], board);
+
             this.setState({
+                result,
                 loading: false,
-                error,
             });
+            console.log(`Player #1 - ${player1Cards} - ${result.equities[0].getEquity()}%`);
+            console.log(`Player #2 - ${player2Cards} - ${result.equities[1].getEquity()}%`);
+            error = false
+        } catch (e) {
+            console.log(e);
+            error = true
         }
+
+        this.setState({
+            loading: false,
+            error,
+        });
     }
 
-    showResult() {
+    showResult(valid) {
         let {result, error} = this.state;
 
         if (error) {
@@ -150,35 +150,41 @@ class Odds extends React.Component {
         if (_.isNil(result.equities)) {
             return <div/>
         }
+
         return (
-            <div>
-                <Row>
-                    <Col xs="4">
-                        <div style={{display: 'inline-block'}}>Player 1</div>
-                    </Col>
-                    <Col xs="4">
-                        Win: {result.equities[0].getEquity()}%
-                    </Col>
-                    <Col xs="4">
-                        Tie: {result.equities[0].getTiePercentage()}%
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs="4">
-                        <div style={{display: 'inline-block'}}>Player 2</div>
-                    </Col>
-                    <Col xs="4">
-                        Win: {result.equities[1].getEquity()}%
-                    </Col>
-                    <Col xs="4">
-                        Tie: {result.equities[1].getTiePercentage()}%
-                    </Col>
-                </Row>
-                <HighchartsReact
-                    highcharts={Highcharts}
-                    options={this.getPieChart(result.equities[0].getEquity(), result.equities[1].getEquity(), result.equities[1].getTiePercentage())}
-                />
-            </div>)
+            <Collapse isOpen={!_.isNil(result.equities)}>
+                <Card outline>
+                    <CardBody>
+                        <Row>
+                            <Col xs="4">
+                                <div style={{display: 'inline-block'}}>Player 1</div>
+                            </Col>
+                            <Col xs="4">
+                                Win: {result.equities[0].getEquity()}%
+                            </Col>
+                            <Col xs="4">
+                                Tie: {result.equities[0].getTiePercentage()}%
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs="4">
+                                <div style={{display: 'inline-block'}}>Player 2</div>
+                            </Col>
+                            <Col xs="4">
+                                Win: {result.equities[1].getEquity()}%
+                            </Col>
+                            <Col xs="4">
+                                Tie: {result.equities[1].getTiePercentage()}%
+                            </Col>
+                        </Row>
+                        <HighchartsReact
+                            highcharts={Highcharts}
+                            options={this.getPieChart(result.equities[0].getEquity(), result.equities[1].getEquity(), result.equities[1].getTiePercentage())}
+                        />
+                    </CardBody>
+                </Card>
+            </Collapse>
+        )
     }
 
     getPieChart(p1, p2, tie) {
@@ -193,12 +199,14 @@ class Odds extends React.Component {
                 },
             },
             tooltip: {
-                pointFormat: `<div>Percent: <b>{point.percentage:.1f}%</b> </div> <br/>`
+                pointFormat: '<b>{point.name}</b>: {point.percentage:.1f} %'
             },
             plotOptions: {
                 pie: {
                     dataLabels: {
-                        enabled: false
+                        enabled: false,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+
                     },
                     showInLegend: true
                 }
@@ -303,7 +311,7 @@ class Odds extends React.Component {
                             </Col>
                         </Row>
                         <br/>
-                        {loading ? showLoading() : this.showResult()}
+                        {loading ? showLoading() : this.showResult(valid)}
                     </ModalBody>
                     <ModalFooter>
                         <Button color="primary" disabled={loading || !valid} onClick={this.getOdds}>Calc</Button>
