@@ -15,6 +15,8 @@ import {showLoading} from "../App";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faBalanceScale} from "@fortawesome/free-solid-svg-icons/index";
 import Cards from "./Cards";
+import HighchartsReact from "highcharts-react-official";
+import Highcharts from "highcharts";
 
 class Odds extends React.Component {
     constructor(props) {
@@ -172,7 +174,58 @@ class Odds extends React.Component {
                         Tie: {result.equities[1].getTiePercentage()}%
                     </Col>
                 </Row>
+                <HighchartsReact
+                    highcharts={Highcharts}
+                    options={this.getPieChart(result.equities[0].getEquity(), result.equities[1].getEquity(), result.equities[1].getTiePercentage())}
+                />
             </div>)
+    }
+
+    getPieChart(p1, p2, tie) {
+        return ({
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: "",
+                style: {
+                    display: 'none'
+                },
+            },
+            tooltip: {
+                pointFormat: `<div>Percent: <b>{point.percentage:.1f}%</b> </div> <br/>`
+            },
+            plotOptions: {
+                pie: {
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+            legend: {
+                itemMarginBottom: 12,
+                itemStyle: {
+                    fontSize: '1.2em',
+                },
+            },
+            series: [{
+                name: "pie",
+                data: [{
+                    name: "Player 1",
+                    y: p1,
+                    color: Highcharts.getOptions().colors[0]
+                }, {
+                    name: "Player 2",
+                    y: p2,
+                    color: Highcharts.getOptions().colors[6]
+                }, {
+                    name: "Tie",
+                    y: tie,
+                    color: Highcharts.getOptions().colors[1]
+                }]
+            }],
+        })
     }
 
     render() {
