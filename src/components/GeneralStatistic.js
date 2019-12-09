@@ -337,11 +337,15 @@ class GeneralStatistic extends React.Component {
                     avgTotal,
                     avgBounty,
                     dates,
-                    usersButtons,
+                    usersButtons: _.sortBy(usersButtons, (b) => {
+                            return -b.gamesPlayed
+                        }
+                    ),
                     avgPlayerPerGame,
                     userPercent,
                     filtered,
-                });
+                })
+                ;
             }
         }
     }
