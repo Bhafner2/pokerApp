@@ -109,7 +109,7 @@ class Cards extends React.Component {
 
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="secondary" onClick={this.toggle}>Exit</Button>
+                        <Button color="secondary" onClick={this.toggle}>No Card</Button>
                     </ModalFooter>
                 </Modal>
             </span>

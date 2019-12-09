@@ -27,6 +27,10 @@ class Odds extends React.Component {
             p12: '',
             p21: '',
             p22: '',
+            p31: '',
+            p32: '',
+            p41: '',
+            p42: '',
             b1: '',
             b2: '',
             b3: '',
@@ -56,6 +60,10 @@ class Odds extends React.Component {
             p12: '',
             p21: '',
             p22: '',
+            p31: '',
+            p32: '',
+            p41: '',
+            p42: '',
             b1: '',
             b2: '',
             b3: '',
@@ -88,13 +96,17 @@ class Odds extends React.Component {
     async calcOdds() {
         let error;
         try {
-            let {p11, p12, p21, p22, b1, b2, b3, b4, b5} = this.state;
+            const {p11, p12, p21, p22, p31, p32, p41, p42, b1, b2, b3, b4, b5} = this.state;
             let player1Cards;
             let player2Cards;
+            let player3Cards;
+            let player4Cards;
             let board;
 
             const p1 = p11 + p12;
             const p2 = p21 + p22;
+            const p3 = p31 + p32;
+            const p4 = p41 + p42;
             const b = b1 + b2 + b3 + b4 + b5;
 
             if (!_.isNil(p1)) {
@@ -109,19 +121,25 @@ class Odds extends React.Component {
                 } catch (e) {
                 }
             }
+            if (!_.isNil(p3)) {
+                try {
+                    player3Cards = CardGroup.fromString(p3.toString());
+                } catch (e) {
+                }
+            }
+            if (!_.isNil(p4)) {
+                try {
+                    player4Cards = CardGroup.fromString(p4.toString());
+                } catch (e) {
+                }
+            }
             if (!_.isNil(b)) {
                 try {
                     board = CardGroup.fromString(b.toString());
                 } catch (e) {
                 }
             }
-
-
-            // JhJs
-            // JdQd
-            // 7d9dTs
-
-            const result = OddsCalculator.calculate([player1Cards, player2Cards], board);
+            const result = OddsCalculator.calculate([player1Cards, player2Cards, player3Cards, player4Cards], board);
 
             this.setState({
                 result,
@@ -129,6 +147,9 @@ class Odds extends React.Component {
             });
             console.log(`Player #1 - ${player1Cards} - ${result.equities[0].getEquity()}%`);
             console.log(`Player #2 - ${player2Cards} - ${result.equities[1].getEquity()}%`);
+            console.log(`Player #3 - ${player3Cards} - ${result.equities[2].getEquity()}%`);
+            console.log(`Player #4 - ${player4Cards} - ${result.equities[3].getEquity()}%`);
+            console.log(`Tie - ${result.equities[3].getTiePercentage()}%`);
             error = false
         } catch (e) {
             console.log(e);
@@ -155,31 +176,31 @@ class Odds extends React.Component {
             <Collapse isOpen={!_.isNil(result.equities)}>
                 <Card outline>
                     <CardBody>
-                        <Row>
-                            <Col xs="4">
-                                <div style={{display: 'inline-block'}}>Player 1</div>
-                            </Col>
-                            <Col xs="4">
-                                Win: {result.equities[0].getEquity()}%
-                            </Col>
-                            <Col xs="4">
-                                Tie: {result.equities[0].getTiePercentage()}%
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs="4">
-                                <div style={{display: 'inline-block'}}>Player 2</div>
-                            </Col>
-                            <Col xs="4">
-                                Win: {result.equities[1].getEquity()}%
-                            </Col>
-                            <Col xs="4">
-                                Tie: {result.equities[1].getTiePercentage()}%
-                            </Col>
-                        </Row>
+                        {/*<Row>*/}
+                        {/*    <Col xs="4">*/}
+                        {/*        <div style={{display: 'inline-block'}}>Player 1</div>*/}
+                        {/*    </Col>*/}
+                        {/*    <Col xs="4">*/}
+                        {/*        Win: {result.equities[0].getEquity()}%*/}
+                        {/*    </Col>*/}
+                        {/*    <Col xs="4">*/}
+                        {/*        Tie: {result.equities[0].getTiePercentage()}%*/}
+                        {/*    </Col>*/}
+                        {/*</Row>*/}
+                        {/*<Row>*/}
+                        {/*    <Col xs="4">*/}
+                        {/*        <div style={{display: 'inline-block'}}>Player 2</div>*/}
+                        {/*    </Col>*/}
+                        {/*    <Col xs="4">*/}
+                        {/*        Win: {result.equities[1].getEquity()}%*/}
+                        {/*    </Col>*/}
+                        {/*    <Col xs="4">*/}
+                        {/*        Tie: {result.equities[1].getTiePercentage()}%*/}
+                        {/*    </Col>*/}
+                        {/*</Row>*/}
                         <HighchartsReact
                             highcharts={Highcharts}
-                            options={this.getPieChart(result.equities[0].getEquity(), result.equities[1].getEquity(), result.equities[1].getTiePercentage())}
+                            options={this.getPieChart(result.equities[0].getEquity(), result.equities[1].getEquity(), result.equities[2].getEquity(), result.equities[3].getEquity(), result.equities[1].getTiePercentage())}
                         />
                     </CardBody>
                 </Card>
@@ -187,7 +208,7 @@ class Odds extends React.Component {
         )
     }
 
-    getPieChart(p1, p2, tie) {
+    getPieChart(p1, p2, p3, p4, tie) {
         return ({
             chart: {
                 type: 'pie'
@@ -199,16 +220,22 @@ class Odds extends React.Component {
                 },
             },
             tooltip: {
-                pointFormat: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                pointFormat: '<span>{point.y} %</span>'
             },
             plotOptions: {
                 pie: {
+                    showInLegend: true,
+                    cursor: 'pointer',
                     dataLabels: {
-                        enabled: false,
-                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-
-                    },
-                    showInLegend: true
+                        enabled: true,
+                        format: '<span>{point.name}<br>{point.y} %<span>',
+                        distance: -50,
+                        filter: {
+                            property: 'percentage',
+                            operator: '>',
+                            value: 10
+                        }
+                    }
                 }
             },
             legend: {
@@ -226,7 +253,15 @@ class Odds extends React.Component {
                 }, {
                     name: "Player 2",
                     y: p2,
-                    color: Highcharts.getOptions().colors[6]
+                    color: Highcharts.getOptions().colors[2]
+                }, {
+                    name: "Player 3",
+                    y: p3,
+                    color: Highcharts.getOptions().colors[3]
+                }, {
+                    name: "Player 4",
+                    y: p4,
+                    color: Highcharts.getOptions().colors[4]
                 }, {
                     name: "Tie",
                     y: tie,
@@ -237,10 +272,25 @@ class Odds extends React.Component {
     }
 
     render() {
-        const {loading, p11, p12, p21, p22, b1, b2, b3, b4, b5} = this.state;
-        const usedCarts = [p11, p12, p21, p22, b1, b2, b3, b4, b5];
-        const valid = (p11 !== "" && p12 !== "" && p21 !== "" && p22 !== "")
-            && (
+        const {loading, p11, p12, p21, p22, p31, p32, p41, p42, b1, b2, b3, b4, b5} = this.state;
+        const usedCarts = [p11, p12, p21, p22, p31, p32, p41, p42, b1, b2, b3, b4, b5];
+        const p1 = (p11 !== "" && p12 !== "");
+        const p2 = (p21 !== "" && p22 !== "");
+        const p3 = (p31 !== "" && p32 !== "");
+        const p4 = (p41 !== "" && p42 !== "");
+        const valid =
+            (
+                (p1 || (p11 === "" && p12 === "")) &&
+                (p2 || (p21 === "" && p22 === "")) &&
+                (p3 || (p31 === "" && p32 === "")) &&
+                (p4 || (p41 === "" && p42 === ""))
+            )
+            &&
+            (
+                (p1 && p2) || (p1 && p3) || (p1 && p4) || (p2 && p3) || (p2 && p4) || (p3 && p4)
+            )
+            &&
+            (
                 (b1 === "" && b2 === "" && b3 === "" && b4 === "" && b5 === "")
                 || (b1 !== "" && b2 !== "" && b3 !== "" && b4 === "" && b5 === "")
                 || (b1 !== "" && b2 !== "" && b3 !== "" && b4 !== "" && b5 === "")
@@ -254,12 +304,6 @@ class Odds extends React.Component {
                        onKeyPress={() => this.handleKeyPress}>
                     <ModalHeader toggle={this.toggle}>Odds Calculator</ModalHeader>
                     <ModalBody>
-                        <Row>
-                            <Col>
-                                Pleas select the cards...
-                            </Col>
-                        </Row>
-                        <br/>
                         <Row style={{paddingTop: "6px"}}>
                             <Col xs="3" style={{paddingRight: "0.2em"}}>
                                 <div style={{display: 'inline-block'}}>Player 1</div>
@@ -283,6 +327,32 @@ class Odds extends React.Component {
                                 />
                                 <Cards selected={(c) => this.setState({p22: c})}
                                        usedCarts={usedCarts} owner={"Player 2"}
+                                />
+                            </Col>
+                        </Row>
+                        <Row style={{paddingTop: "6px"}}>
+                            <Col xs="3" style={{paddingRight: "0.2em"}}>
+                                <div style={{display: 'inline-block'}}>Player 3</div>
+                            </Col>
+                            <Col xs="9">
+                                <Cards selected={(c) => this.setState({p31: c})}
+                                       usedCarts={usedCarts} owner={"Player 3"}
+                                />
+                                <Cards selected={(c) => this.setState({p32: c})}
+                                       usedCarts={usedCarts} owner={"Player 3"}
+                                />
+                            </Col>
+                        </Row>
+                        <Row style={{paddingTop: "6px"}}>
+                            <Col xs="3" style={{paddingRight: "0.2em"}}>
+                                <div style={{display: 'inline-block'}}>Player 4</div>
+                            </Col>
+                            <Col xs="9">
+                                <Cards selected={(c) => this.setState({p41: c})}
+                                       usedCarts={usedCarts} owner={"Player 4"}
+                                />
+                                <Cards selected={(c) => this.setState({p42: c})}
+                                       usedCarts={usedCarts} owner={"Player 4"}
                                 />
                             </Col>
                         </Row>
