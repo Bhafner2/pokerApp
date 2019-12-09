@@ -130,7 +130,7 @@ class Games extends React.Component {
                     type: 'spline',
                     yAxis: 1,
                     data: _.map(filteredGames, (g) => {
-                        return [moment(g.date).valueOf(), (Math.round((g.buyIn / g.players) * 10) / 10)]
+                        return [moment(g.date).valueOf(), showNumber(g.buyIn / g.players)]
                     }),
                     color: '#6C757D',
                     lineWidth: 1,

@@ -220,7 +220,7 @@ class Odds extends React.Component {
                 },
             },
             tooltip: {
-                pointFormat: '<span>{point.y} %</span>'
+                pointFormat: '<span>{point.y}%</span>'
             },
             plotOptions: {
                 pie: {
@@ -228,7 +228,7 @@ class Odds extends React.Component {
                     cursor: 'pointer',
                     dataLabels: {
                         enabled: true,
-                        format: '<span>{point.name}<br>{point.y} %<span>',
+                        format: '<span>{point.name}<br>{point.y}%<span>',
                         distance: -50,
                         filter: {
                             property: 'percentage',

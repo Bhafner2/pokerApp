@@ -215,7 +215,7 @@ class GeneralStatistic extends React.Component {
                         if (user.games.length > 0) {
                             userPercent.push({
                                 name: user.name,
-                                percent: Math.round((user.games.length / dates.length) * 100)
+                                percent: showNumber((user.games.length / dates.length) * 100)
                             });
                         }
                         continue;
@@ -301,16 +301,16 @@ class GeneralStatistic extends React.Component {
 
                         userPercent.push({
                             name: user.name,
-                            percent: Math.round((user.games.length / dates.length) * 100)
+                            percent: showNumber((user.games.length / dates.length) * 100)
                         });
 
                         if (this.state.getAvg) {
-                            user.won = Math.round(user.won / user.games.length);
-                            user.bounty = Math.round(user.bounty / user.games.length);
-                            user.total = Math.round(user.total / user.games.length);
-                            user.buyIn = Math.round(user.buyIn / user.games.length);
-                            user.played = Math.round((user.played / dates.length) * 100);
-                            user.hero = Math.round(user.hero / (user.games.length));
+                            user.won = showNumber(user.won / user.games.length);
+                            user.bounty = showNumber(user.bounty / user.games.length);
+                            user.total = showNumber(user.total / user.games.length);
+                            user.buyIn = showNumber(user.buyIn / user.games.length);
+                            user.played = showNumber((user.played / dates.length) * 100);
+                            user.hero = showNumber(user.hero / (user.games.length));
                         }
 
                         filteredUsers.push(user);
@@ -318,10 +318,10 @@ class GeneralStatistic extends React.Component {
                 }
                 console.log("users", filteredUsers);
 
-                avgWon = Math.round(sumWon / counter);
-                avgBuyIn = Math.round(sumBuyIn / counter);
-                avgBounty = Math.round(sumBounty / counter);
-                avgTotal = Math.round(sumTotal / counter);
+                avgWon = showNumber(sumWon / counter);
+                avgBuyIn = showNumber(sumBuyIn / counter);
+                avgBounty = showNumber(sumBounty / counter);
+                avgTotal = showNumber(sumTotal / counter);
 
                 this.setState({
                     maxWon,

@@ -2,6 +2,7 @@ import React from 'react';
 import {Popover, PopoverHeader, PopoverBody, Row, Col, Input, Button} from 'reactstrap';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faQuestionCircle} from "@fortawesome/free-solid-svg-icons";
+import {showNumber} from "../App";
 
 class Hint extends React.Component {
     constructor(props) {
@@ -104,7 +105,7 @@ class Hint extends React.Component {
                                 {won}
                             </Col>
                             <Col xs={4}>
-                                {Math.round(buyIn / this.getBountyPercent())}
+                                {showNumber(buyIn / this.getBountyPercent())}
                             </Col>
                         </Row>
                         <Row>
@@ -115,7 +116,7 @@ class Hint extends React.Component {
                                 {bounty}
                             </Col>
                             <Col xs={4}>
-                                {Math.round(buyIn - buyIn / this.getBountyPercent())}
+                                {showNumber(buyIn - buyIn / this.getBountyPercent())}
                             </Col>
                         </Row>
                     </PopoverBody>

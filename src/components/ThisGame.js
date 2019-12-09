@@ -16,6 +16,7 @@ import {faGamepad, faList} from '@fortawesome/free-solid-svg-icons';
 import Hint from "./Hint";
 import Games from "./Games";
 import classnames from "classnames";
+import {showNumber} from "../App";
 
 let filteredUsers = [];
 
@@ -123,7 +124,7 @@ class ThisGame extends React.Component {
                         filteredUsers.push(plainUser);
                     }
                 }
-                avgBuyIn = Math.round(sumBuyIn / filteredUsers.length);
+                avgBuyIn = showNumber(sumBuyIn / filteredUsers.length);
             }
             sumOk = sum === 0;
             if (_.isNil(avgBuyIn) || _.isNaN(avgBuyIn)) {

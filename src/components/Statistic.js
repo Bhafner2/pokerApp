@@ -257,7 +257,7 @@ class Statistic extends React.Component {
             x = values_x[v];
             y = x * m + b;
             result_values_x.push(x);
-            result_values_y.push(Math.round(y * 10) / 10);
+            result_values_y.push(showNumber(y));
         }
 
         return result_values_y;
@@ -412,9 +412,9 @@ class Statistic extends React.Component {
                     type: 'pie'
                 },
                 tooltip: {
-                    pointFormat: `<div>Percent: <b>{point.percentage:.1f}%</b> </div> <br/>` +
+                    pointFormat: `<span><div>Percent: <b>{point.percentage:.1f}%</b> </div> <br/>` +
                         `<div>Amount: <b>{point.y}</b> </div> <br/>` +
-                        `<div>Won: <b>{point.sum}</b> </div>`
+                        `<div>Won: <b>{point.sum}</b> </div></span>`
                 },
                 title: {
                     text: 'Ranking',
@@ -438,7 +438,6 @@ class Statistic extends React.Component {
                 },
                 series: [{
                     name: "Ranking",
-                    colorByPoint: true,
                     data: [{
                         name: '1st',
                         y: this.getRankingAmount(ranking, 1),
