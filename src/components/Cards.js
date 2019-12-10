@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {Button, Col, Input, Modal, ModalBody, ModalFooter, ModalHeader, Row, Table} from "reactstrap";
+import {Button, Modal, ModalBody, ModalFooter, ModalHeader, Table} from "reactstrap";
 
 const NO_CARD = {display: "??", color: "#007BFF", value: ''};
 
