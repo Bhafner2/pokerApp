@@ -217,11 +217,11 @@ class Games extends React.Component {
             <div>
                 <Row>
                     <TimeFilter
+                        style={{marginLeft: "6px"}}
                         calcData={(fromDate, toDate) => this.applyFilter(fromDate, toDate)}
                         addition={switchChart}
                     />
                 </Row>
-                <br/>
                 {useChart ? (
                     <span>
                         {
@@ -239,6 +239,7 @@ class Games extends React.Component {
                 ) : (
                     <Row>
                         <Col>
+
                             <Table borderless size="sm" style={{paddingTop: "12px"}}>
                                 <thead>
                                 <tr>

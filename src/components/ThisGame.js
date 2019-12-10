@@ -351,7 +351,7 @@ class ThisGame extends React.Component {
                         <TabPane tabId="1">
                             <div>
                                 <br/>
-                                <FormGroup>
+                                <FormGroup style={{marginLeft: "6px"}}>
                                     <Row style={{align: "left"}}>
                                         <Col xs="5">
                                             <div onClick={this.showFilter}
