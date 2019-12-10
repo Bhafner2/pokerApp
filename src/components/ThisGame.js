@@ -31,6 +31,7 @@ class ThisGame extends React.Component {
             sum: 0,
             sumOk: true,
             avgBuyIn: 0,
+            players: 0,
             sumBuyIn: 0,
             sumBounty: 0,
             sumWon: 0,
@@ -140,6 +141,7 @@ class ThisGame extends React.Component {
                 sum,
                 sumOk,
                 avgBuyIn,
+                players: filteredUsers.length,
                 sumBuyIn,
                 sumBounty,
                 sumWon,
@@ -164,12 +166,14 @@ class ThisGame extends React.Component {
                 title: {
                     text: 'Players',
                     style: {
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        display: 'none',
                     },
                 },
                 yAxis: {
                     title: {
-                        text: ''
+                        text: '',
+                        display: 'none',
                     },
                     plotLines: [{
                         value: 0,
@@ -393,6 +397,14 @@ class ThisGame extends React.Component {
                                     </Row>
                                     <Row>
                                         <Col xs="4">
+                                            <b>Players</b>
+                                        </Col>
+                                        <Col xs="7">
+                                            <div>{this.state.players}</div>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col xs="4">
                                             <b>Avg BuyIn</b>
                                         </Col>
                                         <Col xs="7">
@@ -400,6 +412,7 @@ class ThisGame extends React.Component {
                                         </Col>
                                     </Row>
                                 </FormGroup>
+                                <br/>
                                 <Row>
                                     <Col>
                                         <HighchartsReact

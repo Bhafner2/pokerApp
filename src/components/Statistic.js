@@ -257,7 +257,7 @@ class Statistic extends React.Component {
             x = values_x[v];
             y = x * m + b;
             result_values_x.push(x);
-            result_values_y.push(showNumber(y));
+            result_values_y.push(Math.round(y * 10) / 10);
         }
 
         return result_values_y;
@@ -272,12 +272,16 @@ class Statistic extends React.Component {
                 title: {
                     text: 'Games',
                     style: {
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        display: 'none',
                     },
                 },
                 yAxis: {
                     title: {
-                        text: ''
+                        text: '',
+                        style: {
+                            display: 'none'
+                        },
                     },
                     plotLines: [{
                         value: 0,
@@ -419,7 +423,7 @@ class Statistic extends React.Component {
                 title: {
                     text: 'Ranking',
                     style: {
-                        fontWeight: 'bold'
+                        display: 'none'
                     },
                 },
                 plotOptions: {

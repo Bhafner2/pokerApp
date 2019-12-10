@@ -68,7 +68,8 @@ class Games extends React.Component {
                 title: {
                     text: 'Games',
                     style: {
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        display: 'none',
                     },
                 },
                 xAxis: {
@@ -76,11 +77,17 @@ class Games extends React.Component {
                 },
                 yAxis: [{ // Primary yAxis
                     title: {
-                        text: ''
+                        text: '',
+                        style: {
+                            display: 'none'
+                        },
                     },
                 }, { // Secondary yAxis
                     title: {
-                        text: ''
+                        text: '',
+                        style: {
+                            display: 'none'
+                        },
                     },
                     opposite: true,
                 }],

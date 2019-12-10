@@ -679,6 +679,13 @@ class GeneralStatistic extends React.Component {
                     display: 'none'
                 },
             },
+            exporting: {
+                buttons: {
+                    contextButton: {
+                        menuItems: ['viewFullscreen']
+                    }
+                }
+            },
             yAxis: [{ // Primary yAxis
                 title: {
                     style: {
@@ -686,13 +693,6 @@ class GeneralStatistic extends React.Component {
                     },
                 }
             }, { // Secondary yAxis
-                title: {
-                    style: {
-                        display: 'none'
-                    },
-                },
-                opposite: true
-            }, { // 3 yAxis
                 title: {
                     style: {
                         display: 'none'
@@ -784,7 +784,7 @@ class GeneralStatistic extends React.Component {
             }, {
                 name: HERO,
                 stack: '3',
-                yAxis: 2,
+                yAxis: 0,
                 type: 'column',
                 data: _.map(users, (u) => {
                     return u.hero
@@ -901,7 +901,10 @@ class GeneralStatistic extends React.Component {
             },
             yAxis: {
                 title: {
-                    text: ''
+                    text: '',
+                    style: {
+                        display: 'none'
+                    },
                 },
                 plotLines: [{
                     value: 0,
@@ -1171,6 +1174,7 @@ class GeneralStatistic extends React.Component {
                                     </Col>
                                     <Col xs={1}/>
                                 </Row>
+                                <br/>
                                 {useChart ? chart : list}
                             </TabPane>
                         </TabContent>
