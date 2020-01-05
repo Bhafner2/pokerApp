@@ -1058,6 +1058,22 @@ class GeneralStatistic extends React.Component {
                                 </Col>
                             </Row>
                             {this.filter()}
+                            {sumBuyIn === 0 && !this.state.filtered?
+                                <Row>
+                                    <Col>
+                                        <Button 
+                                            color={"link"}
+                                            onClick={() => this.lastYear(moment().year() - 1)}
+                                            style={{
+                                                color: "#007BFF"
+                                            }}>
+                                                No games found, goto {moment().year() - 1}?
+                                        </Button>
+                                    </Col>
+                                </Row> 
+                            :
+                                <span  />
+                            }
                         </FormGroup>
                         <Nav tabs>
                             <NavItem>
@@ -1213,7 +1229,7 @@ class GeneralStatistic extends React.Component {
                                 </Row>
                                 <Row style={{paddingTop: "12px"}}>
                                     <Col xs={6}>
-                                        <b>Average</b> Buy In / Person
+                                        <b>Avg</b> Buy In / Player
                                     </Col>
                                     <Col xs={6}>
                                         {showNumber(avgBuyIn)}

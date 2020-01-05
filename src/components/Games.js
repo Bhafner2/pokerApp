@@ -220,6 +220,7 @@ class Games extends React.Component {
                         style={{marginLeft: "6px"}}
                         calcData={(fromDate, toDate) => this.applyFilter(fromDate, toDate)}
                         addition={switchChart}
+                        result={filteredGames.length}
                     />
                 </Row>
                 {useChart ? (

@@ -489,6 +489,7 @@ class Statistic extends React.Component {
 
                         <TimeFilter today={this.props.today}
                                     calcData={(fromDate, toDate) => this.getData(fromDate, toDate)}
+                                    result={sumBuyIn}
                         />
                         <Nav tabs>
                             <NavItem>

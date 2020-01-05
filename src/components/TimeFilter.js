@@ -150,7 +150,23 @@ class TimeFilter extends React.Component {
                     </Col>
                     {this.props.addition}
                 </Row>
-                <Collapse isOpen={this.state.showFilter}>
+                {this.props.result === 0 && !this.state.filtered?
+                    <Row>
+                        <Col>
+                            <Button 
+                                color={"link"}
+                                onClick={() => this.lastYear(moment().year() - 1)}
+                                style={{
+                                    color: "#007BFF"
+                                }}>
+                                    No games found, goto {moment().year() - 1}?
+                            </Button>
+                        </Col>
+                    </Row> 
+                :
+                    <span  />
+                 }
+                 <Collapse isOpen={this.state.showFilter}>
                     <Card outline>
                         <CardBody>
                             <Row>
