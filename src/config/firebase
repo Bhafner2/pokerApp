@@ -1,0 +1,12 @@
+// src/firebase.js
+import firebase from 'firebase'
+const config = {
+    apiKey: <your firrbase config>,
+    authDomain: <your firrbase config>,
+    databaseURL: <your firrbase config>,
+    projectId: <your firrbase config>,
+    storageBucket: <your firrbase config>,
+    messagingSenderId: <your firrbase config>,
+};
+firebase.initializeApp(config);
+export default firebase; 
