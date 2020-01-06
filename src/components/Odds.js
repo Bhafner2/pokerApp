@@ -272,7 +272,7 @@ class Odds extends React.Component {
     }
 
     render() {
-        const {loading, p11, p12, p21, p22, p31, p32, p41, p42, b1, b2, b3, b4, b5} = this.state;
+        const {loading, p11, p12, p21, p22, p31, p32, p41, p42, b1, b2, b3, b4, b5, result} = this.state;
         const usedCarts = [p11, p12, p21, p22, p31, p32, p41, p42, b1, b2, b3, b4, b5];
         const p1 = (p11 !== "" && p12 !== "");
         const p2 = (p21 !== "" && p22 !== "");
@@ -304,11 +304,22 @@ class Odds extends React.Component {
                        onKeyPress={() => this.handleKeyPress}>
                     <ModalHeader toggle={this.toggle}>Odds Calculator</ModalHeader>
                     <ModalBody>
+                    {!_.isNil(result.equities) ?
+                        (<Row style={{paddingTop: "6px"}}>
+                                <Col xs="7" >
+                                </Col>
+                                <Col xs="4">
+                                    Tie:  {result.equities[0].getTiePercentage()}%
+                                </Col>
+                            </Row>
+                        ) : ( 
+                                <span/>
+                        )}
                         <Row style={{paddingTop: "6px"}}>
                             <Col xs="3" style={{paddingRight: "0.2em"}}>
                                 <div style={{display: 'inline-block'}}>Player 1</div>
                             </Col>
-                            <Col xs="9">
+                            <Col xs="4">
                                 <Cards selected={(c) => this.setState({p11: c})}
                                        usedCarts={usedCarts} owner={"Player 1"}
                                 />
@@ -316,12 +327,19 @@ class Odds extends React.Component {
                                        usedCarts={usedCarts} owner={"Player 1"}
                                 />
                             </Col>
+                            {!_.isNil(result.equities) && p1 ?
+                            (<Col xs="4">
+                                Win: {result.equities[0].getEquity()}%
+                            </Col>      
+                            ) : ( 
+                                <span/>
+                            )}
                         </Row>
                         <Row style={{paddingTop: "6px"}}>
                             <Col xs="3" style={{paddingRight: "0.2em"}}>
                                 <div style={{display: 'inline-block'}}>Player 2</div>
                             </Col>
-                            <Col xs="9">
+                            <Col xs="4">
                                 <Cards selected={(c) => this.setState({p21: c})}
                                        usedCarts={usedCarts} owner={"Player 2"}
                                 />
@@ -329,12 +347,19 @@ class Odds extends React.Component {
                                        usedCarts={usedCarts} owner={"Player 2"}
                                 />
                             </Col>
+                            {!_.isNil(result.equities) && p2 ?
+                                (<Col xs="4">
+                                        Win: {result.equities[1].getEquity()}%
+                                    </Col>                                
+                            ) : ( 
+                                <span/>
+                            )}
                         </Row>
                         <Row style={{paddingTop: "6px"}}>
                             <Col xs="3" style={{paddingRight: "0.2em"}}>
                                 <div style={{display: 'inline-block'}}>Player 3</div>
                             </Col>
-                            <Col xs="9">
+                            <Col xs="4">
                                 <Cards selected={(c) => this.setState({p31: c})}
                                        usedCarts={usedCarts} owner={"Player 3"}
                                 />
@@ -342,12 +367,19 @@ class Odds extends React.Component {
                                        usedCarts={usedCarts} owner={"Player 3"}
                                 />
                             </Col>
+                            {!_.isNil(result.equities) && p3 ?
+                                (<Col xs="4">
+                                        Win: {result.equities[2].getEquity()}%
+                                    </Col>                                
+                            ) : ( 
+                                <span/>
+                            )}
                         </Row>
                         <Row style={{paddingTop: "6px"}}>
                             <Col xs="3" style={{paddingRight: "0.2em"}}>
                                 <div style={{display: 'inline-block'}}>Player 4</div>
                             </Col>
-                            <Col xs="9">
+                            <Col xs="4">
                                 <Cards selected={(c) => this.setState({p41: c})}
                                        usedCarts={usedCarts} owner={"Player 4"}
                                 />
@@ -355,6 +387,13 @@ class Odds extends React.Component {
                                        usedCarts={usedCarts} owner={"Player 4"}
                                 />
                             </Col>
+                            {!_.isNil(result.equities) && p4 ?
+                                (<Col xs="4">
+                                        Win: {result.equities[3].getEquity()}%
+                                    </Col>                                
+                            ) : ( 
+                                <span/>
+                            )}
                         </Row>
                         <Row style={{paddingTop: "12px"}}>
                             <Col xs="3" style={{paddingRight: "0.2em"}}>

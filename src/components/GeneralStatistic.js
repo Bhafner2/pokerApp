@@ -99,6 +99,7 @@ class GeneralStatistic extends React.Component {
         this.last3m = this.last3m.bind(this);
         this.last6m = this.last6m.bind(this);
         this.lastYear = this.lastYear.bind(this);
+        this.holeStat = this.holeStat.bind(this);
         this.showFilter = this.showFilter.bind(this);
         this.resetFilter = this.resetFilter.bind(this);
         this.setSum = this.setSum.bind(this);
@@ -470,6 +471,26 @@ class GeneralStatistic extends React.Component {
         })
     }
 
+    holeStat() {
+        this.setState({
+            fromDate: '2018-10-01',
+            toDate: moment().format('YYYY-MM-DD'),
+            dateOk: true,
+        }, () => {
+            this.getData();
+        })
+    }
+
+    lastYearPlus25Percent(year = moment().year() - 1) {
+        this.setState({
+            fromDate: year + '-01-01',
+            toDate: year + '-12-31',
+            dateOk: true,
+        }, () => {
+            this.usersPercentFilter();
+        })
+    }
+
     usersAll() {
         this.setState({
             filteredUsers: [],
@@ -544,7 +565,12 @@ class GeneralStatistic extends React.Component {
             <Collapse isOpen={this.state.showFilter}>
                 <Card outline>
                     <CardBody>
-                        <Row>
+                        <Row onClick={this.holeStat}>
+                                <Col>
+                                    Time filter
+                                </Col>
+                            </Row>
+                        <Row style={{paddingTop: "12px"}}>
                             <Col>
                                 <InputGroup>
                                     <Input type="date" name="fromDate" id="fromDate"
@@ -671,7 +697,7 @@ class GeneralStatistic extends React.Component {
         const {attributeToShow} = this.state;
         return ({
             chart: {
-                type: 'spline',
+                type: 'line',
             },
             title: {
                 text: attributeToShow,
@@ -718,7 +744,7 @@ class GeneralStatistic extends React.Component {
                 },
             },
             series: [{
-                name: 'Buy In',
+                name: BUYIN,
                 stack: 'data',
                 type: 'column',
                 data: _.map(users, (u) => {
@@ -758,7 +784,7 @@ class GeneralStatistic extends React.Component {
                 },
             }, {
                 name: TOTAL,
-                type: 'spline',
+                type: 'line',
                 data: _.map(users, (u) => {
                     return u.total
                 }),
@@ -1058,16 +1084,16 @@ class GeneralStatistic extends React.Component {
                                 </Col>
                             </Row>
                             {this.filter()}
-                            {sumBuyIn === 0 && !this.state.filtered?
+                            {(sumBuyIn === 0 || moment().month() < 4) && !this.state.filtered ?
                                 <Row>
                                     <Col>
                                         <Button 
                                             color={"link"}
-                                            onClick={() => this.lastYear(moment().year() - 1)}
+                                            onClick={() => this.lastYearPlus25Percent()}
                                             style={{
                                                 color: "#007BFF"
                                             }}>
-                                                No games found, goto {moment().year() - 1}?
+                                                Show last year?
                                         </Button>
                                     </Col>
                                 </Row> 

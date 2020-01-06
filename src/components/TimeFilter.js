@@ -31,6 +31,7 @@ class TimeFilter extends React.Component {
         this.updateFormDate = this.updateFormDate.bind(this);
         this.updateToDate = this.updateToDate.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
+        this.holeStat = this.holeStat.bind(this);
     }
 
     componentDidMount() {
@@ -87,6 +88,16 @@ class TimeFilter extends React.Component {
             dateOk: true,
         }, () => {
             this.calc()
+        })
+    }
+
+    holeStat() {
+        this.setState({
+            fromDate: moment('2018-10-01'),
+            toDate: moment(),
+            dateOk: true,
+        }, () => {
+            this.calc();
         })
     }
 
@@ -150,7 +161,7 @@ class TimeFilter extends React.Component {
                     </Col>
                     {this.props.addition}
                 </Row>
-                {this.props.result === 0 && !this.state.filtered?
+                {(this.props.result === 0 || moment().month() < 4) && !this.state.filtered ?
                     <Row>
                         <Col>
                             <Button 
@@ -159,7 +170,7 @@ class TimeFilter extends React.Component {
                                 style={{
                                     color: "#007BFF"
                                 }}>
-                                    No games found, goto {moment().year() - 1}?
+                                    Show last year?
                             </Button>
                         </Col>
                     </Row> 
@@ -169,7 +180,12 @@ class TimeFilter extends React.Component {
                  <Collapse isOpen={this.state.showFilter}>
                     <Card outline>
                         <CardBody>
-                            <Row>
+                            <Row onClick={this.holeStat}>
+                                <Col>
+                                    Time filter
+                                </Col>
+                            </Row>
+                            <Row style={{paddingTop: "12px"}}>
                                 <Col>
                                     <InputGroup>
                                         <Input type="date" name="fromDate" id="fromDate"
