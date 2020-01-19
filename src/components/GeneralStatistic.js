@@ -709,9 +709,13 @@ class GeneralStatistic extends React.Component {
     }
     static formatTooltip(tooltip, x = this.x, points = this.points) {
         let s = `<b>${x}</b>`;
-        points.forEach((point) =>
-          s += `<br/>${point.series.name}: ${point.y}`
-        );
+        points.forEach((point) => {
+            if(point.series.name === TOTAL){
+                s += `<br/> <b>${point.series.name}: ${point.y}</b>`
+            }else {
+                s += `<br/>${point.series.name}: ${point.y}`
+            }
+        });
     
         return s;
       }
@@ -783,19 +787,6 @@ class GeneralStatistic extends React.Component {
                     enabled: false,
                 },
             }, {
-                name: BOUNTY,
-                stack: 'data',
-                type: 'column',
-                data: _.map(users, (u) => {
-                    return u.bounty
-                }),
-                lineWidth: 1,
-                color: '#155724',
-                visible: attributeToShow === BOUNTY || attributeToShow === TOTAL,
-                marker: {
-                    enabled: false,
-                },
-            }, {
                 name: WON,
                 stack: 'data',
                 type: 'column',
@@ -805,6 +796,19 @@ class GeneralStatistic extends React.Component {
                 lineWidth: 1,
                 color: '#28A745',
                 visible: attributeToShow === WON || attributeToShow === TOTAL,
+                marker: {
+                    enabled: false,
+                },
+            }, {
+                name: BOUNTY,
+                stack: 'data',
+                type: 'column',
+                data: _.map(users, (u) => {
+                    return u.bounty
+                }),
+                lineWidth: 1,
+                color: '#155724',
+                visible: attributeToShow === BOUNTY || attributeToShow === TOTAL,
                 marker: {
                     enabled: false,
                 },
