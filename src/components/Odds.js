@@ -271,6 +271,14 @@ class Odds extends React.Component {
         })
     }
 
+    reset(){
+        this.setState({
+            result: null
+        }, () => {
+            this.forceUpdate();
+        });
+    }
+
     render() {
         const {loading, p11, p12, p21, p22, p31, p32, p41, p42, b1, b2, b3, b4, b5, result} = this.state;
         const usedCarts = [p11, p12, p21, p22, p31, p32, p41, p42, b1, b2, b3, b4, b5];
@@ -342,9 +350,11 @@ class Odds extends React.Component {
                             <Col xs="4">
                                 <Cards selected={(c) => this.setState({p21: c})}
                                        usedCarts={usedCarts} owner={"Player 2"}
+                                       onClick={() => this.reset()}
                                 />
                                 <Cards selected={(c) => this.setState({p22: c})}
                                        usedCarts={usedCarts} owner={"Player 2"}
+                                       onClick={() => this.reset()}
                                 />
                             </Col>
                             {!_.isNil(result.equities) && p2 ?
@@ -362,9 +372,11 @@ class Odds extends React.Component {
                             <Col xs="4">
                                 <Cards selected={(c) => this.setState({p31: c})}
                                        usedCarts={usedCarts} owner={"Player 3"}
+                                       onClick={() => this.reset()}
                                 />
                                 <Cards selected={(c) => this.setState({p32: c})}
                                        usedCarts={usedCarts} owner={"Player 3"}
+                                       onClick={() => this.reset()}
                                 />
                             </Col>
                             {!_.isNil(result.equities) && p3 ?
@@ -382,9 +394,11 @@ class Odds extends React.Component {
                             <Col xs="4">
                                 <Cards selected={(c) => this.setState({p41: c})}
                                        usedCarts={usedCarts} owner={"Player 4"}
+                                       onClick={() => this.reset()}
                                 />
                                 <Cards selected={(c) => this.setState({p42: c})}
                                        usedCarts={usedCarts} owner={"Player 4"}
+                                       onClick={() => this.reset()}
                                 />
                             </Col>
                             {!_.isNil(result.equities) && p4 ?
@@ -402,20 +416,25 @@ class Odds extends React.Component {
                             <Col xs="9">
                                 <Cards selected={(c) => this.setState({b1: c})}
                                        usedCarts={usedCarts} owner={"board flop"}
+                                       onClick={() => this.reset()}
                                 />
                                 <Cards selected={(c) => this.setState({b2: c})}
                                        usedCarts={usedCarts} owner={"board flop"}
+                                       onClick={() => this.reset()}
                                 />
                                 <Cards selected={(c) => this.setState({b3: c})}
                                        usedCarts={usedCarts} owner={"board flop"}
+                                       onClick={() => this.reset()}
                                 />
                                 <span style={{paddingLeft: "6px"}}/>
                                 <Cards selected={(c) => this.setState({b4: c})}
                                        usedCarts={usedCarts} owner={"board turn"}
+                                       onClick={() => this.reset()}
                                 />
                                 <span style={{paddingLeft: "6px"}}/>
                                 <Cards selected={(c) => this.setState({b5: c})}
                                        usedCarts={usedCarts} owner={"board river"}
+                                       onClick={() => this.reset()}
                                 />
                             </Col>
                         </Row>

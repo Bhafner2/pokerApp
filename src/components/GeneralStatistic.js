@@ -1136,9 +1136,11 @@ class GeneralStatistic extends React.Component {
                         </Nav>
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="1">
-                                <Row style={{paddingTop: "6px"}}>
-                                    <Col xs={3} style={{marginLeft: "4px"}}>
-                                        <ButtonGroup style={{paddingTop: "4px"}}>
+                            <Card>
+                                <CardBody>
+                                <Row>
+                                    <Col xs={3}>
+                                        <ButtonGroup>
                                             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
                                                 <DropdownToggle caret color="primary" size={"sm"}>
                                                     {this.state.attributeToShow}
@@ -1179,7 +1181,7 @@ class GeneralStatistic extends React.Component {
                                         </ButtonGroup>
                                     </Col>
                                     <Col xs={3}>
-                                        <ButtonGroup style={{paddingTop: "4px"}}>
+                                        <ButtonGroup>
                                             <Button size={"sm"} outline color={"primary"} active={!getAvg}
                                                     onClick={this.setSum}>
                                                 Σ
@@ -1190,8 +1192,8 @@ class GeneralStatistic extends React.Component {
                                             </Button>
                                         </ButtonGroup>
                                     </Col>
-                                    <Col xs={5} style={{paddingLeft: "4px"}}>
-                                        <ButtonGroup style={{paddingTop: "4px"}}>
+                                    <Col xs={5}>
+                                        <ButtonGroup >
                                             <Button size={"sm"} outline color="primary"
                                                     active={useChart && chartType === COLUMN}
                                                     onClick={() => this.togglePieChart(COLUMN)}>
@@ -1214,8 +1216,9 @@ class GeneralStatistic extends React.Component {
                                             </Button>
                                         </ButtonGroup>
                                     </Col>
-                                    <Col xs={1}/>
                                 </Row>
+                                </CardBody>
+                                </Card>
                                 <br/>
                                 {useChart ? chart : list}
                             </TabPane>

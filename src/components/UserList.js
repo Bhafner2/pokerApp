@@ -374,7 +374,6 @@ class UserList extends React.Component {
                             :
                             <div>
                                 <Row style={{paddingTop: "6px"}}>
-
                                     <Col xs="5">
                                         <div>Buy In</div>
                                     </Col>
