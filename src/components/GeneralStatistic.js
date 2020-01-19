@@ -444,6 +444,9 @@ class GeneralStatistic extends React.Component {
             dateOk: true,
         }, () => {
             this.getData();
+            setTimeout(() => {
+                this.usersPercentFilter(); 
+            }, 100);
         })
     }
 
@@ -457,6 +460,9 @@ class GeneralStatistic extends React.Component {
             dateOk: true,
         }, () => {
             this.getData();
+            setTimeout(() => {
+                this.usersPercentFilter(); 
+            }, 100);
         })
     }
 
@@ -468,6 +474,9 @@ class GeneralStatistic extends React.Component {
             dateOk: true,
         }, () => {
             this.getData();
+            setTimeout(() => {
+                this.usersPercentFilter(); 
+            }, 100);
         })
     }
 
@@ -478,6 +487,9 @@ class GeneralStatistic extends React.Component {
             dateOk: true,
         }, () => {
             this.getData();
+            setTimeout(() => {
+                this.usersPercentFilter(); 
+            }, 100);
         })
     }
 
@@ -487,8 +499,11 @@ class GeneralStatistic extends React.Component {
             toDate: year + '-12-31',
             dateOk: true,
         }, () => {
-            this.usersPercentFilter();
-        })
+            this.getData();
+            setTimeout(() => {
+                this.usersPercentFilter(); 
+            }, 100);
+        });
     }
 
     usersAll() {
