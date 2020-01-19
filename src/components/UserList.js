@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Col, Input, ListGroupItem, Modal, ModalBody, ModalFooter, ModalHeader, Row} from 'reactstrap';
+import {Button, Col, Input, ListGroupItem, Modal, ModalBody, ModalFooter, ModalHeader, Row, ButtonGroup} from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
 import {store} from "../redux/store";
 import {saveUsers} from "../redux/actions";
@@ -332,10 +332,10 @@ class UserList extends React.Component {
                     <ModalHeader toggle={this.toggle}>{user.name}</ModalHeader>
                     <ModalBody>
                         <Row>
-                            <Col xs="4">
+                            <Col xs="5">
                                 Date
                             </Col>
-                            <Col xs="8">
+                            <Col xs="7">
                                 <Input type="date" name="date" id="date"
                                        onChange={this.updateDate}
                                        value={this.state.date}
@@ -347,64 +347,91 @@ class UserList extends React.Component {
                         {!UserList.isAdmin() ?
                             <div>
                                 <Row style={{paddingTop: "6px"}}>
-                                    <Col xs="4">
+                                    <Col xs="5">
                                         <div style={{display: 'inline-block'}}>Buy In</div>
                                     </Col>
-                                    <Col xs="8">
+                                    <Col xs="7">
                                         {this.state.buyIn > 0 ? this.state.buyIn : 0}
                                     </Col>
                                 </Row>
                                 <Row style={{paddingTop: "6px"}}>
-                                    <Col xs="4">
+                                    <Col xs="5">
                                         <div style={{display: 'inline-block'}}>Won</div>
                                     </Col>
-                                    <Col xs="8">
+                                    <Col xs="7">
                                         {this.state.won > 0 ? this.state.won : 0}
                                     </Col>
                                 </Row>
                                 <Row style={{paddingTop: "6px"}}>
-                                    <Col xs="4">
+                                    <Col xs="5">
                                         <div style={{display: 'inline-block'}}>Bounty's</div>
                                     </Col>
-                                    <Col xs="8">
+                                    <Col xs="7">
                                         {this.state.bounty > 0 ? this.state.bounty : 0}
                                     </Col>
                                 </Row>
                             </div>
                             :
                             <div>
-                                <Row>
-                                    <Col xs="4">
+                                <Row style={{paddingTop: "6px"}}>
+
+                                    <Col xs="5">
                                         <div>Buy In</div>
                                     </Col>
-                                    <Col xs="8">
-                                        <Input autoFocus
-                                               type="number" name="buyIn" id="buyIn"
-                                               onChange={this.updateBuyIn}
-                                               value={this.state.buyIn}
-                                        />
-                                    </Col>
+                                    <Col xs="7">
+                                        <ButtonGroup>
+                                            <Button onClick={() => this.setState({buyIn: _.parseInt(this.state.buyIn - 12)})} color="danger">
+                                                -
+                                            </Button>
+                                            <Input autoFocus
+                                                type="number" name="buyIn" id="buyIn"
+                                                onChange={this.updateBuyIn}
+                                                value={this.state.buyIn}
+                                            />
+                                            <Button onClick={() => this.setState({buyIn: _.parseInt(this.state.buyIn + 12)})} color="success">
+                                                +
+                                            </Button>
+                                        </ButtonGroup>
+                                    </Col>       
                                 </Row>
-                                <Row>
-                                    <Col xs="4">
+                                <Row style={{paddingTop: "6px"}}>
+                                    <Col xs="5">
                                         <div style={{display: 'inline-block'}}>Won</div>
                                     </Col>
-                                    <Col xs="8">
-                                        <Input type="number" name="won" id="won"
-                                               onChange={this.updateWon}
-                                               value={this.state.won}
-                                        />
+                                    <Col xs="7">
+                                        <ButtonGroup>
+                                            <Button onClick={() => this.setState({won: _.parseInt(this.state.won - 10)})} color="danger">
+                                                -
+                                            </Button>
+                                            <Input autoFocus
+                                                type="number" name="won" id="won"
+                                                onChange={this.updateWon}
+                                                value={this.state.won}
+                                            />
+                                            <Button onClick={() => this.setState({won: _.parseInt(this.state.won + 10)})} color="success">
+                                                +
+                                            </Button>
+                                        </ButtonGroup>
                                     </Col>
                                 </Row>
-                                <Row>
-                                    <Col xs="4">
+                                <Row style={{paddingTop: "6px"}}>
+                                    <Col xs="5">
                                         <div style={{display: 'inline-block'}}>Bounty's Won</div>
                                     </Col>
-                                    <Col xs="8">
-                                        <Input type="number" name="bounty" id="bounty"
-                                               onChange={this.updateBounty}
-                                               value={this.state.bounty}
-                                        />
+                                    <Col xs="7">
+                                        <ButtonGroup>
+                                            <Button onClick={() => this.setState({bounty: _.parseInt(this.state.bounty - 2)})} color="danger">
+                                                -
+                                            </Button>
+                                            <Input autoFocus
+                                                type="number" name="bounty" id="bounty"
+                                                onChange={this.updateBounty}
+                                                value={this.state.bounty}
+                                            />
+                                            <Button onClick={() => this.setState({bounty: _.parseInt(this.state.bounty + 2)})} color="success">
+                                                +
+                                            </Button>
+                                        </ButtonGroup>
                                     </Col>
                                 </Row>
                             </div>
