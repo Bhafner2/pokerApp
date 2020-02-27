@@ -215,7 +215,7 @@ class ThisGame extends React.Component {
                     },
                 },
                 series: [{
-                    name: 'Buy In',
+                    name: 'BuyIn',
                     stack: 'data',
                     type: 'column',
                     data: _.map(users, (u) => {
