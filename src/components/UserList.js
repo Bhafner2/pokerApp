@@ -9,6 +9,7 @@ import Statistic from "./Statistic";
 import firebase from "../config/firebase";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faDollarSign} from '@fortawesome/free-solid-svg-icons';
+import moment from 'moment';
 
 class UserList extends React.Component {
     constructor(props) {
@@ -180,7 +181,8 @@ class UserList extends React.Component {
         user.sumBuyIn = 0;
         user.sumWon = 0;
         user.sumBounty = 0;
-        user.gamesPlayed = 0;
+        user.gamesPlayed = 0;       
+        user.lastBuyIn = buyIn !== 0 && user.lastBuyIn < moment(date).format() ? moment(date).format() : moment('2018-01-01').format();
 
         for (let i = 0; i < user.games.length; i++) {
             if (this.state.date === user.games[i].date) {
@@ -192,7 +194,7 @@ class UserList extends React.Component {
                     save = false;
                 }
                 found = true;
-                console.log("game successfully updated " + user.name + ", date: " + date + " buyIn " + user.games[i].buyIn + " won " + user.games[i].won, " bounty ", user.games[i].bounty);
+            //    console.log("game successfully updated " + user.name + ", date: " + date + " buyIn " + user.games[i].buyIn + " won " + user.games[i].won, " bounty ", user.games[i].bounty);
             }
             if (user.games[i].buyIn > 0) {
                 user.sumBuyIn += user.games[i].buyIn;
@@ -221,7 +223,7 @@ class UserList extends React.Component {
                 user.gamesPlayed++;
             }
 
-            console.log("game successfully created " + user.name + ", date: " + this.state.date + " buyIn " + game.buyIn + " won " + game.won, " bounty ", game.bounty);
+            // console.log("game successfully created " + user.name + ", date: " + this.state.date + " buyIn " + game.buyIn + " won " + game.won, " bounty ", game.bounty);
         }
 
         data.games = this.calcGames(users);
@@ -308,7 +310,10 @@ class UserList extends React.Component {
         const {user} = this.props;
         return (<div>
                 <ListGroupItem key={this.props.key}
-                               style={{color: this.props.blue ? "#007BFF" : "black"}}>
+                            style={{
+                                color: this.props.blue ? "#007BFF" : "black",
+                                backgroundColor: user.lastBuyIn > moment().subtract(28, 'h').format() ? "#D4EDDA" : "white"                                   
+                            }}>
                     <Row>
                         <Col xs="4">
                             <Statistic user={user} today={this.props.date} toggle={this.state.stat}

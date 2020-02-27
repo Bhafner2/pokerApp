@@ -4,6 +4,7 @@ import {getUsersRejected, getUsersFulfilled, saveUsersRejected} from "./actions"
 import {GET_USERS, SAVE_USERS} from "./constants";
 import {store} from '../redux/store'
 import * as _ from 'lodash';
+import moment from "moment";
 
 
 export function* getUsersSaga() {
@@ -41,6 +42,7 @@ function fetchUsers() {
                     sumWon: 0,
                     sumBounty: 0,
                     gamesPlayed: 0,
+                    lastBuyIn: moment('2018-01-01').format(),
                 });
             } else {
                 users.push({
@@ -50,6 +52,7 @@ function fetchUsers() {
                     sumWon: dbUsers[user].sumWon,
                     sumBounty: dbUsers[user].sumBounty,
                     gamesPlayed: dbUsers[user].gamesPlayed,
+                    lastBuyIn: _.isNil(dbUsers[user].lastBuyIn) ? moment('2018-01-01').format() : dbUsers[user].lastBuyIn,
                 });
             }
         }
