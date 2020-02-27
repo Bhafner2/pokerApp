@@ -353,7 +353,7 @@ class UserList extends React.Component {
                             <div>
                                 <Row style={{paddingTop: "6px"}}>
                                     <Col xs="5">
-                                        <div style={{display: 'inline-block'}}>Buy In</div>
+                                        <div style={{display: 'inline-block'}}>BuyIn</div>
                                     </Col>
                                     <Col xs="7">
                                         {this.state.buyIn > 0 ? this.state.buyIn : 0}
@@ -380,7 +380,7 @@ class UserList extends React.Component {
                             <div>
                                 <Row style={{paddingTop: "6px"}}>
                                     <Col xs="5">
-                                        <div>Buy In</div>
+                                        <div>BuyIn</div>
                                     </Col>
                                     <Col xs="7">
                                         <ButtonGroup>

@@ -1265,7 +1265,7 @@ class GeneralStatistic extends React.Component {
                                 <br/>
                                 <Row style={{paddingTop: "12px"}}>
                                     <Col xs={6}>
-                                        <b>Sum</b> of all Buy In's
+                                        <b>Sum</b> of all BuyIn's
                                     </Col>
                                     <Col xs={6}>
                                         {showNumber(sumBuyIn)}
@@ -1289,7 +1289,7 @@ class GeneralStatistic extends React.Component {
                                 </Row>
                                 <Row style={{paddingTop: "12px"}}>
                                     <Col xs={6}>
-                                        <b>Avg</b> Buy In / Player
+                                        <b>Avg</b> BuyIn / Player
                                     </Col>
                                     <Col xs={6}>
                                         {showNumber(avgBuyIn)}

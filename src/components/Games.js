@@ -61,7 +61,7 @@ class Games extends React.Component {
     static formatTooltip(tooltip, x = this.x, points = this.points) {
         let s = `<b>${moment(x).format("D.M.YY")}</b>`;
         points.forEach((point) => {
-            if(point.series.name !== "Buy In"){
+            if(point.series.name !== "BuyIn"){
                 s += `<br/>${point.series.name}: ${point.y}`
             }
         });
@@ -147,7 +147,7 @@ class Games extends React.Component {
                         radius: 2,
                     },
                 }, {
-                    name: 'Avg Buy In',
+                    name: 'Avg BuyIn',
                     type: 'spline',
                     yAxis: 1,
                     data: _.map(filteredGames, (g) => {
@@ -175,7 +175,7 @@ class Games extends React.Component {
                         radius: 2,
                     },
                 }, {
-                    name: 'Buy In',
+                    name: 'BuyIn',
                     type: 'scatter',
                     yAxis: 1,
                     data: this.mapBuyIns(filteredUsers),
@@ -267,7 +267,7 @@ class Games extends React.Component {
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th>Buy In's</th>
+                                    <th>BuyIn's</th>
                                     <td>{showNumber(_.sumBy(filteredGames, 'buyIn'))}</td>
                                     <td>{showNumber(_.maxValue(filteredGames, 'buyIn'))}</td>
                                     <td>{showNumber(_.meanBy(filteredGames, 'buyIn'))}</td>
