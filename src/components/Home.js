@@ -28,7 +28,7 @@ import {
     faCalendar,
     faSearch,
     faSignOutAlt,
-    faSortAmountUp,
+    faSortAmountDown,
 
 } from '@fortawesome/free-solid-svg-icons'
 import Odds from "./Odds";
@@ -277,7 +277,7 @@ class Home extends Component {
                                     <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}
                                               style={{paddingTop: "12px"}}>
                                         <DropdownToggle caret size={"sm"}>
-                                            <FontAwesomeIcon icon={faSortAmountUp}/>
+                                            <FontAwesomeIcon icon={faSortAmountDown}/>
                                         </DropdownToggle>
                                         <DropdownMenu>
                                             <DropdownItem

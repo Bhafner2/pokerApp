@@ -707,6 +707,7 @@ class GeneralStatistic extends React.Component {
             this.getData();
         })
     }
+
     static formatTooltip(tooltip, x = this.x, points = this.points) {
         let s = `<b>${x}</b>`;
         points.forEach((point) => {
@@ -766,7 +767,7 @@ class GeneralStatistic extends React.Component {
             tooltip: {
                 formatter: GeneralStatistic.formatTooltip,
                 shared: true,
-              },
+            },
             legend: {
                 itemMarginBottom: 12,
                 itemStyle: {

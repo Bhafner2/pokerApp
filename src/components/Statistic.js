@@ -263,11 +263,27 @@ class Statistic extends React.Component {
         return result_values_y;
     }
 
+    static formatTooltip(tooltip, x = this.x, points = this.points) {
+        let s = `<b>${x}</b>`;
+        points.forEach((point) => {
+            if(point.series.name === "Total"){
+                s += `<br/> <b>${point.series.name}: ${point.y}</b>`
+            }else {
+                s += `<br/>${point.series.name}: ${point.y}`
+            }
+        });
+        return s;
+    }
+
     chart(date, buyIn, won, bounty, total, trend, showDots) {
         this.setState({
             options: {
                 chart: {
                     type: 'spline',
+                },
+                tooltip: {
+                    formatter: Statistic.formatTooltip,
+                    shared: true,
                 },
                 title: {
                     text: 'Games',
@@ -416,9 +432,13 @@ class Statistic extends React.Component {
                     type: 'pie'
                 },
                 tooltip: {
-                    pointFormat: `<span><div>Percent: <b>{point.percentage:.1f}%</b> </div> <br/>` +
-                        `<div>Amount: <b>{point.y}</b> </div> <br/>` +
-                        `<div>Won: <b>{point.sum}</b> </div></span>`
+                    shared: true,
+                    formatter: function() {
+                        return (`<span><div>Percent: <b>${showNumber(this.point.percentage)}%</b> </div> <br/>` +
+                        `<div>Amount: <b>${this.point.y}</b> </div> <br/>` 
+                       + `<div>Won: <b>${this.point.sum}</b> </div></span>`);
+                    }                    
+
                 },
                 title: {
                     text: 'Ranking',
