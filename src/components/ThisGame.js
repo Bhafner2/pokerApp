@@ -303,8 +303,9 @@ class ThisGame extends React.Component {
                             {_.isArray(games) ?
                                 this.props.data.games.map((game, i) =>
                                     <Col xs={6} key={i}>
-                                        <Button color={"link"} value={game.date} onClick={this.updateDate}
-                                        >{moment(game.date).format('dd D.M.YY')}</Button>
+                                        <Button color={"link"} value={game.date} onClick={this.updateDate}>
+                                            {moment(game.date).format('dd D.M.YY')}
+                                        </Button>
                                     </Col>
                                 ) : <div>No Games played </div>}
                         </Row>

@@ -161,8 +161,8 @@ class AddUser extends React.Component {
                     </FormGroup>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="secondary" onClick={this.toggle}>Cancel</Button>
                     <Button color="primary" onClick={this.addUser} disabled={!this.state.usernameOk}>Save</Button>
+                    <Button color="secondary" onClick={this.toggle}>Exit</Button>
                 </ModalFooter>
             </Modal>
         </div>;
