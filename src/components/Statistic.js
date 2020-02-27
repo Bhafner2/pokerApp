@@ -438,7 +438,6 @@ class Statistic extends React.Component {
                         `<div>Amount: <b>${this.point.y}</b> </div> <br/>` 
                        + `<div>Won: <b>${this.point.sum}</b> </div></span>`);
                     }                    
-
                 },
                 title: {
                     text: 'Ranking',

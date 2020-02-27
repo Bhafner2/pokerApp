@@ -147,13 +147,25 @@ class ThisGame extends React.Component {
                 sumWon,
                 filtered: this.state.date === this.props.today,
                 onOpen: false,
+            }, () => {
+                this.chart(filteredUsers);
             });
-            this.chart(filteredUsers);
         }
     }
 
-    chart(users) {
+    static formatTooltip(tooltip, x = this.x, points = this.points) {
+        let s = `<b>${x}</b>`;
+        points.forEach((point) => {
+            if(point.series.name === "Total"){
+                s += `<br/> <b>${point.series.name}: ${point.y}</b>`
+            }else {
+                s += `<br/>${point.series.name}: ${point.y}`
+            }        
+        });
+        return s;
+    }
 
+    chart(users) {
         users = _.sortBy(users, function (g) {
             return -g.total;
         });
@@ -169,6 +181,10 @@ class ThisGame extends React.Component {
                         fontWeight: 'bold',
                         display: 'none',
                     },
+                },
+                tooltip: {
+                    formatter: ThisGame.formatTooltip,
+                    shared: true,
                 },
                 yAxis: {
                     title: {
@@ -241,6 +257,17 @@ class ThisGame extends React.Component {
                         return u.total
                     }),
                     color: '#6C757D',
+                    marker: {
+                        enabled: false,
+                    },
+                }, {
+                    name: 'Avg BuyIn',
+                    type: 'line',
+                    data: _.map(users, (u) => {
+                        return -this.state.avgBuyIn
+                    }),
+                    dashStyle: "ShortDot",
+                    color: '#DC3545',
                     marker: {
                         enabled: false,
                     },

@@ -58,12 +58,26 @@ class Games extends React.Component {
         })
     }
 
+    static formatTooltip(tooltip, x = this.x, points = this.points) {
+        let s = `<b>${moment(x).format("D.M.YY")}</b>`;
+        points.forEach((point) => {
+            if(point.series.name !== "Buy In"){
+                s += `<br/>${point.series.name}: ${point.y}`
+            }
+        });
+        return s;
+    }
+
     chart() {
         const {filteredGames, filteredUsers} = this.state;
         this.setState({
             options: {
                 chart: {
                     type: 'spline',
+                },
+                tooltip: {
+                    formatter: Games.formatTooltip,
+                    shared: true,
                 },
                 title: {
                     text: 'Games',
@@ -95,9 +109,9 @@ class Games extends React.Component {
                     column: {
                         stacking: 'normal'
                     },
-                    series: {
-                        pointWidth: 10
-                    }
+//                    series: {
+//                        pointWidth: 10
+//                    }
                 },
                 legend: {
                     itemMarginBottom: 12,
@@ -165,9 +179,10 @@ class Games extends React.Component {
                     type: 'scatter',
                     yAxis: 1,
                     data: this.mapBuyIns(filteredUsers),
-                    color: 'rgba(255, 0, 0, .1)',
+                    color: 'rgba(255, 0, 0, .07)',
                     visible: false,
                     marker: {
+                        symbol: "circle",
                         radius: 24,
                     },
                 }
