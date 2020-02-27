@@ -27,6 +27,7 @@ class Cards extends React.Component {
             });
             this.props.selected(NO_CARD.value);
         }
+        this.props.reset();
     }
 
     setCard(card) {
