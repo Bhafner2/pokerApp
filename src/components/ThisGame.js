@@ -183,8 +183,8 @@ class ThisGame extends React.Component {
                     },
                 },
                 tooltip: {
-                    formatter: ThisGame.formatTooltip,
                     shared: true,
+                    useHTML: true,
                 },
                 yAxis: {
                     title: {
@@ -267,7 +267,7 @@ class ThisGame extends React.Component {
                         return -this.state.avgBuyIn
                     }),
                     dashStyle: "ShortDot",
-                    color: '#DC3545',
+                    color: '#003F85',
                     marker: {
                         enabled: false,
                     },

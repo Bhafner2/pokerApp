@@ -282,8 +282,8 @@ class Statistic extends React.Component {
                     type: 'spline',
                 },
                 tooltip: {
-                    formatter: Statistic.formatTooltip,
                     shared: true,
+                    useHTML: true,
                 },
                 title: {
                     text: 'Games',
@@ -435,9 +435,9 @@ class Statistic extends React.Component {
                     shared: true,
                     formatter: function() {
                         return (`<span><b>${this.point.name}</b> <br/>
-                        <span><div>Chance: ${showNumber(this.point.percentage)}% </div> <br/>` +
-                        `<div>Amount: ${this.point.y}</div> <br/>` 
-                       + `<div>Won: ${this.point.sum}</div></span>`);
+                        <span><div>Chance: <b>${showNumber(this.point.percentage)}%</b></div> <br/>` +
+                        `<div>Amount: <b>${this.point.y}</b></div> <br/>` 
+                       + `<div>Won: <b>${this.point.sum}</b></div></span>`);
                     }                    
                 },
                 title: {

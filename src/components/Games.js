@@ -76,8 +76,8 @@ class Games extends React.Component {
                     type: 'spline',
                 },
                 tooltip: {
-                    formatter: Games.formatTooltip,
                     shared: true,
+                    useHTML: true,
                 },
                 title: {
                     text: 'Games',

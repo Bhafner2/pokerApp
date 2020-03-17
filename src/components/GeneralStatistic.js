@@ -766,8 +766,8 @@ class GeneralStatistic extends React.Component {
                 }),
             }],
             tooltip: {
-                formatter: GeneralStatistic.formatTooltip,
                 shared: true,
+                useHTML: true,
             },
             legend: {
                 itemMarginBottom: 12,
@@ -870,6 +870,10 @@ class GeneralStatistic extends React.Component {
                 style: {
                     display: 'none'
                 },
+            },
+            tooltip: {
+                shared: true,
+                useHTML: true,
             },
             xAxis: [{
                 categories: [TOTAL, WON, BUYIN, BOUNTY, PLAYED, HERO]
