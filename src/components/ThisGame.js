@@ -267,7 +267,7 @@ class ThisGame extends React.Component {
                         return -this.state.avgBuyIn
                     }),
                     dashStyle: "ShortDot",
-                    color: '#003F85',
+                    color: '#007BFF',
                     marker: {
                         enabled: false,
                     },

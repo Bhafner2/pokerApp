@@ -360,7 +360,7 @@ class Statistic extends React.Component {
                     },
                 }, {
                     name: 'LMS',
-                    type: 'spline',
+                    type: 'ShortDot',
                     data: trend,
                     lineWidth: 1,
                     color: '#007BFF',
