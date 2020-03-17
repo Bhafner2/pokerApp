@@ -156,7 +156,7 @@ class App extends Component {
     }
 
     render() {
-        const AppVersion = 'v1.7.0';
+        const AppVersion = 'v1.7.1';
         const {connErr, login} = this.props.data;
         return (
             <div>

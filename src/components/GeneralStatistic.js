@@ -33,7 +33,7 @@ import HC_more from 'highcharts/highcharts-more' //module
 
 import {showNumber} from '../App';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faTrophy, faFilter, faChartBar, faList, faChartPie, faChartLine} from '@fortawesome/free-solid-svg-icons'
+import {faTrophy, faFilter, faChartBar, faList, faChartPie, faSpider} from '@fortawesome/free-solid-svg-icons'
 
 let filteredUsers = [];
 let empty = {name: '', won: 0, buyIn: 0, bounty: 0, date: ''};
@@ -961,6 +961,10 @@ class GeneralStatistic extends React.Component {
                     display: 'none'
                 },
             },
+            tooltip: {
+                shared: true,
+                useHTML: true,
+            },
             yAxis: {
                 title: {
                     text: '',
@@ -1243,7 +1247,7 @@ class GeneralStatistic extends React.Component {
                                                     <Button size={"sm"} outline color={"primary"}
                                                             active={useChart && chartType === SPIDER}
                                                             onClick={() => this.togglePieChart(SPIDER)}>
-                                                        <FontAwesomeIcon icon={faChartLine} size={"1x"}/>
+                                                        <FontAwesomeIcon icon={faSpider} size={"1x"}/>
                                                     </Button>
                                                     <Button size={"sm"} outline color={"primary"}
                                                             active={!useChart}
@@ -1256,7 +1260,11 @@ class GeneralStatistic extends React.Component {
                                     </CardBody>
                                 </Card>
                                 <br/>
-                                {useChart ? chart : list}
+                                {dates.length === 0 ?
+                                        <div className="center"><b>No games found ...</b><br/>change the filter or play a game</div> 
+                                    :
+                                    useChart ? chart : list
+                                }
                             </TabPane>
                         </TabContent>
                         <TabContent activeTab={this.state.activeTab}>
@@ -1305,11 +1313,15 @@ class GeneralStatistic extends React.Component {
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="9">
                                 <br/>
-                                <HighchartsReact
-                                    style={{visibility: this.state.dateOk ? 'visible' : 'hidden'}}
-                                    highcharts={Highcharts}
-                                    options={this.historyChart(sortedUsers)}
-                                />
+                                {dates.length === 0 ?
+                                    <div className="center"><b>No games found ...</b><br/>change the filter or play a game</div> 
+                                :
+                                    <HighchartsReact
+                                        style={{visibility: this.state.dateOk ? 'visible' : 'hidden'}}
+                                        highcharts={Highcharts}
+                                        options={this.historyChart(sortedUsers)}
+                                    />
+                                }
                             </TabPane>
                         </TabContent>
                     </ModalBody>
