@@ -485,6 +485,7 @@ class GeneralStatistic extends React.Component {
             fromDate: '2018-10-01',
             toDate: moment().format('YYYY-MM-DD'),
             dateOk: true,
+            showFilter: false,
         }, () => {
             this.getData();
             setTimeout(() => {
@@ -1167,88 +1168,88 @@ class GeneralStatistic extends React.Component {
                         </Nav>
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="1">
-                            <Card>
-                                <CardBody>
-                                <Row>
-                                    <Col xs={3}>
-                                        <ButtonGroup>
-                                            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
-                                                <DropdownToggle caret color="primary" size={"sm"}>
-                                                    {this.state.attributeToShow}
-                                                </DropdownToggle>
-                                                <DropdownMenu>
-                                                    <DropdownItem
-                                                        onClick={() => this.setState({attributeToShow: TOTAL})}
-                                                    >
-                                                        Total
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                        onClick={() => this.setState({attributeToShow: WON})}
-                                                    >
-                                                        Won
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                        onClick={() => this.setState({attributeToShow: BOUNTY})}
-                                                    >
-                                                        Bounty
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                        onClick={() => this.setState({attributeToShow: BUYIN})}
-                                                    >
-                                                        BuyIn
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                        onClick={() => this.setState({attributeToShow: PLAYED})}
-                                                    >
-                                                        Played
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                        onClick={() => this.setState({attributeToShow: HERO})}
-                                                    >
-                                                        Hero
-                                                    </DropdownItem>
-                                                </DropdownMenu>
-                                            </Dropdown>
-                                        </ButtonGroup>
-                                    </Col>
-                                    <Col xs={3}>
-                                        <ButtonGroup>
-                                            <Button size={"sm"} outline color={"primary"} active={!getAvg}
-                                                    onClick={this.setSum}>
-                                                Σ
-                                            </Button>
-                                            <Button size={"sm"} outline color="primary" active={getAvg}
-                                                    onClick={this.setAvg}>
-                                                Ø
-                                            </Button>
-                                        </ButtonGroup>
-                                    </Col>
-                                    <Col xs={5}>
-                                        <ButtonGroup >
-                                            <Button size={"sm"} outline color="primary"
-                                                    active={useChart && chartType === COLUMN}
-                                                    onClick={() => this.togglePieChart(COLUMN)}>
-                                                <FontAwesomeIcon icon={faChartBar} size={"1x"}/>
-                                            </Button>
-                                            <Button size={"sm"} outline color={"primary"}
-                                                    active={useChart && chartType === PIE}
-                                                    onClick={() => this.togglePieChart(PIE)}>
-                                                <FontAwesomeIcon icon={faChartPie} size={"1x"}/>
-                                            </Button>
-                                            <Button size={"sm"} outline color={"primary"}
-                                                    active={useChart && chartType === SPIDER}
-                                                    onClick={() => this.togglePieChart(SPIDER)}>
-                                                <FontAwesomeIcon icon={faChartLine} size={"1x"}/>
-                                            </Button>
-                                            <Button size={"sm"} outline color={"primary"}
-                                                    active={!useChart}
-                                                    onClick={() => this.setState({useChart: false, chartType: COLUMN})}>
-                                                <FontAwesomeIcon icon={faList} size={"1x"}/>
-                                            </Button>
-                                        </ButtonGroup>
-                                    </Col>
-                                </Row>
-                                </CardBody>
+                                <Card>
+                                    <CardBody>
+                                        <Row>
+                                            <Col xs={3}>
+                                                <ButtonGroup>
+                                                    <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
+                                                        <DropdownToggle caret color="primary" size={"sm"}>
+                                                            {this.state.attributeToShow}
+                                                        </DropdownToggle>
+                                                        <DropdownMenu>
+                                                            <DropdownItem
+                                                                onClick={() => this.setState({attributeToShow: TOTAL})}
+                                                            >
+                                                                Total
+                                                            </DropdownItem>
+                                                            <DropdownItem
+                                                                onClick={() => this.setState({attributeToShow: WON})}
+                                                            >
+                                                                Won
+                                                            </DropdownItem>
+                                                            <DropdownItem
+                                                                onClick={() => this.setState({attributeToShow: BOUNTY})}
+                                                            >
+                                                                Bounty
+                                                            </DropdownItem>
+                                                            <DropdownItem
+                                                                onClick={() => this.setState({attributeToShow: BUYIN})}
+                                                            >
+                                                                BuyIn
+                                                            </DropdownItem>
+                                                            <DropdownItem
+                                                                onClick={() => this.setState({attributeToShow: PLAYED})}
+                                                            >
+                                                                Played
+                                                            </DropdownItem>
+                                                            <DropdownItem
+                                                                onClick={() => this.setState({attributeToShow: HERO})}
+                                                            >
+                                                                Hero
+                                                            </DropdownItem>
+                                                        </DropdownMenu>
+                                                    </Dropdown>
+                                                </ButtonGroup>
+                                            </Col>
+                                            <Col xs={3}>
+                                                <ButtonGroup>
+                                                    <Button size={"sm"} outline color={"primary"} active={!getAvg}
+                                                            onClick={this.setSum}>
+                                                        Σ
+                                                    </Button>
+                                                    <Button size={"sm"} outline color="primary" active={getAvg}
+                                                            onClick={this.setAvg}>
+                                                        Ø
+                                                    </Button>
+                                                </ButtonGroup>
+                                            </Col>
+                                            <Col xs={5}>
+                                                <ButtonGroup >
+                                                    <Button size={"sm"} outline color="primary"
+                                                            active={useChart && chartType === COLUMN}
+                                                            onClick={() => this.togglePieChart(COLUMN)}>
+                                                        <FontAwesomeIcon icon={faChartBar} size={"1x"}/>
+                                                    </Button>
+                                                    <Button size={"sm"} outline color={"primary"}
+                                                            active={useChart && chartType === PIE}
+                                                            onClick={() => this.togglePieChart(PIE)}>
+                                                        <FontAwesomeIcon icon={faChartPie} size={"1x"}/>
+                                                    </Button>
+                                                    <Button size={"sm"} outline color={"primary"}
+                                                            active={useChart && chartType === SPIDER}
+                                                            onClick={() => this.togglePieChart(SPIDER)}>
+                                                        <FontAwesomeIcon icon={faChartLine} size={"1x"}/>
+                                                    </Button>
+                                                    <Button size={"sm"} outline color={"primary"}
+                                                            active={!useChart}
+                                                            onClick={() => this.setState({useChart: false, chartType: COLUMN})}>
+                                                        <FontAwesomeIcon icon={faList} size={"1x"}/>
+                                                    </Button>
+                                                </ButtonGroup>
+                                            </Col>
+                                        </Row>
+                                    </CardBody>
                                 </Card>
                                 <br/>
                                 {useChart ? chart : list}

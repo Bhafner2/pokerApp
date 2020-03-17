@@ -434,9 +434,10 @@ class Statistic extends React.Component {
                 tooltip: {
                     shared: true,
                     formatter: function() {
-                        return (`<span><div>Percent: <b>${showNumber(this.point.percentage)}%</b> </div> <br/>` +
-                        `<div>Amount: <b>${this.point.y}</b> </div> <br/>` 
-                       + `<div>Won: <b>${this.point.sum}</b> </div></span>`);
+                        return (`<span><b>${this.point.name}</b> <br/>
+                        <span><div>Chance: ${showNumber(this.point.percentage)}% </div> <br/>` +
+                        `<div>Amount: ${this.point.y}</div> <br/>` 
+                       + `<div>Won: ${this.point.sum}</div></span>`);
                     }                    
                 },
                 title: {

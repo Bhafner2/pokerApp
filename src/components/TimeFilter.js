@@ -96,6 +96,7 @@ class TimeFilter extends React.Component {
             fromDate: moment('2018-10-01'),
             toDate: moment(),
             dateOk: true,
+            showFilter: false,
         }, () => {
             this.calc();
         })
