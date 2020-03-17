@@ -548,10 +548,14 @@ class Statistic extends React.Component {
                                 <br/>
                                 <Row>
                                     <Col>
+                                    {dates.length === 0 ?
+                                        <div className="center"><b>No games found ...</b><br/>change the filter or play a game</div> 
+                                    :
                                         <HighchartsReact
                                             highcharts={Highcharts}
                                             options={this.state.options}
                                         />
+                                    }
                                     </Col>
                                 </Row>
                             </TabPane>
@@ -561,10 +565,14 @@ class Statistic extends React.Component {
                                 <br/>
                                 <Row>
                                     <Col>
+                                    {dates.length === 0 ?
+                                        <div className="center"><b>No games found ...</b><br/>change the filter or play a game</div> 
+                                    :
                                         <HighchartsReact
                                             highcharts={Highcharts}
                                             options={this.state.pie}
                                         />
+                                    }
                                     </Col>
                                 </Row>
                             </TabPane>
