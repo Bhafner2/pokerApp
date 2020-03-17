@@ -181,8 +181,9 @@ class UserList extends React.Component {
         user.sumBuyIn = 0;
         user.sumWon = 0;
         user.sumBounty = 0;
-        user.gamesPlayed = 0;       
-        user.lastBuyIn = buyIn !== 0 && user.lastBuyIn < moment(date).format() ? moment(date).format() : moment('2018-01-01').format();
+        user.gamesPlayed = 0;
+        user.lastBuyIn = buyIn !== 0 && user.lastBuyIn <= moment(date).format() ? moment(date).format() : moment('2018-01-01').format();
+        console.log(user.lastBuyIn, user.name)
 
         for (let i = 0; i < user.games.length; i++) {
             if (this.state.date === user.games[i].date) {
@@ -312,7 +313,7 @@ class UserList extends React.Component {
                 <ListGroupItem key={this.props.key}
                             style={{
                                 color: this.props.blue ? "#007BFF" : "black",
-                                backgroundColor: user.lastBuyIn > moment().subtract(28, 'h').format() ? "#D4EDDA" : "white"                                   
+                                backgroundColor: user.lastBuyIn > moment().subtract(28, 'h').format() ? "#CCE5FF" : "white"
                             }}>
                     <Row>
                         <Col xs="4">
