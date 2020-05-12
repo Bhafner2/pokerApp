@@ -127,19 +127,19 @@ class Calc extends React.Component {
 
         if (sum1 < amount) {
             p11 += 10;
-            console.log("v1: +10");
+            console.log("v1 player1 +10");
         } else if (sum1 > amount) {
             p11 -= 10;
-            console.log("v1: -10");
+            console.log("v1 player1 -10");
         } else {
             sum1ok = true;
         }
         if (sum2 < amount) {
             p21 += 10;
-            console.log("v2: +10");
+            console.log("v2 player1 +10");
         } else if (sum2 > amount) {
             p21 -= 10;
-            console.log("v2: -10");
+            console.log("v2 player1 -10");
         } else {
             sum2ok = true;
         }
