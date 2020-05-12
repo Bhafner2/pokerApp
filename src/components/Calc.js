@@ -93,9 +93,9 @@ class Calc extends React.Component {
                 p12: Math.round(amount * 33 / factor) * 10,
                 p13: Math.round(amount * 12 / factor) * 10,
                 p14: 0,
-                p21: Math.round(amount * 45 / factor) * 10,
-                p22: Math.round(amount * 33 / factor) * 10,
-                p23: Math.round(amount * 17 / factor) * 10,
+                p21: Math.round(amount * 48 / factor) * 10,
+                p22: Math.round(amount * 32 / factor) * 10,
+                p23: Math.round(amount * 20 / factor) * 10,
                 p24: 0,
             }, () => {
                 this.roundResults()
@@ -106,9 +106,9 @@ class Calc extends React.Component {
                 p12: Math.round(amount * 27 / factor) * 10,
                 p13: Math.round(amount * 13 / factor) * 10,
                 p14: Math.round(amount * 5 / factor) * 10,
-                p21: Math.round(amount * 42 / factor) * 10,
-                p22: Math.round(amount * 31 / factor) * 10,
-                p23: Math.round(amount * 15 / factor) * 10,
+                p21: Math.round(amount * 45 / factor) * 10,
+                p22: Math.round(amount * 32 / factor) * 10,
+                p23: Math.round(amount * 16 / factor) * 10,
                 p24: Math.round(amount * 7 / factor) * 10,
             }, () => {
                 this.roundResults()
