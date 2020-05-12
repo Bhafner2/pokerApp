@@ -6,18 +6,18 @@ import {
     ModalFooter,
     ModalHeader, Nav, NavItem, NavLink, Row, TabContent, TabPane,
 } from "reactstrap";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import * as _ from 'lodash';
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import moment from "moment";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faGamepad, faList} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGamepad, faList } from '@fortawesome/free-solid-svg-icons';
 import Hint from "./Hint";
 import Games from "./Games";
 import classnames from "classnames";
-import {showNumber} from "../App";
-import {MENU_SIZE} from './Home'
+import { showNumber } from "../App";
+import { MENU_SIZE } from './Home'
 
 let filteredUsers = [];
 
@@ -90,7 +90,7 @@ class ThisGame extends React.Component {
             console.log("ThisGame getData", this.state.date);
 
             filteredUsers = [];
-            const {users} = this.props.data;
+            const { users } = this.props.data;
             const date = new Date(this.state.date);
             let sum = 0;
             let sumOk;
@@ -102,7 +102,7 @@ class ThisGame extends React.Component {
             if (this.state.dateOk && !_.isNil(users)) {
 
                 for (let i in users) {
-                    let user = {...users[i]};
+                    let user = { ...users[i] };
 
                     user.games = _.filter(user.games, function (g) {
                         if (_.isNil(g) || _.isNil(g.date)) {
@@ -157,11 +157,11 @@ class ThisGame extends React.Component {
     static formatTooltip(tooltip, x = this.x, points = this.points) {
         let s = `<b>${x}</b>`;
         points.forEach((point) => {
-            if(point.series.name === "Total"){
+            if (point.series.name === "Total") {
                 s += `<br/> <b>${point.series.name}: ${point.y}</b>`
-            }else {
+            } else {
                 s += `<br/>${point.series.name}: ${point.y}`
-            }        
+            }
         });
         return s;
     }
@@ -290,21 +290,21 @@ class ThisGame extends React.Component {
             })
         } else {
             this.setState({
-                    date: evt.target.value
-                }, () => {
-                    console.log("new date " + this.state.date);
-                    if (this.state.date === '') {
-                        this.setState({
-                            dateOk: false,
-                        })
-                    } else {
-                        this.setState({
-                            dateOk: true,
-                            showFilter: false,
-                        });
-                    }
-                    this.getData();
+                date: evt.target.value
+            }, () => {
+                console.log("new date " + this.state.date);
+                if (this.state.date === '') {
+                    this.setState({
+                        dateOk: false,
+                    })
+                } else {
+                    this.setState({
+                        dateOk: true,
+                        showFilter: false,
+                    });
                 }
+                this.getData();
+            }
             );
         }
     }
@@ -322,7 +322,7 @@ class ThisGame extends React.Component {
     }
 
     filter() {
-        const {games} = this.props.data;
+        const { games } = this.props.data;
         return (
             <Collapse isOpen={this.state.showFilter}>
                 <Card outline>
@@ -344,12 +344,12 @@ class ThisGame extends React.Component {
 
     render() {
         return (<div>
-            <FontAwesomeIcon icon={faGamepad} onClick={this.toggle} size={MENU_SIZE}
-                             style={{color: this.state.sumOk ? "" : "#DC3545"}}/>
+            <FontAwesomeIcon icon={faGamepad} onClick={this.toggle}
+                style={{ fontSize: MENU_SIZE, color: this.state.sumOk ? "" : "#DC3545" }} />
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
-                   onKeyPress={this.handleKeyPress}
-                   onOpened={this.getData}
+                onKeyPress={this.handleKeyPress}
+                onOpened={this.getData}
             >
                 <ModalHeader toggle={this.toggle}>Game {moment(this.state.date).format('D.M.YY')}</ModalHeader>
                 <ModalBody>
@@ -357,7 +357,7 @@ class ThisGame extends React.Component {
                         <NavItem>
                             <NavLink
                                 id={'game'} key={'game'}
-                                className={classnames({active: this.state.activeTab === '1'})}
+                                className={classnames({ active: this.state.activeTab === '1' })}
                                 onClick={() => {
                                     this.toggleTab('1');
                                 }}
@@ -367,7 +367,7 @@ class ThisGame extends React.Component {
                         </NavItem>
                         <NavItem>
                             <NavLink
-                                className={classnames({active: this.state.activeTab === '2'})}
+                                className={classnames({ active: this.state.activeTab === '2' })}
                                 onClick={() => {
                                     this.toggleTab('2');
                                 }}
@@ -379,14 +379,14 @@ class ThisGame extends React.Component {
                     <TabContent activeTab={this.state.activeTab}>
                         <TabPane tabId="1">
                             <div>
-                                <br/>
-                                <FormGroup style={{marginLeft: "6px"}}>
-                                    <Row style={{align: "left"}}>
+                                <br />
+                                <FormGroup style={{ marginLeft: "6px" }}>
+                                    <Row style={{ align: "left" }}>
                                         <Col xs="5">
                                             <div onClick={this.showFilter}
-                                                 style={{color: this.state.filtered ? "black" : "#007BFF"}}
+                                                style={{ color: this.state.filtered ? "black" : "#007BFF" }}
                                             >
-                                                <FontAwesomeIcon icon={faList}/> Last Games
+                                                <FontAwesomeIcon icon={faList} /> Last Games
                                             </div>
                                         </Col>
                                     </Row>
@@ -397,10 +397,10 @@ class ThisGame extends React.Component {
                                             paddingTop: "12px",
                                         }}>
                                             <Hint sum={this.state.sum} won={this.state.sumWon}
-                                                  buyIn={this.state.sumBuyIn}
-                                                  bounty={this.state.sumBounty}/>
+                                                buyIn={this.state.sumBuyIn}
+                                                bounty={this.state.sumBounty} />
                                         </div>}
-                                    <Row style={{paddingTop: "12px"}}>
+                                    <Row style={{ paddingTop: "12px" }}>
                                         <Col xs="4">
                                             <b>Date</b>
                                         </Col>
@@ -441,11 +441,11 @@ class ThisGame extends React.Component {
                                         </Col>
                                     </Row>
                                 </FormGroup>
-                                <br/>
+                                <br />
                                 <Row>
                                     <Col>
                                         <HighchartsReact
-                                            style={{visibility: this.state.dateOk ? 'visible' : 'hidden'}}
+                                            style={{ visibility: this.state.dateOk ? 'visible' : 'hidden' }}
                                             highcharts={Highcharts}
                                             options={this.state.options}
                                         />
@@ -456,8 +456,8 @@ class ThisGame extends React.Component {
                     </TabContent>
                     <TabContent activeTab={this.state.activeTab}>
                         <TabPane tabId="2">
-                            <br/>
-                            <Games games={this.props.data.games}/>
+                            <br />
+                            <Games games={this.props.data.games} />
                         </TabPane>
                     </TabContent>
                 </ModalBody>

@@ -197,7 +197,7 @@ class Calc extends React.Component {
 
     render() {
         return (<div>
-            <FontAwesomeIcon icon={faPeopleArrows} onClick={this.toggle} size={MENU_SIZE} />
+            <FontAwesomeIcon icon={faPeopleArrows} onClick={this.toggle} style={{fontSize: MENU_SIZE}} />
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                 onKeyPress={this.handleKeyPress}

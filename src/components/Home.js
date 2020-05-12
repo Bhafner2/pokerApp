@@ -43,7 +43,7 @@ import Odds from "./Odds";
 
 
 const GAMES_PLAYED = "gamesPlayed";
-export const MENU_SIZE = "lg";
+export const MENU_SIZE = "1.5em";
 
 class Home extends Component {
     constructor(props) {
@@ -261,7 +261,7 @@ class Home extends Component {
                         <Odds />
                     </NavbarBrand>
                     <NavbarBrand>
-                        <FontAwesomeIcon icon={faBars} onClick={this.toggleMenu} size={MENU_SIZE} />
+                        <FontAwesomeIcon icon={faBars} onClick={this.toggleMenu} style={{fontSize: MENU_SIZE}} />
                     </NavbarBrand>
                     <Collapse isOpen={this.state.showDate} navbar>
                         <Nav navbar style={{ color: this.isToday() }}>
