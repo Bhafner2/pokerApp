@@ -27,12 +27,13 @@ class GameDetail extends React.Component {
     }
 
     render() {
-        const {game, name, value} = this.props;
+        const {game, value} = this.props;
+        const name = this.props.name.split(' ').join('')
         return (
             <div id={'list' + name}>
                 <Row>
                     <Col xs={3} onClick={this.toggle}>
-                        <b>{name}</b>
+                        <b>{this.props.name}</b>
                     </Col>
                     <Col xs={3} onClick={this.toggle}>
                         {value}
@@ -69,7 +70,7 @@ class GameDetail extends React.Component {
                         </Row>
                         <Row>
                             <Col xs={4}>
-                                BuyIn
+                                Buy In
                             </Col>
                             <Col xs={6}>
                                 {game.buyIn}

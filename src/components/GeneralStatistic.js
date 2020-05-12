@@ -44,7 +44,7 @@ const COLUMN = "COLUMN";
 
 const TOTAL = "Total";
 const WON = "Won";
-const BUYIN = "BuyIn";
+const BUYIN = "Buy In";
 const BOUNTY = "Bounty";
 const PLAYED = "Played";
 const HERO = "Hero";
@@ -1204,7 +1204,7 @@ class GeneralStatistic extends React.Component {
                                                             <DropdownItem
                                                                 onClick={() => this.setState({attributeToShow: BUYIN})}
                                                             >
-                                                                BuyIn
+                                                                Buy In
                                                             </DropdownItem>
                                                             <DropdownItem
                                                                 onClick={() => this.setState({attributeToShow: PLAYED})}
@@ -1278,7 +1278,7 @@ class GeneralStatistic extends React.Component {
                                 <br/>
                                 <Row style={{paddingTop: "12px"}}>
                                     <Col xs={6}>
-                                        <b>Sum</b> of all BuyIn's
+                                        <b>Sum</b> of all Buy In's
                                     </Col>
                                     <Col xs={6}>
                                         {showNumber(sumBuyIn)}
@@ -1302,7 +1302,7 @@ class GeneralStatistic extends React.Component {
                                 </Row>
                                 <Row style={{paddingTop: "12px"}}>
                                     <Col xs={6}>
-                                        <b>Avg</b> BuyIn / Player
+                                        <b>Avg</b> Buy In / Player
                                     </Col>
                                     <Col xs={6}>
                                         {showNumber(avgBuyIn)}

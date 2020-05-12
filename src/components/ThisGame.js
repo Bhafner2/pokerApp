@@ -215,7 +215,7 @@ class ThisGame extends React.Component {
                     },
                 },
                 series: [{
-                    name: 'BuyIn',
+                    name: 'Buy In',
                     stack: 'data',
                     type: 'column',
                     data: _.map(users, (u) => {
@@ -261,7 +261,7 @@ class ThisGame extends React.Component {
                         enabled: false,
                     },
                 }, {
-                    name: 'Avg BuyIn',
+                    name: 'Avg Buy In',
                     type: 'line',
                     data: _.map(users, (u) => {
                         return -this.state.avgBuyIn
@@ -433,7 +433,7 @@ class ThisGame extends React.Component {
                                     </Row>
                                     <Row>
                                         <Col xs="4">
-                                            <b>Avg BuyIn</b>
+                                            <b>Avg Buy In</b>
                                         </Col>
                                         <Col xs="7">
                                             <div>{this.state.avgBuyIn}</div>

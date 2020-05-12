@@ -88,7 +88,7 @@ class Hint extends React.Component {
                         </Row>
                         <Row>
                             <Col xs={4}>
-                                BuyIn
+                                Buy In
                             </Col>
                             <Col xs={4}>
                                 {buyIn}

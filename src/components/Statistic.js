@@ -321,7 +321,7 @@ class Statistic extends React.Component {
                     },
                 },
                 series: [{
-                    name: 'BuyIn',
+                    name: 'Buy In',
                     stack: 'data',
                     type: 'column',
                     data: buyIn,
@@ -631,7 +631,7 @@ class Statistic extends React.Component {
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <th>BuyIn</th>
+                                                <th>Buy In</th>
                                                 <td>{showNumber(sumBuyIn)}</td>
                                                 <td>{showNumber(maxBuyIn)}</td>
                                                 <td>{showNumber(avgBuyIn)}</td>
