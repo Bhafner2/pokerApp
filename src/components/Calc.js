@@ -123,26 +123,26 @@ class Calc extends React.Component {
         let sum1ok = false;
         let sum2ok = false;
 
+        console.log("sums: amount, 1, 2", amount, sum1, sum2);
+
         if (sum1 < amount) {
             p11 += 10;
-            sum1 += 10;
-        } else if (sum1 < amount) {
+            console.log("v1: +10");
+        } else if (sum1 > amount) {
             p11 -= 10;
-            sum1 -= 10;
+            console.log("v1: -10");
         } else {
             sum1ok = true;
         }
         if (sum2 < amount) {
             p21 += 10;
-            sum2 += 10;
-        } else if (sum2 < amount) {
+            console.log("v2: +10");
+        } else if (sum2 > amount) {
             p21 -= 10;
-            sum2 -= 10;
+            console.log("v2: -10");
         } else {
             sum2ok = true;
         }
-
-        console.log("checksum: amount, 1, 2", amount, sum1, sum2);
 
         this.setState({
             p11,
@@ -150,7 +150,6 @@ class Calc extends React.Component {
         }, () => {
             if (!sum1ok || !sum2ok) {
                 this.roundResults();
-                console.log("round again");
             }
         });
     }
@@ -187,7 +186,6 @@ class Calc extends React.Component {
     }
 
     handleKeyPress(target) {
-        console.log("key pressed");
         if (target.charCode === 13) {
             console.log("enter pressed");
         } else if (target.charCode === 27) {
