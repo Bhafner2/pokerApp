@@ -44,6 +44,7 @@ import Odds from "./Odds";
 
 const GAMES_PLAYED = "gamesPlayed";
 export const MENU_SIZE = "1.5em";
+export const MENU_FONT = "0.6em";
 
 class Home extends Component {
     constructor(props) {
@@ -261,7 +262,9 @@ class Home extends Component {
                         <Odds />
                     </NavbarBrand>
                     <NavbarBrand>
-                        <FontAwesomeIcon icon={faBars} onClick={this.toggleMenu} style={{fontSize: MENU_SIZE}} />
+                        <FontAwesomeIcon icon={faBars} onClick={this.toggleMenu} style={{ fontSize: MENU_SIZE }} />
+                        <div style={{ fontSize: MENU_FONT }}>Menu</div>
+
                     </NavbarBrand>
                     <Collapse isOpen={this.state.showDate} navbar>
                         <Nav navbar style={{ color: this.isToday() }}>
@@ -328,7 +331,7 @@ class Home extends Component {
                                         />
                                         <InputGroupAddon addonType="prepend">
                                             <Button onClick={this.resetSearch}>
-                                            <FontAwesomeIcon icon={faTrash} />
+                                                <FontAwesomeIcon icon={faTrash} />
                                             </Button>
                                         </InputGroupAddon>
                                     </InputGroup>

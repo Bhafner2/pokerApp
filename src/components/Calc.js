@@ -15,7 +15,7 @@ import { connect } from "react-redux";
 import * as _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPeopleArrows } from '@fortawesome/free-solid-svg-icons';
-import {MENU_SIZE} from './Home'
+import { MENU_SIZE, MENU_FONT } from './Home'
 
 class Calc extends React.Component {
     constructor(props) {
@@ -198,6 +198,7 @@ class Calc extends React.Component {
     render() {
         return (<div>
             <FontAwesomeIcon icon={faPeopleArrows} onClick={this.toggle} style={{fontSize: MENU_SIZE}} />
+            <div style={{ fontSize: MENU_FONT }}>Split</div>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                 onKeyPress={this.handleKeyPress}
