@@ -1008,7 +1008,7 @@ class GeneralStatistic extends React.Component {
                 summarised.push([moment.utc(games[i].date).valueOf(), showNumber(value)]);
                 lastTotal += total
             }
-            const toDate = moment(this.state.toDate) > moment() ? moment() : moment(this.state.toDate);
+            const toDate = moment(this.state.toDate) > moment() ? moment().format("YYYY-MM-DD") : moment.utc(this.state.toDate).valueOf();
             summarised.push([moment.utc(toDate).valueOf(), lastTotal]);
         }
         return summarised;
