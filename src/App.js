@@ -1,24 +1,24 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import 'react-infinite-calendar/styles.css';
-import {connectionError, getUsers, login, setLoad} from "./redux/actions";
-import {connect} from 'react-redux'
-import {store} from './redux/store'
+import { connectionError, getUsers, login, setLoad } from "./redux/actions";
+import { connect } from 'react-redux'
+import { store } from './redux/store'
 import firebase from "./config/firebase";
 import Home from "./components/Home";
 import Login from "./components/Login";
-import {Alert, Col, Row, Spinner} from "reactstrap";
+import { Alert, Col, Row, Spinner } from "reactstrap";
 import logo from './img/Poker.png';
 import * as _ from 'lodash';
 
 export function showLoading() {
     return (
         <Row>
-            <Col xs={5}/>
+            <Col xs={5} />
             <Col xs={2}>
-                <br/>
-                <Spinner color="dark" size="lg"/>
-                <br/>
+                <br />
+                <Spinner color="dark" size="lg" />
+                <br />
             </Col>
             < Col
                 xs={5}
@@ -85,7 +85,7 @@ class App extends Component {
 
     connectionCheck() {
         let connectedRef = firebase.database().ref(".info/connected");
-        const {connErr} = this.props.data;
+        const { connErr } = this.props.data;
         connectedRef.on("value", function (snap) {
             if (snap.val()) {
                 if (!_.isNil(timeoutConn)) {
@@ -156,36 +156,30 @@ class App extends Component {
 
     render() {
         const AppVersion = 'v1.8.0';
-        const {connErr, login} = this.props.data;
+        const { connErr, login } = this.props.data;
         return (
             <div>
-                <header className="header" id={"js-header"}>
-                    <Row>
-                        <Col xs="4">
-                            <img id={"logo"} src={logo} alt={"logo"}/>
-                        </Col>
-                        <Col xs="8">
-                            <h1 id={"title"}>Poker Statistic</h1>
-                        </Col>
-                    </Row>
+                <header className="header">
+                    <img id={"logo"} src={logo} alt={"logo"} />
+                    <h1 id={"title"}>Poker Statistic</h1>
                 </header>
                 {connErr ? showLoading() : (
                     <div>
-                        {login ? <Home logout={App.logout}/> : <Login login={App.login}/>}
+                        {login ? <Home logout={App.logout} /> : <Login login={App.login} />}
                     </div>
                 )}
                 <Alert className="center"
-                       color="danger"
-                       style={{
-                           visibility: this.state.showError ? 'visible' : 'hidden',
-                           position: "fixed",
-                           left: "0",
-                           bottom: "0",
-                           width: "100%",
-                       }}>
+                    color="danger"
+                    style={{
+                        visibility: this.state.showError ? 'visible' : 'hidden',
+                        position: "fixed",
+                        left: "0",
+                        bottom: "0",
+                        width: "100%",
+                    }}>
                     No connection to Server!
                 </Alert>
-                <div style={{position: "fixed", bottom: "5px", right: "5px", fontSize: "0.5em"}}>{AppVersion}</div>
+                <div style={{ position: "fixed", bottom: "5px", right: "5px", fontSize: "0.5em" }}>{AppVersion}</div>
             </div>
         );
     }

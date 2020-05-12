@@ -12,48 +12,26 @@
 
 .header {
     background-color: whitesmoke;
-    height: 150px;
-    padding: 20px;
+    padding: 16px 8px 16px 8px;
     color: black;
-    font-weight: normal;
+    font-weight: bold;
     font-family: 'Bree Serif', serif;
-    font-size: 1.5em;
-    display: inline-block;
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    transition: all 0.3s;
+    font-size: 1.2em;
+    display:flex;
     width: 100%;
 }
 
-.smaller {
-    font-size: 1em;
-    height: 50px;
-    padding: 10px;
-    /*position: -webkit-sticky;*/
-    /*position: sticky;*/
-    top: 0;
-}
-
 #title {
-    padding-left: 20px;
-    padding-top: 4px;
-}
-
-.smaller #title {
-    font-size: 1.2em;
-    padding-left: 0;
-}
-
-.smaller #logo {
-    display: none;
+    text-align: center;
+    padding-left: 1ch;
+    font-size: 2em;
 }
 
 #logo {
     width: auto;
-    height: 8ch;
-    padding: 0;
-    alignment: left;
+    height: 4.5ch;
+    padding-left: 16px;
+    align-items: left;
     margin: 0;
 }
 
