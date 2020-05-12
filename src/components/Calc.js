@@ -11,10 +11,10 @@ import {
     Row
 } from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import * as _ from 'lodash';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faCalculator} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPeopleArrows } from '@fortawesome/free-solid-svg-icons';
 
 class Calc extends React.Component {
     constructor(props) {
@@ -24,145 +24,133 @@ class Calc extends React.Component {
             amountOk: false,
             onOpen: true,
             amount: 0,
-            p1: 0,
-            p2: 0,
-            p3: 0,
-            p4: 0,
+            p11: 0,
+            p12: 0,
+            p13: 0,
+            p14: 0,
+            p21: 0,
+            p22: 0,
+            p23: 0,
+            p24: 0,
         };
 
         this.toggle = this.toggle.bind(this);
 
-        this.checkResults = this.checkResults.bind(this);
         this.updateAmount = this.updateAmount.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.roundResults = this.roundResults.bind(this);
-        this.preventFailture = this.preventFailture.bind(this);
     }
 
     toggle() {
         this.setState({
             modal: !this.state.modal,
         });
-        // this.setState({
-        //     onOpen: true,
-        //     amount: 0,
-        //     amountOk: false,
-        //     p1: 0,
-        //     p2: 0,
-        //     p3: 0,
-        //     p4: 0,
-        // });
     }
 
     calculate() {
-        const factor = 100;
-        const amount = this.state.amount / 10;
-        if (this.state.amount < 1 || !this.state.amountOk) {
+        const factor = 1000;
+        const { amount } = this.state;
+        if (amount < 10 || !this.state.amountOk) {
             this.setState({
-                p1: 0,
-                p2: 0,
-                p3: 0,
-                p4: 0,
+                p11: 0,
+                p12: 0,
+                p13: 0,
+                p14: 0,
+                p21: 0,
+                p22: 0,
+                p23: 0,
+                p24: 0,
             });
-        } else if (this.state.amount < 40) {
+        } else if (amount < 40) {
             this.setState({
-                p1: amount,
-                p2: 0,
-                p3: 0,
-                p4: 0,
+                p11: amount,
+                p12: 0,
+                p13: 0,
+                p14: 0,
+                p21: amount,
+                p22: 0,
+                p23: 0,
+                p24: 0,
             }, () => {
-                this.preventFailture()
+                this.roundResults()
             });
-        } else if (this.state.amount < 100) {
+        } else if (amount < 100) {
             this.setState({
-                p1: Math.round(amount * 70 / factor),
-                p2: Math.round(amount * 30 / factor),
-                p3: 0,
-                p4: 0,
+                p11: Math.round(amount * 70 / factor) * 10,
+                p12: Math.round(amount * 30 / factor) * 10,
+                p13: 0,
+                p14: 0,
+                p21: Math.round(amount * 65 / factor) * 10,
+                p22: Math.round(amount * 35 / factor) * 10,
+                p23: 0,
+                p24: 0,
             }, () => {
-                this.preventFailture()
+                this.roundResults()
             });
         } else if (this.state.amount < 200) {
             this.setState({
-                p1: Math.round(amount * 60 / factor),
-                p2: Math.round(amount * 30 / factor),
-                p3: Math.round(amount * 10 / factor),
-                p4: 0,
+                p11: Math.round(amount * 55 / factor) * 10,
+                p12: Math.round(amount * 33 / factor) * 10,
+                p13: Math.round(amount * 12 / factor) * 10,
+                p14: 0,
+                p21: Math.round(amount * 45 / factor) * 10,
+                p22: Math.round(amount * 33 / factor) * 10,
+                p23: Math.round(amount * 17 / factor) * 10,
+                p24: 0,
             }, () => {
-                this.preventFailture()
+                this.roundResults()
             });
         } else {
             this.setState({
-                p1: Math.round(amount * 55 / factor),
-                p2: Math.round(amount * 27 / factor),
-                p3: Math.round(amount * 13 / factor),
-                p4: Math.round(amount * 5 / factor),
-
+                p11: Math.round(amount * 55 / factor) * 10,
+                p12: Math.round(amount * 27 / factor) * 10,
+                p13: Math.round(amount * 13 / factor) * 10,
+                p14: Math.round(amount * 5 / factor) * 10,
+                p21: Math.round(amount * 42 / factor) * 10,
+                p22: Math.round(amount * 31 / factor) * 10,
+                p23: Math.round(amount * 15 / factor) * 10,
+                p24: Math.round(amount * 7 / factor) * 10,
             }, () => {
-                this.preventFailture()
+                this.roundResults()
             });
-        }
-    }
-
-    preventFailture() {
-        if (this.state.amount === 150) {
-            this.setState({
-                p2: this.state.p2 - 1,
-            }, () => {
-                this.roundResults();
-            });
-        } else {
-            this.roundResults();
         }
     }
 
     roundResults() {
-        const amount = this.state.amount / 10;
-        console.log("p1 ", this.state.p1);
-        console.log("p2 ", this.state.p2);
-        console.log("p3 ", this.state.p3);
-        console.log("p4 ", this.state.p4);
-        if (
-            (this.state.p1 +
-                this.state.p2 +
-                this.state.p3 +
-                this.state.p4)
-            < amount
-        ) {
-            this.setState({
-                p1: this.state.p1 + 1,
-            }, () => {
-                this.checkResults();
-            });
-        } else if (
-            (this.state.p1 +
-                this.state.p2 +
-                this.state.p3 +
-                this.state.p4)
-            > amount
-        ) {
-            this.setState({
-                p1: this.state.p1 - 1,
-            }, () => {
-                this.checkResults();
-            });
-        } else {
-            this.checkResults();
-        }
-    }
+        let { amount, p11, p21 } = this.state;
+        let sum1 = this.state.p11 + this.state.p12 + this.state.p13 + this.state.p14;
+        let sum2 = this.state.p21 + this.state.p22 + this.state.p23 + this.state.p24;
+        let sum1ok = false;
+        let sum2ok = false;
 
-    checkResults() {
+        if (sum1 < amount) {
+            p11 += 10;
+            sum1 += 10;
+        } else if (sum1 < amount) {
+            p11 -= 10;
+            sum1 -= 10;
+        } else {
+            sum1ok = true;
+        }
+        if (sum2 < amount) {
+            p21 += 10;
+            sum2 += 10;
+        } else if (sum2 < amount) {
+            p21 -= 10;
+            sum2 -= 10;
+        } else {
+            sum2ok = true;
+        }
+
+        console.log("checksum: amount, 1, 2", amount, sum1, sum2);
+
         this.setState({
-            p1: this.state.p1 * 10,
-            p2: this.state.p2 * 10,
-            p3: this.state.p3 * 10,
-            p4: this.state.p4 * 10,
+            p11,
+            p21,
         }, () => {
-            if ((this.state.p1 +
-                this.state.p2 +
-                this.state.p3 +
-                this.state.p4)
-                !== this.state.amount) {
+            if (!sum1ok || !sum2ok) {
+                this.roundResults();
+                console.log("round again");
             }
         });
     }
@@ -210,73 +198,94 @@ class Calc extends React.Component {
 
     render() {
         return (<div>
-                <FontAwesomeIcon icon={faCalculator} onClick={this.toggle} size="lg"/>
+            <FontAwesomeIcon icon={faPeopleArrows} onClick={this.toggle} size="lg" />
 
-                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
-                       onKeyPress={this.handleKeyPress}
-                >
-                    <ModalHeader toggle={this.toggle}>Calculator</ModalHeader>
-                    <ModalBody>
-                        <Row>
-                            <Col xs="4">
-                                <div>Amount</div>
-                            </Col>
-                            <Col xs="8">
-                                <Input autoFocus
-                                       type="number" name="amount" id="amount"
-                                       onChange={this.updateAmount}
-                                       value={this.state.amount}
-                                       valid={this.state.amountOk}
-                                       invalid={!this.state.amountOk && !this.state.onOpen}
+            <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
+                onKeyPress={this.handleKeyPress}
+            >
+                <ModalHeader toggle={this.toggle}>Calculator</ModalHeader>
+                <ModalBody>
+                    <Row>
+                        <Col xs="4">
+                            <div>Amount</div>
+                        </Col>
+                        <Col xs="8">
+                            <Input autoFocus
+                                type="number" name="amount" id="amount"
+                                onChange={this.updateAmount}
+                                value={this.state.amount}
+                                valid={this.state.amountOk}
+                                invalid={!this.state.amountOk && !this.state.onOpen}
 
-                                />
-                                <FormFeedback invalid>Must be a divisor of 10</FormFeedback>
-                            </Col>
-                        </Row>
-                        <br/>
-                        <Row>
-                            <Col xs="4"/>
-                            <Col xs="8">
-                                <Row>
-                                    <Col xs="4">
-                                        <div>1st</div>
-                                    </Col>
-                                    <Col xs="8">
-                                        <div>{this.state.p1}</div>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col xs="4">
-                                        <div>2nd</div>
-                                    </Col>
-                                    <Col xs="8">
-                                        <div>{this.state.p2}</div>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col xs="4">
-                                        <div>3rd</div>
-                                    </Col>
-                                    <Col xs="8">
-                                        <div>{this.state.p3}</div>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col xs="4">
-                                        <div>4th</div>
-                                    </Col>
-                                    <Col xs="8">
-                                        <div>{this.state.p4}</div>
-                                    </Col>
-                                </Row>
-                            </Col>
-                        </Row>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button color="secondary" onClick={this.toggle}>Exit</Button>
-                    </ModalFooter>
-                </Modal>
-            </div>
+                            />
+                            <FormFeedback invalid>Must be a divisor of 10</FormFeedback>
+                        </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                        <Col xs="4" />
+                        <Col xs="8">
+                            <Row>
+                                <Col xs="4" />
+                                <Col xs="3">
+                                    <div><b>v1</b></div>
+                                </Col>
+                                <Col xs="3">
+                                    <div><b>v2</b></div>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col xs="4">
+                                    <div>1st</div>
+                                </Col>
+                                <Col xs="3">
+                                    <div>{this.state.p11}</div>
+                                </Col>
+                                <Col xs="3">
+                                    <div>{this.state.p21}</div>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col xs="4">
+                                    <div>2nd</div>
+                                </Col>
+                                <Col xs="3">
+                                    <div>{this.state.p12}</div>
+                                </Col>
+                                <Col xs="3">
+                                    <div>{this.state.p22}</div>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col xs="4">
+                                    <div>3rd</div>
+                                </Col>
+                                <Col xs="3">
+                                    <div>{this.state.p13}</div>
+                                </Col>
+                                <Col xs="3">
+                                    <div>{this.state.p23}</div>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col xs="4">
+                                    <div>4th</div>
+                                </Col>
+                                <Col xs="3">
+                                    <div>{this.state.p14}</div>
+                                </Col>
+                                <Col xs="3">
+                                    <div>{this.state.p24}</div>
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="secondary" onClick={this.toggle}>Exit</Button>
+                </ModalFooter>
+            </Modal>
+        </div>
         );
     }
 }
