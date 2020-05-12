@@ -242,7 +242,7 @@ class Home extends Component {
                 {/*{this.dbInit()}*/}
                 <Navbar sticky="top"
                     style={{
-                        backgroundColor: "whitesmoke",
+                        backgroundColor: "white",
                         borderTop: "0.5px solid",
                         borderBottom: "0.5px solid",
                         borderColor: "#DFDFDF",

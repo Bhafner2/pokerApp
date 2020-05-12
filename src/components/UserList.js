@@ -1,14 +1,14 @@
 import React from 'react';
-import {Button, Col, Input, ListGroupItem, Modal, ModalBody, ModalFooter, ModalHeader, Row, ButtonGroup} from 'reactstrap';
+import { Button, Col, Input, ListGroupItem, Modal, ModalBody, ModalFooter, ModalHeader, Row, ButtonGroup } from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
-import {store} from "../redux/store";
-import {saveUsers} from "../redux/actions";
-import {connect} from "react-redux";
+import { store } from "../redux/store";
+import { saveUsers } from "../redux/actions";
+import { connect } from "react-redux";
 import * as _ from 'lodash';
 import Statistic from "./Statistic";
 import firebase from "../config/firebase";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faDollarSign} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoins } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
 
 class UserList extends React.Component {
@@ -39,12 +39,12 @@ class UserList extends React.Component {
 
     isToday() {
         if (this.state.date === '') {
-            return {color: 'red'}
+            return { color: 'red' }
         }
         if (this.state.date !== this.props.today) {
-            return {color: '#007BFF'}
+            return { color: '#007BFF' }
         } else {
-            return {color: 'black'}
+            return { color: 'black' }
         }
     }
 
@@ -73,21 +73,21 @@ class UserList extends React.Component {
 
     updateDate(evt) {
         this.setState({
-                date: evt.target.value
-            }, () => {
-                console.log("new date " + this.state.date);
-                if (this.state.date === '') {
-                    this.setState({
-                        dateOk: false,
-                    })
-                } else {
-                    this.setState({
-                        dateOk: true,
-                    }, () => {
-                        this.getActualGame();
-                    });
-                }
+            date: evt.target.value
+        }, () => {
+            console.log("new date " + this.state.date);
+            if (this.state.date === '') {
+                this.setState({
+                    dateOk: false,
+                })
+            } else {
+                this.setState({
+                    dateOk: true,
+                }, () => {
+                    this.getActualGame();
+                });
             }
+        }
         );
     }
 
@@ -95,8 +95,8 @@ class UserList extends React.Component {
         if (this.state.modal) {
             console.log("UserList getData", this.props.user);
 
-            const {user} = this.props;
-            const {connErr} = this.props.data;
+            const { user } = this.props;
+            const { connErr } = this.props.data;
 
             if (!connErr) {
                 console.log("search game for user " + user.name + " on date " + this.state.date);
@@ -166,9 +166,9 @@ class UserList extends React.Component {
         let save = true;
         const data = this.props.data;
         const users = data.users;
-        const {user} = this.props;
+        const { user } = this.props;
         this.toggle();
-        let {buyIn, won, bounty, date} = this.state;
+        let { buyIn, won, bounty, date } = this.state;
         if (buyIn === '' || isNaN(buyIn)) {
             buyIn = 0;
         }
@@ -195,7 +195,7 @@ class UserList extends React.Component {
                     save = false;
                 }
                 found = true;
-            //    console.log("game successfully updated " + user.name + ", date: " + date + " buyIn " + user.games[i].buyIn + " won " + user.games[i].won, " bounty ", user.games[i].bounty);
+                //    console.log("game successfully updated " + user.name + ", date: " + date + " buyIn " + user.games[i].buyIn + " won " + user.games[i].won, " bounty ", user.games[i].bounty);
             }
             if (user.games[i].buyIn > 0) {
                 user.sumBuyIn += user.games[i].buyIn;
@@ -234,7 +234,7 @@ class UserList extends React.Component {
         this.props.saved();
     }
 
-    calcGames(users,) {
+    calcGames(users, ) {
         let list = [];
         for (let i in users) {
             for (let j in users[i].games) {
@@ -308,150 +308,150 @@ class UserList extends React.Component {
     }
 
     render() {
-        const {user} = this.props;
+        const { user } = this.props;
         return (<div>
-                <ListGroupItem key={this.props.key}
-                            style={{
-                                color: this.props.blue ? "#007BFF" : "black",
-                                backgroundColor: user.lastBuyIn > moment().subtract(28, 'h').format() ? "#CCE5FF" : "white"
-                            }}>
-                    <Row>
-                        <Col xs="4">
-                            <Statistic user={user} today={this.props.date} toggle={this.state.stat}
-                                       resetToggle={() => {
-                                           this.setState({stat: false})
-                                       }}/>
-                        </Col>
+            <ListGroupItem key={this.props.key}
+                style={{
+                    color: this.props.blue ? "#007BFF" : "black",
+                    backgroundColor: user.lastBuyIn > moment().subtract(28, 'h').format() ? "#CCE5FF" : "white"
+                }}>
+                <Row>
+                    <Col xs="4">
+                        <Statistic user={user} today={this.props.date} toggle={this.state.stat}
+                            resetToggle={() => {
+                                this.setState({ stat: false })
+                            }} />
+                    </Col>
 
-                        <Col xs="4">
-                            <div onClick={this.toggleStat}>
-                                <b>{user.name}</b>
-                            </div>
-                        </Col>
-                        <Col xs="4">
-                            <FontAwesomeIcon icon={faDollarSign} onClick={this.toggle} size={"1x"}/>
+                    <Col xs="4">
+                        <div onClick={this.toggleStat}>
+                            <b>{user.name}</b>
+                        </div>
+                    </Col>
+                    <Col xs="4">
+                        <FontAwesomeIcon icon={faCoins} onClick={this.toggle} size={"1x"} />
+                    </Col>
+                </Row>
+            </ListGroupItem>
+            <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
+                onKeyPress={this.handleKeyPress}>
+                <ModalHeader toggle={this.toggle}>{user.name}</ModalHeader>
+                <ModalBody>
+                    <Row>
+                        <Col xs="5">
+                            Date
+                            </Col>
+                        <Col xs="7">
+                            <Input type="date" name="date" id="date"
+                                onChange={this.updateDate}
+                                value={this.state.date}
+                                style={this.isToday()}
+                            />
                         </Col>
                     </Row>
-                </ListGroupItem>
-                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
-                       onKeyPress={this.handleKeyPress}>
-                    <ModalHeader toggle={this.toggle}>{user.name}</ModalHeader>
-                    <ModalBody>
-                        <Row>
-                            <Col xs="5">
-                                Date
-                            </Col>
-                            <Col xs="7">
-                                <Input type="date" name="date" id="date"
-                                       onChange={this.updateDate}
-                                       value={this.state.date}
-                                       style={this.isToday()}
-                                />
-                            </Col>
-                        </Row>
 
-                        {!UserList.isAdmin() ?
-                            <div>
-                                <Row style={{paddingTop: "6px"}}>
-                                    <Col xs="5">
-                                        <div style={{display: 'inline-block'}}>Buy In</div>
-                                    </Col>
-                                    <Col xs="7">
-                                        {this.state.buyIn > 0 ? this.state.buyIn : 0}
-                                    </Col>
-                                </Row>
-                                <Row style={{paddingTop: "6px"}}>
-                                    <Col xs="5">
-                                        <div style={{display: 'inline-block'}}>Won</div>
-                                    </Col>
-                                    <Col xs="7">
-                                        {this.state.won > 0 ? this.state.won : 0}
-                                    </Col>
-                                </Row>
-                                <Row style={{paddingTop: "6px"}}>
-                                    <Col xs="5">
-                                        <div style={{display: 'inline-block'}}>Bounty's</div>
-                                    </Col>
-                                    <Col xs="7">
-                                        {this.state.bounty > 0 ? this.state.bounty : 0}
-                                    </Col>
-                                </Row>
-                            </div>
-                            :
-                            <div>
-                                <Row style={{paddingTop: "6px"}}>
-                                    <Col xs="5">
-                                        <div>Buy In</div>
-                                    </Col>
-                                    <Col xs="7">
-                                        <ButtonGroup>
-                                            <Button onClick={() => this.setState({buyIn: _.parseInt(this.state.buyIn - 12)})} color="danger">
-                                                -
+                    {!UserList.isAdmin() ?
+                        <div>
+                            <Row style={{ paddingTop: "6px" }}>
+                                <Col xs="5">
+                                    <div style={{ display: 'inline-block' }}>Buy In</div>
+                                </Col>
+                                <Col xs="7">
+                                    {this.state.buyIn > 0 ? this.state.buyIn : 0}
+                                </Col>
+                            </Row>
+                            <Row style={{ paddingTop: "6px" }}>
+                                <Col xs="5">
+                                    <div style={{ display: 'inline-block' }}>Won</div>
+                                </Col>
+                                <Col xs="7">
+                                    {this.state.won > 0 ? this.state.won : 0}
+                                </Col>
+                            </Row>
+                            <Row style={{ paddingTop: "6px" }}>
+                                <Col xs="5">
+                                    <div style={{ display: 'inline-block' }}>Bounty's</div>
+                                </Col>
+                                <Col xs="7">
+                                    {this.state.bounty > 0 ? this.state.bounty : 0}
+                                </Col>
+                            </Row>
+                        </div>
+                        :
+                        <div>
+                            <Row style={{ paddingTop: "6px" }}>
+                                <Col xs="5">
+                                    <div>Buy In</div>
+                                </Col>
+                                <Col xs="7">
+                                    <ButtonGroup>
+                                        <Button onClick={() => this.setState({ buyIn: _.parseInt(this.state.buyIn - 12) })} color="danger">
+                                            -
                                             </Button>
-                                            <Input autoFocus
-                                                type="number" name="buyIn" id="buyIn"
-                                                onChange={this.updateBuyIn}
-                                                value={this.state.buyIn}
-                                            />
-                                            <Button onClick={() => this.setState({buyIn: _.parseInt(this.state.buyIn + 12)})} color="success">
-                                                +
+                                        <Input autoFocus
+                                            type="number" name="buyIn" id="buyIn"
+                                            onChange={this.updateBuyIn}
+                                            value={this.state.buyIn}
+                                        />
+                                        <Button onClick={() => this.setState({ buyIn: _.parseInt(this.state.buyIn + 12) })} color="success">
+                                            +
                                             </Button>
-                                        </ButtonGroup>
-                                    </Col>       
-                                </Row>
-                                <Row style={{paddingTop: "6px"}}>
-                                    <Col xs="5">
-                                        <div style={{display: 'inline-block'}}>Won</div>
-                                    </Col>
-                                    <Col xs="7">
-                                        <ButtonGroup>
-                                            <Button onClick={() => this.setState({won: _.parseInt(this.state.won - 10)})} color="danger">
-                                                -
+                                    </ButtonGroup>
+                                </Col>
+                            </Row>
+                            <Row style={{ paddingTop: "6px" }}>
+                                <Col xs="5">
+                                    <div style={{ display: 'inline-block' }}>Won</div>
+                                </Col>
+                                <Col xs="7">
+                                    <ButtonGroup>
+                                        <Button onClick={() => this.setState({ won: _.parseInt(this.state.won - 10) })} color="danger">
+                                            -
                                             </Button>
-                                            <Input autoFocus
-                                                type="number" name="won" id="won"
-                                                onChange={this.updateWon}
-                                                value={this.state.won}
-                                            />
-                                            <Button onClick={() => this.setState({won: _.parseInt(this.state.won + 10)})} color="success">
-                                                +
+                                        <Input autoFocus
+                                            type="number" name="won" id="won"
+                                            onChange={this.updateWon}
+                                            value={this.state.won}
+                                        />
+                                        <Button onClick={() => this.setState({ won: _.parseInt(this.state.won + 10) })} color="success">
+                                            +
                                             </Button>
-                                        </ButtonGroup>
-                                    </Col>
-                                </Row>
-                                <Row style={{paddingTop: "6px"}}>
-                                    <Col xs="5">
-                                        <div style={{display: 'inline-block'}}>Bounty's Won</div>
-                                    </Col>
-                                    <Col xs="7">
-                                        <ButtonGroup>
-                                            <Button onClick={() => this.setState({bounty: _.parseInt(this.state.bounty - 2)})} color="danger">
-                                                -
+                                    </ButtonGroup>
+                                </Col>
+                            </Row>
+                            <Row style={{ paddingTop: "6px" }}>
+                                <Col xs="5">
+                                    <div style={{ display: 'inline-block' }}>Bounty's Won</div>
+                                </Col>
+                                <Col xs="7">
+                                    <ButtonGroup>
+                                        <Button onClick={() => this.setState({ bounty: _.parseInt(this.state.bounty - 2) })} color="danger">
+                                            -
                                             </Button>
-                                            <Input autoFocus
-                                                type="number" name="bounty" id="bounty"
-                                                onChange={this.updateBounty}
-                                                value={this.state.bounty}
-                                            />
-                                            <Button onClick={() => this.setState({bounty: _.parseInt(this.state.bounty + 2)})} color="success">
-                                                +
+                                        <Input autoFocus
+                                            type="number" name="bounty" id="bounty"
+                                            onChange={this.updateBounty}
+                                            value={this.state.bounty}
+                                        />
+                                        <Button onClick={() => this.setState({ bounty: _.parseInt(this.state.bounty + 2) })} color="success">
+                                            +
                                             </Button>
-                                        </ButtonGroup>
-                                    </Col>
-                                </Row>
-                            </div>
-                        }
-                    </ModalBody>
-                    <ModalFooter>
-                        {UserList.isAdmin() ?
-                            <Button color="primary" onClick={this.saveGame}
-                                        disabled={!this.state.dateOk}>Save</Button>
-                            : <span />
-                        }
-                        <Button color="secondary" onClick={this.toggle}>Exit</Button>
-                    </ModalFooter>
-                </Modal>
-            </div>
+                                    </ButtonGroup>
+                                </Col>
+                            </Row>
+                        </div>
+                    }
+                </ModalBody>
+                <ModalFooter>
+                    {UserList.isAdmin() ?
+                        <Button color="primary" onClick={this.saveGame}
+                            disabled={!this.state.dateOk}>Save</Button>
+                        : <span />
+                    }
+                    <Button color="secondary" onClick={this.toggle}>Exit</Button>
+                </ModalFooter>
+            </Modal>
+        </div>
         );
     }
 }

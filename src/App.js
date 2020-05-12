@@ -8,7 +8,7 @@ import firebase from "./config/firebase";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import { Alert, Col, Row, Spinner } from "reactstrap";
-import logo from './img/Poker.png';
+import logo from './img/logo.png';
 import * as _ from 'lodash';
 
 export function showLoading() {
@@ -80,7 +80,6 @@ class App extends Component {
                 App.logout();
             }
         });
-        // window.addEventListener("scroll", App.resizeHeaderOnScroll);
     }
 
     connectionCheck() {
@@ -143,19 +142,8 @@ class App extends Component {
         });
     }
 
-    static resizeHeaderOnScroll() {
-        const distanceY = window.pageYOffset || document.documentElement.scrollTop,
-            shrinkOn = 1,
-            headerEl = document.getElementById("js-header");
-        if (distanceY > shrinkOn) {
-            headerEl.classList.add("smaller");
-        } else {
-            headerEl.classList.remove("smaller");
-        }
-    }
-
     render() {
-        const AppVersion = 'v1.8.0';
+        const AppVersion = 'v2.0.0';
         const { connErr, login } = this.props.data;
         return (
             <div>
