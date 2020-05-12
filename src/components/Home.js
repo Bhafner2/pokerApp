@@ -17,7 +17,6 @@ import {
     NavbarBrand,
     Row,
     Button,
-    InputGroupText
 } from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
 import AddUser from "./AddUser";
@@ -37,7 +36,7 @@ import {
     faSortAmountDown,
     faBars,
     faCalendar,
-    faSearch,
+    faTrash,
 } from '@fortawesome/free-solid-svg-icons'
 import Odds from "./Odds";
 // import firebase from "../config/firebase";
@@ -329,7 +328,7 @@ class Home extends Component {
                                         />
                                         <InputGroupAddon addonType="prepend">
                                             <Button onClick={this.resetSearch}>
-                                                X
+                                            <FontAwesomeIcon icon={faTrash} />
                                             </Button>
                                         </InputGroupAddon>
                                     </InputGroup>
