@@ -1105,7 +1105,7 @@ class GeneralStatistic extends React.Component {
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                        onKeyPress={this.handleKeyPress} onOpened={this.usersPercentFilter}
                 >
-                    <ModalHeader toggle={this.toggle}>Top List</ModalHeader>
+                    <ModalHeader toggle={this.toggle}>Ranking</ModalHeader>
                     <ModalBody>
                         <FormGroup>
                             <Row>

@@ -203,7 +203,7 @@ class Calc extends React.Component {
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                 onKeyPress={this.handleKeyPress}
             >
-                <ModalHeader toggle={this.toggle}>Calculator</ModalHeader>
+                <ModalHeader toggle={this.toggle}>Split</ModalHeader>
                 <ModalBody>
                     <Row>
                         <Col xs="4">
