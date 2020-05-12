@@ -43,7 +43,7 @@ import Odds from "./Odds";
 
 
 const GAMES_PLAYED = "gamesPlayed";
-export const MENU_SIZE = "1.5em";
+export const MENU_SIZE = "1.3em";
 export const MENU_FONT = "0.6em";
 
 class Home extends Component {
