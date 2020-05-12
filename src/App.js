@@ -7,10 +7,9 @@ import {store} from './redux/store'
 import firebase from "./config/firebase";
 import Home from "./components/Home";
 import Login from "./components/Login";
-import {Alert, Col, Row} from "reactstrap";
+import {Alert, Col, Row, Spinner} from "reactstrap";
 import logo from './img/Poker.png';
 import * as _ from 'lodash';
-import ReactLoading from 'react-loading';
 
 export function showLoading() {
     return (
@@ -18,7 +17,7 @@ export function showLoading() {
             <Col xs={5}/>
             <Col xs={2}>
                 <br/>
-                <ReactLoading type="spin" color="black" height={50} width={50}/>
+                <Spinner color="dark" size="lg"/>
                 <br/>
             </Col>
             < Col
