@@ -17,6 +17,7 @@ import Hint from "./Hint";
 import Games from "./Games";
 import classnames from "classnames";
 import {showNumber} from "../App";
+import {MENU_SIZE} from './Home'
 
 let filteredUsers = [];
 
@@ -343,7 +344,7 @@ class ThisGame extends React.Component {
 
     render() {
         return (<div>
-            <FontAwesomeIcon icon={faGamepad} onClick={this.toggle} size="lg"
+            <FontAwesomeIcon icon={faGamepad} onClick={this.toggle} size={MENU_SIZE}
                              style={{color: this.state.sumOk ? "" : "#DC3545"}}/>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}

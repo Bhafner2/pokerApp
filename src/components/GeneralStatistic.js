@@ -34,6 +34,7 @@ import HC_more from 'highcharts/highcharts-more' //module
 import {showNumber} from '../App';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faTrophy, faFilter, faChartBar, faList, faChartPie, faSpider} from '@fortawesome/free-solid-svg-icons'
+import {MENU_SIZE} from './Home'
 
 let filteredUsers = [];
 let empty = {name: '', won: 0, buyIn: 0, bounty: 0, date: ''};
@@ -1098,7 +1099,7 @@ class GeneralStatistic extends React.Component {
         return (
 
             <div>
-                <FontAwesomeIcon icon={faTrophy} onClick={this.toggle} size="lg"/>
+                <FontAwesomeIcon icon={faTrophy} onClick={this.toggle} size={MENU_SIZE}/>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                        onKeyPress={this.handleKeyPress} onOpened={this.usersPercentFilter}
                 >

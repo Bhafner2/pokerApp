@@ -17,6 +17,7 @@ import {faBalanceScale} from "@fortawesome/free-solid-svg-icons/index";
 import Cards from "./Cards";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
+import {MENU_SIZE} from './Home'
 
 class Odds extends React.Component {
     constructor(props) {
@@ -297,7 +298,7 @@ class Odds extends React.Component {
             );
         return (
             <div>
-                <FontAwesomeIcon icon={faBalanceScale} onClick={this.toggle} size="lg"/>
+                <FontAwesomeIcon icon={faBalanceScale} onClick={this.toggle} size={MENU_SIZE}/>
 
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                        onKeyPress={() => this.handleKeyPress}>

@@ -1,7 +1,13 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
-    Alert, Col,
-    Collapse, Dropdown, DropdownItem, DropdownMenu, DropdownToggle,
+    Alert,
+    Col,
+    Collapse,
+    Dropdown,
+    DropdownItem,
+    DropdownMenu,
+    DropdownToggle,
+    InputGroupButtonDropdown,
     Input,
     InputGroup,
     InputGroupAddon,
@@ -9,33 +15,36 @@ import {
     Nav,
     Navbar,
     NavbarBrand,
-    Row
+    Row,
+    Button,
+    InputGroupText
 } from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
 import AddUser from "./AddUser";
-import {getUsers} from "../redux/actions";
+import { getUsers } from "../redux/actions";
 import UserList from "./UserList";
 import moment from "moment/moment";
 import * as _ from 'lodash';
-import {connect} from 'react-redux'
-import {store} from '../redux/store'
+import { connect } from 'react-redux'
+import { store } from '../redux/store'
 import GeneralStatistic from "./GeneralStatistic";
 import Calc from "./Calc";
 import ThisGame from "./ThisGame";
-import {showLoading} from "../App";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import { showLoading } from "../App";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-    faCalendar,
-    faSearch,
     faSignOutAlt,
     faSortAmountDown,
-
+    faBars,
+    faCalendar,
+    faSearch,
 } from '@fortawesome/free-solid-svg-icons'
 import Odds from "./Odds";
 // import firebase from "../config/firebase";
 
 
 const GAMES_PLAYED = "gamesPlayed";
+export const MENU_SIZE = "lg";
 
 class Home extends Component {
     constructor(props) {
@@ -60,6 +69,7 @@ class Home extends Component {
         this.isToday = this.isToday.bind(this);
         this.updateDate = this.updateDate.bind(this);
         this.updateSearch = this.updateSearch.bind(this);
+        this.toggleMenu = this.toggleMenu.bind(this);
         this.toggleDate = this.toggleDate.bind(this);
         this.toggleSearch = this.toggleSearch.bind(this);
         this.filterUser = this.filterUser.bind(this);
@@ -137,8 +147,8 @@ class Home extends Component {
     }
 
     renderUsers() {
-        const {users} = this.props.data;
-        const {date, today, filtered} = this.state;
+        const { users } = this.props.data;
+        const { date, today, filtered } = this.state;
 
         if (_.isNil(users) || _.isNil(users[0])) {
             return (
@@ -165,7 +175,7 @@ class Home extends Component {
         return (
             <div>
                 {filteredUsers.map((user, i) =>
-                    <UserList user={user} key={i} saved={this.showSaved} date={date} today={today} blue={filtered}/>)}
+                    <UserList user={user} key={i} saved={this.showSaved} date={date} today={today} blue={filtered} />)}
             </div>
         );
     };
@@ -202,6 +212,12 @@ class Home extends Component {
             showSearch: false,
         });
     }
+    toggleMenu() {
+        this.setState({
+            showSearch: !this.state.showSearch,
+            showDate: !this.state.showDate,
+        });
+    }
 
     toggleSearch() {
         this.setState({
@@ -212,9 +228,6 @@ class Home extends Component {
 
     resetSearch(evt) {
         this.updateSearch(evt);
-        this.setState({
-            showSearch: false,
-        });
     }
 
     toggleDropdown() {
@@ -228,90 +241,100 @@ class Home extends Component {
             <div className="center" onKeyPress={this.handleKeyPress}>
                 {/*{this.dbInit()}*/}
                 <Navbar sticky="top"
-                        style={{
-                            backgroundColor: "whitesmoke",
-                            borderTop: "0.5px solid",
-                            borderColor: "#DFDFDF",
-                            justifyContent: 'space-between'
-                        }}
+                    style={{
+                        backgroundColor: "whitesmoke",
+                        borderTop: "0.5px solid",
+                        borderBottom: "0.5px solid",
+                        borderColor: "#DFDFDF",
+                        justifyContent: 'space-between'
+                    }}
                 >
                     <NavbarBrand>
-                        <GeneralStatistic today={this.state.date}/>
+                        <GeneralStatistic today={this.state.date} />
                     </NavbarBrand>
                     <NavbarBrand>
-                        <ThisGame today={this.state.date}/>
+                        <ThisGame today={this.state.date} />
                     </NavbarBrand>
                     <NavbarBrand>
-                        <Odds/>
+                        <Calc />
                     </NavbarBrand>
                     <NavbarBrand>
-                        <Calc/>
+                        <Odds />
                     </NavbarBrand>
                     <NavbarBrand>
-                        <FontAwesomeIcon icon={faCalendar} onClick={this.toggleDate} size="lg"
-                                         style={{color: this.isToday()}}/>
-                    </NavbarBrand>
-                    <NavbarBrand>
-                        <FontAwesomeIcon icon={faSearch} onClick={this.toggleSearch} size="lg"
-                                         style={{color: this.state.filtered ? "#007BFF" : "black"}}/>
-                    </NavbarBrand>
-                    <NavbarBrand>
-                        <FontAwesomeIcon icon={faSignOutAlt} onClick={this.props.logout} size="lg"/>
+                        <FontAwesomeIcon icon={faBars} onClick={this.toggleMenu} size={MENU_SIZE} />
                     </NavbarBrand>
                     <Collapse isOpen={this.state.showDate} navbar>
-                        <Nav navbar>
-                            <InputGroup style={{paddingTop: "12px"}}>
-
-                                <Input type="date" name="date" id="date"
-                                       value={this.state.date}
-                                       onChange={this.updateDate}
-                                       style={{color: this.isToday()}}
-                                />
-                            </InputGroup>
+                        <Nav navbar style={{ color: this.isToday() }}>
+                            <Row>
+                                <Col xs={1} />
+                                <Col xs={10}>
+                                    <InputGroup style={{ paddingTop: "12px" }}>
+                                        <InputGroupAddon addonType="prepend">
+                                            <Button>
+                                                <FontAwesomeIcon icon={faCalendar} />
+                                            </Button>
+                                        </InputGroupAddon>
+                                        <Input type="date" name="date" id="date"
+                                            value={this.state.date}
+                                            onChange={this.updateDate}
+                                            style={{ color: this.isToday() }}
+                                        />
+                                        <InputGroupAddon addonType="apend">
+                                            <Button onClick={this.props.logout} >
+                                                <FontAwesomeIcon icon={faSignOutAlt} />
+                                            </Button>
+                                        </InputGroupAddon>
+                                    </InputGroup>
+                                </Col>
+                                <Col xs={1} />
+                            </Row>
                         </Nav>
                     </Collapse>
                     <Collapse isOpen={this.state.showSearch} navbar>
                         <Nav navbar>
                             <Row>
-                                <Col xs={2}>
-                                    <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}
-                                              style={{paddingTop: "12px"}}>
-                                        <DropdownToggle caret size={"sm"}>
-                                            <FontAwesomeIcon icon={faSortAmountDown}/>
-                                        </DropdownToggle>
-                                        <DropdownMenu>
-                                            <DropdownItem
-                                                onClick={() => this.setState({attributeToSort: GAMES_PLAYED})}
-                                            >
-                                                Played
-                                            </DropdownItem>
-                                            <DropdownItem
-                                                onClick={() => this.setState({attributeToSort: "name"})}
-                                            >
-                                                Name
-                                            </DropdownItem>
-                                            <DropdownItem
-                                                onClick={() => this.setState({attributeToSort: ""})}
-                                            >
-                                                Create Date
-                                            </DropdownItem>
-                                        </DropdownMenu>
-                                    </Dropdown>
-                                </Col>
+                                <Col xs={1} />
                                 <Col xs={10}>
-                                    <InputGroup style={{paddingTop: "12px"}}>
+                                    <InputGroup style={{ paddingTop: "12px" }}>
+                                        <InputGroupButtonDropdown addonType="append" isOpen={this.statedropdownOpen} toggle={this.toggleDropDown}>
+                                            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
+                                                <DropdownToggle caret>
+                                                    <FontAwesomeIcon icon={faSortAmountDown} />
+                                                </DropdownToggle>
+                                                <DropdownMenu>
+                                                    <DropdownItem
+                                                        onClick={() => this.setState({ attributeToSort: GAMES_PLAYED })}
+                                                    >
+                                                        Played
+                                            </DropdownItem>
+                                                    <DropdownItem
+                                                        onClick={() => this.setState({ attributeToSort: "name" })}
+                                                    >
+                                                        Name
+                                            </DropdownItem>
+                                                    <DropdownItem
+                                                        onClick={() => this.setState({ attributeToSort: "" })}
+                                                    >
+                                                        Create Date
+                                            </DropdownItem>
+                                                </DropdownMenu>
+                                            </Dropdown>
+                                        </InputGroupButtonDropdown>
                                         <Input type="text" name="search" id="search"
-                                               value={this.state.search}
-                                               onChange={this.updateSearch}
-                                               style={{color: "#007BFF"}}
-                                               placeholder="Search.."
+                                            value={this.state.search}
+                                            onChange={this.updateSearch}
+                                            style={{ color: "#007BFF" }}
+                                            placeholder="Search.."
                                         />
-                                        <InputGroupAddon addonType="prepend"
-                                                         onClick={this.resetSearch}>
-                                            X
+                                        <InputGroupAddon addonType="prepend">
+                                            <Button onClick={this.resetSearch}>
+                                                X
+                                            </Button>
                                         </InputGroupAddon>
                                     </InputGroup>
                                 </Col>
+                                <Col xs={1} />
                             </Row>
                         </Nav>
                     </Collapse>
@@ -325,18 +348,18 @@ class Home extends Component {
                         paddingTop: '10px',
                         paddingBottom: '20px',
                     }}>
-                        {UserList.isAdmin() ? <AddUser saved={this.showSaved}/> : <div/>}
+                        {UserList.isAdmin() ? <AddUser saved={this.showSaved} /> : <div />}
                     </div>
                 </div>
                 <Row>
                     <Alert color={this.state.alertSuccess ? "success" : "danger"}
-                           style={{
-                               visibility: this.state.showAlert ? 'visible' : 'hidden',
-                               position: "fixed",
-                               left: "0",
-                               bottom: "0",
-                               width: "100%"
-                           }}>
+                        style={{
+                            visibility: this.state.showAlert ? 'visible' : 'hidden',
+                            position: "fixed",
+                            left: "0",
+                            bottom: "0",
+                            width: "100%"
+                        }}>
                         {this.state.alertText}
                     </Alert>
                 </Row>
