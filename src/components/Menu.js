@@ -121,8 +121,8 @@ class Menu extends Component {
     render() {
         return (
             <div>
-                <FontAwesomeIcon id={"menu"} icon={faEllipsisV} onClick={this.toggleMenu} />
-                <Collapse isOpen={this.state.showDate} navbar>
+                <FontAwesomeIcon id={"hamburger"} icon={faEllipsisV} onClick={this.toggleMenu} />
+                <Collapse isOpen={this.state.showDate} navbar id={"menu"}>
                     <Nav navbar style={{ color: isToday(this.props.date) }}>
                         <Row>
                             <Col xs={1} />

@@ -36,11 +36,15 @@
     margin: 0;
 }
 
-#menu {
+#hamburger {
     align-items: right;
     position: absolute;
     top: 18px;
     right: 20px;
+}
+
+#menu {
+    background-color: whitesmoke;
 }
 
 .login {

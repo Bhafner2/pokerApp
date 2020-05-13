@@ -140,6 +140,11 @@ class Home extends Component {
         return (
             <div className="center" onKeyPress={this.handleKeyPress}>
                 {/*{this.dbInit()}*/}
+                <Menu id={"Menu"}
+                        attributeToSort={(attributeToSort) => this.setState({ attributeToSort })}
+                        search={(search) => this.setState({ search })}
+                        date={(date) => this.setState({ date })}
+                    />
                 <Navbar sticky="top"
                     style={{
                         backgroundColor: "white",
@@ -162,12 +167,8 @@ class Home extends Component {
                     <NavbarBrand>
                         <Odds />
                     </NavbarBrand>
-                    <Menu id={"Menu"}
-                        attributeToSort={(attributeToSort) => this.setState({ attributeToSort })}
-                        search={(search) => this.setState({ search })}
-                        date={(date) => this.setState({ date })}
-                    />
                 </Navbar>
+
                 <div>
                     <ListGroup>
                         {this.renderUsers(this.state.usersToRender)}
