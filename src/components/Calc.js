@@ -8,7 +8,8 @@ import {
     ModalBody,
     ModalFooter,
     ModalHeader,
-    Row
+    Row,
+    Table
 } from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
 import { connect } from "react-redux";
@@ -197,7 +198,7 @@ class Calc extends React.Component {
 
     render() {
         return (<div>
-            <FontAwesomeIcon icon={faPeopleArrows} onClick={this.toggle} style={{fontSize: MENU_SIZE}} />
+            <FontAwesomeIcon icon={faPeopleArrows} onClick={this.toggle} style={{ fontSize: MENU_SIZE }} />
             <div style={{ fontSize: MENU_FONT }}>Payout</div>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
@@ -216,76 +217,48 @@ class Calc extends React.Component {
                                 value={this.state.amount}
                                 valid={this.state.amountOk}
                                 invalid={!this.state.amountOk && !this.state.onOpen}
-
                             />
                             <FormFeedback invalid>Must be a divisor of 10</FormFeedback>
                         </Col>
                     </Row>
-                    <br />
-                    <Row>
-                        <Col xs="4" />
-                        <Col xs="8">
-                            <Row>
-                                <Col xs="4" />
-                                <Col xs="3">
-                                    <div><b>v1</b></div>
-                                </Col>
-                                <Col xs="3">
-                                    <div><b>v2</b></div>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col xs="4">
-                                    <div>1st</div>
-                                </Col>
-                                <Col xs="3">
-                                    <div>{this.state.p11}</div>
-                                </Col>
-                                <Col xs="3">
-                                    <div>{this.state.p21}</div>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col xs="4">
-                                    <div>2nd</div>
-                                </Col>
-                                <Col xs="3">
-                                    <div>{this.state.p12}</div>
-                                </Col>
-                                <Col xs="3">
-                                    <div>{this.state.p22}</div>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col xs="4">
-                                    <div>3rd</div>
-                                </Col>
-                                <Col xs="3">
-                                    <div>{this.state.p13}</div>
-                                </Col>
-                                <Col xs="3">
-                                    <div>{this.state.p23}</div>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col xs="4">
-                                    <div>4th</div>
-                                </Col>
-                                <Col xs="3">
-                                    <div>{this.state.p14}</div>
-                                </Col>
-                                <Col xs="3">
-                                    <div>{this.state.p24}</div>
-                                </Col>
-                            </Row>
-                        </Col>
-                    </Row>
+                    <br /> 
+                    <Table borderless size="sm" style={{ paddingTop: "12px" }}>
+                        <thead>
+                            <tr>
+                                <th />
+                                <th>v1</th>
+                                <th>v2</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>1st</th>
+                                <td>{this.state.p11}</td>
+                                <td>{this.state.p21}</td>
+                            </tr>
+                            <tr>
+                                <th>2nd</th>
+                                <td>{this.state.p12}</td>
+                                <td>{this.state.p22}</td>
+                            </tr>
+                            <tr>
+                                <th>3rd</th>
+                                <td>{this.state.p13}</td>
+                                <td>{this.state.p23}</td>
+                            </tr>
+                            <tr>
+                                <th>4th</th>
+                                <td>{this.state.p14}</td>
+                                <td>{this.state.p24}</td>
+                            </tr>
+                        </tbody>
+                    </Table>
                 </ModalBody>
                 <ModalFooter>
                     <Button color="secondary" onClick={this.toggle}>Exit</Button>
                 </ModalFooter>
             </Modal>
-        </div>
+        </div >
         );
     }
 }
