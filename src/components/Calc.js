@@ -198,16 +198,16 @@ class Calc extends React.Component {
     render() {
         return (<div>
             <FontAwesomeIcon icon={faPeopleArrows} onClick={this.toggle} style={{fontSize: MENU_SIZE}} />
-            <div style={{ fontSize: MENU_FONT }}>Split</div>
+            <div style={{ fontSize: MENU_FONT }}>Payout</div>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                 onKeyPress={this.handleKeyPress}
             >
-                <ModalHeader toggle={this.toggle}>Split</ModalHeader>
+                <ModalHeader toggle={this.toggle}>Payout</ModalHeader>
                 <ModalBody>
                     <Row>
                         <Col xs="4">
-                            <div>Amount</div>
+                            <div>Pot size</div>
                         </Col>
                         <Col xs="8">
                             <Input autoFocus
