@@ -134,8 +134,8 @@ class Menu extends Component {
                 <Collapse isOpen={this.state.showDate} id={"menu"}>
                     <Card outline id={"menu"}>
                         <CardBody style={{ padding: "0 40px 0 40px" }}>
-                        <Row className="menuItem">
-                                <Col xs={12} style={{fontSize:"0.5em"}}>
+                            <Row className="menuItem">
+                                <Col xs={12} style={{ fontSize: "0.5em" }}>
                                     App Version: {AppVersion}
                                 </Col>
                             </Row>
@@ -169,7 +169,7 @@ class Menu extends Component {
                                     <InputGroup style={{ paddingTop: "12px" }}>
                                         <InputGroupButtonDropdown addonType="append" isOpen={this.statedropdownOpen} toggle={this.toggleDropDown}>
                                             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
-                                                <DropdownToggle caret color={"primary"} >
+                                                <DropdownToggle caret style={{ border: " 1px solid", borderColor: "#CDD4DA", backgroundColor: "#E8ECEF", color: "#007BFF" }}>
                                                     <FontAwesomeIcon icon={faSortAmountDown} />
                                                 </DropdownToggle>
                                                 <DropdownMenu>
