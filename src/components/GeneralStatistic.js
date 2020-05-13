@@ -15,13 +15,15 @@ import {
     ModalFooter,
     ModalHeader,
     Nav,
-    NavItem,
+    NavbarBrand,
     NavLink,
     Row,
     TabContent,
-    TabPane
+    TabPane,
+    Navbar,
+    NavItem,
 } from "reactstrap";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import * as _ from 'lodash';
 import classnames from 'classnames';
 import Statistic from "./Statistic";
@@ -31,13 +33,13 @@ import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import HC_more from 'highcharts/highcharts-more' //module
 
-import {showNumber} from '../App';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faTrophy, faFilter, faChartBar, faList, faChartPie, faSpider} from '@fortawesome/free-solid-svg-icons'
+import { showNumber } from '../App';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrophy, faFilter, faChartBar, faList, faChartPie, faSpider } from '@fortawesome/free-solid-svg-icons'
 import { MENU_SIZE, MENU_FONT } from './Home'
 
 let filteredUsers = [];
-let empty = {name: '', won: 0, buyIn: 0, bounty: 0, date: ''};
+let empty = { name: '', won: 0, buyIn: 0, bounty: 0, date: '' };
 
 const SPIDER = "SPIDER";
 const PIE = "PIE";
@@ -70,10 +72,10 @@ class GeneralStatistic extends React.Component {
             avgBuyIn: 0,
             avgTotal: 0,
             avgBounty: 0,
-            maxBuyIn: {...empty},
-            maxWon: {...empty},
-            maxTotal: {...empty},
-            maxBounty: {...empty},
+            maxBuyIn: { ...empty },
+            maxWon: { ...empty },
+            maxTotal: { ...empty },
+            maxBounty: { ...empty },
             popoverOpen: false,
             showFilter: false,
             filtered: false,
@@ -129,19 +131,19 @@ class GeneralStatistic extends React.Component {
     toggle() {
         if (!this.state.modal) {
             this.setState({
-                    toDate: this.props.today,
-                    fromDate: '2018-01-01',
-                    dateOk: true,
-                    activeTab: '1',
-                    showFilter: false,
-                    getAvg: false,
-                    reload: false,
-                    modal: true,
-                    useChart: true,
-                    chartType: COLUMN,
-                    attributeToShow: TOTAL,
-                }, () =>
-                    this.lastYear(moment(this.props.today).year())
+                toDate: this.props.today,
+                fromDate: '2018-01-01',
+                dateOk: true,
+                activeTab: '1',
+                showFilter: false,
+                getAvg: false,
+                reload: false,
+                modal: true,
+                useChart: true,
+                chartType: COLUMN,
+                attributeToShow: TOTAL,
+            }, () =>
+                this.lastYear(moment(this.props.today).year())
             );
         } else {
             this.setState({
@@ -167,13 +169,13 @@ class GeneralStatistic extends React.Component {
             console.log("GeneralStatistic getData");
 
             this.init();
-            const {users} = this.props.data;
+            const { users } = this.props.data;
             const from = new Date(this.state.fromDate);
             const to = new Date(this.state.toDate);
-            let maxWon = {...empty};
-            let maxBuyIn = {...empty};
-            let maxTotal = {...empty};
-            let maxBounty = {...empty};
+            let maxWon = { ...empty };
+            let maxBuyIn = { ...empty };
+            let maxTotal = { ...empty };
+            let maxBounty = { ...empty };
             let sumWon = 0;
             let sumBuyIn = 0;
             let sumTotal = 0;
@@ -204,7 +206,7 @@ class GeneralStatistic extends React.Component {
                 dates = _.uniqBy(dates);
 
                 for (let i in users) {
-                    let user = {...users[i]};
+                    let user = { ...users[i] };
 
                     usersButtons.push(user);
                     if (_.indexOf(this.state.filteredUsers, user.name) >= 0) {
@@ -340,14 +342,14 @@ class GeneralStatistic extends React.Component {
                     avgBounty,
                     dates,
                     usersButtons: _.sortBy(usersButtons, (b) => {
-                            return -b.gamesPlayed
-                        }
+                        return -b.gamesPlayed
+                    }
                     ),
                     avgPlayerPerGame,
                     userPercent,
                     filtered,
                 })
-                ;
+                    ;
             }
         }
     }
@@ -363,10 +365,10 @@ class GeneralStatistic extends React.Component {
             avgWon: 0,
             avgBuyIn: 0,
             avgBounty: 0,
-            avgTotal: {...empty},
-            maxBuyIn: {...empty},
-            maxWon: {...empty},
-            maxBounty: {...empty},
+            avgTotal: { ...empty },
+            maxBuyIn: { ...empty },
+            maxWon: { ...empty },
+            maxBounty: { ...empty },
             maxTotal: 0,
             filteredGames: [],
             usersBounty: [],
@@ -379,43 +381,43 @@ class GeneralStatistic extends React.Component {
 
     updateFormDate(evt) {
         this.setState({
-                fromDate: evt.target.value,
-            }, () => {
-                if (this.state.fromDate === '' || new Date(this.state.toDate) < new Date(this.state.fromDate)) {
-                    this.setState({
-                        dateOk: false,
-                    }, () => {
-                        this.getData();
-                    });
-                } else {
-                    this.setState({
-                        dateOk: true,
-                    }, () => {
-                        this.getData();
-                    });
-                }
+            fromDate: evt.target.value,
+        }, () => {
+            if (this.state.fromDate === '' || new Date(this.state.toDate) < new Date(this.state.fromDate)) {
+                this.setState({
+                    dateOk: false,
+                }, () => {
+                    this.getData();
+                });
+            } else {
+                this.setState({
+                    dateOk: true,
+                }, () => {
+                    this.getData();
+                });
             }
+        }
         );
     }
 
     updateToDate(evt) {
         this.setState({
-                toDate: evt.target.value,
-            }, () => {
-                if (this.state.toDate === '' || new Date(this.state.toDate) < new Date(this.state.fromDate)) {
-                    this.setState({
-                        dateOk: false,
-                    }, () => {
-                        this.getData();
-                    });
-                } else {
-                    this.setState({
-                        dateOk: true,
-                    }, () => {
-                        this.getData();
-                    });
-                }
+            toDate: evt.target.value,
+        }, () => {
+            if (this.state.toDate === '' || new Date(this.state.toDate) < new Date(this.state.fromDate)) {
+                this.setState({
+                    dateOk: false,
+                }, () => {
+                    this.getData();
+                });
+            } else {
+                this.setState({
+                    dateOk: true,
+                }, () => {
+                    this.getData();
+                });
             }
+        }
         );
     }
 
@@ -446,7 +448,7 @@ class GeneralStatistic extends React.Component {
         }, () => {
             this.getData();
             setTimeout(() => {
-                this.usersPercentFilter(); 
+                this.usersPercentFilter();
             }, 100);
         })
     }
@@ -462,7 +464,7 @@ class GeneralStatistic extends React.Component {
         }, () => {
             this.getData();
             setTimeout(() => {
-                this.usersPercentFilter(); 
+                this.usersPercentFilter();
             }, 100);
         })
     }
@@ -476,7 +478,7 @@ class GeneralStatistic extends React.Component {
         }, () => {
             this.getData();
             setTimeout(() => {
-                this.usersPercentFilter(); 
+                this.usersPercentFilter();
             }, 100);
         })
     }
@@ -490,7 +492,7 @@ class GeneralStatistic extends React.Component {
         }, () => {
             this.getData();
             setTimeout(() => {
-                this.usersPercentFilter(); 
+                this.usersPercentFilter();
             }, 100);
         })
     }
@@ -503,7 +505,7 @@ class GeneralStatistic extends React.Component {
         }, () => {
             this.getData();
             setTimeout(() => {
-                this.usersPercentFilter(); 
+                this.usersPercentFilter();
             }, 100);
         });
     }
@@ -567,11 +569,11 @@ class GeneralStatistic extends React.Component {
     filter() {
         let years = [];
         for (let year = moment(this.props.today).year(); year >= 2018; year--) {
-            years.push(<Col key={year} xs={2} style={{paddingRight: "0.2em", paddingLeft: "0.2em"}}>
-                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
-                        size="sm"
-                        color="link"
-                        onClick={() => this.lastYear(year)}
+            years.push(<Col key={year} xs={2} style={{ paddingRight: "0.2em", paddingLeft: "0.2em" }}>
+                <Button style={{ fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px" }}
+                    size="sm"
+                    color="link"
+                    onClick={() => this.lastYear(year)}
                 >
                     {year}
                 </Button>
@@ -583,86 +585,86 @@ class GeneralStatistic extends React.Component {
                 <Card outline>
                     <CardBody>
                         <Row onClick={this.holeStat}>
-                                <Col>
-                                    Time filter
+                            <Col>
+                                Time filter
                                 </Col>
-                            </Row>
-                        <Row style={{paddingTop: "12px"}}>
+                        </Row>
+                        <Row style={{ paddingTop: "12px" }}>
                             <Col>
                                 <InputGroup>
                                     <Input type="date" name="fromDate" id="fromDate"
-                                           onChange={this.updateFormDate}
-                                           value={this.state.fromDate}
-                                           style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
+                                        onChange={this.updateFormDate}
+                                        value={this.state.fromDate}
+                                        style={this.state.dateOk ? { backgroundColor: 'white' } : { backgroundColor: 'red' }}
                                     />
                                     <Input type="date" name="toDate" id="toDate"
-                                           onChange={this.updateToDate}
-                                           value={this.state.toDate}
-                                           style={this.state.dateOk ? {backgroundColor: 'white'} : {backgroundColor: 'red'}}
+                                        onChange={this.updateToDate}
+                                        value={this.state.toDate}
+                                        style={this.state.dateOk ? { backgroundColor: 'white' } : { backgroundColor: 'red' }}
                                     />
                                 </InputGroup>
                             </Col>
                         </Row>
                         <Row>
-                            <Col xs={3} style={{paddingRight: "0.2em", paddingLeft: "1em"}}>
-                                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
-                                        size="sm" color="link"
-                                        onClick={this.last3m}
+                            <Col xs={3} style={{ paddingRight: "0.2em", paddingLeft: "1em" }}>
+                                <Button style={{ fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px" }}
+                                    size="sm" color="link"
+                                    onClick={this.last3m}
                                 >
                                     3 Month
                                 </Button>
                             </Col>
-                            <Col xs={3} style={{paddingRight: "0.2em", paddingLeft: "0.2em"}}>
-                                <Button style={{fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px"}}
-                                        size="sm"
-                                        color="link"
-                                        onClick={this.last6m}
+                            <Col xs={3} style={{ paddingRight: "0.2em", paddingLeft: "0.2em" }}>
+                                <Button style={{ fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px" }}
+                                    size="sm"
+                                    color="link"
+                                    onClick={this.last6m}
                                 >
                                     6 Month
                                 </Button>
                             </Col>
                             {years}
                         </Row>
-                        <Row style={{paddingTop: "12px"}}>
+                        <Row style={{ paddingTop: "12px" }}>
                             <Col>User filter</Col>
                         </Row>
                         <Row>
                             <Col xs={3}>
-                                <Button style={{fontSize: "0.8em"}} size="sm" color="link"
-                                        onClick={this.usersAll}>All</Button>
+                                <Button style={{ fontSize: "0.8em" }} size="sm" color="link"
+                                    onClick={this.usersAll}>All</Button>
                             </Col>
                             <Col xs={3}>
-                                <Button style={{fontSize: "0.8em"}} size="sm" color="link" value={25}
-                                        onClick={this.usersPercentFilter}>>25%</Button>
+                                <Button style={{ fontSize: "0.8em" }} size="sm" color="link" value={25}
+                                    onClick={this.usersPercentFilter}>>25%</Button>
                             </Col>
                             <Col xs={3}>
-                                <Button style={{fontSize: "0.8em"}} size="sm" color="link" value={50}
-                                        onClick={this.usersPercentFilter}>>50%</Button>
+                                <Button style={{ fontSize: "0.8em" }} size="sm" color="link" value={50}
+                                    onClick={this.usersPercentFilter}>>50%</Button>
                             </Col>
                             <Col xs={3}>
-                                <Button style={{fontSize: "0.8em"}} size="sm" color="link" value={75}
-                                        onClick={this.usersPercentFilter}>>75%</Button>
+                                <Button style={{ fontSize: "0.8em" }} size="sm" color="link" value={75}
+                                    onClick={this.usersPercentFilter}>>75%</Button>
                             </Col>
                         </Row>
-                        <Row style={{paddingTop: "6px"}}>
+                        <Row style={{ paddingTop: "6px" }}>
                             {!this.state.reload ?
                                 this.state.usersButtons.map((user, i) =>
-                                    <Col xs={4} style={{paddingTop: "6px"}} key={i}>
+                                    <Col xs={4} style={{ paddingTop: "6px" }} key={i}>
                                         <Button size={"sm"} outline color={"primary"} value={user.name}
-                                                active={!this.isFiltered(user)}
-                                                onClick={this.userFilter}
-                                                key={"filter" + user.name}
-                                                style={{fontSize: "0.8em"}}
+                                            active={!this.isFiltered(user)}
+                                            onClick={this.userFilter}
+                                            key={"filter" + user.name}
+                                            style={{ fontSize: "0.8em" }}
                                         >
                                             {user.name}
                                         </Button>
                                     </Col>
-                                ) : <div/>}
+                                ) : <div />}
                         </Row>
                     </CardBody>
                     <CardFooter>
-                        <Button color="link" size="sm" block style={{padding: "0 0 0 0"}}
-                                onClick={this.showFilter}>Apply</Button>
+                        <Button color="link" size="sm" block style={{ padding: "0 0 0 0" }}
+                            onClick={this.showFilter}>Apply</Button>
                     </CardFooter>
                 </Card>
             </Collapse>)
@@ -713,18 +715,18 @@ class GeneralStatistic extends React.Component {
     static formatTooltip(tooltip, x = this.x, points = this.points) {
         let s = `<b>${x}</b>`;
         points.forEach((point) => {
-            if(point.series.name === TOTAL){
+            if (point.series.name === TOTAL) {
                 s += `<br/> <b>${point.series.name}: ${point.y}</b>`
-            }else {
+            } else {
                 s += `<br/>${point.series.name}: ${point.y}`
             }
         });
-    
+
         return s;
-      }
+    }
 
     getGroupChart(users) {
-        const {attributeToShow} = this.state;
+        const { attributeToShow } = this.state;
         return ({
             chart: {
                 type: 'line',
@@ -860,7 +862,7 @@ class GeneralStatistic extends React.Component {
     }
 
     getSpiderChart(users) {
-        const {attributeToShow} = this.state;
+        const { attributeToShow } = this.state;
         return ({
             chart: {
                 type: 'line',
@@ -894,7 +896,7 @@ class GeneralStatistic extends React.Component {
         const data = [];
         for (let i in users) {
             const u = users[i];
-            data.push({name: u.name, data: [u.total, u.won, u.buyIn, u.bounty, u.played, u.hero]});
+            data.push({ name: u.name, data: [u.total, u.won, u.buyIn, u.bounty, u.played, u.hero] });
         }
         return data;
     }
@@ -941,7 +943,7 @@ class GeneralStatistic extends React.Component {
             const u = users[i];
             const y = u[this.equaliseFont(this.state.attributeToShow)];
             if (!_.isNil(y)) {
-                data.push({name: u.name, y});
+                data.push({ name: u.name, y });
             }
         }
         return data;
@@ -1028,7 +1030,7 @@ class GeneralStatistic extends React.Component {
             result.push({
                 name: user.name,
                 data: this.summariseData(user.games),
-                marker: {enabled: false},
+                marker: { enabled: false },
             })
         }
         return result;
@@ -1058,7 +1060,7 @@ class GeneralStatistic extends React.Component {
     }
 
     render() {
-        const {sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, getAvg, dates, avgPlayerPerGame, attributeToShow, useChart, chartType} = this.state;
+        const { sumBuyIn, avgBuyIn, maxWon, maxBuyIn, maxBounty, maxTotal, getAvg, dates, avgPlayerPerGame, attributeToShow, useChart, chartType } = this.state;
         const sortedUsers = _.sortBy(filteredUsers, user => {
             return -user[this.equaliseFont(attributeToShow)]
         });
@@ -1079,7 +1081,7 @@ class GeneralStatistic extends React.Component {
                 break;
         }
         const chart = (
-            <div style={{paddingTop: "10px"}}>
+            <div style={{ paddingTop: "10px" }}>
                 <HighchartsReact
                     highcharts={Highcharts}
                     options={chartOptions}
@@ -1087,23 +1089,22 @@ class GeneralStatistic extends React.Component {
             </div>
         );
         const list = (
-            <div style={{paddingTop: "12px", paddingLeft: "10px"}}>
+            <div style={{ paddingTop: "12px", paddingLeft: "10px" }}>
                 {sortedUsers.map((user, i) => (
                     <TopList name={attributeToShow} user={user}
-                             value={user[this.equaliseFont(attributeToShow)]}
-                             from={this.state.fromDate} to={this.state.toDate} key={i}/>
+                        value={user[this.equaliseFont(attributeToShow)]}
+                        from={this.state.fromDate} to={this.state.toDate} key={i} />
                 ))}
             </div>
         );
 
         return (
-
             <div>
-                <FontAwesomeIcon icon={faTrophy} onClick={this.toggle} style={{fontSize: MENU_SIZE}}/>
+                <FontAwesomeIcon icon={faTrophy} onClick={this.toggle} style={{ fontSize: MENU_SIZE }} />
                 <div style={{ fontSize: MENU_FONT }}>Ranking</div>
 
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
-                       onKeyPress={this.handleKeyPress} onOpened={this.usersPercentFilter}
+                    onKeyPress={this.handleKeyPress} onOpened={this.usersPercentFilter}
                 >
                     <ModalHeader toggle={this.toggle}>Ranking</ModalHeader>
                     <ModalBody>
@@ -1112,15 +1113,15 @@ class GeneralStatistic extends React.Component {
                                 <Col xs={6}>
                                     <ButtonGroup>
                                         <Button color={"link"} onClick={this.showFilter} id={'filter'} key={'filter'}
-                                                style={{color: this.state.filtered ? "#007BFF" : "black"}}
+                                            style={{ color: this.state.filtered ? "#007BFF" : "black" }}
                                         >
-                                            <FontAwesomeIcon icon={faFilter}/> Filter
+                                            <FontAwesomeIcon icon={faFilter} /> Filter
                                         </Button>
                                         <Button color={"link"} style={{
                                             visibility: this.state.filtered ? "visible" : "hidden",
                                             color: "#007BFF"
                                         }}
-                                                onClick={this.resetFilter}>
+                                            onClick={this.resetFilter}>
                                             X
                                         </Button>
                                     </ButtonGroup>
@@ -1130,25 +1131,25 @@ class GeneralStatistic extends React.Component {
                             {(sumBuyIn === 0 || moment().month() < 4) && !this.state.filtered ?
                                 <Row>
                                     <Col>
-                                        <Button 
+                                        <Button
                                             color={"link"}
                                             onClick={() => this.lastYearPlus25Percent()}
                                             style={{
                                                 color: "#007BFF"
                                             }}>
-                                                Show last year?
+                                            Show last year?
                                         </Button>
                                     </Col>
-                                </Row> 
-                            :
-                                <span  />
+                                </Row>
+                                :
+                                <span />
                             }
                         </FormGroup>
                         <Nav tabs>
                             <NavItem>
                                 <NavLink
                                     id={'total'} key={'total'}
-                                    className={classnames({active: this.state.activeTab === '1'})}
+                                    className={classnames({ active: this.state.activeTab === '1' })}
                                     onClick={() => {
                                         this.toggleTab('1');
                                     }}
@@ -1158,7 +1159,7 @@ class GeneralStatistic extends React.Component {
                             </NavItem>
                             <NavItem>
                                 <NavLink
-                                    className={classnames({active: this.state.activeTab === '9'})}
+                                    className={classnames({ active: this.state.activeTab === '9' })}
                                     onClick={() => {
                                         this.toggleTab('9');
                                     }}
@@ -1168,7 +1169,7 @@ class GeneralStatistic extends React.Component {
                             </NavItem>
                             <NavItem>
                                 <NavLink
-                                    className={classnames({active: this.state.activeTab === '7'})}
+                                    className={classnames({ active: this.state.activeTab === '7' })}
                                     onClick={() => {
                                         this.toggleTab('7');
                                     }}
@@ -1179,92 +1180,87 @@ class GeneralStatistic extends React.Component {
                         </Nav>
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="1">
-                                <Card>
-                                    <CardBody>
-                                        <Row>
-                                            <Col xs={3}>
-                                                <ButtonGroup>
-                                                    <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
-                                                        <DropdownToggle caret color="primary" size={"sm"}>
-                                                            {this.state.attributeToShow}
-                                                        </DropdownToggle>
-                                                        <DropdownMenu>
-                                                            <DropdownItem
-                                                                onClick={() => this.setState({attributeToShow: TOTAL})}
-                                                            >
-                                                                Total
+                                <Navbar style={{ justifyContent: "space-between", fontSize: "0.5em", padding: 0}}>
+                                    <NavbarBrand>
+                                        <ButtonGroup>
+                                            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
+                                                <DropdownToggle caret color="primary" size={"sm"}>
+                                                    {this.state.attributeToShow}
+                                                </DropdownToggle>
+                                                <DropdownMenu>
+                                                    <DropdownItem
+                                                        onClick={() => this.setState({ attributeToShow: TOTAL })}
+                                                    >
+                                                        Total
                                                             </DropdownItem>
-                                                            <DropdownItem
-                                                                onClick={() => this.setState({attributeToShow: WON})}
-                                                            >
-                                                                Won
+                                                    <DropdownItem
+                                                        onClick={() => this.setState({ attributeToShow: WON })}
+                                                    >
+                                                        Won
                                                             </DropdownItem>
-                                                            <DropdownItem
-                                                                onClick={() => this.setState({attributeToShow: BOUNTY})}
-                                                            >
-                                                                Bounty
+                                                    <DropdownItem
+                                                        onClick={() => this.setState({ attributeToShow: BOUNTY })}
+                                                    >
+                                                        Bounty
                                                             </DropdownItem>
-                                                            <DropdownItem
-                                                                onClick={() => this.setState({attributeToShow: BUYIN})}
-                                                            >
-                                                                Buy In
+                                                    <DropdownItem
+                                                        onClick={() => this.setState({ attributeToShow: BUYIN })}
+                                                    >
+                                                        Buy In
                                                             </DropdownItem>
-                                                            <DropdownItem
-                                                                onClick={() => this.setState({attributeToShow: PLAYED})}
-                                                            >
-                                                                Played
+                                                    <DropdownItem
+                                                        onClick={() => this.setState({ attributeToShow: PLAYED })}
+                                                    >
+                                                        Played
                                                             </DropdownItem>
-                                                            <DropdownItem
-                                                                onClick={() => this.setState({attributeToShow: HERO})}
-                                                            >
-                                                                Hero
+                                                    <DropdownItem
+                                                        onClick={() => this.setState({ attributeToShow: HERO })}
+                                                    >
+                                                        Hero
                                                             </DropdownItem>
-                                                        </DropdownMenu>
-                                                    </Dropdown>
-                                                </ButtonGroup>
-                                            </Col>
-                                            <Col xs={3}>
-                                                <ButtonGroup>
-                                                    <Button size={"sm"} outline color={"primary"} active={!getAvg}
-                                                            onClick={this.setSum}>
-                                                        Σ
+                                                </DropdownMenu>
+                                            </Dropdown>
+                                        </ButtonGroup>
+                                    </NavbarBrand>
+                                    <NavbarBrand>
+                                        <ButtonGroup>
+                                            <Button size={"sm"} outline color={"primary"} active={!getAvg}
+                                                onClick={this.setSum}>
+                                                Σ
                                                     </Button>
-                                                    <Button size={"sm"} outline color="primary" active={getAvg}
-                                                            onClick={this.setAvg}>
-                                                        Ø
+                                            <Button size={"sm"} outline color="primary" active={getAvg}
+                                                onClick={this.setAvg}>
+                                                Ø
                                                     </Button>
-                                                </ButtonGroup>
-                                            </Col>
-                                            <Col xs={5}>
-                                                <ButtonGroup >
-                                                    <Button size={"sm"} outline color="primary"
-                                                            active={useChart && chartType === COLUMN}
-                                                            onClick={() => this.togglePieChart(COLUMN)}>
-                                                        <FontAwesomeIcon icon={faChartBar} size={"1x"}/>
-                                                    </Button>
-                                                    <Button size={"sm"} outline color={"primary"}
-                                                            active={useChart && chartType === PIE}
-                                                            onClick={() => this.togglePieChart(PIE)}>
-                                                        <FontAwesomeIcon icon={faChartPie} size={"1x"}/>
-                                                    </Button>
-                                                    <Button size={"sm"} outline color={"primary"}
-                                                            active={useChart && chartType === SPIDER}
-                                                            onClick={() => this.togglePieChart(SPIDER)}>
-                                                        <FontAwesomeIcon icon={faSpider} size={"1x"}/>
-                                                    </Button>
-                                                    <Button size={"sm"} outline color={"primary"}
-                                                            active={!useChart}
-                                                            onClick={() => this.setState({useChart: false, chartType: COLUMN})}>
-                                                        <FontAwesomeIcon icon={faList} size={"1x"}/>
-                                                    </Button>
-                                                </ButtonGroup>
-                                            </Col>
-                                        </Row>
-                                    </CardBody>
-                                </Card>
-                                <br/>
+                                        </ButtonGroup>
+                                    </NavbarBrand><NavbarBrand>
+                                        <ButtonGroup >
+                                            <Button size={"sm"} outline color="primary"
+                                                active={useChart && chartType === COLUMN}
+                                                onClick={() => this.togglePieChart(COLUMN)}>
+                                                <FontAwesomeIcon icon={faChartBar} size={"1x"} />
+                                            </Button>
+                                            <Button size={"sm"} outline color={"primary"}
+                                                active={useChart && chartType === PIE}
+                                                onClick={() => this.togglePieChart(PIE)}>
+                                                <FontAwesomeIcon icon={faChartPie} size={"1x"} />
+                                            </Button>
+                                            <Button size={"sm"} outline color={"primary"}
+                                                active={useChart && chartType === SPIDER}
+                                                onClick={() => this.togglePieChart(SPIDER)}>
+                                                <FontAwesomeIcon icon={faSpider} size={"1x"} />
+                                            </Button>
+                                            <Button size={"sm"} outline color={"primary"}
+                                                active={!useChart}
+                                                onClick={() => this.setState({ useChart: false, chartType: COLUMN })}>
+                                                <FontAwesomeIcon icon={faList} size={"1x"} />
+                                            </Button>
+                                        </ButtonGroup>
+                                    </NavbarBrand>
+                                </Navbar>
+                                <br />
                                 {dates.length === 0 ?
-                                        <div className="center"><b>No games found ...</b><br/>change the filter or play a game</div> 
+                                    <div className="center"><b>No games found ...</b><br />change the filter or play a game</div>
                                     :
                                     useChart ? chart : list
                                 }
@@ -1272,14 +1268,14 @@ class GeneralStatistic extends React.Component {
                         </TabContent>
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="7">
-                                <br/>
-                                <GameDetail game={maxBuyIn} name={BUYIN} value={maxBuyIn.buyIn}/>
-                                <GameDetail game={maxWon} name={WON} value={maxWon.won}/>
-                                <GameDetail game={maxBounty} name={BOUNTY} value={maxBounty.bounty}/>
+                                <br />
+                                <GameDetail game={maxBuyIn} name={BUYIN} value={maxBuyIn.buyIn} />
+                                <GameDetail game={maxWon} name={WON} value={maxWon.won} />
+                                <GameDetail game={maxBounty} name={BOUNTY} value={maxBounty.bounty} />
                                 <GameDetail game={maxTotal} name={TOTAL}
-                                            value={maxTotal.won + maxTotal.bounty - maxTotal.buyIn}/>
-                                <br/>
-                                <Row style={{paddingTop: "12px"}}>
+                                    value={maxTotal.won + maxTotal.bounty - maxTotal.buyIn} />
+                                <br />
+                                <Row style={{ paddingTop: "12px" }}>
                                     <Col xs={6}>
                                         <b>Sum</b> of all Buy In's
                                     </Col>
@@ -1287,7 +1283,7 @@ class GeneralStatistic extends React.Component {
                                         {showNumber(sumBuyIn)}
                                     </Col>
                                 </Row>
-                                <Row style={{paddingTop: "12px"}}>
+                                <Row style={{ paddingTop: "12px" }}>
                                     <Col xs={6}>
                                         <b>Played</b> games
                                     </Col>
@@ -1295,7 +1291,7 @@ class GeneralStatistic extends React.Component {
                                         {showNumber(dates.length)}
                                     </Col>
                                 </Row>
-                                <Row style={{paddingTop: "12px"}}>
+                                <Row style={{ paddingTop: "12px" }}>
                                     <Col xs={6}>
                                         <b>Players / Game</b>
                                     </Col>
@@ -1303,7 +1299,7 @@ class GeneralStatistic extends React.Component {
                                         {showNumber(avgPlayerPerGame)}
                                     </Col>
                                 </Row>
-                                <Row style={{paddingTop: "12px"}}>
+                                <Row style={{ paddingTop: "12px" }}>
                                     <Col xs={6}>
                                         <b>Avg</b> Buy In / Player
                                     </Col>
@@ -1315,12 +1311,12 @@ class GeneralStatistic extends React.Component {
                         </TabContent>
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="9">
-                                <br/>
+                                <br />
                                 {dates.length === 0 ?
-                                    <div className="center"><b>No games found ...</b><br/>change the filter or play a game</div> 
-                                :
+                                    <div className="center"><b>No games found ...</b><br />change the filter or play a game</div>
+                                    :
                                     <HighchartsReact
-                                        style={{visibility: this.state.dateOk ? 'visible' : 'hidden'}}
+                                        style={{ visibility: this.state.dateOk ? 'visible' : 'hidden' }}
                                         highcharts={Highcharts}
                                         options={this.historyChart(sortedUsers)}
                                     />
@@ -1338,19 +1334,19 @@ class GeneralStatistic extends React.Component {
 
 class TopList extends React.Component {
     render() {
-        const {name, user, value, from, to, i, extension} = this.props;
+        const { name, user, value, from, to, i, extension } = this.props;
         return (
             <Row key={i}>
                 <Col xs={4}>{user.name}</Col>
                 <Col xs={5}>{name}: {showNumber(value)}{extension}</Col>
                 <Col xs={1}>
                     <Statistic user={user}
-                               fromDate={from}
-                               today={to}
-                               toggle={false}
-                               resetToggle={(v) => (v)}
+                        fromDate={from}
+                        today={to}
+                        toggle={false}
+                        resetToggle={(v) => (v)}
                     /></Col>
-                <Col xs={2}/>
+                <Col xs={2} />
             </Row>
         );
     }
