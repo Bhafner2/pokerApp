@@ -27,7 +27,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import moment from "moment/moment";
-import { isToday, logout } from '../App';
+import { isToday, logout, AppVersion } from '../App';
 
 class Menu extends Component {
     constructor(props) {
@@ -133,10 +133,15 @@ class Menu extends Component {
                 <FontAwesomeIcon id={"hamburger"} icon={faBars} onClick={this.toggleMenu} />
                 <Collapse isOpen={this.state.showDate} id={"menu"}>
                     <Card outline id={"menu"}>
-                        <CardBody style={{ padding: "0 20px 0 20px" }}>
+                        <CardBody style={{ padding: "0 40px 0 40px" }}>
+                        <Row className="menuItem">
+                                <Col xs={12} style={{fontSize:"0.5em"}}>
+                                    App Version: {AppVersion}
+                                </Col>
+                            </Row>
                             <Row className="menuItem">
                                 <Col xs={12}>
-                                    <Button onClick={logout} color={"primary"} >
+                                    <Button onClick={logout} color={"link"} >
                                         Logout
                                     </Button>
                                 </Col>

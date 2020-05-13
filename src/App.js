@@ -12,6 +12,7 @@ import logo from './img/logo.png';
 import * as _ from 'lodash';
 import moment from "moment/moment";
 
+export const AppVersion = 'v2.0.0';
 export function showLoading() {
     return (
         <Row>
@@ -153,7 +154,6 @@ class App extends Component {
     }
 
     render() {
-        const AppVersion = 'v2.0.0';
         const { connErr, login } = this.props.data;
         return (
             <div>
@@ -177,7 +177,6 @@ class App extends Component {
                     }}>
                     No connection to Server!
                 </Alert>
-                <div style={{ position: "fixed", bottom: "5px", right: "5px", fontSize: "0.5em" }}>{AppVersion}</div>
             </div>
         );
     }
