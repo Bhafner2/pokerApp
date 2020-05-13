@@ -31,7 +31,7 @@ class GameDetail extends React.Component {
         const name = this.props.name.split(' ').join('')
         return (
             <div id={'list' + name}>
-                <Row>
+                <Row style={{ paddingTop: "8px" }}>
                     <Col xs={3} onClick={this.toggle}>
                         <b>{this.props.name}</b>
                     </Col>
@@ -42,7 +42,7 @@ class GameDetail extends React.Component {
                         {game.name}
                     </Col>
                     <Col xs={1} onClick={this.close}>
-                        <ThisGame today={game.date} style={{height: "1em", backgroundColor: "white"}}/>
+                      <ThisGame today={game.date} noName syle={{height: "1em", backgroundColor: "white"}}/>
                     </Col>
                     <Col xs={2} onClick={this.close}/>
                 </Row>

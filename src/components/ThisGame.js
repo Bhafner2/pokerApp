@@ -346,7 +346,7 @@ class ThisGame extends React.Component {
         return (<div>
             <FontAwesomeIcon icon={faGamepad} onClick={this.toggle}
                 style={{ fontSize: MENU_SIZE, color: this.state.sumOk ? "" : "#DC3545" }} />
-                <div style={{ fontSize: MENU_FONT }}>Game</div>
+                {_.isNil(this.props.noName) ? <div style={{ fontSize: MENU_FONT }}>Game</div> : <span/>}
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                 onKeyPress={this.handleKeyPress}
