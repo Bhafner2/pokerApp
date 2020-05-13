@@ -124,7 +124,7 @@ class Menu extends Component {
             <div>
                 <FontAwesomeIcon id={"hamburger"} icon={faEllipsisV} onClick={this.toggleMenu} />
                 <Collapse isOpen={this.state.showDate} id={"menu"}>
-                    <Card outline>
+                    <Card outline id={"menu"}>
                         <CardBody>
                             <Row>
                                 <Col xs={1} />

@@ -140,26 +140,11 @@ class Home extends Component {
         return (
             <div className="center" onKeyPress={this.handleKeyPress}>
                 {/*{this.dbInit()}*/}
-                <Menu id={"Menu"}
+                <Menu id={"menu"}
                     attributeToSort={(attributeToSort) => this.setState({ attributeToSort })}
                     search={(search) => this.setState({ search })}
                     date={(date) => this.setState({ date })}
                 />
-                <Navbar sticky="top" id={"nav"}>
-                    <NavbarBrand>
-                        <GeneralStatistic today={this.state.date} />
-                    </NavbarBrand>
-                    <NavbarBrand>
-                        <ThisGame today={this.state.date} />
-                    </NavbarBrand>
-                    <NavbarBrand>
-                        <Calc />
-                    </NavbarBrand>
-                    <NavbarBrand>
-                        <Odds />
-                    </NavbarBrand>
-                </Navbar>
-
                 <div>
                     <ListGroup>
                         {this.renderUsers(this.state.usersToRender)}
@@ -174,16 +159,28 @@ class Home extends Component {
                 </div>
                 <Row>
                     <Alert color={this.state.alertSuccess ? "success" : "danger"}
+                        className={alert}
                         style={{
                             visibility: this.state.showAlert ? 'visible' : 'hidden',
                             position: "fixed",
-                            left: "0",
-                            bottom: "0",
-                            width: "100%"
                         }}>
                         {this.state.alertText}
                     </Alert>
                 </Row>
+                <Navbar sticky={"top"} id={"nav"}>
+                    <NavbarBrand>
+                        <GeneralStatistic today={this.state.date} />
+                    </NavbarBrand>
+                    <NavbarBrand>
+                        <ThisGame today={this.state.date} />
+                    </NavbarBrand>
+                    <NavbarBrand>
+                        <Calc />
+                    </NavbarBrand>
+                    <NavbarBrand>
+                        <Odds />
+                    </NavbarBrand>
+                </Navbar>
             </div>
         );
     }

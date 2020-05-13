@@ -7,7 +7,7 @@ import { store } from './redux/store'
 import firebase from "./config/firebase";
 import Home from "./components/Home";
 import Login from "./components/Login";
-import { Alert, Col, Row, Spinner } from "reactstrap";
+import { Alert, Col, Row, Spinner, Navbar } from "reactstrap";
 import logo from './img/logo.png';
 import * as _ from 'lodash';
 import moment from "moment/moment";
@@ -157,22 +157,22 @@ class App extends Component {
         const { connErr, login } = this.props.data;
         return (
             <div>
-                <header className="header">
+                <Navbar sticky={"top"} className="header justify-content-start">
                     <img id={"logo"} src={logo} alt={"logo"} />
                     <h1 id={"title"}>Poker Statistic</h1>
-                </header>
+                </Navbar>
                 {connErr ? showLoading() : (
                     <div>
                         {login ? <Home logout={logout} /> : <Login login={App.login} />}
                     </div>
                 )}
-                <Alert className="center"
+                <Alert className="center alert"
                     color="danger"
                     style={{
                         visibility: this.state.showError ? 'visible' : 'hidden',
                         position: "fixed",
                         left: "0",
-                        bottom: "0",
+                        bottom: "200px",
                         width: "100%",
                     }}>
                     No connection to Server!
