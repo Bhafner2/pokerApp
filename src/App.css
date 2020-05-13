@@ -36,10 +36,19 @@
     margin: 0;
 }
 
+#nav {
+    background-color: white;
+    border-top: 0.5px solid;
+    border-bottom: 0.5px solid;
+    border-color: #DFDFDF;
+    padding: 0.3em 0.8em 0.3em 1.2em;
+    justify-content: space-between;
+}
+
 #hamburger {
     align-items: right;
     position: absolute;
-    top: 18px;
+    top: 20px;
     right: 20px;
 }
 
