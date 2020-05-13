@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
     Col,
-    Collapse,
     Dropdown,
     DropdownItem,
     DropdownMenu,
@@ -10,9 +9,11 @@ import {
     Input,
     InputGroup,
     InputGroupAddon,
-    Nav,
+    CardBody,
     Row,
     Button,
+    Card,
+    Collapse,
 } from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
 import * as _ from 'lodash';
@@ -122,79 +123,77 @@ class Menu extends Component {
         return (
             <div>
                 <FontAwesomeIcon id={"hamburger"} icon={faEllipsisV} onClick={this.toggleMenu} />
-                <Collapse isOpen={this.state.showDate} navbar id={"menu"}>
-                    <Nav navbar style={{ color: isToday(this.props.date) }}>
-                        <Row>
-                            <Col xs={1} />
-                            <Col xs={10}>
-                                <InputGroup style={{ paddingTop: "12px" }}>
-                                    <InputGroupAddon addonType="prepend">
-                                        <Button>
-                                            <FontAwesomeIcon icon={faCalendar} />
-                                        </Button>
-                                    </InputGroupAddon>
-                                    <Input type="date" name="date" id="date"
-                                        value={this.state.date}
-                                        onChange={this.updateDate}
-                                        style={{ color: isToday(this.state.date) }}
-                                    />
-                                    <InputGroupAddon addonType="apend">
-                                        <Button onClick={logout} >
-                                            <FontAwesomeIcon icon={faSignOutAlt} />
-                                        </Button>
-                                    </InputGroupAddon>
-                                </InputGroup>
-                            </Col>
-                            <Col xs={1} />
-                        </Row>
-                    </Nav>
-                </Collapse>
-                <Collapse isOpen={this.state.showSearch} navbar>
-                    <Nav navbar>
-                        <Row>
-                            <Col xs={1} />
-                            <Col xs={10}>
-                                <InputGroup style={{ paddingTop: "12px" }}>
-                                    <InputGroupButtonDropdown addonType="append" isOpen={this.statedropdownOpen} toggle={this.toggleDropDown}>
-                                        <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
-                                            <DropdownToggle caret>
-                                                <FontAwesomeIcon icon={faSortAmountDown} />
-                                            </DropdownToggle>
-                                            <DropdownMenu>
-                                                <DropdownItem
-                                                    onClick={() => this.props.attributeToSort("gamesPlayed")}
-                                                >
-                                                    Played
+                <Collapse isOpen={this.state.showDate} id={"menu"}>
+                    <Card outline>
+                        <CardBody>
+                            <Row>
+                                <Col xs={1} />
+                                <Col xs={10}>
+                                    <InputGroup>
+                                        <InputGroupAddon addonType="prepend">
+                                            <Button>
+                                                <FontAwesomeIcon icon={faCalendar} />
+                                            </Button>
+                                        </InputGroupAddon>
+                                        <Input type="date" name="date" id="date"
+                                            value={this.state.date}
+                                            onChange={this.updateDate}
+                                            style={{ color: isToday(this.state.date) }}
+                                        />
+                                        <InputGroupAddon addonType="apend">
+                                            <Button onClick={logout} >
+                                                <FontAwesomeIcon icon={faSignOutAlt} />
+                                            </Button>
+                                        </InputGroupAddon>
+                                    </InputGroup>
+                                </Col>
+                                <Col xs={1} />
+                            </Row>
+                            <Row>
+                                <Col xs={1} />
+                                <Col xs={10}>
+                                    <InputGroup style={{ paddingTop: "12px" }}>
+                                        <InputGroupButtonDropdown addonType="append" isOpen={this.statedropdownOpen} toggle={this.toggleDropDown}>
+                                            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
+                                                <DropdownToggle caret>
+                                                    <FontAwesomeIcon icon={faSortAmountDown} />
+                                                </DropdownToggle>
+                                                <DropdownMenu>
+                                                    <DropdownItem
+                                                        onClick={() => this.props.attributeToSort("gamesPlayed")}
+                                                    >
+                                                        Played
                                             </DropdownItem>
-                                                <DropdownItem
-                                                    onClick={() => this.props.attributeToSort("name")}
-                                                >
-                                                    Name
+                                                    <DropdownItem
+                                                        onClick={() => this.props.attributeToSort("name")}
+                                                    >
+                                                        Name
                                             </DropdownItem>
-                                                <DropdownItem
-                                                    onClick={() => this.props.attributeToSort("")}
-                                                >
-                                                    Create Date
+                                                    <DropdownItem
+                                                        onClick={() => this.props.attributeToSort("")}
+                                                    >
+                                                        Create Date
                                             </DropdownItem>
-                                            </DropdownMenu>
-                                        </Dropdown>
-                                    </InputGroupButtonDropdown>
-                                    <Input type="text" name="search" id="search"
-                                        value={this.state.search}
-                                        onChange={this.updateSearch}
-                                        style={{ color: "#007BFF" }}
-                                        placeholder="Search.."
-                                    />
-                                    <InputGroupAddon addonType="prepend">
-                                        <Button onClick={this.resetSearch}>
-                                            <FontAwesomeIcon icon={faTrash} />
-                                        </Button>
-                                    </InputGroupAddon>
-                                </InputGroup>
-                            </Col>
-                            <Col xs={1} />
-                        </Row>
-                    </Nav>
+                                                </DropdownMenu>
+                                            </Dropdown>
+                                        </InputGroupButtonDropdown>
+                                        <Input type="text" name="search" id="search"
+                                            value={this.state.search}
+                                            onChange={this.updateSearch}
+                                            style={{ color: "#007BFF" }}
+                                            placeholder="Search.."
+                                        />
+                                        <InputGroupAddon addonType="prepend">
+                                            <Button onClick={this.resetSearch}>
+                                                <FontAwesomeIcon icon={faTrash} />
+                                            </Button>
+                                        </InputGroupAddon>
+                                    </InputGroup>
+                                </Col>
+                                <Col xs={1} />
+                            </Row>
+                        </CardBody>
+                    </Card>
                 </Collapse>
             </div>
         );
@@ -203,11 +202,11 @@ class Menu extends Component {
 
 const mapStateToProps = state => {
     return {
-        data: state
+                    data: state
     }
 };
 
 export default connect(
     mapStateToProps,
-    {}
+                {}
 )(Menu);
