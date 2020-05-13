@@ -64,6 +64,14 @@
     background-color: whitesmoke;
 }
 
+.menuItem {
+    border-bottom: 0.5px solid;
+    border-top: 0.5px solid;
+    border-color: lightgray;
+    padding: 10px;
+    align-content: right;
+}
+
 .login {
     border: none;
 }
@@ -76,5 +84,4 @@
 
 Input {
     text-align: center;
-
 }
