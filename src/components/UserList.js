@@ -10,6 +10,7 @@ import firebase from "../config/firebase";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoins } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
+import { isToday } from '../App';
 
 class UserList extends React.Component {
     constructor(props) {
@@ -32,20 +33,8 @@ class UserList extends React.Component {
         this.saveGame = this.saveGame.bind(this);
         this.updateBuyIn = this.updateBuyIn.bind(this);
         this.updateDate = this.updateDate.bind(this);
-        this.isToday = this.isToday.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.toggleStat = this.toggleStat.bind(this);
-    }
-
-    isToday() {
-        if (this.state.date === '') {
-            return { color: 'red' }
-        }
-        if (this.state.date !== this.props.today) {
-            return { color: '#007BFF' }
-        } else {
-            return { color: 'black' }
-        }
     }
 
     toggle() {
@@ -345,7 +334,7 @@ class UserList extends React.Component {
                             <Input type="date" name="date" id="date"
                                 onChange={this.updateDate}
                                 value={this.state.date}
-                                style={this.isToday()}
+                                style={{color: isToday(this.state.date)}}
                             />
                         </Col>
                     </Row>

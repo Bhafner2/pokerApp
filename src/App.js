@@ -10,6 +10,7 @@ import Login from "./components/Login";
 import { Alert, Col, Row, Spinner } from "reactstrap";
 import logo from './img/logo.png';
 import * as _ from 'lodash';
+import moment from "moment/moment";
 
 export function showLoading() {
     return (
@@ -50,6 +51,26 @@ export function showNumber(number) {
     return (Math.round(number * 10) / 10);
 }
 
+export function isToday(date) {
+    if (date === '') {
+        return 'red'
+    }
+    if (date !== moment().format('YYYY-MM-DD')) {
+        return '#007BFF'
+    } else {
+        return 'black'
+    }
+}
+
+
+export function logout() {
+    firebase.auth().signOut().then(function () {
+        console.log("logout");
+        store.dispatch(login(false));
+    }).catch(function (error) {
+    });
+}
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -61,9 +82,6 @@ class App extends Component {
     }
 
     componentDidMount() {
-        /*
-                App.logout();
-        */
         this.setState({
             showError: false,
         });
@@ -77,7 +95,7 @@ class App extends Component {
                 console.log("name of login user", firebase.auth().currentUser.email);
 
             } else {
-                App.logout();
+                logout();
             }
         });
     }
@@ -115,7 +133,7 @@ class App extends Component {
                 }, () => {
                     console.log("show Error set")
                 });
-                App.logout();
+                logout();
             }, 4000);
         } else {
             flanke = false;
@@ -134,14 +152,6 @@ class App extends Component {
         store.dispatch(login(true));
     }
 
-    static logout() {
-        firebase.auth().signOut().then(function () {
-            console.log("logout");
-            store.dispatch(login(false));
-        }).catch(function (error) {
-        });
-    }
-
     render() {
         const AppVersion = 'v2.0.0';
         const { connErr, login } = this.props.data;
@@ -153,7 +163,7 @@ class App extends Component {
                 </header>
                 {connErr ? showLoading() : (
                     <div>
-                        {login ? <Home logout={App.logout} /> : <Login login={App.login} />}
+                        {login ? <Home logout={logout} /> : <Login login={App.login} />}
                     </div>
                 )}
                 <Alert className="center"

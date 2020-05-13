@@ -1,28 +1,15 @@
 import React, { Component } from 'react';
 import {
     Alert,
-    Col,
-    Collapse,
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownToggle,
-    InputGroupButtonDropdown,
-    Input,
-    InputGroup,
-    InputGroupAddon,
     ListGroup,
-    Nav,
     Navbar,
     NavbarBrand,
     Row,
-    Button,
 } from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
 import AddUser from "./AddUser";
 import { getUsers } from "../redux/actions";
 import UserList from "./UserList";
-import moment from "moment/moment";
 import * as _ from 'lodash';
 import { connect } from 'react-redux'
 import { store } from '../redux/store'
@@ -30,20 +17,13 @@ import GeneralStatistic from "./GeneralStatistic";
 import Calc from "./Calc";
 import ThisGame from "./ThisGame";
 import { showLoading } from "../App";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-    faSignOutAlt,
-    faSortAmountDown,
-    faBars,
-    faCalendar,
-    faTrash,
-} from '@fortawesome/free-solid-svg-icons'
 import Odds from "./Odds";
+import Menu from "./Menu";
+
 // import firebase from "../config/firebase";
 
-
 const GAMES_PLAYED = "gamesPlayed";
-export const MENU_SIZE = "1.3em";
+export const MENU_SIZE = "1.2em";
 export const MENU_FONT = "0.6em";
 
 class Home extends Component {
@@ -53,49 +33,19 @@ class Home extends Component {
             showAlert: false,
             alertText: '',
             alertSuccess: false,
-            today: '',
             date: '',
             search: '',
-            showDate: false,
-            showSearch: false,
             usersToRender: {},
-            filtered: false,
-            dropdownOpen: false,
             attributeToSort: GAMES_PLAYED,
         };
-
-        this.updateDate = this.updateDate.bind(this);
         this.showSaved = this.showSaved.bind(this);
-        this.isToday = this.isToday.bind(this);
-        this.updateDate = this.updateDate.bind(this);
-        this.updateSearch = this.updateSearch.bind(this);
-        this.toggleMenu = this.toggleMenu.bind(this);
-        this.toggleDate = this.toggleDate.bind(this);
-        this.toggleSearch = this.toggleSearch.bind(this);
         this.filterUser = this.filterUser.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
-        this.resetSearch = this.resetSearch.bind(this);
-        this.toggleDropdown = this.toggleDropdown.bind(this);
-    }
-
-    isToday() {
-        if (this.state.date === '') {
-            return 'red'
-        }
-        if (this.state.date !== this.state.today) {
-            return '#007BFF'
-        } else {
-            return 'black'
-        }
     }
 
     componentDidMount() {
         store.dispatch(getUsers());
         this.setState({
-            today: moment().format('YYYY-MM-DD'),
-            date: moment().subtract(4, 'hours').format('YYYY-MM-DD'),
-            showDate: false,
-            showSearch: false,
             usersToRender: this.props.data.users,
         });
     }
@@ -116,26 +66,6 @@ class Home extends Component {
         }, 2000);
     };
 
-    updateDate(evt) {
-        this.setState({
-            date: evt.target.value,
-        });
-    }
-
-    updateSearch(evt) {
-        if (_.isNil(evt) || _.isNil(evt.target.value) || evt.target.value === '') {
-            this.setState({
-                filtered: false,
-                search: '',
-            });
-        } else {
-            this.setState({
-                search: evt.target.value,
-                filtered: true,
-            });
-        }
-    }
-
     filterUser(users) {
         if (!_.isNil(this.state.search) || this.state.search === '') {
             return _.filter(users, (user) => {
@@ -148,7 +78,7 @@ class Home extends Component {
 
     renderUsers() {
         const { users } = this.props.data;
-        const { date, today, filtered } = this.state;
+        const { date } = this.state;
 
         if (_.isNil(users) || _.isNil(users[0])) {
             return (
@@ -175,7 +105,7 @@ class Home extends Component {
         return (
             <div>
                 {filteredUsers.map((user, i) =>
-                    <UserList user={user} key={i} saved={this.showSaved} date={date} today={today} blue={filtered} />)}
+                    <UserList user={user} key={i} saved={this.showSaved} date={date} blue={this.state.search !== ''} />)}
             </div>
         );
     };
@@ -206,36 +136,6 @@ class Home extends Component {
         }
     }
 
-    toggleDate() {
-        this.setState({
-            showDate: !this.state.showDate,
-            showSearch: false,
-        });
-    }
-    toggleMenu() {
-        this.setState({
-            showSearch: !this.state.showSearch,
-            showDate: !this.state.showDate,
-        });
-    }
-
-    toggleSearch() {
-        this.setState({
-            showSearch: !this.state.showSearch,
-            showDate: false,
-        });
-    }
-
-    resetSearch(evt) {
-        this.updateSearch(evt);
-    }
-
-    toggleDropdown() {
-        this.setState({
-            dropdownOpen: !this.state.dropdownOpen
-        })
-    }
-
     render() {
         return (
             <div className="center" onKeyPress={this.handleKeyPress}>
@@ -246,6 +146,7 @@ class Home extends Component {
                         borderTop: "0.5px solid",
                         borderBottom: "0.5px solid",
                         borderColor: "#DFDFDF",
+                        padding: "0.3em 1em 0.3em 1em",
                         justifyContent: 'space-between'
                     }}
                 >
@@ -261,85 +162,11 @@ class Home extends Component {
                     <NavbarBrand>
                         <Odds />
                     </NavbarBrand>
-                    <NavbarBrand>
-                        <FontAwesomeIcon icon={faBars} onClick={this.toggleMenu} style={{ fontSize: MENU_SIZE }} />
-                        <div style={{ fontSize: MENU_FONT }}>Menu</div>
-
-                    </NavbarBrand>
-                    <Collapse isOpen={this.state.showDate} navbar>
-                        <Nav navbar style={{ color: this.isToday() }}>
-                            <Row>
-                                <Col xs={1} />
-                                <Col xs={10}>
-                                    <InputGroup style={{ paddingTop: "12px" }}>
-                                        <InputGroupAddon addonType="prepend">
-                                            <Button>
-                                                <FontAwesomeIcon icon={faCalendar} />
-                                            </Button>
-                                        </InputGroupAddon>
-                                        <Input type="date" name="date" id="date"
-                                            value={this.state.date}
-                                            onChange={this.updateDate}
-                                            style={{ color: this.isToday() }}
-                                        />
-                                        <InputGroupAddon addonType="apend">
-                                            <Button onClick={this.props.logout} >
-                                                <FontAwesomeIcon icon={faSignOutAlt} />
-                                            </Button>
-                                        </InputGroupAddon>
-                                    </InputGroup>
-                                </Col>
-                                <Col xs={1} />
-                            </Row>
-                        </Nav>
-                    </Collapse>
-                    <Collapse isOpen={this.state.showSearch} navbar>
-                        <Nav navbar>
-                            <Row>
-                                <Col xs={1} />
-                                <Col xs={10}>
-                                    <InputGroup style={{ paddingTop: "12px" }}>
-                                        <InputGroupButtonDropdown addonType="append" isOpen={this.statedropdownOpen} toggle={this.toggleDropDown}>
-                                            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
-                                                <DropdownToggle caret>
-                                                    <FontAwesomeIcon icon={faSortAmountDown} />
-                                                </DropdownToggle>
-                                                <DropdownMenu>
-                                                    <DropdownItem
-                                                        onClick={() => this.setState({ attributeToSort: GAMES_PLAYED })}
-                                                    >
-                                                        Played
-                                            </DropdownItem>
-                                                    <DropdownItem
-                                                        onClick={() => this.setState({ attributeToSort: "name" })}
-                                                    >
-                                                        Name
-                                            </DropdownItem>
-                                                    <DropdownItem
-                                                        onClick={() => this.setState({ attributeToSort: "" })}
-                                                    >
-                                                        Create Date
-                                            </DropdownItem>
-                                                </DropdownMenu>
-                                            </Dropdown>
-                                        </InputGroupButtonDropdown>
-                                        <Input type="text" name="search" id="search"
-                                            value={this.state.search}
-                                            onChange={this.updateSearch}
-                                            style={{ color: "#007BFF" }}
-                                            placeholder="Search.."
-                                        />
-                                        <InputGroupAddon addonType="prepend">
-                                            <Button onClick={this.resetSearch}>
-                                                <FontAwesomeIcon icon={faTrash} />
-                                            </Button>
-                                        </InputGroupAddon>
-                                    </InputGroup>
-                                </Col>
-                                <Col xs={1} />
-                            </Row>
-                        </Nav>
-                    </Collapse>
+                    <Menu id={"Menu"}
+                        attributeToSort={(attributeToSort) => this.setState({ attributeToSort })}
+                        search={(search) => this.setState({ search })}
+                        date={(date) => this.setState({ date })}
+                    />
                 </Navbar>
                 <div>
                     <ListGroup>
@@ -375,6 +202,7 @@ const mapStateToProps = state => {
         data: state
     }
 };
+
 
 export default connect(
     mapStateToProps,
