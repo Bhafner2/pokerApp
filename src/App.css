@@ -19,6 +19,7 @@
     font-size: 1.2em;
     display: flex;
     width: 100%;
+    height: 60px;
     top: 0px;
     left: 0px;
     justify-content: normal;
@@ -53,7 +54,7 @@
 #hamburger {
     align-items: right;
     position: fixed;
-    top: 26px;
+    top: 25px;
     font-size: 1em;
     right: 20px;
     z-index: 1020;
