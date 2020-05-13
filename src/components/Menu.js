@@ -21,9 +21,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
     faSignOutAlt,
     faSortAmountDown,
-    faEllipsisV,
     faCalendar,
     faTrash,
+    faBars,
 } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import moment from "moment/moment";
@@ -69,12 +69,12 @@ class Menu extends Component {
     updateSearch(evt) {
         if (_.isNil(evt) || _.isNil(evt.target.value) || evt.target.value === '') {
             this.setState({
-                filtered: false,
+                search: ''
             });
             this.props.search('');
         } else {
             this.setState({
-                filtered: true,
+                search: evt.target.value,
             });
             this.props.search(evt.target.value);
         }
@@ -122,7 +122,7 @@ class Menu extends Component {
     render() {
         return (
             <div>
-                <FontAwesomeIcon id={"hamburger"} icon={faEllipsisV} onClick={this.toggleMenu} />
+                <FontAwesomeIcon id={"hamburger"} icon={faBars} onClick={this.toggleMenu} />
                 <Collapse isOpen={this.state.showDate} id={"menu"}>
                     <Card outline id={"menu"}>
                         <CardBody>
@@ -202,11 +202,11 @@ class Menu extends Component {
 
 const mapStateToProps = state => {
     return {
-                    data: state
+        data: state
     }
 };
 
 export default connect(
     mapStateToProps,
-                {}
+    {}
 )(Menu);

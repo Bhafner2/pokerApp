@@ -12,7 +12,7 @@
 
 .header {
     background-color: whitesmoke;
-    padding: 8px 4px 4px 4px; 
+    padding: 4px 4px 4px 4px; 
     color: #333434;
     font-weight: bolder;
     font-family: 'Bree Serif', serif;
@@ -34,7 +34,7 @@
 #logo {
     width: auto;
     height: 4ch;
-    padding-left: 0px; 
+    padding-left: 12px; 
     align-items: left;
     margin: 0;
 }
@@ -53,10 +53,10 @@
 #hamburger {
     align-items: right;
     position: fixed;
-    top: 4vh;
+    top: 26px;
     font-size: 1em;
     right: 20px;
-    z-index: 99999;
+    z-index: 1020;
 }
 
 #menu {
