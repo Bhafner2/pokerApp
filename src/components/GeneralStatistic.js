@@ -773,7 +773,7 @@ class GeneralStatistic extends React.Component {
                 useHTML: true,
             },
             legend: {
-                itemMarginBottom: 12,
+                itemMarginBottom: 10,
                 itemStyle: {
                     fontSize: '1.2em',
                 },
@@ -883,7 +883,7 @@ class GeneralStatistic extends React.Component {
             },
             ],
             legend: {
-                itemMarginBottom: 12,
+                itemMarginBottom: 10,
                 itemStyle: {
                     fontSize: '1.2em',
                 },
@@ -925,7 +925,7 @@ class GeneralStatistic extends React.Component {
                 }
             },
             legend: {
-                itemMarginBottom: 12,
+                itemMarginBottom: 10,
                 itemStyle: {
                     fontSize: '1.2em',
                 },
@@ -990,7 +990,7 @@ class GeneralStatistic extends React.Component {
 
             },
             legend: {
-                itemMarginBottom: 12,
+                itemMarginBottom: 10,
                 itemStyle: {
                     fontSize: '1.2em',
                 },
@@ -1180,8 +1180,8 @@ class GeneralStatistic extends React.Component {
                         </Nav>
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="1">
-                                <Navbar style={{ justifyContent: "space-between", fontSize: "0.5em", padding: 0}}>
-                                    <NavbarBrand>
+                                <Navbar style={{ justifyContent: "space-between", fontSize: "0.5em", padding: "10px" }}>
+                                    <NavbarBrand style={{ margin: "0" }}>
                                         <ButtonGroup>
                                             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
                                                 <DropdownToggle caret color="primary" size={"sm"}>
@@ -1222,7 +1222,7 @@ class GeneralStatistic extends React.Component {
                                             </Dropdown>
                                         </ButtonGroup>
                                     </NavbarBrand>
-                                    <NavbarBrand>
+                                    <NavbarBrand style={{ margin: "0" }}>
                                         <ButtonGroup>
                                             <Button size={"sm"} outline color={"primary"} active={!getAvg}
                                                 onClick={this.setSum}>
@@ -1233,8 +1233,9 @@ class GeneralStatistic extends React.Component {
                                                 Ø
                                                     </Button>
                                         </ButtonGroup>
-                                    </NavbarBrand><NavbarBrand>
-                                        <ButtonGroup >
+                                    </NavbarBrand>
+                                    <NavbarBrand style={{ margin: "0" }}>
+                                        <ButtonGroup>
                                             <Button size={"sm"} outline color="primary"
                                                 active={useChart && chartType === COLUMN}
                                                 onClick={() => this.togglePieChart(COLUMN)}>
@@ -1258,7 +1259,6 @@ class GeneralStatistic extends React.Component {
                                         </ButtonGroup>
                                     </NavbarBrand>
                                 </Navbar>
-                                <br />
                                 {dates.length === 0 ?
                                     <div className="center"><b>No games found ...</b><br />change the filter or play a game</div>
                                     :
@@ -1268,45 +1268,46 @@ class GeneralStatistic extends React.Component {
                         </TabContent>
                         <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="7">
-                                <br />
-                                <GameDetail game={maxBuyIn} name={BUYIN} value={maxBuyIn.buyIn} />
-                                <GameDetail game={maxWon} name={WON} value={maxWon.won} />
-                                <GameDetail game={maxBounty} name={BOUNTY} value={maxBounty.bounty} />
-                                <GameDetail game={maxTotal} name={TOTAL}
-                                    value={maxTotal.won + maxTotal.bounty - maxTotal.buyIn} />
-                                <br />
-                                <Row style={{ paddingTop: "12px" }}>
-                                    <Col xs={6}>
-                                        <b>Sum</b> of all Buy In's
+                                <div style={{ padding: "10px" }}>
+                                    <GameDetail game={maxBuyIn} name={BUYIN} value={maxBuyIn.buyIn} />
+                                    <GameDetail game={maxWon} name={WON} value={maxWon.won} />
+                                    <GameDetail game={maxBounty} name={BOUNTY} value={maxBounty.bounty} />
+                                    <GameDetail game={maxTotal} name={TOTAL}
+                                        value={maxTotal.won + maxTotal.bounty - maxTotal.buyIn} />
+                                    <br />
+                                    <Row style={{ paddingTop: "12px" }}>
+                                        <Col xs={8}>
+                                            <b>Sum</b> of all Buy In's
                                     </Col>
-                                    <Col xs={6}>
-                                        {showNumber(sumBuyIn)}
+                                        <Col xs={4}>
+                                            {showNumber(sumBuyIn)}
+                                        </Col>
+                                    </Row>
+                                    <Row style={{ paddingTop: "12px" }}>
+                                        <Col xs={8}>
+                                            <b>Played</b> games
                                     </Col>
-                                </Row>
-                                <Row style={{ paddingTop: "12px" }}>
-                                    <Col xs={6}>
-                                        <b>Played</b> games
+                                        <Col xs={4}>
+                                            {showNumber(dates.length)}
+                                        </Col>
+                                    </Row>
+                                    <Row style={{ paddingTop: "12px" }}>
+                                        <Col xs={8}>
+                                            <b>Players / Game</b>
+                                        </Col>
+                                        <Col xs={4}>
+                                            {showNumber(avgPlayerPerGame)}
+                                        </Col>
+                                    </Row>
+                                    <Row style={{ paddingTop: "12px" }}>
+                                        <Col xs={8}>
+                                            <b>Avg</b> Buy In / Player
                                     </Col>
-                                    <Col xs={6}>
-                                        {showNumber(dates.length)}
-                                    </Col>
-                                </Row>
-                                <Row style={{ paddingTop: "12px" }}>
-                                    <Col xs={6}>
-                                        <b>Players / Game</b>
-                                    </Col>
-                                    <Col xs={6}>
-                                        {showNumber(avgPlayerPerGame)}
-                                    </Col>
-                                </Row>
-                                <Row style={{ paddingTop: "12px" }}>
-                                    <Col xs={6}>
-                                        <b>Avg</b> Buy In / Player
-                                    </Col>
-                                    <Col xs={6}>
-                                        {showNumber(avgBuyIn)}
-                                    </Col>
-                                </Row>
+                                        <Col xs={4}>
+                                            {showNumber(avgBuyIn)}
+                                        </Col>
+                                    </Row>
+                                </div>
                             </TabPane>
                         </TabContent>
                         <TabContent activeTab={this.state.activeTab}>

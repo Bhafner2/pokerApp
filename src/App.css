@@ -14,6 +14,8 @@
     background-color: whitesmoke;
     padding: 4px 4px 4px 4px; 
     color: #333434;
+    border-bottom: 0.5px solid;
+    border-color: lightgray;
     font-weight: bolder;
     font-family: 'Bree Serif', serif;
     font-size: 1.2em;
@@ -42,9 +44,9 @@
 
 #nav {
     background-color: whitesmoke;
-    border-top: 0.5px solid;
+    border-top: 1px solid;
     border-bottom: 0.5px solid;
-    border-color: #DFDFDF;
+    border-color: lightgray;
     padding: 0.3em 0.8em 0.3em 1.2em;
     justify-content: space-between;
     width: 100%;

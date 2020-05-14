@@ -9,15 +9,15 @@ import {
     Row, TabContent,
     Table, TabPane
 } from "reactstrap";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import * as _ from 'lodash';
 import classnames from 'classnames';
 import moment from "moment";
-import {showNumber} from '../App';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faChartBar} from '@fortawesome/free-solid-svg-icons'
+import { showNumber } from '../App';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChartBar } from '@fortawesome/free-solid-svg-icons'
 import TimeFilter from "./TimeFilter";
 
 let buyIns = [];
@@ -102,8 +102,8 @@ class Statistic extends React.Component {
         if (this.state.modal) {
             console.log("Statistic getData", fromDate.format(), toDate.format());
             this.init();
-            const {user} = this.props;
-            const {users} = this.props.data;
+            const { user } = this.props;
+            const { users } = this.props.data;
             let filteredGames;
             const actualUser = _.filter(users, (u) => {
                 return user.name === u.name
@@ -266,9 +266,9 @@ class Statistic extends React.Component {
     static formatTooltip(tooltip, x = this.x, points = this.points) {
         let s = `<b>${x}</b>`;
         points.forEach((point) => {
-            if(point.series.name === "Total"){
+            if (point.series.name === "Total") {
                 s += `<br/> <b>${point.series.name}: ${point.y}</b>`
-            }else {
+            } else {
                 s += `<br/>${point.series.name}: ${point.y}`
             }
         });
@@ -315,7 +315,7 @@ class Statistic extends React.Component {
                     categories: date,
                 }],
                 legend: {
-                    itemMarginBottom: 12,
+                    itemMarginBottom: 10,
                     itemStyle: {
                         fontSize: '1.2em',
                     },
@@ -419,7 +419,7 @@ class Statistic extends React.Component {
             for (let j in games[i].rank) {
                 const r = games[i].rank[j];
                 if (r.name === this.props.user.name) {
-                    ranking.push({place: parseInt(j) + 1, won: r.won});
+                    ranking.push({ place: parseInt(j) + 1, won: r.won });
                 }
             }
         }
@@ -433,12 +433,12 @@ class Statistic extends React.Component {
                 },
                 tooltip: {
                     shared: true,
-                    formatter: function() {
+                    formatter: function () {
                         return (`<span><b>${this.point.name}</b> <br/>
                         <span><div>Chance: <b>${showNumber(this.point.percentage)}%</b></div> <br/>` +
-                        `<div>Amount: <b>${this.point.y}</b></div> <br/>` 
-                       + `<div>Won: <b>${this.point.sum}</b></div></span>`);
-                    }                    
+                            `<div>Amount: <b>${this.point.y}</b></div> <br/>`
+                            + `<div>Won: <b>${this.point.sum}</b></div></span>`);
+                    }
                 },
                 title: {
                     text: 'Ranking',
@@ -455,7 +455,7 @@ class Statistic extends React.Component {
                     }
                 },
                 legend: {
-                    itemMarginBottom: 12,
+                    itemMarginBottom: 10,
                     itemStyle: {
                         fontSize: '1.2em',
                     },
@@ -494,95 +494,95 @@ class Statistic extends React.Component {
     }
 
     render() {
-        const {user} = this.props;
-        const {sumWon, sumBuyIn, sumTotal, sumBounty, avgWon, avgBuyIn, avgTotal, avgBounty, maxWon, maxBuyIn, maxTotal, maxBounty, dates,} = this.state;
-        let {wons} = this.state;
+        const { user } = this.props;
+        const { sumWon, sumBuyIn, sumTotal, sumBounty, avgWon, avgBuyIn, avgTotal, avgBounty, maxWon, maxBuyIn, maxTotal, maxBounty, dates, } = this.state;
+        let { wons } = this.state;
 
         return (<div>
-                <FontAwesomeIcon icon={faChartBar} onClick={this.toggle} size={"1x"}/>
+            <FontAwesomeIcon icon={faChartBar} onClick={this.toggle} size={"1x"} />
 
-                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
-                       onKeyPress={this.handleKeyPress}
-                >
-                    <ModalHeader toggle={this.toggle}>Statistic for {user.name}</ModalHeader>
-                    <ModalBody>
+            <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
+                onKeyPress={this.handleKeyPress}
+            >
+                <ModalHeader toggle={this.toggle}>Statistic for {user.name}</ModalHeader>
+                <ModalBody>
 
-                        <TimeFilter today={this.props.today}
-                                    calcData={(fromDate, toDate) => this.getData(fromDate, toDate)}
-                                    result={sumBuyIn}
-                        />
-                        <Nav tabs>
-                            <NavItem>
-                                <NavLink
-                                    className={classnames({active: this.state.activeTab === '1'})}
-                                    onClick={() => {
-                                        this.toggleTab('1');
-                                    }}
-                                >
-                                    Chart
+                    <TimeFilter today={this.props.today}
+                        calcData={(fromDate, toDate) => this.getData(fromDate, toDate)}
+                        result={sumBuyIn}
+                    />
+                    <Nav tabs>
+                        <NavItem>
+                            <NavLink
+                                className={classnames({ active: this.state.activeTab === '1' })}
+                                onClick={() => {
+                                    this.toggleTab('1');
+                                }}
+                            >
+                                Chart
                                 </NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink
-                                    className={classnames({active: this.state.activeTab === '2'})}
-                                    onClick={() => {
-                                        this.toggleTab('2');
-                                    }}
-                                >
-                                    Ranking
+                        </NavItem>
+                        <NavItem>
+                            <NavLink
+                                className={classnames({ active: this.state.activeTab === '2' })}
+                                onClick={() => {
+                                    this.toggleTab('2');
+                                }}
+                            >
+                                Ranking
                                 </NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink
-                                    className={classnames({active: this.state.activeTab === '3'})}
-                                    onClick={() => {
-                                        this.toggleTab('3');
-                                    }}
-                                >
-                                    Table
+                        </NavItem>
+                        <NavItem>
+                            <NavLink
+                                className={classnames({ active: this.state.activeTab === '3' })}
+                                onClick={() => {
+                                    this.toggleTab('3');
+                                }}
+                            >
+                                Table
                                 </NavLink>
-                            </NavItem>
-                        </Nav>
-                        <TabContent activeTab={this.state.activeTab}>
-                            <TabPane tabId="1">
-                                <br/>
-                                <Row>
-                                    <Col>
+                        </NavItem>
+                    </Nav>
+                    <TabContent activeTab={this.state.activeTab}>
+                        <TabPane tabId="1">
+                            <br />
+                            <Row>
+                                <Col>
                                     {dates.length === 0 ?
-                                        <div className="center"><b>No games found ...</b><br/>change the filter or play a game</div> 
-                                    :
+                                        <div className="center"><b>No games found ...</b><br />change the filter or play a game</div>
+                                        :
                                         <HighchartsReact
                                             highcharts={Highcharts}
                                             options={this.state.options}
                                         />
                                     }
-                                    </Col>
-                                </Row>
-                            </TabPane>
-                        </TabContent>
-                        <TabContent activeTab={this.state.activeTab}>
-                            <TabPane tabId="2">
-                                <br/>
-                                <Row>
-                                    <Col>
+                                </Col>
+                            </Row>
+                        </TabPane>
+                    </TabContent>
+                    <TabContent activeTab={this.state.activeTab}>
+                        <TabPane tabId="2">
+                            <br />
+                            <Row>
+                                <Col>
                                     {dates.length === 0 ?
-                                        <div className="center"><b>No games found ...</b><br/>change the filter or play a game</div> 
-                                    :
+                                        <div className="center"><b>No games found ...</b><br />change the filter or play a game</div>
+                                        :
                                         <HighchartsReact
                                             highcharts={Highcharts}
                                             options={this.state.pie}
                                         />
                                     }
-                                    </Col>
-                                </Row>
-                            </TabPane>
-                        </TabContent>
-                        <TabContent activeTab={this.state.activeTab}>
-                            <TabPane tabId="3">
-                                <br/>
+                                </Col>
+                            </Row>
+                        </TabPane>
+                    </TabContent>
+                    <TabContent activeTab={this.state.activeTab}>
+                        <TabPane tabId="3">
+                            <div style={{ padding: "10px, 10px, 0, 10px" }}>
                                 <Row>
                                     <Col>
-                                        <Row style={{paddingTop: "12px"}}>
+                                        <Row style={{ paddingTop: "12px" }}>
                                             <Col xs={8}>
                                                 <b>balance</b>
                                             </Col>
@@ -590,7 +590,7 @@ class Statistic extends React.Component {
                                                 <b>{sumTotal > 0 ? `+ ${showNumber(sumTotal)}` : showNumber(sumTotal)}</b>
                                             </Col>
                                         </Row>
-                                        <Row style={{paddingTop: "12px"}}>
+                                        <Row style={{ paddingTop: "12px" }}>
                                             <Col xs={8}>
                                                 Games <b>played</b>
                                             </Col>
@@ -598,7 +598,7 @@ class Statistic extends React.Component {
                                                 {dates.length}
                                             </Col>
                                         </Row>
-                                        <Row style={{paddingTop: "12px"}}>
+                                        <Row style={{ paddingTop: "12px" }}>
                                             <Col xs={8}>
                                                 Chances of <b>winning</b>
                                             </Col>
@@ -608,7 +608,7 @@ class Statistic extends React.Component {
                                                 }).length / dates.length * 100)}%
                                             </Col>
                                         </Row>
-                                        <Row style={{paddingTop: "12px"}}>
+                                        <Row style={{ paddingTop: "12px" }}>
                                             <Col xs={8}>
                                                 Chances of making <b>plus</b>
                                             </Col>
@@ -618,54 +618,55 @@ class Statistic extends React.Component {
                                                 }).length / dates.length * 100)}%
                                             </Col>
                                         </Row>
-                                        <br/>
-                                        <br/>
-                                        <Table borderless size="sm" style={{paddingTop: "12px"}}>
+                                        <br />
+                                        <br />
+                                        <Table borderless size="sm" style={{ paddingTop: "12px" }}>
                                             <thead>
-                                            <tr>
-                                                <th/>
-                                                <th>Sum</th>
-                                                <th>Max</th>
-                                                <th>Avg</th>
-                                            </tr>
+                                                <tr>
+                                                    <th />
+                                                    <th>Sum</th>
+                                                    <th>Max</th>
+                                                    <th>Avg</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
-                                                <th>Buy In</th>
-                                                <td>{showNumber(sumBuyIn)}</td>
-                                                <td>{showNumber(maxBuyIn)}</td>
-                                                <td>{showNumber(avgBuyIn)}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Won</th>
-                                                <td>{showNumber(sumWon)}</td>
-                                                <td>{showNumber(maxWon)}</td>
-                                                <td>{showNumber(avgWon)}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Bounty</th>
-                                                <td>{showNumber(sumBounty)}</td>
-                                                <td>{showNumber(maxBounty)}</td>
-                                                <td>{showNumber(avgBounty)}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Total</th>
-                                                <td>{showNumber(sumTotal)}</td>
-                                                <td>{showNumber(maxTotal)}</td>
-                                                <td>{showNumber(avgTotal)}</td>
-                                            </tr>
+                                                <tr>
+                                                    <th>Buy In</th>
+                                                    <td>{showNumber(sumBuyIn)}</td>
+                                                    <td>{showNumber(maxBuyIn)}</td>
+                                                    <td>{showNumber(avgBuyIn)}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Won</th>
+                                                    <td>{showNumber(sumWon)}</td>
+                                                    <td>{showNumber(maxWon)}</td>
+                                                    <td>{showNumber(avgWon)}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Bounty</th>
+                                                    <td>{showNumber(sumBounty)}</td>
+                                                    <td>{showNumber(maxBounty)}</td>
+                                                    <td>{showNumber(avgBounty)}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Total</th>
+                                                    <td>{showNumber(sumTotal)}</td>
+                                                    <td>{showNumber(maxTotal)}</td>
+                                                    <td>{showNumber(avgTotal)}</td>
+                                                </tr>
                                             </tbody>
                                         </Table>
                                     </Col>
                                 </Row>
-                            </TabPane>
-                        </TabContent>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button color="secondary" onClick={this.toggle}>Exit</Button>
-                    </ModalFooter>
-                </Modal>
-            </div>
+                            </div>
+                        </TabPane>
+                    </TabContent>
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="secondary" onClick={this.toggle}>Exit</Button>
+                </ModalFooter>
+            </Modal>
+        </div>
         );
     }
 }

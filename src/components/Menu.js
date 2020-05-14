@@ -110,14 +110,14 @@ class Menu extends Component {
 
     render() {
         return (
-            <div onFocusOut={() => console.log("colse")}>
+            <div>
                 <FontAwesomeIcon id={"hamburger"} icon={faBars} onClick={this.toggleMenu} />
                 <Collapse isOpen={this.state.showMenu} id={"menu"}>
                     <Card outline id={"menu"}>
                         <CardBody style={{ padding: "0 40px 0 40px" }}>
                             <Row className="menuItem">
-                                <Col xs={12} style={{ fontSize: "0.5em" }}>
-                                    App Version: {AppVersion}
+                                <Col xs={12}>
+                                    Menu
                                 </Col>
                             </Row>
                             <Row className="menuItem">
@@ -188,10 +188,15 @@ class Menu extends Component {
                                     </InputGroup>
                                 </Col>
                             </Row>
+                            <Row className="menuItem">
+                                <Col xs={12} style={{ fontSize: "0.5em" }}>
+                                    App Version: {AppVersion}
+                                </Col>
+                            </Row>
                         </CardBody>
                     </Card>
                 </Collapse>
-                <div onClick={this.toggleMenu} className={ this.state.showMenu ? "clickGround" : ""} />
+                <div onClick={this.toggleMenu} className={this.state.showMenu ? "clickGround" : ""} />
             </div>
         );
     }

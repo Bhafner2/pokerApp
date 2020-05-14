@@ -221,8 +221,8 @@ class Calc extends React.Component {
                             <FormFeedback invalid>Must be a divisor of 10</FormFeedback>
                         </Col>
                     </Row>
-                    <br /> 
-                    <Table borderless size="sm" style={{ paddingTop: "12px" }}>
+                    <br />
+                    <Table borderless style={{ paddingTop: "12px" }}>
                         <thead>
                             <tr>
                                 <th />

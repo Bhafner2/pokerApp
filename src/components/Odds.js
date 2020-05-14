@@ -220,7 +220,7 @@ class Odds extends React.Component {
                 }
             },
             legend: {
-                itemMarginBottom: 12,
+                itemMarginBottom: 10,
                 itemStyle: {
                     fontSize: '1.2em',
                 },

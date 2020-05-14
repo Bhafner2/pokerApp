@@ -210,7 +210,7 @@ class ThisGame extends React.Component {
                     }),
                 }],
                 legend: {
-                    itemMarginBottom: 12,
+                    itemMarginBottom: 10,
                     itemStyle: {
                         fontSize: '1.2em',
                     },
@@ -346,7 +346,7 @@ class ThisGame extends React.Component {
         return (<div>
             <FontAwesomeIcon icon={faGamepad} onClick={this.toggle}
                 style={{ fontSize: MENU_SIZE, color: this.state.sumOk ? "" : "#DC3545" }} />
-                {_.isNil(this.props.noName) ? <div style={{ fontSize: MENU_FONT }}>Game</div> : <span/>}
+            {_.isNil(this.props.noName) ? <div style={{ fontSize: MENU_FONT }}>Game</div> : <span />}
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                 onKeyPress={this.handleKeyPress}
@@ -379,7 +379,7 @@ class ThisGame extends React.Component {
                     </Nav>
                     <TabContent activeTab={this.state.activeTab}>
                         <TabPane tabId="1">
-                            <div>
+                            <div style={{ paddingLeft: "10px" }}>
                                 <br />
                                 <FormGroup style={{ marginLeft: "6px" }}>
                                     <Row style={{ align: "left" }}>

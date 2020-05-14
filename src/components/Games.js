@@ -4,15 +4,15 @@ import {
     ButtonGroup,
     Col, Row, Table,
 } from "reactstrap";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import * as _ from 'lodash';
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import moment from "moment";
-import {showNumber} from "../App";
+import { showNumber } from "../App";
 import TimeFilter from "./TimeFilter";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faChartBar, faList} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChartBar, faList } from "@fortawesome/free-solid-svg-icons";
 
 class Games extends React.Component {
     constructor(props) {
@@ -35,12 +35,12 @@ class Games extends React.Component {
     }
 
     applyFilter(from, to) {
-        const {games} = this.props;
+        const { games } = this.props;
 
         let filteredGames = _.filter(games, g => {
             return moment(g.date) < to && moment(g.date) > from
         });
-        const {users} = this.props.data || [];
+        const { users } = this.props.data || [];
 
         let filteredUsers = _.filter(users, u => {
             return _.filter(u.games, g => {
@@ -59,7 +59,7 @@ class Games extends React.Component {
     }
 
     chart() {
-        const {filteredGames, filteredUsers} = this.state;
+        const { filteredGames, filteredUsers } = this.state;
         this.setState({
             options: {
                 chart: {
@@ -99,12 +99,12 @@ class Games extends React.Component {
                     column: {
                         stacking: 'normal'
                     },
-//                    series: {
-//                        pointWidth: 10
-//                    }
+                    //                    series: {
+                    //                        pointWidth: 10
+                    //                    }
                 },
                 legend: {
-                    itemMarginBottom: 12,
+                    itemMarginBottom: 10,
                     itemStyle: {
                         fontSize: '1.2em',
                     },
@@ -183,7 +183,7 @@ class Games extends React.Component {
 
     mapBuyIns(users) {
         const data = [];
-        const {from, to} = this.state;
+        const { from, to } = this.state;
 
         for (let i in users) {
             for (let j in users[i].games) {
@@ -197,7 +197,7 @@ class Games extends React.Component {
     }
 
     render() {
-        const {filteredGames, useChart} = this.state;
+        const { filteredGames, useChart } = this.state;
         _.mixin({
             maxValue: (xs, it) => {
                 const fn = _.isFunction(it) ? it : _.property(it);
@@ -206,23 +206,22 @@ class Games extends React.Component {
         });
         const switchChart = (
             <Col xs={4}>
-                <ButtonGroup style={{paddingTop: "4px"}}>
+                <ButtonGroup style={{ paddingTop: "4px" }}>
                     <Button size={"sm"} outline color="primary" active={useChart}
-                            onClick={() => this.setState({useChart: true})}>
-                        <FontAwesomeIcon icon={faChartBar} size={"1x"}/>
+                        onClick={() => this.setState({ useChart: true })}>
+                        <FontAwesomeIcon icon={faChartBar} size={"1x"} />
                     </Button>
                     <Button size={"sm"} outline color={"primary"} active={!useChart}
-                            onClick={() => this.setState({useChart: false})}>
-                        <FontAwesomeIcon icon={faList} size={"1x"}/>
+                        onClick={() => this.setState({ useChart: false })}>
+                        <FontAwesomeIcon icon={faList} size={"1x"} />
                     </Button>
                 </ButtonGroup>
             </Col>
         );
         return (
             <div>
-                <Row>
+                <Row style={{ paddingLeft: "20px", paddingRight: "20px" }}>
                     <TimeFilter
-                        style={{marginLeft: "6px"}}
                         calcData={(fromDate, toDate) => this.applyFilter(fromDate, toDate)}
                         addition={switchChart}
                         result={filteredGames.length}
@@ -231,60 +230,60 @@ class Games extends React.Component {
                 {useChart ? (
                     <span>
                         {
-                            <Row style={{paddingTop: "12px"}}>
+                            <Row style={{ paddingTop: "12px" }}>
                                 <Col>
                                     <HighchartsReact
                                         highcharts={Highcharts}
                                         options={this.state.options}
-                                        containerProps={{style: {width: "100%"}}}
+                                        containerProps={{ style: { width: "100%" } }}
                                     />
                                 </Col>
                             </Row>
                         }
                     </span>
                 ) : (
-                    <Row>
-                        <Col>
+                        <Row>
+                            <Col>
 
-                            <Table borderless size="sm" style={{paddingTop: "12px"}}>
-                                <thead>
-                                <tr>
-                                    <th/>
-                                    <th>Sum</th>
-                                    <th>Max</th>
-                                    <th>Avg</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <th>Buy In's</th>
-                                    <td>{showNumber(_.sumBy(filteredGames, 'buyIn'))}</td>
-                                    <td>{showNumber(_.maxValue(filteredGames, 'buyIn'))}</td>
-                                    <td>{showNumber(_.meanBy(filteredGames, 'buyIn'))}</td>
-                                </tr>
-                                <tr>
-                                    <th>Pot size</th>
-                                    <td>{showNumber(_.sumBy(filteredGames, 'won'))}</td>
-                                    <td>{showNumber(_.maxValue(filteredGames, 'won'))}</td>
-                                    <td>{showNumber(_.meanBy(filteredGames, 'won'))}</td>
-                                </tr>
-                                <tr>
-                                    <th>Bounty's</th>
-                                    <td>{showNumber(_.sumBy(filteredGames, 'bounty'))}</td>
-                                    <td>{showNumber(_.maxValue(filteredGames, 'bounty'))}</td>
-                                    <td>{showNumber(_.meanBy(filteredGames, 'bounty'))}</td>
-                                </tr>
-                                <tr>
-                                    <th>Players</th>
-                                    <td>{showNumber(_.sumBy(filteredGames, 'players'))}</td>
-                                    <td>{showNumber(_.maxValue(filteredGames, 'players'))}</td>
-                                    <td>{showNumber(_.meanBy(filteredGames, 'players'))}</td>
-                                </tr>
-                                </tbody>
-                            </Table>
-                        </Col>
-                    </Row>
-                )}
+                                <Table borderless size="sm" style={{ paddingTop: "12px" }}>
+                                    <thead>
+                                        <tr>
+                                            <th />
+                                            <th>Sum</th>
+                                            <th>Max</th>
+                                            <th>Avg</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>Buy In's</th>
+                                            <td>{showNumber(_.sumBy(filteredGames, 'buyIn'))}</td>
+                                            <td>{showNumber(_.maxValue(filteredGames, 'buyIn'))}</td>
+                                            <td>{showNumber(_.meanBy(filteredGames, 'buyIn'))}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Pot size</th>
+                                            <td>{showNumber(_.sumBy(filteredGames, 'won'))}</td>
+                                            <td>{showNumber(_.maxValue(filteredGames, 'won'))}</td>
+                                            <td>{showNumber(_.meanBy(filteredGames, 'won'))}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Bounty's</th>
+                                            <td>{showNumber(_.sumBy(filteredGames, 'bounty'))}</td>
+                                            <td>{showNumber(_.maxValue(filteredGames, 'bounty'))}</td>
+                                            <td>{showNumber(_.meanBy(filteredGames, 'bounty'))}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Players</th>
+                                            <td>{showNumber(_.sumBy(filteredGames, 'players'))}</td>
+                                            <td>{showNumber(_.maxValue(filteredGames, 'players'))}</td>
+                                            <td>{showNumber(_.meanBy(filteredGames, 'players'))}</td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
+                            </Col>
+                        </Row>
+                    )}
             </div>);
     }
 }
