@@ -64,14 +64,20 @@
 }
 
 #menu {
-    background-color: whitesmoke;
+    background-color: white;
+    position: fixed;
+    top: 70px;
+    left: 60px;
+    right: 10px;
+    z-index: 1019;
+
 }
 
 .menuItem {
     border-bottom: 0.5px solid;
     border-top: 0.5px solid;
     border-color: lightgray;
-    padding: 10px;
+    padding: 10px 0 10px 0;
     align-content: right;
 }
 
@@ -87,6 +93,15 @@
 
 .contend {
     padding-bottom: 65px;
+}
+
+.clickGround {
+    background-color: black;
+    opacity: 0.5;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1015;
 }
 
 Input {

@@ -35,8 +35,7 @@ class Menu extends Component {
             showAlert: false,
             alertText: '',
             alertSuccess: false,
-            showDate: false,
-            showSearch: false,
+            showMenu: false,
             usersToRender: {},
             filtered: false,
             dropdownOpen: false,
@@ -48,8 +47,6 @@ class Menu extends Component {
         this.resetDate = this.resetDate.bind(this);
         this.updateSearch = this.updateSearch.bind(this);
         this.toggleMenu = this.toggleMenu.bind(this);
-        this.toggleDate = this.toggleDate.bind(this);
-        this.toggleSearch = this.toggleSearch.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.resetSearch = this.resetSearch.bind(this);
         this.toggleDropdown = this.toggleDropdown.bind(this);
@@ -90,29 +87,14 @@ class Menu extends Component {
     handleKeyPress(target) {
         if (target.charCode === 13) {
             this.setState({
-                showDate: false,
-                showSearch: false,
+                showMenu: false,
             });
         }
     }
 
-    toggleDate() {
-        this.setState({
-            showDate: !this.state.showDate,
-            showSearch: false,
-        });
-    }
     toggleMenu() {
         this.setState({
-            showSearch: !this.state.showSearch,
-            showDate: !this.state.showDate,
-        });
-    }
-
-    toggleSearch() {
-        this.setState({
-            showSearch: !this.state.showSearch,
-            showDate: false,
+            showMenu: !this.state.showMenu,
         });
     }
 
@@ -128,9 +110,9 @@ class Menu extends Component {
 
     render() {
         return (
-            <div>
+            <div onFocusOut={() => console.log("colse")}>
                 <FontAwesomeIcon id={"hamburger"} icon={faBars} onClick={this.toggleMenu} />
-                <Collapse isOpen={this.state.showDate} id={"menu"}>
+                <Collapse isOpen={this.state.showMenu} id={"menu"}>
                     <Card outline id={"menu"}>
                         <CardBody style={{ padding: "0 40px 0 40px" }}>
                             <Row className="menuItem">
@@ -209,6 +191,7 @@ class Menu extends Component {
                         </CardBody>
                     </Card>
                 </Collapse>
+                <div onClick={this.toggleMenu} className={ this.state.showMenu ? "clickGround" : ""} />
             </div>
         );
     }
