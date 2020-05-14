@@ -383,7 +383,7 @@ class ThisGame extends React.Component {
                                 <br />
                                 <FormGroup style={{ marginLeft: "6px" }}>
                                     <Row style={{ align: "left" }}>
-                                        <Col xs="5">
+                                        <Col xs="12">
                                             <div onClick={this.showFilter}
                                                 style={{ color: this.state.filtered ? "black" : "#007BFF" }}
                                             >
@@ -402,7 +402,7 @@ class ThisGame extends React.Component {
                                                 bounty={this.state.sumBounty} />
                                         </div>}
                                     <Row style={{ paddingTop: "12px" }}>
-                                        <Col xs="4">
+                                        <Col xs="5">
                                             <b>Date</b>
                                         </Col>
                                         <Col xs="7">
@@ -410,7 +410,7 @@ class ThisGame extends React.Component {
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Col xs="4">
+                                        <Col xs="5">
                                             <b>Pot size</b>
                                         </Col>
                                         <Col xs="7">
@@ -418,7 +418,7 @@ class ThisGame extends React.Component {
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Col xs="4">
+                                        <Col xs="5">
                                             <b>Bounty's</b>
                                         </Col>
                                         <Col xs="7">
@@ -426,7 +426,7 @@ class ThisGame extends React.Component {
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Col xs="4">
+                                        <Col xs="5">
                                             <b>Players</b>
                                         </Col>
                                         <Col xs="7">
@@ -434,7 +434,7 @@ class ThisGame extends React.Component {
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Col xs="4">
+                                        <Col xs="5">
                                             <b>Avg Buy In</b>
                                         </Col>
                                         <Col xs="7">
