@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import 'react-infinite-calendar/styles.css';
 import firebase from "../config/firebase";
-import {connect} from 'react-redux'
-import {Button, Col, FormGroup, Input, Label, ListGroupItem, Row} from "reactstrap";
-import {loginError, setLoad} from "../redux/actions";
-import {store} from "../redux/store";
-import {showLoading} from "../App";
+import { connect } from 'react-redux'
+import { Button, Col, FormGroup, Input, Label, ListGroupItem, Row } from "reactstrap";
+import { loginError, setLoad } from "../redux/actions";
+import { store } from "../redux/store";
+import { showLoading } from "../App";
 
 class Login extends Component {
     constructor(props) {
@@ -51,54 +51,54 @@ class Login extends Component {
     }
 
     render() {
-        const {load} = this.props.data;
+        const { load } = this.props.data;
         return (
             <div onKeyPress={this.handleKeyPress}>
                 {load ? showLoading() : (
                     <ListGroupItem className="login">
                         <Row>
-                            <Col xs={1}/>
+                            <Col xs={1} />
                             <Col xs={10}>
                                 <FormGroup>
-                                    <br/>
+                                    <br />
                                     <Label for="email">Email</Label>
                                     <Input type="email" name="email" id="email"
-                                           onChange={this.updateEmail}
-                                           value={this.state.email}
+                                        onChange={this.updateEmail}
+                                        value={this.state.email}
                                     />
                                 </FormGroup>
                             </Col>
-                            <Col xs={1}/>
+                            <Col xs={1} />
                         </Row>
                         <Row>
-                            <Col xs={1}/>
+                            <Col xs={1} />
                             <Col xs={10}>
                                 <FormGroup>
                                     <Label for="password">Password</Label>
                                     <Input type="password" name="password" id="password"
-                                           onChange={this.updatePassword}
-                                           value={this.state.password}
+                                        onChange={this.updatePassword}
+                                        value={this.state.password}
                                     />
                                 </FormGroup>
                             </Col>
-                            <Col xs={1}/>
+                            <Col xs={1} />
                         </Row>
                         <Row>
-                            <Col xs={1}/>
-                            <Col xs={10}>
-                                <Button style={{align: "right"}} color="primary" name="login"
-                                        onClick={this.login}>Login</Button>
+                            <Col xs={1} />
+                            <Col xs={10} >
+                                <Button  color="primary" name="login"
+                                    onClick={this.login}>Login</Button>
                             </Col>
-                            <Col xs={1}/>
+                            <Col xs={1} />
                         </Row>
                         <Row>
-                            <Col xs={1}/>
+                            <Col xs={1} />
                             <Col xs={10}>
                                 <FormGroup>
-                                    <div style={{color: "red", fontSize: "0.8em"}}>{this.props.data.loginError}</div>
+                                    <div style={{ color: "red", fontSize: "0.8em" }}>{this.props.data.loginError}</div>
                                 </FormGroup>
                             </Col>
-                            <Col xs={1}/>
+                            <Col xs={1} />
                         </Row>
                     </ListGroupItem>)}
             </div>

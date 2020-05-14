@@ -145,14 +145,13 @@ class Home extends Component {
                     search={(search) => this.setState({ search })}
                     date={(date) => this.setState({ date })}
                 />
-                <div>
+                <div className={"contend"}>
                     <ListGroup>
                         {this.renderUsers(this.state.usersToRender)}
                     </ListGroup>
-
                     <div style={{
                         paddingTop: '10px',
-                        paddingBottom: '20px',
+                        paddingBottom: '10px',
                     }}>
                         {UserList.isAdmin() ? <AddUser saved={this.showSaved} /> : <div />}
                     </div>
@@ -167,7 +166,7 @@ class Home extends Component {
                         {this.state.alertText}
                     </Alert>
                 </Row>
-                <Navbar sticky={"top"} id={"nav"}>
+                <Navbar id={"nav"}>
                     <NavbarBrand>
                         <GeneralStatistic today={this.state.date} />
                     </NavbarBrand>

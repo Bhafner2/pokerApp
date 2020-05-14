@@ -8,7 +8,6 @@ import {
     InputGroupButtonDropdown,
     Input,
     InputGroup,
-    InputGroupAddon,
     CardBody,
     Row,
     Button,
@@ -199,7 +198,7 @@ class Menu extends Component {
                                         />
                                         <InputGroupText addonType="apend">
                                             <FontAwesomeIcon
-                                                style={{ color: this.state.search == '' ? "black" : "007BFF" }}
+                                                style={{ color: this.state.search === '' ? "black" : "007BFF" }}
                                                 icon={faTrash}
                                                 onClick={this.resetSearch}
                                             />
