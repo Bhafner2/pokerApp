@@ -84,7 +84,19 @@ class Search extends Component {
                 <FontAwesomeIcon icon={faSearch} onClick={this.toggleMenu} style={{ fontSize: MENU_SIZE }} />
                 <div style={{ fontSize: MENU_FONT }}>Search</div>
                 <div>
-                    <Collapse isOpen={this.state.showMenu} className={"search"}>
+                    <Collapse isOpen={this.state.showMenu} style={{
+                            backgroundColor: "whitesmoke",
+                            borderTop: "1px solid",
+                            borderBottom: "0.5px solid",
+                            borderColor: "lightgray",
+                            padding: "0.3em 0.8em 0.3em 1.2em",
+                            justifyContent: "space-between",
+                            width: "100%",
+                            height: "70px",
+                            position: "fixed",
+                            bottom: "65px",
+                            left: "0px",
+                    }}>
                         <Row>
                             <Col xs={12}>
                                 <InputGroup style={{ paddingTop: "12px" }}>
