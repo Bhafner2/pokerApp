@@ -69,6 +69,9 @@ class Search extends Component {
     }
 
     resetSearch(evt) {
+        this.setState({
+            showMenu: false,
+        });
         this.updateSearch(evt);
     }
 
@@ -85,17 +88,17 @@ class Search extends Component {
                 <div style={{ fontSize: MENU_FONT }}>Search</div>
                 <div>
                     <Collapse isOpen={this.state.showMenu} style={{
-                            backgroundColor: "whitesmoke",
-                            borderTop: "1px solid",
-                            borderBottom: "0.5px solid",
-                            borderColor: "lightgray",
-                            padding: "0.3em 0.8em 0.3em 1.2em",
-                            justifyContent: "space-between",
-                            width: "100%",
-                            height: "70px",
-                            position: "fixed",
-                            bottom: "65px",
-                            left: "0px",
+                        backgroundColor: "whitesmoke",
+                        borderTop: "1px solid",
+                        borderBottom: "0.5px solid",
+                        borderColor: "lightgray",
+                        padding: "0.3em 0.8em 0.3em 1.2em",
+                        justifyContent: "space-between",
+                        width: "100%",
+                        height: "70px",
+                        position: "fixed",
+                        bottom: "65px",
+                        left: "0px",
                     }}>
                         <Row>
                             <Col xs={12}>
