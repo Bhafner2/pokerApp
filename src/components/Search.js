@@ -16,9 +16,9 @@ import 'react-infinite-calendar/styles.css';
 import * as _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-    faSortAmountDown,
     faTrash,
     faSearch,
+    faSortAmountDownAlt,
 } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import { MENU_SIZE, MENU_FONT } from './Home';
@@ -104,9 +104,9 @@ class Search extends Component {
                             <Col xs={12}>
                                 <InputGroup style={{ paddingTop: "12px" }}>
                                     <InputGroupButtonDropdown addonType="append" isOpen={this.statedropdownOpen} toggle={this.toggleDropDown}>
-                                        <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
+                                        <Dropdown  direction="up" isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
                                             <DropdownToggle caret style={{ border: " 1px solid", borderColor: "#CDD4DA", backgroundColor: "#E8ECEF", color: "#007BFF" }}>
-                                                <FontAwesomeIcon icon={faSortAmountDown} />
+                                            <FontAwesomeIcon icon={faSortAmountDownAlt} />
                                             </DropdownToggle>
                                             <DropdownMenu>
                                                 <DropdownItem
