@@ -315,13 +315,13 @@ class UserList extends React.Component {
                                 this.setState({ stat: false })
                             }} />
                     </Col>
-                    <Col xs="9" onClick={this.toggleStat}
+                    <Col xs="8" onClick={this.toggleStat}
                         style={{ paddingLeft: "25px", paddingRight: "0" }}
                     >
                         <b>{user.name}</b>
                     </Col>
-                    <Col xs="1">
-                        <FontAwesomeIcon icon={faRubleSign} onClick={this.toggle} style={{ fontWeight: "leighter" }} />
+                    <Col xs="2" onClick={this.toggle} style={{ textAlign: "right", paddingLeft: "0", paddingRight: "10px" }}>
+                        <FontAwesomeIcon icon={faRubleSign} />
                     </Col>
                 </Row>
             </ListGroupItem>
