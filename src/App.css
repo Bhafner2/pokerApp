@@ -14,7 +14,7 @@
     background-color: whitesmoke;
     padding: 4px 4px 4px 4px; 
     color: #333434;
-    border-bottom: 0.5px solid;
+    border: 0.5px solid;
     border-color: lightgray;
     font-weight: bolder;
     font-family: 'Bree Serif', serif;
@@ -59,7 +59,7 @@
 #hamburger {
     align-items: right;
     position: fixed;
-    top: 25px;
+    top: 23px;
     font-size: 1em;
     right: 20px;
     z-index: 1020;

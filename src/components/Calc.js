@@ -206,53 +206,55 @@ class Calc extends React.Component {
             >
                 <ModalHeader toggle={this.toggle}>Payout</ModalHeader>
                 <ModalBody>
-                    <Row>
-                        <Col xs="4">
-                            <div>Pot size</div>
-                        </Col>
-                        <Col xs="8">
-                            <Input autoFocus
-                                type="number" name="amount" id="amount"
-                                onChange={this.updateAmount}
-                                value={this.state.amount}
-                                valid={this.state.amountOk}
-                                invalid={!this.state.amountOk && !this.state.onOpen}
-                            />
-                            <FormFeedback invalid>Must be a divisor of 10</FormFeedback>
-                        </Col>
-                    </Row>
-                    <br />
-                    <Table borderless style={{ paddingTop: "12px" }}>
-                        <thead>
-                            <tr>
-                                <th />
-                                <th>v1</th>
-                                <th>v2</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th>1st</th>
-                                <td>{this.state.p11}</td>
-                                <td>{this.state.p21}</td>
-                            </tr>
-                            <tr>
-                                <th>2nd</th>
-                                <td>{this.state.p12}</td>
-                                <td>{this.state.p22}</td>
-                            </tr>
-                            <tr>
-                                <th>3rd</th>
-                                <td>{this.state.p13}</td>
-                                <td>{this.state.p23}</td>
-                            </tr>
-                            <tr>
-                                <th>4th</th>
-                                <td>{this.state.p14}</td>
-                                <td>{this.state.p24}</td>
-                            </tr>
-                        </tbody>
-                    </Table>
+                    <div style={{ padding: "10px" }}>
+                        <Row>
+                            <Col xs="4">
+                                <div>Pot size</div>
+                            </Col>
+                            <Col xs="8">
+                                <Input autoFocus
+                                    type="number" name="amount" id="amount"
+                                    onChange={this.updateAmount}
+                                    value={this.state.amount}
+                                    valid={this.state.amountOk}
+                                    invalid={!this.state.amountOk && !this.state.onOpen}
+                                />
+                                <FormFeedback invalid>Must be a divisor of 10</FormFeedback>
+                            </Col>
+                        </Row>
+                        <br />
+                        <Table size={"sm"} borderless style={{ paddingTop: "12px" }}>
+                            <thead>
+                                <tr>
+                                    <th />
+                                    <th>v1</th>
+                                    <th>v2</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>1st</th>
+                                    <td>{this.state.p11}</td>
+                                    <td>{this.state.p21}</td>
+                                </tr>
+                                <tr>
+                                    <th>2nd</th>
+                                    <td>{this.state.p12}</td>
+                                    <td>{this.state.p22}</td>
+                                </tr>
+                                <tr>
+                                    <th>3rd</th>
+                                    <td>{this.state.p13}</td>
+                                    <td>{this.state.p23}</td>
+                                </tr>
+                                <tr>
+                                    <th>4th</th>
+                                    <td>{this.state.p14}</td>
+                                    <td>{this.state.p24}</td>
+                                </tr>
+                            </tbody>
+                        </Table>
+                    </div>
                 </ModalBody>
                 <ModalFooter>
                     <Button color="secondary" onClick={this.toggle}>Exit</Button>
