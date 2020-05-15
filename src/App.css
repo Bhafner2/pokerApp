@@ -109,3 +109,11 @@
 Input {
     text-align: center;
 }
+
+.userList {
+    border: none;
+    border-bottom: 0.5px solid;
+    border-color: lightgray;
+    text-align: left;
+    font-size: 1em;
+}

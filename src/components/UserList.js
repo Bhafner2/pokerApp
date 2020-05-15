@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 import Statistic from "./Statistic";
 import firebase from "../config/firebase";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoins } from '@fortawesome/free-solid-svg-icons';
+import { faRubleSign } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
 import { isToday } from '../App';
 
@@ -303,22 +303,25 @@ class UserList extends React.Component {
                 style={{
                     color: this.props.blue ? "#007BFF" : "black",
                     backgroundColor: user.lastBuyIn > moment().subtract(28, 'h').format() ? "#CCE5FF" : "white"
-                }}>
+                }}
+                className={"userList"}>
                 <Row>
-                    <Col xs="4">
+                    <Col xs="1"
+                        onClick={this.toggleStat}
+                        style={{ paddingLeft: "25px" }}
+                    >
                         <Statistic user={user} today={this.props.date} toggle={this.state.stat}
                             resetToggle={() => {
                                 this.setState({ stat: false })
                             }} />
                     </Col>
-
-                    <Col xs="4">
-                        <div onClick={this.toggleStat}>
-                            <b>{user.name}</b>
-                        </div>
+                    <Col xs="9" onClick={this.toggleStat}
+                        style={{ paddingLeft: "25px", paddingRight: "0" }}
+                    >
+                        <b>{user.name}</b>
                     </Col>
-                    <Col xs="4">
-                        <FontAwesomeIcon icon={faCoins} onClick={this.toggle} size={"1x"} />
+                    <Col xs="1">
+                        <FontAwesomeIcon icon={faRubleSign} onClick={this.toggle} style={{ fontWeight: "leighter" }} />
                     </Col>
                 </Row>
             </ListGroupItem>
@@ -334,7 +337,7 @@ class UserList extends React.Component {
                             <Input type="date" name="date" id="date"
                                 onChange={this.updateDate}
                                 value={this.state.date}
-                                style={{color: isToday(this.state.date)}}
+                                style={{ color: isToday(this.state.date) }}
                             />
                         </Col>
                     </Row>

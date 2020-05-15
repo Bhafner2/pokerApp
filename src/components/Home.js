@@ -149,11 +149,15 @@ class Home extends Component {
                     <ListGroup>
                         {this.renderUsers(this.state.usersToRender)}
                     </ListGroup>
-                    <div style={{
-                        paddingTop: '10px',
-                        paddingBottom: '10px',
-                    }}>
-                        {UserList.isAdmin() ? <AddUser saved={this.showSaved} /> : <div />}
+                    <div >
+                        {UserList.isAdmin() ?
+                            <div style={{
+                                paddingTop: '10px',
+                                paddingBottom: '10px',
+                            }}>
+                                <AddUser saved={this.showSaved} />
+                            </div>
+                            : <div />}
                     </div>
                 </div>
                 <Row>
