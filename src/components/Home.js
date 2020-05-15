@@ -19,6 +19,7 @@ import ThisGame from "./ThisGame";
 import { showLoading } from "../App";
 import Odds from "./Odds";
 import Menu from "./Menu";
+import Search from './Search';
 
 // import firebase from "../config/firebase";
 
@@ -141,8 +142,6 @@ class Home extends Component {
             <div className="center" onKeyPress={this.handleKeyPress}>
                 {/*{this.dbInit()}*/}
                 <Menu id={"menu"}
-                    attributeToSort={(attributeToSort) => this.setState({ attributeToSort })}
-                    search={(search) => this.setState({ search })}
                     date={(date) => this.setState({ date })}
                 />
                 <div className={"contend"}>
@@ -182,6 +181,12 @@ class Home extends Component {
                     </NavbarBrand>
                     <NavbarBrand>
                         <Odds />
+                    </NavbarBrand>
+                    <NavbarBrand>
+                        <Search
+                            attributeToSort={(attributeToSort) => this.setState({ attributeToSort })}
+                            search={(search) => this.setState({ search })}
+                        />
                     </NavbarBrand>
                 </Navbar>
             </div>
