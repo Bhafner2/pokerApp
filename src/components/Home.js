@@ -98,9 +98,7 @@ class Home extends Component {
 
         if (_.isNil(filteredUsers[0])) {
             return (
-                <div>
-                    No user found...
-                </div>
+                <div className="center"><b>No user found ...</b><br />change the search or add a user</div>
             )
         }
         return (

@@ -28,7 +28,6 @@ class Search extends Component {
         super(props);
         this.state = {
             showMenu: false,
-            filtered: false,
             dropdownOpen: false,
             search: '',
         };
@@ -84,7 +83,7 @@ class Search extends Component {
     render() {
         return (
             <div>
-                <FontAwesomeIcon icon={faSearch} onClick={this.toggleMenu} style={{ fontSize: MENU_SIZE }} />
+                <FontAwesomeIcon icon={faSearch} onClick={this.toggleMenu} style={{ fontSize: MENU_SIZE, color: this.state.showMenu ? "#007BFF" : "black"}} />
                 <div style={{ fontSize: MENU_FONT }}>Search</div>
                 <div>
                     <Collapse isOpen={this.state.showMenu} style={{
