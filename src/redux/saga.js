@@ -43,6 +43,7 @@ function fetchUsers() {
                     sumBounty: 0,
                     gamesPlayed: 0,
                     lastBuyIn: moment('2018-01-01').format(),
+                    lastBuyInOk: moment('2018-01-01').format(),
                 });
             } else {
                 users.push({
@@ -53,6 +54,7 @@ function fetchUsers() {
                     sumBounty: dbUsers[user].sumBounty,
                     gamesPlayed: dbUsers[user].gamesPlayed,
                     lastBuyIn: _.isNil(dbUsers[user].lastBuyIn) ? moment('2018-01-01').format() : dbUsers[user].lastBuyIn,
+                    lastBuyInOk: _.isNil(dbUsers[user].lastBuyInOk) ? moment('2018-01-01').format() : dbUsers[user].lastBuyInOk,
                 });
             }
         }

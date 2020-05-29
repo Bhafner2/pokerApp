@@ -1,5 +1,19 @@
 import React from 'react';
-import { Button, Col, Input, ListGroupItem, Modal, ModalBody, ModalFooter, ModalHeader, Row, ButtonGroup } from 'reactstrap';
+import {
+    Button,
+    Col,
+    Input,
+    ListGroupItem,
+    Modal,
+    ModalBody,
+    ModalFooter,
+    ModalHeader,
+    Row,
+    ButtonGroup,
+    Form,
+    FormGroup,
+    Label,
+} from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
 import { store } from "../redux/store";
 import { saveUsers } from "../redux/actions";
@@ -12,6 +26,9 @@ import { faRubleSign } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
 import { isToday } from '../App';
 
+const lastDay = moment().subtract(28, 'h').format();
+const firstDay = moment('2018-01-01').format();
+
 class UserList extends React.Component {
     constructor(props) {
         super(props);
@@ -23,6 +40,7 @@ class UserList extends React.Component {
             date: props.date,
             dateOk: true,
             stat: false,
+            lastBuyInOk: firstDay,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -35,6 +53,7 @@ class UserList extends React.Component {
         this.updateDate = this.updateDate.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.toggleStat = this.toggleStat.bind(this);
+        this.toggleLastBuyInOk = this.toggleLastBuyInOk.bind(this);
     }
 
     toggle() {
@@ -43,6 +62,7 @@ class UserList extends React.Component {
                 date: this.props.date,
                 dateOk: true,
                 modal: true,
+                lastBuyInOk: this.props.user.lastBuyInOk,
             }, () => {
                 this.getActualGame();
             });
@@ -171,8 +191,8 @@ class UserList extends React.Component {
         user.sumWon = 0;
         user.sumBounty = 0;
         user.gamesPlayed = 0;
-        user.lastBuyIn = buyIn !== 0 && user.lastBuyIn <= moment(date).format() ? moment(date).format() : moment('2018-01-01').format();
-        console.log(user.lastBuyIn, user.name)
+        user.lastBuyIn = buyIn > 0 && user.lastBuyIn <= moment(date).format() ? moment(date).format() : firstDay;
+        user.lastBuyInOk = buyIn > 0 ? this.state.lastBuyInOk : firstDay;
 
         for (let i = 0; i < user.games.length; i++) {
             if (this.state.date === user.games[i].date) {
@@ -221,6 +241,13 @@ class UserList extends React.Component {
             store.dispatch(saveUsers(data));
         }
         this.props.saved();
+    }
+
+    toggleLastBuyInOk() {
+        const { user } = this.props;
+        this.setState({
+            lastBuyInOk: user.lastBuyInOk < lastDay ? user.lastBuyIn : firstDay
+        });
     }
 
     calcGames(users, ) {
@@ -296,13 +323,23 @@ class UserList extends React.Component {
         return firebase.auth().currentUser.email === "admin@statistic.com"
     }
 
+    getBackgroundColor(user) {
+        if (user.lastBuyInOk > lastDay) {
+            return "#D2EDDA";
+        }
+        if (user.lastBuyIn > lastDay) {
+            return "#CCE5FF";
+        }
+        return "white";
+    }
+
     render() {
         const { user } = this.props;
         return (<div>
             <ListGroupItem key={this.props.key}
                 style={{
                     color: this.props.blue ? "#007BFF" : "black",
-                    backgroundColor: user.lastBuyIn > moment().subtract(28, 'h').format() ? "#CCE5FF" : "white"
+                    backgroundColor: this.getBackgroundColor(user),
                 }}
                 className={"userList"}>
                 <Row>
@@ -431,6 +468,21 @@ class UserList extends React.Component {
                                     </ButtonGroup>
                                 </Col>
                             </Row>
+                            {user.lastBuyIn > lastDay ?
+                                <Row style={{ paddingTop: "12px" }}>
+                                    <Col xs="5">
+                                    </Col>
+                                    <Col xs="7">
+                                        <Form>
+                                            <FormGroup check inline>
+                                                <Label check>
+                                                    <Input type="checkbox" checked={this.state.lastBuyInOk > lastDay} onClick={() => this.toggleLastBuyInOk()} /> finished today
+                                            </Label>
+                                            </FormGroup>
+                                        </Form>
+                                    </Col>
+                                </Row>
+                                : <div />}
                         </div>
                     }
                 </ModalBody>
