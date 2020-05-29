@@ -22,7 +22,8 @@ import { MENU_SIZE, MENU_FONT } from './Home'
 import { saveUsers } from '../redux/actions';
 import { store } from '../redux/store';
 import moment from 'moment';
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import UserList from "./UserList";
 
 const lastDay = moment().subtract(28, 'h').format();
 
@@ -241,26 +242,30 @@ class Calc extends React.Component {
                     <div style={{ padding: "10px" }}>
                         <Row>
                             <Col xs="4">
-                                <div>Pot size</div>
+                                <b>Pot size</b>
                             </Col>
                             <Col xs="8">
-                                <InputGroup>
-                                    <Input autoFocus
-                                        type="number" name="amount" id="amount"
-                                        onChange={this.updateAmount}
-                                        value={this.state.amount}
-                                        valid={this.state.amountOk}
-                                        invalid={!this.state.amountOk && !this.state.onOpen}
-                                    />
-                                    <InputGroupText addonType="apend">
-                                        <FontAwesomeIcon
-                                            style={{ color: this.state.amount === 0 ? "black" : "007BFF" }}
-                                            icon={faTrash}
-                                            onClick={() => this.updateAmount({ target: { value: 0 } })}
-                                        />
-                                    </InputGroupText>
-                                </InputGroup>
-                                <FormFeedback invalid>Must be a divisor of 10</FormFeedback>
+                                {UserList.isAdmin() ?
+                                    <span>
+                                        <InputGroup>
+                                            <Input autoFocus
+                                                type="number" name="amount" id="amount"
+                                                onChange={this.updateAmount}
+                                                value={this.state.amount}
+                                                valid={this.state.amountOk}
+                                                invalid={!this.state.amountOk && !this.state.onOpen}
+                                            />
+                                            <InputGroupText addonType="apend">
+                                                <FontAwesomeIcon
+                                                    style={{ color: this.state.amount === 0 ? "black" : "007BFF" }}
+                                                    icon={faTrash}
+                                                    onClick={() => this.updateAmount({ target: { value: 0 } })}
+                                                />
+                                            </InputGroupText>
+                                        </InputGroup>
+                                        <FormFeedback invalid>Must be a divisor of 10</FormFeedback>
+                                    </span>
+                                    : <b>{this.state.amount}</b>}
                             </Col>
                         </Row>
                         <br />
