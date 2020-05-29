@@ -9,7 +9,9 @@ import {
     ModalFooter,
     ModalHeader,
     Row,
-    Table
+    Table,
+    InputGroup,
+    InputGroupText,
 } from 'reactstrap';
 import 'react-infinite-calendar/styles.css';
 import { connect } from "react-redux";
@@ -17,6 +19,12 @@ import * as _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPeopleArrows } from '@fortawesome/free-solid-svg-icons';
 import { MENU_SIZE, MENU_FONT } from './Home'
+import { saveUsers } from '../redux/actions';
+import { store } from '../redux/store';
+import moment from 'moment';
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+
+const lastDay = moment().subtract(28, 'h').format();
 
 class Calc extends React.Component {
     constructor(props) {
@@ -44,9 +52,24 @@ class Calc extends React.Component {
     }
 
     toggle() {
-        this.setState({
-            modal: !this.state.modal,
-        });
+        if (!this.state.modal) {
+            const { data } = this.props;
+            let amount = 0;
+            if (moment(data.lastGame.date).format() >= lastDay) {
+                amount = data.lastGame.amount;
+            };
+            this.setState({
+                modal: true,
+                amountOk: true,
+                amount,
+            }, () => {
+                this.calculate();
+            });
+        } else {
+            this.setState({
+                modal: false,
+            });
+        }
     }
 
     calculate() {
@@ -157,7 +180,11 @@ class Calc extends React.Component {
     }
 
     updateAmount(evt) {
+        const data = this.props.data;
+        const lastGame = { amount: 0, date: moment('2018-01-01').format() }
         if (evt.target.value === '' || isNaN(evt.target.value)) {
+            lastGame.amount = 0;
+            lastGame.date = moment().format();
             this.setState({
                 onOpen: false,
                 amount: 0,
@@ -166,11 +193,14 @@ class Calc extends React.Component {
                 this.calculate()
             });
         } else {
+            const amount = _.parseInt(evt.target.value, 10);
+            lastGame.amount = amount;
+            lastGame.date = moment().format();
             this.setState({
                 onOpen: false,
-                amount: _.parseInt(evt.target.value, 10)
+                amount,
             }, () => {
-                if ((this.state.amount % 10) === 0 && this.state.amount !== 0) {
+                if ((this.state.amount % 10) === 0) {
                     this.setState({
                         amountOk: true,
                     }, () => {
@@ -185,6 +215,8 @@ class Calc extends React.Component {
                 }
             });
         }
+        data.lastGame = lastGame;
+        store.dispatch(saveUsers(data));
     }
 
     handleKeyPress(target) {
@@ -212,13 +244,22 @@ class Calc extends React.Component {
                                 <div>Pot size</div>
                             </Col>
                             <Col xs="8">
-                                <Input autoFocus
-                                    type="number" name="amount" id="amount"
-                                    onChange={this.updateAmount}
-                                    value={this.state.amount}
-                                    valid={this.state.amountOk}
-                                    invalid={!this.state.amountOk && !this.state.onOpen}
-                                />
+                                <InputGroup>
+                                    <Input autoFocus
+                                        type="number" name="amount" id="amount"
+                                        onChange={this.updateAmount}
+                                        value={this.state.amount}
+                                        valid={this.state.amountOk}
+                                        invalid={!this.state.amountOk && !this.state.onOpen}
+                                    />
+                                    <InputGroupText addonType="apend">
+                                        <FontAwesomeIcon
+                                            style={{ color: this.state.amount === 0 ? "black" : "007BFF" }}
+                                            icon={faTrash}
+                                            onClick={() => this.updateAmount({ target: { value: 0 } })}
+                                        />
+                                    </InputGroupText>
+                                </InputGroup>
                                 <FormFeedback invalid>Must be a divisor of 10</FormFeedback>
                             </Col>
                         </Row>

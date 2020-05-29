@@ -1,4 +1,4 @@
-import {CONNECTION_ERROR, GET_USERS, GET_USERS_FULFILLED, LOAD, LOGIN, LOGIN_ERROR, SAVE_USERS} from "./constants";
+import { CONNECTION_ERROR, GET_USERS, GET_USERS_FULFILLED, LOAD, LOGIN, LOGIN_ERROR, SAVE_USERS } from "./constants";
 
 export default (state, action) => {
     switch (action.type) {
@@ -22,11 +22,12 @@ export default (state, action) => {
             return state;
         case GET_USERS_FULFILLED:
             console.log("reducer get users fulfilled", action.data);
-            let newState = {users: [], actualUser: {}, connErr: false, login: true, loginError: '', load: false,};
+            let newState = { users: [], actualUser: {}, connErr: false, login: true, loginError: '', load: false, lastGame: {} };
             return ({
                 ...newState,
                 users: action.data.users,
-                games: action.data.games
+                games: action.data.games,
+                lastGame: action.data.lastGame,
             });
         case CONNECTION_ERROR:
             console.log("reducer connection error", action.connErr);

@@ -1,8 +1,8 @@
 import firebase from "../config/firebase";
-import {takeLatest, call, put} from 'redux-saga/effects';
-import {getUsersRejected, getUsersFulfilled, saveUsersRejected} from "./actions";
-import {GET_USERS, SAVE_USERS} from "./constants";
-import {store} from '../redux/store'
+import { takeLatest, call, put } from 'redux-saga/effects';
+import { getUsersRejected, getUsersFulfilled, saveUsersRejected } from "./actions";
+import { GET_USERS, SAVE_USERS } from "./constants";
+import { store } from '../redux/store'
 import * as _ from 'lodash';
 import moment from "moment";
 
@@ -69,9 +69,12 @@ function fetchUsers() {
         for (let i in dbGames) {
             games.push(dbGames[i]);
         }
-        let data={
+
+        const lastGame = snapshot.val().lastGame;
+        let data = {
             users,
-            games
+            games,
+            lastGame,
         };
 
         store.dispatch(getUsersFulfilled(data));
