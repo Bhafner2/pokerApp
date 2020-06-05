@@ -40,7 +40,7 @@ class UserList extends React.Component {
             date: props.date,
             dateOk: true,
             stat: false,
-            lastBuyInOk: firstDay,
+            lastBuyInOk: this.props.user.lastBuyInOk,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -62,7 +62,6 @@ class UserList extends React.Component {
                 date: this.props.date,
                 dateOk: true,
                 modal: true,
-                lastBuyInOk: this.props.user.lastBuyInOk,
             }, () => {
                 this.getActualGame();
             });
@@ -201,7 +200,7 @@ class UserList extends React.Component {
                     user.games[i].won = won;
                     user.games[i].bounty = bounty;
                 } else {
-                    save = false;
+                //    save = false;
                 }
                 found = true;
                 //    console.log("game successfully updated " + user.name + ", date: " + date + " buyIn " + user.games[i].buyIn + " won " + user.games[i].won, " bounty ", user.games[i].bounty);
