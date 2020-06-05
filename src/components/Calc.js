@@ -2,7 +2,6 @@ import React from 'react';
 import {
     Button,
     Col,
-    FormFeedback,
     Input,
     Modal,
     ModalBody,
@@ -32,9 +31,7 @@ class Calc extends React.Component {
         super(props);
         this.state = {
             modal: false,
-            amountOk: false,
             onOpen: true,
-            amount: 0,
             p11: 0,
             p12: 0,
             p13: 0,
@@ -52,17 +49,16 @@ class Calc extends React.Component {
         this.roundResults = this.roundResults.bind(this);
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.data.lastGame.amount !== this.props.data.lastGame.amount) {
+            this.calculate();
+        }
+    }
+
     toggle() {
         if (!this.state.modal) {
-            const { data } = this.props;
-            let amount = 0;
-            if (moment(data.lastGame.date).format() >= lastDay) {
-                amount = data.lastGame.amount;  //TODO
-            };
             this.setState({
                 modal: true,
-                amountOk: true,
-                amount,
             }, () => {
                 this.calculate();
             });
@@ -75,8 +71,8 @@ class Calc extends React.Component {
 
     calculate() {
         const factor = 1000;
-        const { amount } = this.state;
-        if (amount < 10 || !this.state.amountOk) {
+        const { amount } = this.props.data.lastGame;
+        if (amount < 10 || amount % 10 !== 0) {
             this.setState({
                 p11: 0,
                 p12: 0,
@@ -113,7 +109,7 @@ class Calc extends React.Component {
             }, () => {
                 this.roundResults()
             });
-        } else if (this.state.amount < 200) {
+        } else if (amount < 200) {
             this.setState({
                 p11: Math.round(amount * 55 / factor) * 10,
                 p12: Math.round(amount * 33 / factor) * 10,
@@ -143,50 +139,55 @@ class Calc extends React.Component {
     }
 
     roundResults() {
-        let { amount, p11, p21 } = this.state;
+        const { amount } = this.props.data.lastGame;
+        let { p11, p21 } = this.state;
         let sum1 = this.state.p11 + this.state.p12 + this.state.p13 + this.state.p14;
         let sum2 = this.state.p21 + this.state.p22 + this.state.p23 + this.state.p24;
         let sum1ok = false;
         let sum2ok = false;
 
-        console.log("sums: amount, 1, 2", amount, sum1, sum2);
+        if (amount % 10 === 0) {
+            console.log("sums: amount, 1, 2", amount, sum1, sum2);
 
-        if (sum1 < amount) {
-            p11 += 10;
-            console.log("v1 player1 +10");
-        } else if (sum1 > amount) {
-            p11 -= 10;
-            console.log("v1 player1 -10");
-        } else {
-            sum1ok = true;
-        }
-        if (sum2 < amount) {
-            p21 += 10;
-            console.log("v2 player1 +10");
-        } else if (sum2 > amount) {
-            p21 -= 10;
-            console.log("v2 player1 -10");
-        } else {
-            sum2ok = true;
-        }
-
-        this.setState({
-            p11,
-            p21,
-        }, () => {
-            if (!sum1ok || !sum2ok) {
-                this.roundResults();
+            if (sum1 < amount) {
+                p11 += 10;
+                console.log("v1 player1 +10");
+            } else if (sum1 > amount) {
+                p11 -= 10;
+                console.log("v1 player1 -10");
+            } else {
+                sum1ok = true;
             }
-        });
+            if (sum2 < amount) {
+                p21 += 10;
+                console.log("v2 player1 +10");
+            } else if (sum2 > amount) {
+                p21 -= 10;
+                console.log("v2 player1 -10");
+            } else {
+                sum2ok = true;
+            }
+
+            this.setState({
+                p11,
+                p21,
+            }, () => {
+                if (!sum1ok || !sum2ok) {
+                    this.roundResults();
+                }
+            });
+        }
     }
 
     updateAmount(evt) {
         const data = this.props.data;
         if (evt.target.value === '' || isNaN(evt.target.value)) {
+            data.lastGame.amount = 0;
+            data.lastGame.date = moment().format();
+            store.dispatch(saveUsers(data));
+
             this.setState({
                 onOpen: false,
-                amount: 0,
-                amountOk: false,
             }, () => {
                 this.calculate()
             });
@@ -198,21 +199,8 @@ class Calc extends React.Component {
 
             this.setState({
                 onOpen: false,
-                amount,
             }, () => {
-                if ((this.state.amount % 10) === 0) {
-                    this.setState({
-                        amountOk: true,
-                    }, () => {
-                        this.calculate()
-                    });
-                } else {
-                    this.setState({
-                        amountOk: false,
-                    }, () => {
-                        this.calculate()
-                    });
-                }
+                this.calculate()
             });
         }
     }
@@ -227,7 +215,9 @@ class Calc extends React.Component {
     }
 
     render() {
-        const invalid = !this.state.amountOk  && !this.state.onOpen;
+        const { amount } = this.props.data.lastGame;
+        const invalid = (amount % 10) !== 0 && !this.state.onOpen;
+
         return (<div>
             <FontAwesomeIcon icon={faPeopleArrows} onClick={this.toggle} style={{ fontSize: MENU_SIZE }} />
             <div style={{ fontSize: MENU_FONT }}>Payout</div>
@@ -249,24 +239,24 @@ class Calc extends React.Component {
                                             <Input autoFocus
                                                 type="number" name="amount" id="amount"
                                                 onChange={this.updateAmount}
-                                                value={this.state.amount}
+                                                value={amount}
                                                 invalid={invalid}
                                             />
                                             <InputGroupText addonType="apend">
                                                 <FontAwesomeIcon
-                                                    style={{ color: this.state.amount === 0 ? "black" : "007BFF" }}
+                                                    style={{ color: amount === 0 ? "black" : "007BFF" }}
                                                     icon={faTrash}
                                                     onClick={() => this.updateAmount({ target: { value: 0 } })}
                                                 />
                                             </InputGroupText>
                                         </InputGroup>
                                         <div
-                                            style={{ color: "red", fontSize: "0.8em", visibility: invalid ?  'visible' : 'hidden'}}
+                                            style={{ color: "red", fontSize: "0.8em", visibility: invalid ? 'visible' : 'hidden' }}
                                         >
                                             Must be a divisor of 10
                                         </div>
                                     </span>
-                                    : <b>{this.state.amount}</b>}
+                                    : <b>{amount}</b>}
                             </Col>
                         </Row>
                         <br />
