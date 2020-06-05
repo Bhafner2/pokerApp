@@ -24,10 +24,13 @@ class Games extends React.Component {
             from: '',
             to: '',
             useChart: true,
+            byDate: false,
         };
         this.chart = this.chart.bind(this);
         this.applyFilter = this.applyFilter.bind(this);
         this.mapBuyIns = this.mapBuyIns.bind(this);
+        this.getDate = this.getDate.bind(this);
+        this.toggleByDate = this.toggleByDate.bind(this);
     }
 
     componentDidMount() {
@@ -48,6 +51,8 @@ class Games extends React.Component {
             });
         });
 
+      filteredGames = _.sortBy(filteredGames, 'date');
+
         this.setState({
             filteredGames,
             filteredUsers,
@@ -56,6 +61,10 @@ class Games extends React.Component {
         }, () => {
             this.chart();
         })
+    }
+
+    getDate(date) {
+        return this.state.byDate ? moment(date).valueOf() : moment(date).format('D.M.YY')
     }
 
     chart() {
@@ -77,7 +86,8 @@ class Games extends React.Component {
                     },
                 },
                 xAxis: {
-                    type: 'datetime',
+                    type: this.state.byDate ? 'datetime' : '',
+                    categories: this.state.byDate ? '': _.map(filteredGames, g => moment(g.date).format('D.M.YY')),
                 },
                 yAxis: [{ // Primary yAxis
                     title: {
@@ -99,9 +109,6 @@ class Games extends React.Component {
                     column: {
                         stacking: 'normal'
                     },
-                    //                    series: {
-                    //                        pointWidth: 10
-                    //                    }
                 },
                 legend: {
                     itemMarginBottom: 10,
@@ -115,7 +122,7 @@ class Games extends React.Component {
                     type: 'column',
                     yAxis: 0,
                     data: _.map(filteredGames, (g) => {
-                        return [moment(g.date).valueOf(), g.bounty]
+                        return [this.getDate(g.date), g.bounty]
                     }),
                     lineWidth: 1,
                     color: '#155724',
@@ -129,7 +136,7 @@ class Games extends React.Component {
                     type: 'column',
                     yAxis: 0,
                     data: _.map(filteredGames, (g) => {
-                        return [moment(g.date).valueOf(), g.buyIn]
+                        return [this.getDate(g.date), g.buyIn]
                     }),
                     color: '#28A745',
                     marker: {
@@ -141,7 +148,7 @@ class Games extends React.Component {
                     type: 'spline',
                     yAxis: 1,
                     data: _.map(filteredGames, (g) => {
-                        return [moment(g.date).valueOf(), showNumber(g.buyIn / g.players)]
+                        return [this.getDate(g.date), showNumber(g.buyIn / g.players)]
                     }),
                     color: '#6C757D',
                     lineWidth: 1,
@@ -155,7 +162,7 @@ class Games extends React.Component {
                     type: 'column',
                     yAxis: 1,
                     data: _.map(filteredGames, (g) => {
-                        return [moment(g.date).valueOf(), g.players]
+                        return [this.getDate(g.date), g.players]
                     }),
                     lineWidth: 1,
                     color: '#FFC107',
@@ -189,11 +196,20 @@ class Games extends React.Component {
             for (let j in users[i].games) {
                 const game = users[i].games[j];
                 if (game.buyIn > 0 && moment(game.date) < to && moment(game.date) > from) {
-                    data.push([moment(game.date).valueOf(), game.buyIn])
+                    data.push([this.getDate(game.date), game.buyIn])
                 }
             }
         }
         return data;
+    }
+
+    toggleByDate() {
+        this.setState({ 
+            byDate: !this.state.byDate,
+            options: '',
+         }, () => {
+            this.applyFilter(this.state.from, this.state.to);
+        });
     }
 
     render() {
@@ -225,6 +241,8 @@ class Games extends React.Component {
                         calcData={(fromDate, toDate) => this.applyFilter(fromDate, toDate)}
                         addition={switchChart}
                         result={filteredGames.length}
+                        toggleByDate={() => this.toggleByDate()}
+                        byDate={this.state.byDate}
                     />
                 </Row>
                 {useChart ? (

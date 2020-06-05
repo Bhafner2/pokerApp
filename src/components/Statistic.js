@@ -5,9 +5,14 @@ import {
     Modal,
     ModalBody,
     ModalFooter,
-    ModalHeader, Nav, NavItem, NavLink,
-    Row, TabContent,
-    Table, TabPane
+    ModalHeader,
+    Nav,
+    NavItem,
+    NavLink,
+    Row,
+    TabContent,
+    Table,
+    TabPane
 } from "reactstrap";
 import { connect } from "react-redux";
 import Highcharts from 'highcharts'
@@ -52,6 +57,9 @@ class Statistic extends React.Component {
             dates: [],
             totals: [],
             pie: {},
+            byDate: false,
+            from: '',
+            to: '',
         };
 
         this.toggle = this.toggle.bind(this);
@@ -61,6 +69,8 @@ class Statistic extends React.Component {
         this.init = this.init.bind(this);
         this.getData = this.getData.bind(this);
         this.getPieChart = this.getPieChart.bind(this);
+        this.getDate = this.getDate.bind(this);
+        this.toggleByDate = this.toggleByDate.bind(this);
     }
 
 
@@ -175,15 +185,14 @@ class Statistic extends React.Component {
                 avgBuyIn,
                 avgBounty,
                 avgWon,
+
+                from: fromDate,
+                to: toDate,
             });
 
             console.log("games for stat ", filteredGames);
 
-            if (buyIns.length > 1) {
-                this.chart(dates, buyIns, wons, bountys, totals, trends, false);
-            } else {
-                this.chart(dates, buyIns, wons, bountys, totals, trends, true);
-            }
+            this.chart(dates, buyIns, wons, bountys, totals, trends, buyIns.length < 1);
 
             let games = _.filter(this.props.data.games, function (g) {
                 if (_.isNil(g) || _.isNil(g.date)) {
@@ -275,11 +284,28 @@ class Statistic extends React.Component {
         return s;
     }
 
+    getXAxis() {
+        if (this.state.byDate) {
+            return "type : 'datetime'"
+        } else {
+            return "categories: date"
+        }
+    }
+
+    toggleByDate() {
+        this.setState({
+            byDate: !this.state.byDate,
+            options: '',
+        }, () => {
+            this.getData(this.state.from, this.state.to);
+        });
+    }
+
     chart(date, buyIn, won, bounty, total, trend, showDots) {
         this.setState({
             options: {
                 chart: {
-                    type: 'spline',
+                    type: 'spline', 
                 },
                 tooltip: {
                     shared: true,
@@ -311,9 +337,10 @@ class Statistic extends React.Component {
                         stacking: 'normal'
                     },
                 },
-                xAxis: [{
-                    categories: date,
-                }],
+                xAxis: {
+                    type: this.state.byDate ? 'datetime' : '',
+                    categories: this.state.byDate ? '' : date,
+                },
                 legend: {
                     itemMarginBottom: 10,
                     itemStyle: {
@@ -324,7 +351,7 @@ class Statistic extends React.Component {
                     name: 'Buy In',
                     stack: 'data',
                     type: 'column',
-                    data: buyIn,
+                    data: this.mapData(buyIn, date),
                     lineWidth: 1,
                     color: '#DC3545',
                     marker: {
@@ -334,7 +361,7 @@ class Statistic extends React.Component {
                     name: 'Bounty',
                     stack: 'data',
                     type: 'column',
-                    data: bounty,
+                    data: this.mapData(bounty, date),
                     lineWidth: 1,
                     color: '#155724',
                     marker: {
@@ -344,7 +371,7 @@ class Statistic extends React.Component {
                     name: 'Won',
                     stack: 'data',
                     type: 'column',
-                    data: won,
+                    data: this.mapData(won, date),
                     lineWidth: 1,
                     color: '#28A745',
                     marker: {
@@ -353,7 +380,7 @@ class Statistic extends React.Component {
                 }, {
                     name: 'Total',
                     type: 'spline',
-                    data: total,
+                    data: this.mapData(total, date),
                     color: '#6C757D',
                     marker: {
                         enabled: showDots,
@@ -361,7 +388,7 @@ class Statistic extends React.Component {
                 }, {
                     name: 'LMS',
                     type: 'spline',
-                    data: trend,
+                    data: this.mapData(trend, date),
                     dashStyle: "ShortDot",
                     color: '#007BFF',
                     marker: {
@@ -371,6 +398,20 @@ class Statistic extends React.Component {
                 ],
             }
         });
+    }
+
+    mapData(data, date) {
+        const formatted = [];
+
+        for (let i in data) {
+            formatted.push([this.getDate(date[i]), data[i]]);
+        }
+        return formatted;
+    }
+
+    getDate(date) {
+        const d = new moment(date, 'D.M.YY');
+        return this.state.byDate ? d.valueOf() : date;
     }
 
     init() {
@@ -510,6 +551,8 @@ class Statistic extends React.Component {
                     <TimeFilter today={this.props.today}
                         calcData={(fromDate, toDate) => this.getData(fromDate, toDate)}
                         result={sumBuyIn}
+                        toggleByDate={() => this.toggleByDate()}
+                        byDate={this.state.byDate}
                     />
                     <Nav tabs>
                         <NavItem>
