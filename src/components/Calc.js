@@ -57,7 +57,7 @@ class Calc extends React.Component {
             const { data } = this.props;
             let amount = 0;
             if (moment(data.lastGame.date).format() >= lastDay) {
-                amount = data.lastGame.amount;
+                amount = data.lastGame.amount;  //TODO
             };
             this.setState({
                 modal: true,
@@ -182,10 +182,7 @@ class Calc extends React.Component {
 
     updateAmount(evt) {
         const data = this.props.data;
-        const lastGame = { amount: 0, date: moment('2018-01-01').format() }
         if (evt.target.value === '' || isNaN(evt.target.value)) {
-            lastGame.amount = 0;
-            lastGame.date = moment().format();
             this.setState({
                 onOpen: false,
                 amount: 0,
@@ -195,8 +192,10 @@ class Calc extends React.Component {
             });
         } else {
             const amount = _.parseInt(evt.target.value, 10);
-            lastGame.amount = amount;
-            lastGame.date = moment().format();
+            data.lastGame.amount = amount;
+            data.lastGame.date = moment().format();
+            store.dispatch(saveUsers(data));
+
             this.setState({
                 onOpen: false,
                 amount,
@@ -216,8 +215,6 @@ class Calc extends React.Component {
                 }
             });
         }
-        data.lastGame = lastGame;
-        store.dispatch(saveUsers(data));
     }
 
     handleKeyPress(target) {
@@ -230,6 +227,7 @@ class Calc extends React.Component {
     }
 
     render() {
+        const invalid = !this.state.amountOk  && !this.state.onOpen;
         return (<div>
             <FontAwesomeIcon icon={faPeopleArrows} onClick={this.toggle} style={{ fontSize: MENU_SIZE }} />
             <div style={{ fontSize: MENU_FONT }}>Payout</div>
@@ -252,8 +250,7 @@ class Calc extends React.Component {
                                                 type="number" name="amount" id="amount"
                                                 onChange={this.updateAmount}
                                                 value={this.state.amount}
-                                                valid={this.state.amountOk}
-                                                invalid={!this.state.amountOk && !this.state.onOpen}
+                                                invalid={invalid}
                                             />
                                             <InputGroupText addonType="apend">
                                                 <FontAwesomeIcon
@@ -263,7 +260,11 @@ class Calc extends React.Component {
                                                 />
                                             </InputGroupText>
                                         </InputGroup>
-                                        <FormFeedback invalid>Must be a divisor of 10</FormFeedback>
+                                        <div
+                                            style={{ color: "red", fontSize: "0.8em", visibility: invalid ?  'visible' : 'hidden'}}
+                                        >
+                                            Must be a divisor of 10
+                                        </div>
                                     </span>
                                     : <b>{this.state.amount}</b>}
                             </Col>
