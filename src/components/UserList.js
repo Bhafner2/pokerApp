@@ -190,20 +190,18 @@ class UserList extends React.Component {
         user.sumWon = 0;
         user.sumBounty = 0;
         user.gamesPlayed = 0;
-        user.lastBuyIn = buyIn > 0 && user.lastBuyIn <= moment(date).format() ? moment(date).format() : firstDay;
-        user.lastBuyInOk = buyIn > 0 ? this.state.lastBuyInOk : firstDay;
 
         for (let i = 0; i < user.games.length; i++) {
             if (this.state.date === user.games[i].date) {
-                if (user.games[i].buyIn !== buyIn || user.games[i].won !== won || user.games[i].bounty !== bounty) {
+                if (user.games[i].buyIn !== buyIn || user.games[i].won !== won || user.games[i].bounty !== bounty|| user.lastBuyInOk !== this.state.lastBuyInOk) {
                     user.games[i].buyIn = buyIn;
                     user.games[i].won = won;
                     user.games[i].bounty = bounty;
                 } else {
-                //    save = false;
+                    save = false;
                 }
                 found = true;
-                //    console.log("game successfully updated " + user.name + ", date: " + date + " buyIn " + user.games[i].buyIn + " won " + user.games[i].won, " bounty ", user.games[i].bounty);
+                    console.log("game successfully updated " + user.name + ", date: " + date + " buyIn " + user.games[i].buyIn + " won " + user.games[i].won, " bounty ", user.games[i].bounty);
             }
             if (user.games[i].buyIn > 0) {
                 user.sumBuyIn += user.games[i].buyIn;
@@ -232,8 +230,11 @@ class UserList extends React.Component {
                 user.gamesPlayed++;
             }
 
-            // console.log("game successfully created " + user.name + ", date: " + this.state.date + " buyIn " + game.buyIn + " won " + game.won, " bounty ", game.bounty);
+             console.log("game successfully created " + user.name + ", date: " + this.state.date + " buyIn " + game.buyIn + " won " + game.won, " bounty ", game.bounty);
         }
+
+        user.lastBuyIn = buyIn > 0 && user.lastBuyIn <= moment(date).format() ? moment(date).format() : firstDay;
+        user.lastBuyInOk = buyIn > 0 ? this.state.lastBuyInOk : firstDay;
 
         data.games = this.calcGames(users);
         if (save) {
