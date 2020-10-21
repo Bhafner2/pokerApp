@@ -301,8 +301,8 @@ class Odds extends React.Component {
             );
         return (
             <div>
-                <FontAwesomeIcon icon={faBalanceScale} onClick={this.toggle} style={{ fontSize: MENU_SIZE }} />
-                <div style={{ fontSize: MENU_FONT }}>Odds</div>
+                <FontAwesomeIcon icon={faBalanceScale} onClick={this.toggle} style={{ fontSize: MENU_SIZE, color: "black" }} />
+                <div style={{ fontSize: MENU_FONT, color: "black" }}>Odds</div>
 
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                     onKeyPress={() => this.handleKeyPress}>

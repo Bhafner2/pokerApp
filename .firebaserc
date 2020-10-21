@@ -1,5 +1,15 @@
 {
   "projects": {
-    "pokerApp": "pokerapp-2ed68"
+    "pokerApp": "pokerapp-2ed68",
+    "default": "pokerapp-2ed68"
+  },
+  "targets": {
+    "pokerapp-2ed68": {
+      "hosting": {
+        "production": [
+          "pokerapp-2ed68"
+        ]
+      }
+    }
   }
 }

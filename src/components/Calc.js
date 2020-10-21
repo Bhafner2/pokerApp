@@ -219,8 +219,8 @@ class Calc extends React.Component {
         const invalid = (amount % 10) !== 0 && !this.state.onOpen;
 
         return (<div>
-            <FontAwesomeIcon icon={faPeopleArrows} onClick={this.toggle} style={{ fontSize: MENU_SIZE }} />
-            <div style={{ fontSize: MENU_FONT }}>Payout</div>
+            <FontAwesomeIcon icon={faPeopleArrows} onClick={this.toggle} style={{ fontSize: MENU_SIZE, color: "black" }} />
+            <div style={{ fontSize: MENU_FONT, color: "black" }}>Payout</div>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                 onKeyPress={this.handleKeyPress}

@@ -83,8 +83,8 @@ class Search extends Component {
     render() {
         return (
             <div>
-                <FontAwesomeIcon icon={faSearch} onClick={this.toggleMenu} style={{ fontSize: MENU_SIZE, color: this.state.showMenu ? "#007BFF" : "black"}} />
-                <div style={{ fontSize: MENU_FONT }}>Search</div>
+                <FontAwesomeIcon icon={faSearch} onClick={this.toggleMenu} style={{ fontSize: MENU_SIZE, color: this.state.showMenu ? "#007BFF" : "black" }} />
+                <div style={{ fontSize: MENU_FONT, color: this.state.showMenu ? "#007BFF" : "black" }}>Search</div>
                 <div>
                     <Collapse isOpen={this.state.showMenu} style={{
                         backgroundColor: "whitesmoke",
@@ -103,9 +103,9 @@ class Search extends Component {
                             <Col xs={12}>
                                 <InputGroup style={{ paddingTop: "12px" }}>
                                     <InputGroupButtonDropdown addonType="append" isOpen={this.statedropdownOpen} toggle={this.toggleDropDown}>
-                                        <Dropdown  direction="up" isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
+                                        <Dropdown direction="up" isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
                                             <DropdownToggle caret style={{ border: " 1px solid", borderColor: "#CDD4DA", backgroundColor: "#E8ECEF", color: "#007BFF" }}>
-                                            <FontAwesomeIcon icon={faSortAmountDownAlt} />
+                                                <FontAwesomeIcon icon={faSortAmountDownAlt} />
                                             </DropdownToggle>
                                             <DropdownMenu>
                                                 <DropdownItem

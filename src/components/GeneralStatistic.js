@@ -1100,8 +1100,8 @@ class GeneralStatistic extends React.Component {
 
         return (
             <div>
-                <FontAwesomeIcon icon={faTrophy} onClick={this.toggle} style={{ fontSize: MENU_SIZE }} />
-                <div style={{ fontSize: MENU_FONT }}>Ranking</div>
+                <FontAwesomeIcon icon={faTrophy} onClick={this.toggle} style={{ fontSize: MENU_SIZE, color: "black" }} />
+                <div style={{ fontSize: MENU_FONT, color: "black" }}>Ranking</div>
 
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                     onKeyPress={this.handleKeyPress} onOpened={this.usersPercentFilter}
