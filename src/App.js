@@ -12,7 +12,10 @@ import logo from './img/logo.png';
 import * as _ from 'lodash';
 import moment from "moment/moment";
 
-export const AppVersion = 'v2.1.0';
+export const AppVersion = 'v2.1.1';
+export const BOUNTY_AMOUNT = 5;
+export const POT_AMOUNT = 20;
+
 export function showLoading() {
     return (
         <Row>

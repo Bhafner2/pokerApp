@@ -24,7 +24,7 @@ import firebase from "../config/firebase";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRubleSign } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
-import { isToday } from '../App';
+import { BOUNTY_AMOUNT, isToday, POT_AMOUNT } from '../App';
 
 const lastDay = moment().subtract(28, 'h').format();
 const firstDay = moment('2018-01-01').format();
@@ -335,8 +335,6 @@ class UserList extends React.Component {
 
     render() {
         const { user } = this.props;
-        const BOUNTY_AMOUNT = 5;
-        const POT_AMOUNT = 20;
 
         return (<div>
             <ListGroupItem key={this.props.key}

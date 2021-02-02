@@ -23,6 +23,7 @@ import { store } from '../redux/store';
 import moment from 'moment';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import UserList from "./UserList";
+import { POT_AMOUNT } from '../App';
 
 const lastDay = moment().subtract(28, 'h').format();
 
@@ -248,7 +249,7 @@ class Calc extends React.Component {
                                 {UserList.isAdmin() ?
                                     <span>
                                         <InputGroup>
-                                            <Button onClick={() => this.updateAmount({ target: { value: amount - 20 } })} color="danger">
+                                            <Button onClick={() => this.updateAmount({ target: { value: amount - POT_AMOUNT } })} color="danger">
                                                 -
                                             </Button>
                                             <Input autoFocus
@@ -257,7 +258,7 @@ class Calc extends React.Component {
                                                 value={amount}
                                                 invalid={invalid}
                                             />
-                                            <Button onClick={() => this.updateAmount({ target: { value: amount + 20 } })} color="success">
+                                            <Button onClick={() => this.updateAmount({ target: { value: amount + POT_AMOUNT } })} color="success">
                                                 +
                                             </Button>
                                             <InputGroupText addonType="apend">

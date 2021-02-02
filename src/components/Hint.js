@@ -2,7 +2,7 @@ import React from 'react';
 import {Popover, PopoverHeader, PopoverBody, Row, Col, Input, Button} from 'reactstrap';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faQuestionCircle} from "@fortawesome/free-solid-svg-icons";
-import {showNumber} from "../App";
+import {BOUNTY_AMOUNT, POT_AMOUNT, showNumber} from "../App";
 
 class Hint extends React.Component {
     constructor(props) {
@@ -13,7 +13,7 @@ class Hint extends React.Component {
         this.update = this.update.bind(this);
         this.state = {
             popoverOpen: false,
-            percent: 25,
+            percent: POT_AMOUNT + BOUNTY_AMOUNT,
         };
     }
 
