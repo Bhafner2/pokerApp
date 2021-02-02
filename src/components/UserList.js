@@ -335,6 +335,9 @@ class UserList extends React.Component {
 
     render() {
         const { user } = this.props;
+        const BOUNTY_AMOUNT = 5;
+        const POT_AMOUNT = 20;
+
         return (<div>
             <ListGroupItem key={this.props.key}
                 style={{
@@ -414,7 +417,7 @@ class UserList extends React.Component {
                                 </Col>
                                 <Col xs="7">
                                     <ButtonGroup>
-                                        <Button onClick={() => this.setState({ buyIn: _.parseInt(this.state.buyIn - 12) })} color="danger">
+                                        <Button onClick={() => this.setState({ buyIn: _.parseInt(this.state.buyIn - (POT_AMOUNT + BOUNTY_AMOUNT) ) })} color="danger">
                                             -
                                             </Button>
                                         <Input autoFocus
@@ -422,7 +425,7 @@ class UserList extends React.Component {
                                             onChange={this.updateBuyIn}
                                             value={this.state.buyIn}
                                         />
-                                        <Button onClick={() => this.setState({ buyIn: _.parseInt(this.state.buyIn + 12) })} color="success">
+                                        <Button onClick={() => this.setState({ buyIn: _.parseInt(this.state.buyIn + (POT_AMOUNT + BOUNTY_AMOUNT)) })} color="success">
                                             +
                                             </Button>
                                     </ButtonGroup>
@@ -434,7 +437,7 @@ class UserList extends React.Component {
                                 </Col>
                                 <Col xs="7">
                                     <ButtonGroup>
-                                        <Button onClick={() => this.setState({ won: _.parseInt(this.state.won - 10) })} color="danger">
+                                        <Button onClick={() => this.setState({ won: _.parseInt(this.state.won - POT_AMOUNT) })} color="danger">
                                             -
                                             </Button>
                                         <Input autoFocus
@@ -442,7 +445,7 @@ class UserList extends React.Component {
                                             onChange={this.updateWon}
                                             value={this.state.won}
                                         />
-                                        <Button onClick={() => this.setState({ won: _.parseInt(this.state.won + 10) })} color="success">
+                                        <Button onClick={() => this.setState({ won: _.parseInt(this.state.won + POT_AMOUNT) })} color="success">
                                             +
                                             </Button>
                                     </ButtonGroup>
@@ -454,7 +457,7 @@ class UserList extends React.Component {
                                 </Col>
                                 <Col xs="7">
                                     <ButtonGroup>
-                                        <Button onClick={() => this.setState({ bounty: _.parseInt(this.state.bounty - 2) })} color="danger">
+                                        <Button onClick={() => this.setState({ bounty: _.parseInt(this.state.bounty - BOUNTY_AMOUNT) })} color="danger">
                                             -
                                             </Button>
                                         <Input autoFocus
@@ -462,7 +465,7 @@ class UserList extends React.Component {
                                             onChange={this.updateBounty}
                                             value={this.state.bounty}
                                         />
-                                        <Button onClick={() => this.setState({ bounty: _.parseInt(this.state.bounty + 2) })} color="success">
+                                        <Button onClick={() => this.setState({ bounty: _.parseInt(this.state.bounty + BOUNTY_AMOUNT) })} color="success">
                                             +
                                             </Button>
                                     </ButtonGroup>

@@ -13,7 +13,7 @@ class Hint extends React.Component {
         this.update = this.update.bind(this);
         this.state = {
             popoverOpen: false,
-            percent: 20,
+            percent: 25,
         };
     }
 
