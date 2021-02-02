@@ -312,7 +312,7 @@ class Calc extends React.Component {
                                             Must be between 1 and 4
                                        </div>
                                     </span>
-                                    : <b>{amount}</b>}
+                                    : <b>{payout}</b>}
                             </Col>
                         </Row>
                         <br />
