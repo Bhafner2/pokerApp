@@ -45,6 +45,8 @@ class Calc extends React.Component {
         this.toggle = this.toggle.bind(this);
 
         this.updateAmount = this.updateAmount.bind(this);
+        this.updatePayout = this.updatePayout.bind(this);
+        this.sendToDb = this.sendToDb.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.roundResults = this.roundResults.bind(this);
     }
@@ -71,7 +73,7 @@ class Calc extends React.Component {
 
     calculate() {
         const factor = 1000;
-        const { amount } = this.props.data.lastGame;
+        const { amount, payout } = this.props.data.lastGame;
         if (amount < 10 || amount % 10 !== 0) {
             this.setState({
                 p11: 0,
@@ -83,7 +85,7 @@ class Calc extends React.Component {
                 p23: 0,
                 p24: 0,
             });
-        } else if (amount < 40) {
+        } else if (payout === 1) {
             this.setState({
                 p11: amount,
                 p12: 0,
@@ -96,7 +98,7 @@ class Calc extends React.Component {
             }, () => {
                 this.roundResults()
             });
-        } else if (amount < 100) {
+        } else if (payout === 2) {
             this.setState({
                 p11: Math.round(amount * 70 / factor) * 10,
                 p12: Math.round(amount * 30 / factor) * 10,
@@ -109,7 +111,7 @@ class Calc extends React.Component {
             }, () => {
                 this.roundResults()
             });
-        } else if (amount < 200) {
+        } else if (payout === 3) {
             this.setState({
                 p11: Math.round(amount * 55 / factor) * 10,
                 p12: Math.round(amount * 33 / factor) * 10,
@@ -181,28 +183,37 @@ class Calc extends React.Component {
 
     updateAmount(evt) {
         const data = this.props.data;
-        if (evt.target.value === '' || isNaN(evt.target.value)) {
-            data.lastGame.amount = 0;
-            data.lastGame.date = moment().format();
-            store.dispatch(saveUsers(data));
-
-            this.setState({
-                onOpen: false,
-            }, () => {
-                this.calculate()
-            });
+        if (evt.target.value === '' || evt.target.value < 0 || isNaN(evt.target.value)) {
+            this.sendToDb(0, data.lastGame.payout);
         } else {
             const amount = _.parseInt(evt.target.value, 10);
-            data.lastGame.amount = amount;
-            data.lastGame.date = moment().format();
-            store.dispatch(saveUsers(data));
-
-            this.setState({
-                onOpen: false,
-            }, () => {
-                this.calculate()
-            });
+            this.sendToDb(amount, data.lastGame.payout);
         }
+    }
+
+    updatePayout(evt) {
+        const data = this.props.data;
+        if (evt.target.value === '' || evt.target.value < 0 || isNaN(evt.target.value)) {
+            this.sendToDb(data.lastGame.amount, 0);
+        } else {
+            const payout = _.parseInt(evt.target.value, 10);
+            this.sendToDb(data.lastGame.amount, payout);
+        }
+    }
+
+    sendToDb(amount, payout, date = moment().format()){
+        const data = this.props.data;
+
+        data.lastGame.amount = amount;
+        data.lastGame.date = date
+        data.lastGame.payout = payout;
+        store.dispatch(saveUsers(data));
+
+        this.setState({
+            onOpen: false,
+        }, () => {
+            this.calculate()
+        });
     }
 
     handleKeyPress(target) {
@@ -215,8 +226,9 @@ class Calc extends React.Component {
     }
 
     render() {
-        const { amount } = this.props.data.lastGame;
+        const { amount, payout } = this.props.data.lastGame;
         const invalid = (amount % 10) !== 0 && !this.state.onOpen;
+        const invalidPayout = payout < 0 || payout > 4;
 
         return (<div>
             <FontAwesomeIcon icon={faPeopleArrows} onClick={this.toggle} style={{ fontSize: MENU_SIZE, color: "black" }} />
@@ -228,7 +240,7 @@ class Calc extends React.Component {
                 <ModalHeader toggle={this.toggle}>Payout</ModalHeader>
                 <ModalBody>
                     <div style={{ padding: "10px" }}>
-                        <Row>
+                    <Row>
                             <Col xs="4">
                                 <b>Pot size</b>
                             </Col>
@@ -236,12 +248,18 @@ class Calc extends React.Component {
                                 {UserList.isAdmin() ?
                                     <span>
                                         <InputGroup>
+                                            <Button onClick={() => this.updateAmount({ target: { value: amount - 20 } })} color="danger">
+                                                -
+                                            </Button>
                                             <Input autoFocus
                                                 type="number" name="amount" id="amount"
                                                 onChange={this.updateAmount}
                                                 value={amount}
                                                 invalid={invalid}
                                             />
+                                            <Button onClick={() => this.updateAmount({ target: { value: amount + 20 } })} color="success">
+                                                +
+                                            </Button>
                                             <InputGroupText addonType="apend">
                                                 <FontAwesomeIcon
                                                     style={{ color: amount === 0 ? "black" : "007BFF" }}
@@ -255,6 +273,43 @@ class Calc extends React.Component {
                                         >
                                             Must be a divisor of 10
                                         </div>
+                                    </span>
+                                    : <b>{amount}</b>}
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs="4">
+                                <b>Payout</b>
+                            </Col>
+                            <Col xs="8">
+                                {UserList.isAdmin() ?
+                                    <span>
+                                        <InputGroup>
+                                                <Button onClick={() => this.updatePayout({ target: { value: payout < 1 ? 0: payout - 1 } })} color="danger">
+                                                    -
+                                                </Button>
+                                                <Input
+                                                    type="number" name="payout" id="payout"
+                                                    onChange={this.updatePayout}
+                                                    value={payout}
+                                                    invalid={invalidPayout}
+                                                />
+                                                <Button onClick={() => this.updatePayout({ target: { value: payout + 1 } })} color="success">
+                                                    +
+                                                </Button>
+                                            <InputGroupText addonType="apend">
+                                                <FontAwesomeIcon
+                                                    style={{ color: payout === 3 ? "black" : "007BFF" }}
+                                                    icon={faTrash}
+                                                    onClick={() => this.updatePayout({ target: { value: 3 } })}
+                                                />
+                                            </InputGroupText>
+                                        </InputGroup>
+                                        <div
+                                            style={{ color: "red", fontSize: "0.8em", visibility: invalidPayout ? 'visible' : 'hidden' }}
+                                        >
+                                            Must be between 1 and 4
+                                       </div>
                                     </span>
                                     : <b>{amount}</b>}
                             </Col>
