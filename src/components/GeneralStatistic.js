@@ -605,8 +605,8 @@ class GeneralStatistic extends React.Component {
                                 </InputGroup>
                             </Col>
                         </Row>
-                        <Row>
-                            <Col xs={3} style={{ paddingRight: "0.2em", paddingLeft: "1em" }}>
+                        <Row style={{ paddingRight: "1em", paddingLeft: "1em", paddingTop: "0.2em", paddingBottom: "0px"}}>
+                            <Col xs={3} style={{ paddingRight: "0.2em", paddingLeft: "0.2em" }}>
                                 <Button style={{ fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px" }}
                                     size="sm" color="link"
                                     onClick={this.last3m}
@@ -623,6 +623,28 @@ class GeneralStatistic extends React.Component {
                                     6 Month
                                 </Button>
                             </Col>
+                            <Col xs={3} style={{ paddingRight: "0.2em", paddingLeft: "0.2em" }}>
+                                <Button style={{ fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px" }}
+                                    size="sm"
+                                    color="link"
+                                    onClick={this.lastMonths}
+                                    value={9}
+                                >
+                                    9 Month
+                                </Button>
+                            </Col>
+                            <Col xs={3} style={{ paddingRight: "0.2em", paddingLeft: "0.2em" }}>
+                                <Button style={{ fontSize: "0.8em", paddingRight: "0px", paddingLeft: "0px" }}
+                                    size="sm"
+                                    color="link"
+                                    onClick={this.lastMonths}
+                                    value={12}
+                                >
+                                    Year
+                                </Button>
+                            </Col>
+                        </Row>
+                        <Row style={{ paddingRight: "1em", paddingLeft: "1em", paddingTop: "0px"}}>
                             {years}
                         </Row>
                         <Row style={{ paddingTop: "12px" }}>
