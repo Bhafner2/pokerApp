@@ -657,15 +657,15 @@ class GeneralStatistic extends React.Component {
                             </Col>
                             <Col xs={3}>
                                 <Button style={{ fontSize: "0.8em" }} size="sm" color="link" value={25}
-                                    onClick={this.usersPercentFilter}>>25%</Button>
+                                    onClick={this.usersPercentFilter}>{'>'}25%</Button>
                             </Col>
                             <Col xs={3}>
                                 <Button style={{ fontSize: "0.8em" }} size="sm" color="link" value={50}
-                                    onClick={this.usersPercentFilter}>>50%</Button>
+                                    onClick={this.usersPercentFilter}>{'>'}50%</Button>
                             </Col>
                             <Col xs={3}>
                                 <Button style={{ fontSize: "0.8em" }} size="sm" color="link" value={75}
-                                    onClick={this.usersPercentFilter}>>75%</Button>
+                                    onClick={this.usersPercentFilter}>{'>'}75%</Button>
                             </Col>
                         </Row>
                         <Row style={{ paddingTop: "6px" }}>

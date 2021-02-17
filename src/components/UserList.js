@@ -415,7 +415,7 @@ class UserList extends React.Component {
                                 </Col>
                                 <Col xs="7">
                                     <ButtonGroup>
-                                        <Button onClick={() => this.setState({ buyIn: _.parseInt(this.state.buyIn - (POT_AMOUNT + BOUNTY_AMOUNT) ) })} color="danger">
+                                        <Button disabled={ this.state.buyIn < 1 } onClick={() => this.setState({ buyIn: _.parseInt(this.state.buyIn - (POT_AMOUNT + BOUNTY_AMOUNT) ) })} color="danger">
                                             -
                                             </Button>
                                         <Input autoFocus
@@ -435,7 +435,7 @@ class UserList extends React.Component {
                                 </Col>
                                 <Col xs="7">
                                     <ButtonGroup>
-                                        <Button onClick={() => this.setState({ won: _.parseInt(this.state.won - POT_AMOUNT) })} color="danger">
+                                        <Button disabled={ this.state.won < 1 } onClick={() => this.setState({ won: _.parseInt(this.state.won - POT_AMOUNT) })} color="danger">
                                             -
                                             </Button>
                                         <Input autoFocus
@@ -455,7 +455,7 @@ class UserList extends React.Component {
                                 </Col>
                                 <Col xs="7">
                                     <ButtonGroup>
-                                        <Button onClick={() => this.setState({ bounty: _.parseInt(this.state.bounty - BOUNTY_AMOUNT) })} color="danger">
+                                        <Button disabled={ this.state.bounty < 1 } onClick={() => this.setState({ bounty: _.parseInt(this.state.bounty - BOUNTY_AMOUNT) })} color="danger">
                                             -
                                             </Button>
                                         <Input autoFocus
