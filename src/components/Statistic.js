@@ -657,7 +657,7 @@ class Statistic extends React.Component {
                                             </Col>
                                             <Col xs={4}>
                                                 {showNumber(_.filter(totals, (total) => {
-                                                    return total > 0;
+                                                    return total >= 0;
                                                 }).length / dates.length * 100)}%
                                             </Col>
                                         </Row>
