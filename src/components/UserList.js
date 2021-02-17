@@ -24,7 +24,7 @@ import firebase from "../config/firebase";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRubleSign } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
-import { BOUNTY_AMOUNT, isToday, POT_AMOUNT } from '../App';
+import { isToday } from '../App';
 
 const lastDay = moment().subtract(28, 'h').format();
 const firstDay = moment('2018-01-01').format();
@@ -335,6 +335,7 @@ class UserList extends React.Component {
 
     render() {
         const { user } = this.props;
+        const { bountyAmount, potAmount } = this.props.data.config;
 
         return (<div>
             <ListGroupItem key={this.props.key}
@@ -415,7 +416,7 @@ class UserList extends React.Component {
                                 </Col>
                                 <Col xs="7">
                                     <ButtonGroup>
-                                        <Button disabled={ this.state.buyIn < 1 } onClick={() => this.setState({ buyIn: _.parseInt(this.state.buyIn - (POT_AMOUNT + BOUNTY_AMOUNT) ) })} color="danger">
+                                        <Button disabled={ this.state.buyIn < 1 } onClick={() => this.setState({ buyIn: _.parseInt(this.state.buyIn - (potAmount + bountyAmount) ) })} color="danger">
                                             -
                                             </Button>
                                         <Input autoFocus
@@ -423,7 +424,7 @@ class UserList extends React.Component {
                                             onChange={this.updateBuyIn}
                                             value={this.state.buyIn}
                                         />
-                                        <Button onClick={() => this.setState({ buyIn: _.parseInt(this.state.buyIn + (POT_AMOUNT + BOUNTY_AMOUNT)) })} color="success">
+                                        <Button onClick={() => this.setState({ buyIn: _.parseInt(this.state.buyIn + (potAmount + bountyAmount)) })} color="success">
                                             +
                                             </Button>
                                     </ButtonGroup>
@@ -435,7 +436,7 @@ class UserList extends React.Component {
                                 </Col>
                                 <Col xs="7">
                                     <ButtonGroup>
-                                        <Button disabled={ this.state.won < 1 } onClick={() => this.setState({ won: _.parseInt(this.state.won - POT_AMOUNT) })} color="danger">
+                                        <Button disabled={ this.state.won < 1 } onClick={() => this.setState({ won: _.parseInt(this.state.won - potAmount) })} color="danger">
                                             -
                                             </Button>
                                         <Input autoFocus
@@ -443,7 +444,7 @@ class UserList extends React.Component {
                                             onChange={this.updateWon}
                                             value={this.state.won}
                                         />
-                                        <Button onClick={() => this.setState({ won: _.parseInt(this.state.won + POT_AMOUNT) })} color="success">
+                                        <Button onClick={() => this.setState({ won: _.parseInt(this.state.won + potAmount) })} color="success">
                                             +
                                             </Button>
                                     </ButtonGroup>
@@ -455,7 +456,7 @@ class UserList extends React.Component {
                                 </Col>
                                 <Col xs="7">
                                     <ButtonGroup>
-                                        <Button disabled={ this.state.bounty < 1 } onClick={() => this.setState({ bounty: _.parseInt(this.state.bounty - BOUNTY_AMOUNT) })} color="danger">
+                                        <Button disabled={ this.state.bounty < 1 } onClick={() => this.setState({ bounty: _.parseInt(this.state.bounty - bountyAmount) })} color="danger">
                                             -
                                             </Button>
                                         <Input autoFocus
@@ -463,7 +464,7 @@ class UserList extends React.Component {
                                             onChange={this.updateBounty}
                                             value={this.state.bounty}
                                         />
-                                        <Button onClick={() => this.setState({ bounty: _.parseInt(this.state.bounty + BOUNTY_AMOUNT) })} color="success">
+                                        <Button onClick={() => this.setState({ bounty: _.parseInt(this.state.bounty + bountyAmount) })} color="success">
                                             +
                                             </Button>
                                     </ButtonGroup>

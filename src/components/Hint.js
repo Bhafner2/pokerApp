@@ -3,6 +3,7 @@ import {Popover, PopoverHeader, PopoverBody, Row, Col, Input, Button} from 'reac
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faQuestionCircle} from "@fortawesome/free-solid-svg-icons";
 import {BOUNTY_AMOUNT, POT_AMOUNT, showNumber} from "../App";
+import { connect } from "react-redux";
 
 class Hint extends React.Component {
     constructor(props) {
@@ -13,14 +14,16 @@ class Hint extends React.Component {
         this.update = this.update.bind(this);
         this.state = {
             popoverOpen: false,
-            percent: POT_AMOUNT + BOUNTY_AMOUNT,
+            percent: 0,
         };
     }
 
     toggle() {
-        this.setState({
-            popoverOpen: !this.state.popoverOpen
+        const { bountyAmount, potAmount } = this.props.data.config;
 
+        this.setState({
+            popoverOpen: !this.state.popoverOpen,
+            percent: bountyAmount / potAmount * 100,
         });
     }
 
@@ -126,4 +129,13 @@ class Hint extends React.Component {
     }
 }
 
-export default Hint;
+const mapStateToProps = state => {
+    return {
+        data: state
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    {}
+)(Hint);

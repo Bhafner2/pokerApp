@@ -22,12 +22,13 @@ export default (state, action) => {
             return state;
         case GET_USERS_FULFILLED:
             console.log("reducer get users fulfilled", action.data);
-            let newState = { users: [], actualUser: {}, connErr: false, login: true, loginError: '', load: false, lastGame: {} };
+            let newState = { users: [], actualUser: {}, connErr: false, login: true, loginError: '', load: false, lastGame: {},  config: {} };
             return ({
                 ...newState,
                 users: action.data.users,
                 games: action.data.games,
                 lastGame: action.data.lastGame,
+                config: action.data.config,
             });
         case CONNECTION_ERROR:
             console.log("reducer connection error", action.connErr);

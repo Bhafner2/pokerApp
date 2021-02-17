@@ -19,6 +19,9 @@ import {
 import { connect } from 'react-redux'
 import moment from "moment/moment";
 import { isToday, logout, AppVersion } from '../App';
+import { saveUsers } from '../redux/actions';
+import { store } from '../redux/store';
+import UserList from "./UserList";
 
 class Menu extends Component {
     constructor(props) {
@@ -32,6 +35,7 @@ class Menu extends Component {
         this.resetDate = this.resetDate.bind(this);
         this.toggleMenu = this.toggleMenu.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
+        this.updatePotAmount = this.updatePotAmount.bind(this);
     }
 
     componentDidMount() {
@@ -66,7 +70,28 @@ class Menu extends Component {
         });
     }
 
+    updatePotAmount(amount) {
+        const data = this.props.data;
+        if (amount === '' || amount < 0 || isNaN(amount)) {
+            data.config.potAmount = 0;
+        } else {
+            data.config.potAmount = amount;
+        }
+        store.dispatch(saveUsers(data));
+    }
+
+    updateBountyAmount(amount) {
+        const data = this.props.data;
+        if (amount === '' || amount < 0 || isNaN(amount)) {
+            data.config.bountyAmount = 0;
+        } else {
+            data.config.bountyAmount = amount;
+        }
+        store.dispatch(saveUsers(data));
+    }
+
     render() {
+        const { potAmount, bountyAmount } = this.props.data.config;
         return (
             <div>
                 <FontAwesomeIcon id={"hamburger"} icon={faBars} onClick={this.toggleMenu} />
@@ -75,16 +100,55 @@ class Menu extends Component {
                         <CardBody style={{ padding: "0 40px 0 40px" }}>
                             <Row className="menuItem">
                                 <Col xs={12}>
-                                    Menu
+                                   <b>Menu</b>
                                 </Col>
                             </Row>
-                            <Row className="menuItem">
-                                <Col xs={12}>
-                                    <Button onClick={logout} color={"link"} >
-                                        Logout
-                                    </Button>
-                                </Col>
-                            </Row>
+                            {UserList.isAdmin() ? 
+                                <span>
+                                    <Row className="menuItem">
+                                    <Col xs={4} style={{paddingLeft: "0px", paddingRight: "0px", paddingTop: "0.2em"}}>
+                                        BuyIn:
+                                    </Col>
+                                    <Col xs={8}>
+                                            <InputGroup>
+                                                <Button disabled={ potAmount < 1 } onClick={() => this.updatePotAmount(potAmount - 1)} color="danger">
+                                                    -
+                                                </Button>
+                                                <Input
+                                                    type="number" name="potAmount" id="potAmount"
+                                                    onChange={this.updatePotAmount}
+                                                    value={potAmount}
+                                                />
+                                                <Button onClick={() => this.updatePotAmount( potAmount + 1)} color="success">
+                                                    +
+                                                </Button>
+                                            </InputGroup>
+                                        </Col>
+                                    </Row>
+                                    <Row className="menuItem">
+                                        <Col xs={4} style={{paddingLeft: "0px", paddingRight: "0px", paddingTop: "0.2em"}}>
+                                            Bounty:
+                                        </Col>
+                                        <Col xs={8}>
+                                            <InputGroup>
+                                                <Button disabled={ bountyAmount < 1 } onClick={() => this.updateBountyAmount(bountyAmount - 1)} color="danger">
+                                                    -
+                                                </Button>
+                                                <Input
+                                                    type="number" name="bountyAmount" id="bountyAmount"
+                                                    onChange={this.updateBountyAmount}
+                                                    value={bountyAmount}
+                                                />
+                                                <Button onClick={() => this.updateBountyAmount( bountyAmount + 1)} color="success">
+                                                    +
+                                                </Button>
+                                            </InputGroup>
+                                        </Col>
+                                    </Row>                            
+                                </span>
+                            :
+                                <span></span>
+                            }
                             <Row className="menuItem">
                                 <Col xs={12}>
                                     <InputGroup>
@@ -101,6 +165,13 @@ class Menu extends Component {
                                             />
                                         </InputGroupText>
                                     </InputGroup>
+                                </Col>
+                            </Row>
+                            <Row className="menuItem">
+                                <Col xs={12}>
+                                    <Button onClick={logout} color={"link"} >
+                                        Logout
+                                    </Button>
                                 </Col>
                             </Row>
                             <Row className="menuItem">

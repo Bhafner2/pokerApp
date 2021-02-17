@@ -71,10 +71,14 @@ function fetchUsers() {
         }
 
         const lastGame = snapshot.val().lastGame;
+
+        const config = snapshot.val().config;
+
         let data = {
             users,
             games,
             lastGame,
+            config,
         };
 
         store.dispatch(getUsersFulfilled(data));
