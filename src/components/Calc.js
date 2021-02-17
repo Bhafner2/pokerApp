@@ -37,10 +37,12 @@ class Calc extends React.Component {
             p12: 0,
             p13: 0,
             p14: 0,
+            p15: 0,
             p21: 0,
             p22: 0,
             p23: 0,
             p24: 0,
+            p25: 0,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -81,10 +83,12 @@ class Calc extends React.Component {
                 p12: 0,
                 p13: 0,
                 p14: 0,
+                p15: 0,
                 p21: 0,
                 p22: 0,
                 p23: 0,
                 p24: 0,
+                p25: 0,
             });
         } else if (payout === 1) {
             this.setState({
@@ -92,10 +96,12 @@ class Calc extends React.Component {
                 p12: 0,
                 p13: 0,
                 p14: 0,
+                p15: 0,
                 p21: amount,
                 p22: 0,
                 p23: 0,
                 p24: 0,
+                p25: 0,
             }, () => {
                 this.roundResults()
             });
@@ -105,10 +111,12 @@ class Calc extends React.Component {
                 p12: Math.round(amount * 30 / factor) * 10,
                 p13: 0,
                 p14: 0,
+                p15: 0,
                 p21: Math.round(amount * 65 / factor) * 10,
                 p22: Math.round(amount * 35 / factor) * 10,
                 p23: 0,
                 p24: 0,
+                p25: 0,
             }, () => {
                 this.roundResults()
             });
@@ -118,23 +126,43 @@ class Calc extends React.Component {
                 p12: Math.round(amount * 33 / factor) * 10,
                 p13: Math.round(amount * 12 / factor) * 10,
                 p14: 0,
+                p15: 0,
                 p21: Math.round(amount * 48 / factor) * 10,
-                p22: Math.round(amount * 32 / factor) * 10,
-                p23: Math.round(amount * 20 / factor) * 10,
+                p22: Math.round(amount * 34 / factor) * 10,
+                p23: Math.round(amount * 18 / factor) * 10,
                 p24: 0,
+                p25: 0,
             }, () => {
                 this.roundResults()
             });
-        } else {
+        }  else if (payout === 4) {
             this.setState({
                 p11: Math.round(amount * 55 / factor) * 10,
                 p12: Math.round(amount * 27 / factor) * 10,
                 p13: Math.round(amount * 13 / factor) * 10,
                 p14: Math.round(amount * 5 / factor) * 10,
+                p15: 0,
                 p21: Math.round(amount * 45 / factor) * 10,
                 p22: Math.round(amount * 32 / factor) * 10,
                 p23: Math.round(amount * 16 / factor) * 10,
                 p24: Math.round(amount * 7 / factor) * 10,
+                p25: 0,
+            }, () => {
+                this.roundResults()
+            });
+        } else {
+            this.setState({
+                p11: Math.round(amount * 50 / factor) * 10,
+                p12: Math.round(amount * 25 / factor) * 10,
+                p13: Math.round(amount * 13 / factor) * 10,
+                p14: Math.round(amount * 8 / factor) * 10,
+                p15: Math.round(amount * 4 / factor) * 10,
+
+                p21: Math.round(amount * 37 / factor) * 10,
+                p22: Math.round(amount * 28 / factor) * 10,
+                p23: Math.round(amount * 18 / factor) * 10,
+                p24: Math.round(amount * 11 / factor) * 10,
+                p25: Math.round(amount * 6 / factor) * 10,
             }, () => {
                 this.roundResults()
             });
@@ -144,8 +172,8 @@ class Calc extends React.Component {
     roundResults() {
         const { amount } = this.props.data.lastGame;
         let { p11, p21 } = this.state;
-        let sum1 = this.state.p11 + this.state.p12 + this.state.p13 + this.state.p14;
-        let sum2 = this.state.p21 + this.state.p22 + this.state.p23 + this.state.p24;
+        let sum1 = this.state.p11 + this.state.p12 + this.state.p13 + this.state.p14 + this.state.p15;
+        let sum2 = this.state.p21 + this.state.p22 + this.state.p23 + this.state.p24 + this.state.p25;
         let sum1ok = false;
         let sum2ok = false;
 
@@ -229,7 +257,7 @@ class Calc extends React.Component {
     render() {
         const { amount, payout } = this.props.data.lastGame;
         const invalid = (amount % 10) !== 0 && !this.state.onOpen;
-        const invalidPayout = payout < 0 || payout > 4;
+        const invalidPayout = payout < 0 || payout > 5;
 
         return (<div>
             <FontAwesomeIcon icon={faPeopleArrows} onClick={this.toggle} style={{ fontSize: MENU_SIZE, color: "black" }} />
@@ -249,7 +277,7 @@ class Calc extends React.Component {
                                 {UserList.isAdmin() ?
                                     <span>
                                         <InputGroup>
-                                            <Button onClick={() => this.updateAmount({ target: { value: amount - POT_AMOUNT } })} color="danger">
+                                            <Button disabled={ amount < 1 } onClick={() => this.updateAmount({ target: { value: amount - POT_AMOUNT } })} color="danger">
                                                 -
                                             </Button>
                                             <Input autoFocus
@@ -286,7 +314,7 @@ class Calc extends React.Component {
                                 {UserList.isAdmin() ?
                                     <span>
                                         <InputGroup>
-                                                <Button onClick={() => this.updatePayout({ target: { value: payout < 1 ? 0: payout - 1 } })} color="danger">
+                                                <Button disabled={ payout < 2 } onClick={() => this.updatePayout({ target: { value: payout - 1 } })} color="danger">
                                                     -
                                                 </Button>
                                                 <Input
@@ -295,7 +323,7 @@ class Calc extends React.Component {
                                                     value={payout}
                                                     invalid={invalidPayout}
                                                 />
-                                                <Button onClick={() => this.updatePayout({ target: { value: payout + 1 } })} color="success">
+                                                <Button disabled={ payout > 4 } onClick={() => this.updatePayout({ target: { value: payout + 1 } })} color="success">
                                                     +
                                                 </Button>
                                             <InputGroupText addonType="apend">
@@ -316,10 +344,10 @@ class Calc extends React.Component {
                             </Col>
                         </Row>
                         <br />
-                        <Table size={"sm"} borderless style={{ paddingTop: "12px" }}>
+                        <Table size={"sm"}>
                             <thead>
                                 <tr>
-                                    <th />
+                                    <th>#</th>
                                     <th>v1</th>
                                     <th>v2</th>
                                 </tr>
@@ -330,20 +358,25 @@ class Calc extends React.Component {
                                     <td>{this.state.p11}</td>
                                     <td>{this.state.p21}</td>
                                 </tr>
-                                <tr>
+                                <tr style={{visibility: payout > 1 ? 'visible' : 'hidden'}}>
                                     <th>2nd</th>
                                     <td>{this.state.p12}</td>
                                     <td>{this.state.p22}</td>
                                 </tr>
-                                <tr>
+                                <tr style={{visibility: payout > 2 ? 'visible' : 'hidden'}}>
                                     <th>3rd</th>
                                     <td>{this.state.p13}</td>
                                     <td>{this.state.p23}</td>
                                 </tr>
-                                <tr>
+                                <tr style={{visibility: payout > 3 ? 'visible' : 'hidden'}}>
                                     <th>4th</th>
                                     <td>{this.state.p14}</td>
                                     <td>{this.state.p24}</td>
+                                </tr>
+                                <tr style={{visibility: payout > 4 ? 'visible' : 'hidden'}}>
+                                    <th>5th</th>
+                                    <td>{this.state.p15}</td>
+                                    <td>{this.state.p25}</td>
                                 </tr>
                             </tbody>
                         </Table>
