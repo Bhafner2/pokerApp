@@ -24,6 +24,8 @@ import moment from 'moment';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import UserList from "./UserList";
 import { POT_AMOUNT } from '../App';
+import Highcharts from 'highcharts'
+import HighchartsReact from 'highcharts-react-official'
 
 const lastDay = moment().subtract(28, 'h').format();
 
@@ -43,6 +45,7 @@ class Calc extends React.Component {
             p23: 0,
             p24: 0,
             p25: 0,
+            options: {},
         };
 
         this.toggle = this.toggle.bind(this);
@@ -58,6 +61,59 @@ class Calc extends React.Component {
         if (prevProps.data.lastGame.amount !== this.props.data.lastGame.amount) {
             this.calculate();
         }
+    }
+    chart() {
+        this.setState({
+            options: {
+                chart: {
+                    type: 'spline',
+                },
+                tooltip: {
+                    shared: true,
+                    useHTML: true,
+                },
+                title: {
+                    text: 'Payout',
+                    style: {
+                        fontWeight: 'bold',
+                        display: 'none',
+                    },
+                },
+                xAxis: {
+                    categories: ["1st", "2nd", "3rd", "4th", "5th"].slice(0, this.props.data.lastGame.payout),
+                },
+                yAxis: {
+                    title: {
+                        text: '',
+                        style: {
+                            display: 'none'
+                        },
+                    },
+                },
+                legend: {
+                    itemMarginBottom: 10,
+                    itemStyle: {
+                        fontSize: '1.2em',
+                    },
+                },
+                series: [{
+                    name: 'v1',
+                    data: [this.state.p11, this.state.p12, this.state.p13, this.state.p14, this.state.p15].slice(0, this.props.data.lastGame.payout),
+                    lineWidth: 1,
+                    marker: {
+                        enabled: true,
+                    },
+                }, {
+                    name: 'v2',
+                    data: [this.state.p21, this.state.p22, this.state.p23, this.state.p24, this.state.p25].slice(0, this.props.data.lastGame.payout),
+                    lineWidth: 1,
+                    marker: {
+                        enabled: true,
+                    },
+                }
+                ],
+            }
+        });
     }
 
     toggle() {
@@ -135,7 +191,7 @@ class Calc extends React.Component {
             }, () => {
                 this.roundResults()
             });
-        }  else if (payout === 4) {
+        } else if (payout === 4) {
             this.setState({
                 p11: Math.round(amount * 55 / factor) * 10,
                 p12: Math.round(amount * 27 / factor) * 10,
@@ -208,6 +264,7 @@ class Calc extends React.Component {
                 }
             });
         }
+        this.chart();
     }
 
     updateAmount(evt) {
@@ -230,7 +287,7 @@ class Calc extends React.Component {
         }
     }
 
-    sendToDb(amount, payout, date = moment().format()){
+    sendToDb(amount, payout, date = moment().format()) {
         const data = this.props.data;
 
         data.lastGame.amount = amount;
@@ -269,7 +326,7 @@ class Calc extends React.Component {
                 <ModalHeader toggle={this.toggle}>Payout</ModalHeader>
                 <ModalBody>
                     <div style={{ padding: "10px" }}>
-                    <Row>
+                        <Row>
                             <Col xs="4">
                                 <b>Pot size</b>
                             </Col>
@@ -277,7 +334,7 @@ class Calc extends React.Component {
                                 {UserList.isAdmin() ?
                                     <span>
                                         <InputGroup>
-                                            <Button disabled={ amount < 1 } onClick={() => this.updateAmount({ target: { value: amount - POT_AMOUNT } })} color="danger">
+                                            <Button disabled={amount < 1} onClick={() => this.updateAmount({ target: { value: amount - POT_AMOUNT } })} color="danger">
                                                 -
                                             </Button>
                                             <Input autoFocus
@@ -314,17 +371,17 @@ class Calc extends React.Component {
                                 {UserList.isAdmin() ?
                                     <span>
                                         <InputGroup>
-                                                <Button disabled={ payout < 2 } onClick={() => this.updatePayout({ target: { value: payout - 1 } })} color="danger">
-                                                    -
+                                            <Button disabled={payout < 2} onClick={() => this.updatePayout({ target: { value: payout - 1 } })} color="danger">
+                                                -
                                                 </Button>
-                                                <Input
-                                                    type="number" name="payout" id="payout"
-                                                    onChange={this.updatePayout}
-                                                    value={payout}
-                                                    invalid={invalidPayout}
-                                                />
-                                                <Button disabled={ payout > 4 } onClick={() => this.updatePayout({ target: { value: payout + 1 } })} color="success">
-                                                    +
+                                            <Input
+                                                type="number" name="payout" id="payout"
+                                                onChange={this.updatePayout}
+                                                value={payout}
+                                                invalid={invalidPayout}
+                                            />
+                                            <Button disabled={payout > 4} onClick={() => this.updatePayout({ target: { value: payout + 1 } })} color="success">
+                                                +
                                                 </Button>
                                             <InputGroupText addonType="apend">
                                                 <FontAwesomeIcon
@@ -358,28 +415,32 @@ class Calc extends React.Component {
                                     <td>{this.state.p11}</td>
                                     <td>{this.state.p21}</td>
                                 </tr>
-                                <tr style={{visibility: payout > 1 ? 'visible' : 'hidden'}}>
+                                <tr style={{ visibility: payout > 1 ? 'visible' : 'hidden' }}>
                                     <th>2nd</th>
                                     <td>{this.state.p12}</td>
                                     <td>{this.state.p22}</td>
                                 </tr>
-                                <tr style={{visibility: payout > 2 ? 'visible' : 'hidden'}}>
+                                <tr style={{ visibility: payout > 2 ? 'visible' : 'hidden' }}>
                                     <th>3rd</th>
                                     <td>{this.state.p13}</td>
                                     <td>{this.state.p23}</td>
                                 </tr>
-                                <tr style={{visibility: payout > 3 ? 'visible' : 'hidden'}}>
+                                <tr style={{ visibility: payout > 3 ? 'visible' : 'hidden' }}>
                                     <th>4th</th>
                                     <td>{this.state.p14}</td>
                                     <td>{this.state.p24}</td>
                                 </tr>
-                                <tr style={{visibility: payout > 4 ? 'visible' : 'hidden'}}>
+                                <tr style={{ visibility: payout > 4 ? 'visible' : 'hidden' }}>
                                     <th>5th</th>
                                     <td>{this.state.p15}</td>
                                     <td>{this.state.p25}</td>
                                 </tr>
                             </tbody>
                         </Table>
+                        <HighchartsReact
+                            highcharts={Highcharts}
+                            options={this.state.options}
+                        />
                     </div>
                 </ModalBody>
                 <ModalFooter>
