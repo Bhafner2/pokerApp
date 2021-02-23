@@ -66,7 +66,7 @@ class Calc extends React.Component {
         this.setState({
             options: {
                 chart: {
-                    type: 'spline',
+                    type: 'line',
                 },
                 tooltip: {
                     shared: true,
@@ -100,16 +100,10 @@ class Calc extends React.Component {
                     name: 'v1',
                     data: [this.state.p11, this.state.p12, this.state.p13, this.state.p14, this.state.p15].slice(0, this.props.data.lastGame.payout),
                     lineWidth: 1,
-                    marker: {
-                        enabled: true,
-                    },
                 }, {
                     name: 'v2',
                     data: [this.state.p21, this.state.p22, this.state.p23, this.state.p24, this.state.p25].slice(0, this.props.data.lastGame.payout),
                     lineWidth: 1,
-                    marker: {
-                        enabled: true,
-                    },
                 }
                 ],
             }
@@ -133,20 +127,7 @@ class Calc extends React.Component {
     calculate() {
         const factor = 1000;
         const { amount, payout } = this.props.data.lastGame;
-        if (amount < 10 || amount % 10 !== 0) {
-            this.setState({
-                p11: 0,
-                p12: 0,
-                p13: 0,
-                p14: 0,
-                p15: 0,
-                p21: 0,
-                p22: 0,
-                p23: 0,
-                p24: 0,
-                p25: 0,
-            });
-        } else if (payout === 1) {
+        if (payout === 1) {
             this.setState({
                 p11: amount,
                 p12: 0,
@@ -206,7 +187,7 @@ class Calc extends React.Component {
             }, () => {
                 this.roundResults()
             });
-        } else {
+        } else if (payout === 5) {
             this.setState({
                 p11: Math.round(amount * 50 / factor) * 10,
                 p12: Math.round(amount * 25 / factor) * 10,
@@ -222,7 +203,22 @@ class Calc extends React.Component {
             }, () => {
                 this.roundResults()
             });
-        }
+        } else {
+            this.setState({
+                p11: 0,
+                p12: 0,
+                p13: 0,
+                p14: 0,
+                p15: 0,
+                p21: 0,
+                p22: 0,
+                p23: 0,
+                p24: 0,
+                p25: 0,
+            }, () => {
+                this.roundResults()
+            });
+                }
     }
 
     roundResults() {
