@@ -165,8 +165,8 @@ class Calc extends React.Component {
                 p14: 0,
                 p15: 0,
                 p21: Math.round(amount * 48 / factor) * 10,
-                p22: Math.round(amount * 34 / factor) * 10,
-                p23: Math.round(amount * 18 / factor) * 10,
+                p22: Math.round(amount * 32 / factor) * 10,
+                p23: Math.round(amount * 20 / factor) * 10,
                 p24: 0,
                 p25: 0,
             }, () => {
@@ -179,27 +179,27 @@ class Calc extends React.Component {
                 p13: Math.round(amount * 13 / factor) * 10,
                 p14: Math.round(amount * 5 / factor) * 10,
                 p15: 0,
-                p21: Math.round(amount * 45 / factor) * 10,
-                p22: Math.round(amount * 32 / factor) * 10,
-                p23: Math.round(amount * 16 / factor) * 10,
-                p24: Math.round(amount * 7 / factor) * 10,
+                p21: Math.round(amount * 47 / factor) * 10,
+                p22: Math.round(amount * 30 / factor) * 10,
+                p23: Math.round(amount * 17 / factor) * 10,
+                p24: Math.round(amount * 8 / factor) * 10,
                 p25: 0,
             }, () => {
                 this.roundResults()
             });
         } else if (payout === 5) {
             this.setState({
-                p11: Math.round(amount * 50 / factor) * 10,
-                p12: Math.round(amount * 25 / factor) * 10,
-                p13: Math.round(amount * 13 / factor) * 10,
+                p11: Math.round(amount * 47 / factor) * 10,
+                p12: Math.round(amount * 28 / factor) * 10,
+                p13: Math.round(amount * 15 / factor) * 10,
                 p14: Math.round(amount * 8 / factor) * 10,
                 p15: Math.round(amount * 4 / factor) * 10,
 
-                p21: Math.round(amount * 37 / factor) * 10,
-                p22: Math.round(amount * 28 / factor) * 10,
-                p23: Math.round(amount * 18 / factor) * 10,
+                p21: Math.round(amount * 39 / factor) * 10,
+                p22: Math.round(amount * 26 / factor) * 10,
+                p23: Math.round(amount * 17 / factor) * 10,
                 p24: Math.round(amount * 11 / factor) * 10,
-                p25: Math.round(amount * 6 / factor) * 10,
+                p25: Math.round(amount * 7 / factor) * 10,
             }, () => {
                 this.roundResults()
             });
