@@ -2,7 +2,6 @@ import React from 'react';
 import {Popover, PopoverHeader, PopoverBody, Row, Col, Input, Button} from 'reactstrap';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faQuestionCircle} from "@fortawesome/free-solid-svg-icons";
-import {BOUNTY_AMOUNT, POT_AMOUNT, showNumber} from "../App";
 import { connect } from "react-redux";
 
 class Hint extends React.Component {

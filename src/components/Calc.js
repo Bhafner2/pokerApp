@@ -23,7 +23,6 @@ import { store } from '../redux/store';
 import moment from 'moment';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import UserList from "./UserList";
-import { POT_AMOUNT } from '../App';
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 
@@ -218,7 +217,7 @@ class Calc extends React.Component {
             }, () => {
                 this.roundResults()
             });
-                }
+        }
     }
 
     roundResults() {
@@ -311,6 +310,7 @@ class Calc extends React.Component {
         const { amount, payout } = this.props.data.lastGame;
         const invalid = (amount % 10) !== 0 && !this.state.onOpen;
         const invalidPayout = payout < 0 || payout > 5;
+        const { bountyAmount, potAmount } = this.props.data.config;
 
         return (<div>
             <FontAwesomeIcon icon={faPeopleArrows} onClick={this.toggle} style={{ fontSize: MENU_SIZE, color: "black" }} />
@@ -330,7 +330,7 @@ class Calc extends React.Component {
                                 {UserList.isAdmin() ?
                                     <span>
                                         <InputGroup>
-                                            <Button disabled={amount < 1} onClick={() => this.updateAmount({ target: { value: amount - POT_AMOUNT } })} color="danger">
+                                        <Button disabled={amount < 1} onClick={() => this.updateAmount({ target: { value: amount - potAmount } })} color="danger">
                                                 -
                                             </Button>
                                             <Input autoFocus
@@ -339,8 +339,8 @@ class Calc extends React.Component {
                                                 value={amount}
                                                 invalid={invalid}
                                             />
-                                            <Button onClick={() => this.updateAmount({ target: { value: amount + POT_AMOUNT } })} color="success">
-                                                +
+                                             <Button onClick={() => this.updateAmount({ target: { value: amount + potAmount } })} color="success">
+                                              +
                                             </Button>
                                             <InputGroupText addonType="apend">
                                                 <FontAwesomeIcon
