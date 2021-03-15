@@ -345,8 +345,8 @@ class ThisGame extends React.Component {
     render() {
         return (<div>
             <FontAwesomeIcon icon={faGamepad} onClick={this.toggle}
-                style={{ fontSize: MENU_SIZE, color: this.state.sumOk ? "black" : "#DC3545" }} />
-            {_.isNil(this.props.noName) ? <div style={{ fontSize: MENU_FONT, color: this.state.sumOk ? "black" : "#DC3545" }}>Game</div> : <span />}
+                style={{ fontSize: MENU_SIZE, color: this.props.isRed ? "#DC3545" :"black" }} />
+            {_.isNil(this.props.noName) ? <div style={{ fontSize: MENU_FONT, color: this.props.isRed ? "#DC3545" :"black" }}>Game</div> : <span />}
 
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}
                 onKeyPress={this.handleKeyPress}

@@ -42,6 +42,7 @@ class Home extends Component {
         this.showSaved = this.showSaved.bind(this);
         this.filterUser = this.filterUser.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
+        this.doesBuyoutMatch = this.doesBuyoutMatch.bind(this);
     }
 
     componentDidMount() {
@@ -135,6 +136,17 @@ class Home extends Component {
         }
     }
 
+    doesBuyoutMatch() {
+        if (this.props.data.games === undefined) {
+            console.log("doesBuyoutMatch", this.props.data.games);
+            return false;
+        } else {
+            console.log("doesBuyoutMatch2", this.props.data.games);
+            const game = this.props.data.games[0]
+            return game.buyIn - game.won - game.bounty === 0;
+        }
+    }
+
     render() {
         return (
             <div className="center" onKeyPress={this.handleKeyPress}>
@@ -172,7 +184,7 @@ class Home extends Component {
                         <GeneralStatistic today={this.state.date} />
                     </NavbarBrand>
                     <NavbarBrand>
-                        <ThisGame today={this.state.date} />
+                        <ThisGame today={this.state.date} isRed={!this.doesBuyoutMatch()} />
                     </NavbarBrand>
                     <NavbarBrand>
                         <Calc />
