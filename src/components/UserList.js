@@ -335,7 +335,8 @@ class UserList extends React.Component {
 
     render() {
         const { user } = this.props;
-        const { bountyAmount, potAmount } = this.props.data.config;
+        const { bountyAmount  } = this.props.data.config || 5;
+        const { potAmount } = this.props.data.config || 20;
 
         return (<div>
             <ListGroupItem key={this.props.key}

@@ -3,6 +3,7 @@ import {Popover, PopoverHeader, PopoverBody, Row, Col, Input, Button} from 'reac
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faQuestionCircle} from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
+import { showNumber } from '../App';
 
 class Hint extends React.Component {
     constructor(props) {

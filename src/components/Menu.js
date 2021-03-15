@@ -91,7 +91,8 @@ class Menu extends Component {
     }
 
     render() {
-        const { potAmount, bountyAmount } = this.props.data.config;
+        const { bountyAmount  } = this.props.data.config || 5;
+        const { potAmount } = this.props.data.config || 20;
         return (
             <div>
                 <FontAwesomeIcon id={"hamburger"} icon={faBars} onClick={this.toggleMenu} />

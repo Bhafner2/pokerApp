@@ -310,8 +310,8 @@ class Calc extends React.Component {
         const { amount, payout } = this.props.data.lastGame;
         const invalid = (amount % 10) !== 0 && !this.state.onOpen;
         const invalidPayout = payout < 0 || payout > 5;
-        const { bountyAmount, potAmount } = this.props.data.config;
-
+        const { bountyAmount  } = this.props.data.config || 5;
+        const { potAmount } = this.props.data.config || 20;
         return (<div>
             <FontAwesomeIcon icon={faPeopleArrows} onClick={this.toggle} style={{ fontSize: MENU_SIZE, color: "black" }} />
             <div style={{ fontSize: MENU_FONT, color: "black" }}>Payout</div>
