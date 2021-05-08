@@ -13,10 +13,12 @@ class Hint extends React.Component {
         this.getBountyPercent = this.getBountyPercent.bind(this);
         this.update = this.update.bind(this);
         this.updateWonManual = this.updateWonManual.bind(this);
+        this.updateBuyInManual = this.updateBuyInManual.bind(this);
         this.state = {
             popoverOpen: false,
             percent: 0,
             wonManual: 0,
+            buyInManual: 0
         };
     }
 
@@ -26,6 +28,7 @@ class Hint extends React.Component {
         this.setState({
             popoverOpen: !this.state.popoverOpen,
             percent: bountyAmount / potAmount * 100,
+            buyInManual: this.props.buyIn,
         });
     }
 
@@ -42,7 +45,13 @@ class Hint extends React.Component {
             wonManual: evt.target.value,
         }
         );
+    }
 
+    updateBuyInManual(evt) {
+        this.setState({
+            buyInManual: evt.target.value,
+        }
+        );
     }
 
     getBountyPercent() {
@@ -76,31 +85,7 @@ class Hint extends React.Component {
                         actual checksum is {sum}
                     </PopoverHeader>
                     <PopoverBody>
-                        <Row>
-                            <Col xs={7}>
-                                <span style={{ display: 'inline-block', paddingTop: '1.1em' }}>Bounty's in %</span>
-                            </Col>
-                            <Col xs={5}>
-                                <Input type="text" name="per" id="per"
-                                    placeholder="%"
-                                    onChange={this.update}
-                                    value={this.state.percent}
-                                />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs={7}>
-                                <span style={{ display: 'inline-block', paddingTop: '1.1em' }}>Cash counted</span>
-                            </Col>
-                            <Col xs={5}>
-                                <Input type="text" name="man" id="man"
-                                    onChange={this.updateWonManual}
-                                    value={this.state.wonManual}
-                                />
-                            </Col>
-                        </Row>
-                        <br />
-                        <Table borderless size="sm" style={{ paddingTop: "12px" }}>
+                        <Table borderless size="sm" style={{ paddingTop: "12px", whiteSpace: "nowrap" }}>
                             <tbody>
                                 <tr>
                                     <td>
@@ -120,7 +105,18 @@ class Hint extends React.Component {
                                         Buy In
                                     </td>
                                     <td>
-                                        {buyIn}
+                                    <Input type="text" name="buy" id="buy"
+                                            style={{
+                                                fontSize: "1em",
+                                                border: 0,
+                                                backgroundColor: "transparent",
+                                                padding: 0,
+                                                color: "#0d6efd",
+                                                textAlign: "left",
+                                            }}
+                                            onChange={this.updateBuyInManual}
+                                            value={this.state.buyInManual}
+                                        />
                                     </td>
                                     <td>
                                         {buyIn}
@@ -140,11 +136,20 @@ class Hint extends React.Component {
                                         {showNumber(buyIn / this.getBountyPercent())}
                                     </td>
                                     <td>
-                                        {this.state.wonManual}
-
+                                        <Input type="number" name="man" id="man"
+                                            style={{
+                                                fontSize: "1em",
+                                                border: 0,
+                                                backgroundColor: "transparent",
+                                                padding: 0,
+                                                color: "#0d6efd",
+                                                textAlign: "left",
+                                            }}
+                                            onChange={this.updateWonManual}
+                                            value={this.state.wonManual}
+                                        />
                                     </td>
                                 </tr>
-
                                 <tr>
                                     <td>
                                         Bounty
@@ -157,6 +162,32 @@ class Hint extends React.Component {
                                     </td>
                                     <td>
                                         {buyIn - this.state.wonManual}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Bounty %
+                                    </td>
+                                    <td>
+                                        {bounty / this.state.buyInManual * 100}
+                                    </td>
+                                    <td>
+                                        <Input type="text" name="per" id="per"
+                                            style={{
+                                                fontSize: "1em",
+                                                border: 0,
+                                                backgroundColor: "transparent",
+                                                padding: 0,
+                                                color: "#0d6efd",
+                                                textAlign: "left",
+                                            }}
+                                            placeholder="%"
+                                            onChange={this.update}
+                                            value={this.state.percent}
+                                        />
+                                    </td>
+                                    <td>
+                                        {buyIn - this.state.wonManual / buyIn * 100}
                                     </td>
                                 </tr>
                             </tbody>
