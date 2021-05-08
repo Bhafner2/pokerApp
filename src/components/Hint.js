@@ -1,7 +1,7 @@
 import React from 'react';
-import {Popover, PopoverHeader, PopoverBody, Row, Col, Input, Button} from 'reactstrap';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faQuestionCircle} from "@fortawesome/free-solid-svg-icons";
+import { Popover, PopoverHeader, PopoverBody, Row, Col, Input, Button, Table } from 'reactstrap';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import { showNumber } from '../App';
 
@@ -12,9 +12,11 @@ class Hint extends React.Component {
         this.toggle = this.toggle.bind(this);
         this.getBountyPercent = this.getBountyPercent.bind(this);
         this.update = this.update.bind(this);
+        this.updateWonManual = this.updateWonManual.bind(this);
         this.state = {
             popoverOpen: false,
             percent: 0,
+            wonManual: 0,
         };
     }
 
@@ -29,8 +31,16 @@ class Hint extends React.Component {
 
     update(evt) {
         this.setState({
-                percent: evt.target.value,
-            }
+            percent: evt.target.value,
+        }
+        );
+
+    }
+
+    updateWonManual(evt) {
+        this.setState({
+            wonManual: evt.target.value,
+        }
         );
 
     }
@@ -40,7 +50,7 @@ class Hint extends React.Component {
     }
 
     render() {
-        const {sum, buyIn, won, bounty} = this.props;
+        const { sum, buyIn, won, wonManual, bounty } = this.props;
         return (
             <div id={'error'}>
                 <Row>
@@ -51,77 +61,106 @@ class Hint extends React.Component {
                         {sum}
                     </Col>
                     <Col xs="2">
-                        <FontAwesomeIcon icon={faQuestionCircle} onClick={this.toggle} size="lg"/>
+                        <FontAwesomeIcon icon={faQuestionCircle} onClick={this.toggle} size="lg" />
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs="12" style={{fontSize: "0.8em"}} onClick={this.toggle}>
+                    <Col xs="12" style={{ fontSize: "0.8em" }} onClick={this.toggle}>
                         the checksum should be 0
                     </Col>
                 </Row>
                 <Popover placement="top" isOpen={this.state.popoverOpen}
-                         target={'error'}
-                         toggle={this.toggle}>
-                    <PopoverHeader> <Button close onClick={this.toggle}/> Checksum error in Game:
+                    target={'error'}
+                    toggle={this.toggle}>
+                    <PopoverHeader> <Button close onClick={this.toggle} /> Checksum error in Game:
                         actual checksum is {sum}
                     </PopoverHeader>
                     <PopoverBody>
                         <Row>
-                            <Col xs={5}>
-                                <span style={{display: 'inline-block', paddingTop: '1.1em'}}>Bounty's in %</span>
+                            <Col xs={7}>
+                                <span style={{ display: 'inline-block', paddingTop: '1.1em' }}>Bounty's in %</span>
                             </Col>
-                            <Col xs={4}>
+                            <Col xs={5}>
                                 <Input type="text" name="per" id="per"
-                                       placeholder="%"
-                                       onChange={this.update}
-                                       value={this.state.percent}
+                                    placeholder="%"
+                                    onChange={this.update}
+                                    value={this.state.percent}
                                 />
                             </Col>
-                            <Col xs={3}/>
-                        </Row>
-                        <br/>
-                        <Row>
-                            <Col xs={4}/>
-                            <Col xs={4}>
-                                Actual
-                            </Col>
-                            <Col xs={4}>
-                                Should
-                            </Col>
                         </Row>
                         <Row>
-                            <Col xs={4}>
-                                Buy In
+                            <Col xs={7}>
+                                <span style={{ display: 'inline-block', paddingTop: '1.1em' }}>Cash counted</span>
                             </Col>
-                            <Col xs={4}>
-                                {buyIn}
-                            </Col>
-                            <Col xs={4}>
-                                {buyIn}
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs={4}>
-                                Won
-                            </Col>
-                            <Col xs={4}>
-                                {won}
-                            </Col>
-                            <Col xs={4}>
-                                {showNumber(buyIn / this.getBountyPercent())}
+                            <Col xs={5}>
+                                <Input type="text" name="man" id="man"
+                                    onChange={this.updateWonManual}
+                                    value={this.state.wonManual}
+                                />
                             </Col>
                         </Row>
-                        <Row>
-                            <Col xs={4}>
-                                Bounty
-                            </Col>
-                            <Col xs={4}>
-                                {bounty}
-                            </Col>
-                            <Col xs={4}>
-                                {showNumber(buyIn - buyIn / this.getBountyPercent())}
-                            </Col>
-                        </Row>
+                        <br />
+                        <Table borderless size="sm" style={{ paddingTop: "12px" }}>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        Actual
+                                    </td>
+                                    <td>
+                                        calc %
+                                    </td>
+                                    <td>
+                                        calc cash
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Buy In
+                                    </td>
+                                    <td>
+                                        {buyIn}
+                                    </td>
+                                    <td>
+                                        {buyIn}
+                                    </td>
+                                    <td>
+                                        {buyIn}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Won
+                                    </td>
+                                    <td>
+                                        {won}
+                                    </td>
+                                    <td>
+                                        {showNumber(buyIn / this.getBountyPercent())}
+                                    </td>
+                                    <td>
+                                        {this.state.wonManual}
+
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        Bounty
+                                    </td>
+                                    <td>
+                                        {bounty}
+                                    </td>
+                                    <td>
+                                        {showNumber(buyIn - buyIn / this.getBountyPercent())}
+                                    </td>
+                                    <td>
+                                        {buyIn - this.state.wonManual}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </Table>
                     </PopoverBody>
                 </Popover>
             </div>
