@@ -12,7 +12,7 @@ import logo from './img/logo.png';
 import * as _ from 'lodash';
 import moment from "moment/moment";
 
-export const AppVersion = 'v2.2.2';
+export const AppVersion = 'v2.2.3';
 
 export function showLoading() {
     return (
