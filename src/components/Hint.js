@@ -10,7 +10,6 @@ class Hint extends React.Component {
         super(props);
 
         this.toggle = this.toggle.bind(this);
-        this.getBountyPercent = this.getBountyPercent.bind(this);
         this.update = this.update.bind(this);
         this.updateWonManual = this.updateWonManual.bind(this);
         this.updateBuyInManual = this.updateBuyInManual.bind(this);
@@ -29,6 +28,7 @@ class Hint extends React.Component {
             popoverOpen: !this.state.popoverOpen,
             percent: bountyAmount / potAmount * 100,
             buyInManual: this.props.buyIn,
+            wonManual: this.props.data.lastGame.amount,
         });
     }
 
@@ -52,10 +52,6 @@ class Hint extends React.Component {
             buyInManual: evt.target.value,
         }
         );
-    }
-
-    getBountyPercent() {
-        return (this.state.percent / 100) + 1;
     }
 
     render() {
@@ -94,10 +90,7 @@ class Hint extends React.Component {
                                         Actual
                                     </td>
                                     <td>
-                                        calc %
-                                    </td>
-                                    <td>
-                                        calc cash
+                                        Calculated
                                     </td>
                                 </tr>
                                 <tr>
@@ -105,13 +98,12 @@ class Hint extends React.Component {
                                         Buy In
                                     </td>
                                     <td>
-                                    <Input type="text" name="buy" id="buy"
+                                        <Input type="text" name="buy" id="buy"
                                             style={{
                                                 fontSize: "1em",
                                                 border: 0,
                                                 backgroundColor: "transparent",
                                                 padding: 0,
-                                                color: "#0d6efd",
                                                 textAlign: "left",
                                             }}
                                             onChange={this.updateBuyInManual}
@@ -119,10 +111,7 @@ class Hint extends React.Component {
                                         />
                                     </td>
                                     <td>
-                                        {buyIn}
-                                    </td>
-                                    <td>
-                                        {buyIn}
+                                        {showNumber(this.state.wonManual + (this.state.wonManual * this.state.percent / 100))}
                                     </td>
                                 </tr>
                                 <tr>
@@ -131,9 +120,6 @@ class Hint extends React.Component {
                                     </td>
                                     <td>
                                         {won}
-                                    </td>
-                                    <td>
-                                        {showNumber(buyIn / this.getBountyPercent())}
                                     </td>
                                     <td>
                                         <Input type="number" name="man" id="man"
@@ -158,15 +144,12 @@ class Hint extends React.Component {
                                         {bounty}
                                     </td>
                                     <td>
-                                        {showNumber(buyIn - buyIn / this.getBountyPercent())}
-                                    </td>
-                                    <td>
-                                        {buyIn - this.state.wonManual}
+                                        {showNumber(this.state.wonManual * this.state.percent / 100)}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        Bounty %
+                                        Bounty in %
                                     </td>
                                     <td>
                                         {bounty / this.state.buyInManual * 100}
@@ -185,9 +168,6 @@ class Hint extends React.Component {
                                             onChange={this.update}
                                             value={this.state.percent}
                                         />
-                                    </td>
-                                    <td>
-                                        {buyIn - this.state.wonManual / buyIn * 100}
                                     </td>
                                 </tr>
                             </tbody>
