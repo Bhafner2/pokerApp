@@ -98,20 +98,21 @@ class Hint extends React.Component {
                                         Buy In
                                     </td>
                                     <td>
-                                        <Input type="text" name="buy" id="buy"
+                                        <Input type="number" name="buy" id="buy"
                                             style={{
                                                 fontSize: "1em",
                                                 border: 0,
                                                 backgroundColor: "transparent",
                                                 padding: 0,
                                                 textAlign: "left",
+                                                height: "auto"
                                             }}
                                             onChange={this.updateBuyInManual}
                                             value={this.state.buyInManual}
                                         />
                                     </td>
                                     <td>
-                                        {showNumber(this.state.wonManual + (this.state.wonManual * this.state.percent / 100))}
+                                        {showNumber(Number(this.state.wonManual) + Number(this.state.wonManual * this.state.percent / 100))}
                                     </td>
                                 </tr>
                                 <tr>
@@ -130,6 +131,7 @@ class Hint extends React.Component {
                                                 padding: 0,
                                                 color: "#0d6efd",
                                                 textAlign: "left",
+                                                height: "auto"
                                             }}
                                             onChange={this.updateWonManual}
                                             value={this.state.wonManual}
@@ -155,7 +157,7 @@ class Hint extends React.Component {
                                         {bounty / this.state.buyInManual * 100}
                                     </td>
                                     <td>
-                                        <Input type="text" name="per" id="per"
+                                        <Input type="number" name="per" id="per"
                                             style={{
                                                 fontSize: "1em",
                                                 border: 0,
@@ -163,6 +165,7 @@ class Hint extends React.Component {
                                                 padding: 0,
                                                 color: "#0d6efd",
                                                 textAlign: "left",
+                                                height: "auto"
                                             }}
                                             placeholder="%"
                                             onChange={this.update}
