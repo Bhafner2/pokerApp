@@ -154,7 +154,7 @@ class Hint extends React.Component {
                                         Bounty in %
                                     </td>
                                     <td>
-                                        {bounty / this.state.buyInManual * 100}
+                                        {showNumber(bounty / this.state.buyInManual * 100)}
                                     </td>
                                     <td>
                                         <Input type="number" name="per" id="per"
