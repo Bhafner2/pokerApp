@@ -18,7 +18,7 @@
     "lodash": "^4.17.21",
     "mdbreact": "^5.0.2",
     "merge": "^2.1.1",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "node": "^16.1.0",
     "npm": "^7.12.0",
     "npm-check-updates": "^11.5.10",
